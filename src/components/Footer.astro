@@ -1,96 +1,98 @@
 ---
 // Light footer: wordmark, address, contact, copyright. Reflows from a row to a
 // stack on its own container width.
-import Wordmark from './Wordmark.astro';
+import Wordmark from "./Wordmark.astro";
 
 interface Props {
-  class?: string;
+    class?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = "" } = Astro.props;
 
-const email = 'info@zone2hp.com';
-const phoneDisplay = '(00) 0000 0000';
-const phoneHref = 'tel:0000000000';
+const email = "info@zone2hp.com";
+const phoneDisplay = "0430 301 168";
+const phoneHref = "tel:0000000000";
 const year = 2026;
 ---
 
-<footer class:list={['footer', className]}>
-  <div class="footer__inner">
-    <div class="footer__primary">
-      <Wordmark as="div" size="sm" mark />
-      <address class="footer__address">
-        Suite 104 / 2 Rowe St,<br />Eastwood, NSW 2122
-      </address>
-    </div>
+<footer class:list={["footer", className]}>
+    <div class="footer__inner">
+        <div class="footer__primary">
+            <Wordmark as="div" size="sm" mark />
+            <address class="footer__address">
+                Suite 104 / 2 Rowe St,<br />Eastwood, NSW 2122
+            </address>
+        </div>
 
-    <div class="footer__contact">
-      <a href={`mailto:${email}`}>{email}</a>
-      <a href={phoneHref}>{phoneDisplay}</a>
-    </div>
+        <div class="footer__contact">
+            <a href={`mailto:${email}`}>{email}</a>
+            <a href={phoneHref}>{phoneDisplay}</a>
+        </div>
 
-    <p class="footer__legal">&copy; {year} Zone Two Health and Performance</p>
-  </div>
+        <p class="footer__legal">
+            &copy; {year} Zone Two Health and Performance
+        </p>
+    </div>
 </footer>
 
 <style>
-  /* .footer is the query container; .footer__inner (its child) reflows. */
-  .footer {
-    container-type: inline-size;
-    background: var(--stone);
-    border-top: var(--border-hairline);
-  }
-  .footer__inner {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding-block: var(--space-lg);
-    padding-inline: var(--section-pad-inline);
-    display: grid;
-    gap: var(--space-md);
-  }
-  .footer__primary {
-    display: grid;
-    gap: var(--space-sm);
-  }
-
-  @container (min-width: 44rem) {
+    /* .footer is the query container; .footer__inner (its child) reflows. */
+    .footer {
+        container-type: inline-size;
+        background: var(--stone);
+        border-top: var(--border-hairline);
+    }
     .footer__inner {
-      grid-template-columns: 1fr auto;
-      align-items: start;
-      column-gap: var(--space-xl);
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding-block: var(--space-lg);
+        padding-inline: var(--section-pad-inline);
+        display: grid;
+        gap: var(--space-md);
     }
+    .footer__primary {
+        display: grid;
+        gap: var(--space-sm);
+    }
+
+    @container (min-width: 44rem) {
+        .footer__inner {
+            grid-template-columns: 1fr auto;
+            align-items: start;
+            column-gap: var(--space-xl);
+        }
+        .footer__legal {
+            grid-column: 1 / -1;
+        }
+    }
+
+    .footer__address {
+        font-style: normal;
+        color: var(--ink-2);
+        line-height: 1.45;
+    }
+
+    .footer__contact {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+    .footer__contact a {
+        min-height: 2.5rem;
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: var(--step-small);
+        color: var(--ink);
+        text-decoration: none;
+    }
+    .footer__contact a:hover {
+        color: var(--accent-deep);
+    }
+
     .footer__legal {
-      grid-column: 1 / -1;
+        margin: 0;
+        font-size: var(--step-small);
+        color: var(--ink-2);
     }
-  }
-
-  .footer__address {
-    font-style: normal;
-    color: var(--ink-2);
-    line-height: 1.45;
-  }
-
-  .footer__contact {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-  .footer__contact a {
-    min-height: 2.5rem;
-    display: inline-flex;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: var(--step-small);
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .footer__contact a:hover {
-    color: var(--accent-deep);
-  }
-
-  .footer__legal {
-    margin: 0;
-    font-size: var(--step-small);
-    color: var(--ink-2);
-  }
 </style>

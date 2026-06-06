@@ -71,7 +71,7 @@ the whole tree. Specs (`README`, `CLAUDE`, `BRAND-AND-VOICE`, `DESIGN-SYSTEM`,
 - **MapBlock** / **Footer**: `container-type` is on the component root; the *inner*
   wrapper (`.map__grid` / `.footer__inner`) is what the `@container` query restyles.
   Keep that pattern — an element cannot query its own size.
-- **ContactBlock**: phone is a deliberate placeholder `(00) 0000 0000` / `tel:0000000000`.
+- **ContactBlock**: phone is a deliberate placeholder `0430 301 168` / `tel:0000000000`.
   Email is real (`info@zone2hp.com`). Values stack (two big values collide side by side).
 - Asset file names follow `ASSETS.md`: `public/images/hero-{a1,a2,b1,c1,c2}-poster.jpg`,
   `public/video/hero-{...}.webm` + `.mp4`.

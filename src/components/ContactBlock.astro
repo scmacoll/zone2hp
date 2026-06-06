@@ -2,93 +2,94 @@
 // Phone (obvious placeholder until the client adds the real number) and the
 // real email, as tel: and mailto: links with >= 44px tap targets. The single
 // accent action is "Email us".
-import Eyebrow from './Eyebrow.astro';
-import CtaButton from './CtaButton.astro';
+import Eyebrow from "./Eyebrow.astro";
+import CtaButton from "./CtaButton.astro";
 
 interface Props {
-  class?: string;
+    class?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = "" } = Astro.props;
 
-const email = 'info@zone2hp.com';
-const phoneDisplay = '(00) 0000 0000';
-const phoneHref = 'tel:0000000000'; // placeholder, intentionally not a real number
+const email = "info@zone2hp.com";
+const phoneDisplay = "0430 301 168";
+const phoneHref = "tel:0000000000"; // placeholder, intentionally not a real number
 ---
 
-<section class:list={['contact', className]} aria-labelledby="contact-heading">
-  <h2 id="contact-heading" class="contact__title">Get in touch</h2>
+<section class:list={["contact", className]} aria-labelledby="contact-heading">
+    <h2 id="contact-heading" class="contact__title">Get in touch</h2>
 
-  <dl class="contact__list">
-    <div class="contact__item">
-      <dt><Eyebrow as="span">Email</Eyebrow></dt>
-      <dd>
-        <a class="contact__value" href={`mailto:${email}`}>{email}</a>
-      </dd>
-    </div>
+    <dl class="contact__list">
+        <div class="contact__item">
+            <dt><Eyebrow as="span">Email</Eyebrow></dt>
+            <dd>
+                <a class="contact__value" href={`mailto:${email}`}>{email}</a>
+            </dd>
+        </div>
 
-    <div class="contact__item">
-      <dt><Eyebrow as="span">Phone</Eyebrow></dt>
-      <dd>
-        <a class="contact__value" href={phoneHref}>{phoneDisplay}</a>
-        <span class="contact__note">Number live at launch</span>
-      </dd>
-    </div>
-  </dl>
+        <div class="contact__item">
+            <dt><Eyebrow as="span">Phone</Eyebrow></dt>
+            <dd>
+                <a class="contact__value" href={phoneHref}>{phoneDisplay}</a>
+            </dd>
+        </div>
+    </dl>
 
-  <CtaButton href={`mailto:${email}`} variant="solid" class="contact__cta">Email us</CtaButton>
+    <CtaButton href={`mailto:${email}`} variant="solid" class="contact__cta"
+        >Email us</CtaButton
+    >
 </section>
 
 <style>
-  .contact {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    align-items: start;
-  }
-  .contact__title {
-    font-size: var(--step-h3);
-  }
+    .contact {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: start;
+    }
+    .contact__title {
+        font-size: var(--step-h3);
+    }
 
-  /* Values are large, so stack them. Two big links side by side collide in any
+    /* Values are large, so stack them. Two big links side by side collide in any
      realistic container width. */
-  .contact__list {
-    display: grid;
-    gap: var(--space-sm);
-    margin: 0;
-  }
+    .contact__list {
+        display: grid;
+        gap: var(--space-sm);
+        margin: 0;
+    }
 
-  .contact__item dt {
-    margin-bottom: 0.35rem;
-  }
-  .contact__item dd {
-    margin: 0;
-  }
+    .contact__item dt {
+        margin-bottom: 0.35rem;
+    }
+    .contact__item dd {
+        margin: 0;
+    }
 
-  .contact__value {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(1.125rem, 0.9rem + 0.8vw, 1.5rem);
-    letter-spacing: var(--track-tight);
-    color: var(--ink);
-    text-decoration: none;
-    overflow-wrap: anywhere;
-    border-bottom: 1px solid var(--chrome-line);
-  }
-  .contact__value:hover {
-    border-color: var(--accent);
-  }
+    .contact__value {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(1.125rem, 0.9rem + 0.8vw, 1.5rem);
+        letter-spacing: var(--track-tight);
+        color: var(--ink);
+        text-decoration: none;
+        overflow-wrap: anywhere;
+        border-bottom: 1px solid var(--chrome-line);
+    }
+    .contact__value:hover {
+        border-color: var(--accent);
+    }
 
-  .contact__note {
-    display: block;
-    margin-top: 0.25rem;
-    font-family: var(--font-mono);
-    font-size: var(--step-label);
-    letter-spacing: var(--track-label);
-    text-transform: uppercase;
-    color: var(--ink-2);
-  }
+    .contact__note {
+        display: block;
+        margin-top: 0.25rem;
+        font-family: var(--font-mono);
+        font-size: var(--step-label);
+        letter-spacing: var(--track-label);
+        text-transform: uppercase;
+        color: var(--ink-2);
+    }
 </style>

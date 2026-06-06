@@ -12,283 +12,345 @@
 //   loop straight into the <video> below by adding the files at these paths,
 //   no code change: /video/hero-a1.webm, /video/hero-a1.mp4, poster
 //   /images/hero-a1-poster.jpg. Empty <video> simply shows the gradient.
-import Base from '../../layouts/Base.astro';
-import Wordmark from '../../components/Wordmark.astro';
-import ServicesLine from '../../components/ServicesLine.astro';
-import MapBlock from '../../components/MapBlock.astro';
-import FooterExpanded from '../../components/FooterExpanded.astro';
+import Base from "../../layouts/Base.astro";
+import Wordmark from "../../components/Wordmark.astro";
+import ServicesLine from "../../components/ServicesLine.astro";
+import MapBlock from "../../components/MapBlock.astro";
+import FooterExpanded from "../../components/FooterExpanded.astro";
 ---
 
 <Base>
-  <div class="a1">
-    <main id="main">
-      <section class="a1-hero">
-        <div class="a1-hero__media" aria-hidden="true">
-          <video class="a1-hero__video" autoplay muted loop playsinline poster="/images/hero-a1-poster.jpg">
-            <source src="/video/hero-a1.webm" type="video/webm" />
-            <source src="/video/hero-a1.mp4" type="video/mp4" />
-          </video>
-        </div>
+    <div class="a1">
+        <main id="main">
+            <section class="a1-hero">
+                <div class="a1-hero__media" aria-hidden="true">
+                    <video
+                        class="a1-hero__video"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        poster="/images/hero-a1-poster.jpg"
+                    >
+                        <source src="/video/hero-a1.webm" type="video/webm" />
+                        <source src="/video/hero-a1.mp4" type="video/mp4" />
+                    </video>
+                </div>
 
-        <div class="a1-hero__chrome">
-          <header class="a1-nav">
-            <a class="a1-brand" href="#main" aria-label="Zone Two Health and Performance, top of page">
-              <img class="a1-brand__mark" src="/favicon.svg" alt="" width="44" height="44" />
-              <Wordmark as="span" size="sm" class="a1-brand__type" />
-            </a>
+                <div class="a1-hero__chrome">
+                    <header class="a1-nav">
+                        <a
+                            class="a1-brand"
+                            href="#main"
+                            aria-label="Zone Two Health and Performance, top of page"
+                        >
+                            <img
+                                class="a1-brand__mark"
+                                src="/favicon.svg"
+                                alt=""
+                                width="44"
+                                height="44"
+                            />
+                            <Wordmark
+                                as="span"
+                                size="sm"
+                                class="a1-brand__type"
+                            />
+                        </a>
 
-            <nav class="a1-actions" aria-label="Utilities">
-              <button type="button" class="a1-lang" aria-label="Language: English selected">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7" />
-                  <path d="M3 12h18M12 3c2.5 2.4 2.5 15.6 0 18M12 3c-2.5 2.4-2.5 15.6 0 18" stroke="currentColor" stroke-width="1.7" />
-                </svg>
-                <span>EN</span>
-              </button>
-            </nav>
-          </header>
+                        <nav class="a1-actions" aria-label="Utilities">
+                            <button
+                                type="button"
+                                class="a1-lang"
+                                aria-label="Language: English selected"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    width="16"
+                                    height="16"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"></circle>
+                                    <path
+                                        d="M3 12h18M12 3c2.5 2.4 2.5 15.6 0 18M12 3c-2.5 2.4-2.5 15.6 0 18"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"></path>
+                                </svg>
+                                <span>EN</span>
+                            </button>
+                        </nav>
+                    </header>
 
-          <div class="a1-panel">
-            <div class="a1-panel__labels">
-              <ServicesLine class="a1-services" />
-            </div>
+                    <div class="a1-panel">
+                        <div class="a1-panel__labels">
+                            <ServicesLine class="a1-services" />
+                        </div>
 
-            <div class="a1-panel__main">
-              <h1 class="a1-headline">
-                Coming<span class="a1-badge" aria-hidden="true"><img src="/favicon.svg" alt="" width="40" height="40" /></span><br />soon.
-              </h1>
+                        <div class="a1-panel__main">
+                            <h1 class="a1-headline">
+                                Modern<span class="a1-badge" aria-hidden="true"
+                                    ><img
+                                        src="/favicon.svg"
+                                        alt=""
+                                        width="40"
+                                        height="40"
+                                    /></span
+                                ><br />Chiropractic Therapy
+                            </h1>
 
-              <a class="a1-discover" href="#find-us">
-                <span class="a1-discover__text">Discover<br />our services</span>
-                <span class="a1-discover__arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                    <path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+                            <a class="a1-discover" href="#find-us">
+                                <span class="a1-discover__text"
+                                    >Coming<br />Soon</span
+                                >
+                                <span
+                                    class="a1-discover__arrow"
+                                    aria-hidden="true"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="18"
+                                        height="18"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M12 5v14M6 13l6 6 6-6"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-      <section id="find-us" class="a1-find" aria-label="Where to find us">
-        <MapBlock />
-      </section>
-    </main>
+            <section id="find-us" class="a1-find" aria-label="Where to find us">
+                <MapBlock />
+            </section>
+        </main>
 
-    <FooterExpanded />
-  </div>
+        <FooterExpanded />
+    </div>
 </Base>
 
 <style>
-  /* Page token scope: the bright "lime replacement" orange + the A1 hero grade.
+    /* Page token scope: the bright "lime replacement" orange + the A1 hero grade.
      Wrapping main + footer so both inherit --a1-volt. */
-  .a1 {
-    --a1-volt: #f58a2e;
-    --a1-volt-press: #e07a1b;
-    --grad-hero: var(--grad-hero-a1);
-    --panel-radius: 14px;
-  }
+    .a1 {
+        --a1-volt: #f58a2e;
+        --a1-volt-press: #e07a1b;
+        --grad-hero: var(--grad-hero-a1);
+        --panel-radius: 8px;
+    }
 
-  /* ---- Hero ---------------------------------------------------------------- */
-  .a1-hero {
-    position: relative;
-    min-height: 100vh; /* fallback */
-    min-height: 100svh;
-    overflow: clip;
-    isolation: isolate;
-  }
-  .a1-hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: var(--grad-hero);
-  }
-  .a1-hero__video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
+    /* ---- Hero ---------------------------------------------------------------- */
+    .a1-hero {
+        position: relative;
+        min-height: 100vh; /* fallback */
+        min-height: 100svh;
+        overflow: clip;
+        isolation: isolate;
+    }
+    .a1-hero__media {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: var(--grad-hero);
+    }
+    .a1-hero__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
 
-  .a1-hero__chrome {
-    position: relative;
-    z-index: 1;
-    min-height: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding: clamp(1rem, 0.7rem + 1.4vw, 1.75rem);
-  }
+    .a1-hero__chrome {
+        position: relative;
+        z-index: 1;
+        min-height: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        padding: clamp(1rem, 0.7rem + 1.4vw, 1.75rem);
+    }
 
-  /* ---- Top bar: logo left, EN pill right ----------------------------------- */
-  .a1-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-sm);
-  }
-  .a1-brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    text-decoration: none;
-    color: var(--ink);
-  }
-  .a1-brand__mark {
-    width: clamp(38px, 3vw + 30px, 46px);
-    height: auto;
-    border-radius: 8px;
-  }
-  .a1-brand :global(.a1-brand__type) {
-    letter-spacing: 0.04em;
-    color: var(--ink);
-  }
+    /* ---- Top bar: logo left, EN pill right ----------------------------------- */
+    .a1-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-sm);
+    }
+    .a1-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        text-decoration: none;
+        color: var(--ink);
+    }
+    .a1-brand__mark {
+        width: clamp(38px, 3vw + 30px, 46px);
+        height: auto;
+        /*border-radius: 8px;*/
+    }
+    .a1-brand :global(.a1-brand__type) {
+        letter-spacing: 0.04em;
+        color: var(--ink);
+    }
 
-  .a1-lang {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    min-height: 44px;
-    padding-inline: 0.95rem;
-    background: var(--a1-volt);
-    color: var(--ink);
-    border: 0;
-    border-radius: 10px;
-    font-family: var(--font-mono);
-    font-size: var(--step-label);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 150ms var(--ease-out);
-  }
-  .a1-lang:hover {
-    background: var(--a1-volt-press);
-  }
+    .a1-lang {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-height: 44px;
+        padding-inline: 0.95rem;
+        background: var(--a1-volt);
+        color: var(--ink);
+        border: 0;
+        border-radius: 8px;
+        font-family: var(--font-mono);
+        font-size: var(--step-label);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 150ms var(--ease-out);
+    }
+    .a1-lang:hover {
+        background: var(--a1-volt-press);
+    }
 
-  /* ---- Dark translucent panel ---------------------------------------------- */
-  .a1-panel {
-    container-type: inline-size;
-    margin-top: auto;
-    width: 100%;
-    max-width: 60rem;
-    margin-inline: auto;
-    /* dark surface for the light text; --ink-2 re-pointed light so the reused
+    /* ---- Dark translucent panel ---------------------------------------------- */
+    .a1-panel {
+        container-type: inline-size;
+        margin-top: auto;
+        width: 100%;
+        max-width: 60rem;
+        height: 30rem;
+        margin-inline: auto;
+        /* dark surface for the light text; --ink-2 re-pointed light so the reused
        ServicesLine reads on the dark panel, --accent goes volt for the dots */
-    --ink-2: rgba(255, 255, 255, 0.64);
-    --accent: var(--a1-volt);
-    padding: clamp(1.25rem, 1rem + 1.4vw, 2rem);
-    background: rgba(15, 16, 19, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--panel-radius);
-    -webkit-backdrop-filter: blur(8px) saturate(115%);
-    backdrop-filter: blur(8px) saturate(115%);
-    color: var(--paper);
-  }
+        --ink-2: rgba(255, 255, 255, 0.64);
+        --accent: var(--a1-volt);
+        padding: clamp(1.25rem, 1rem + 1.4vw, 2rem);
+        /*background: rgba(15, 16, 19, 0.82);*/
+        background: rgba(15, 16, 19, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--panel-radius);
+        -webkit-backdrop-filter: blur(8px) saturate(115%);
+        backdrop-filter: blur(8px) saturate(115%);
+        color: var(--paper);
+    }
 
-  .a1-panel__labels {
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-  }
-  .a1-panel :global(.a1-services) {
-    font-size: var(--step-label);
-  }
+    .a1-panel__labels {
+        padding-bottom: var(--space-sm);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+    .a1-panel :global(.a1-services) {
+        font-size: var(--step-label);
+    }
 
-  .a1-panel__main {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-top: var(--space-md);
-  }
-  @container (min-width: 34rem) {
     .a1-panel__main {
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        padding-top: var(--space-md);
     }
-  }
+    @container (min-width: 34rem) {
+        .a1-panel__main {
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: var(--space-lg);
+        }
+    }
 
-  .a1-headline {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(2.5rem, 1.5rem + 5vw, 5rem);
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    color: var(--paper);
-  }
-  .a1-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 0.62em;
-    height: 0.62em;
-    margin-left: 0.12em;
-    vertical-align: 0.42em;
-    background: var(--a1-volt);
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  .a1-badge img {
-    width: 76%;
-    height: 76%;
-    border-radius: 4px;
-  }
+    .a1-headline {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(2.5rem, 1.5rem + 5vw, 5rem);
+        line-height: 0.92;
+        letter-spacing: -0.03em;
+        color: var(--paper);
+    }
+    .a1-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 0.62em;
+        height: 0.62em;
+        margin-left: 0.12em;
+        vertical-align: 0.42em;
+        /*border-radius: 50%;*/
+        overflow: hidden;
+    }
+    .a1-badge img {
+        width: 76%;
+        height: 76%;
+        /*border-radius: 4px;*/
+    }
 
-  /* ---- Discover CTA (volt fill, dark text) --------------------------------- */
-  .a1-discover {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    min-height: 44px;
-    align-self: flex-start;
-    padding: 0.85rem 1.1rem;
-    background: var(--a1-volt);
-    color: var(--ink);
-    border-radius: 10px;
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: var(--step-label);
-    font-weight: 600;
-    letter-spacing: var(--track-label);
-    text-transform: uppercase;
-    line-height: 1.2;
-    transition: background-color 150ms var(--ease-out);
-  }
-  .a1-discover:hover {
-    background: var(--a1-volt-press);
-  }
-  @container (min-width: 34rem) {
+    /* ---- Discover CTA (volt fill, dark text) --------------------------------- */
     .a1-discover {
-      align-self: flex-end;
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        min-height: 44px;
+        align-self: flex-start;
+        padding: 0.85rem 1.1rem;
+        background: var(--a1-volt);
+        color: var(--ink);
+        border-radius: 10px;
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: var(--step-label);
+        font-weight: 600;
+        letter-spacing: var(--track-label);
+        text-transform: uppercase;
+        line-height: 1.2;
+        transition: background-color 150ms var(--ease-out);
     }
-  }
-  .a1-discover__arrow {
-    display: inline-flex;
-  }
+    .a1-discover:hover {
+        background: var(--a1-volt-press);
+    }
+    @container (min-width: 34rem) {
+        .a1-discover {
+            align-self: flex-end;
+        }
+    }
+    .a1-discover__arrow {
+        display: inline-flex;
+    }
 
-  /* ---- Find-us (map) section: light, "relatively the same" ----------------- */
-  .a1-find {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding-block: var(--section-pad-block);
-    padding-inline: var(--section-pad-inline);
-  }
+    /* ---- Find-us (map) section: light, "relatively the same" ----------------- */
+    .a1-find {
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding-block: var(--section-pad-block);
+        padding-inline: var(--section-pad-inline);
+    }
 
-  /* Swap the video for the gradient on small screens and under reduced motion. */
-  @media (max-width: 40rem) {
-    .a1-hero__video {
-      display: none;
+    /* Swap the video for the gradient on small screens and under reduced motion. */
+    @media (max-width: 40rem) {
+        .a1-hero__video {
+            display: none;
+        }
     }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .a1-hero__video {
-      display: none;
+    @media (prefers-reduced-motion: reduce) {
+        .a1-hero__video {
+            display: none;
+        }
     }
-  }
 </style>
