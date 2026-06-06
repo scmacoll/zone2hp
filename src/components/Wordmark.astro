@@ -1,0 +1,49 @@
+---
+// ZONE TWO set in Archivo, monoline and confident, with an optional small
+// superscript 2 mark (echoes zone2hp and the favicon). Renders as the hero
+// logotype or the footer mark via the `as` and `size` props.
+interface Props {
+  as?: string;
+  size?: 'sm' | 'md' | 'lg';
+  mark?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { as: Tag = 'span', size = 'md', mark = false, class: className = '', ...rest } = Astro.props;
+---
+
+<Tag class:list={['wordmark', `wordmark--${size}`, className]} aria-label="Zone Two" {...rest}>
+  <span aria-hidden="true">ZONE TWO{mark && <sup class="wordmark__mark">2</sup>}</span>
+</Tag>
+
+<style>
+  .wordmark {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .wordmark--sm {
+    font-size: 1.0625rem;
+  }
+  .wordmark--md {
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  }
+  .wordmark--lg {
+    font-size: clamp(1.5rem, 1rem + 2.5vw, 2.75rem);
+  }
+
+  .wordmark__mark {
+    color: var(--accent);
+    font-size: 0.5em;
+    font-weight: 700;
+    vertical-align: super;
+    margin-left: 0.12em;
+  }
+</style>

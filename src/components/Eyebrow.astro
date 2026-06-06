@@ -1,0 +1,32 @@
+---
+// Uppercase, letter-spaced mono label. Used for service labels, section
+// eyebrows and the Quechua-style coordinate motif.
+interface Props {
+  as?: string;
+  tone?: 'muted' | 'accent';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { as: Tag = 'p', tone = 'muted', class: className = '', ...rest } = Astro.props;
+---
+
+<Tag class:list={['eyebrow', `eyebrow--${tone}`, className]} {...rest}><slot /></Tag>
+
+<style>
+  .eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+  }
+  .eyebrow--muted {
+    color: var(--ink-2);
+  }
+  /* accent-deep keeps small accent text at AA on paper */
+  .eyebrow--accent {
+    color: var(--accent-deep);
+  }
+</style>

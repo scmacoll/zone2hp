@@ -1,27 +1,79 @@
 ---
-// Phase 0 placeholder: verifies fonts, tokens and Tailwind wiring.
-// Replaced by the Base-driven component demo in Phase 1.
-import '@fontsource-variable/archivo';
-import '@fontsource-variable/hanken-grotesk';
-import '@fontsource-variable/geist-mono';
-import '../styles/global.css';
+// Phase 1 system demo: composes the shared layout and components with the real
+// copy bank so the test-width screenshots read well. This page is scaffolding;
+// the winning concept replaces it in a later phase.
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Wordmark from '../components/Wordmark.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import ServicesLine from '../components/ServicesLine.astro';
+import MapBlock from '../components/MapBlock.astro';
+import ContactBlock from '../components/ContactBlock.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<html lang="en-AU">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Zone Two Health and Performance | Chiropractic &amp; Rehab, Eastwood NSW</title>
-  </head>
-  <body class="bg-paper text-ink">
-    <main class="grid min-h-svh place-content-center gap-4 text-center" style="padding: var(--section-pad-inline);">
-      <p class="font-mono text-ink-3" style="font-size: var(--step-label); letter-spacing: var(--track-label); text-transform: uppercase;">
-        Zone Two Health &amp; Performance
+<Base>
+  <main id="main">
+    <Hero scrollCue>
+      <Eyebrow class="reveal" style="--reveal-delay: 0ms">Zone Two Health &amp; Performance</Eyebrow>
+      <Wordmark as="div" size="lg" class="reveal" style="--reveal-delay: 90ms" />
+      <h1 class="hero__headline reveal" style="--reveal-delay: 180ms">Opening soon in Eastwood.</h1>
+      <p class="hero__sub reveal" style="--reveal-delay: 270ms">
+        Chiropractic, post-operative rehabilitation, exercise physiology and dry needling.
       </p>
-      <h1 class="font-display" style="font-size: var(--step-hero);">Opening soon in Eastwood.</h1>
-      <p class="text-ink-2">Foundations wired. Components land in Phase 1.</p>
-    </main>
-  </body>
-</html>
+      <ServicesLine class="reveal" style="--reveal-delay: 360ms" />
+    </Hero>
+
+    <section class="info" aria-label="Location and contact">
+      <p class="info__arc">Recover. Rebuild. Perform.</p>
+      <div class="info__blocks">
+        <MapBlock />
+        <ContactBlock />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .hero__headline {
+    font-size: var(--step-hero);
+    max-width: 16ch;
+  }
+  .hero__sub {
+    max-width: 46ch;
+    font-size: var(--step-h3);
+    color: var(--ink-2);
+  }
+
+  .info {
+    container-type: inline-size;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-block: var(--section-pad-block);
+    padding-inline: var(--section-pad-inline);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .info__arc {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-h2);
+    letter-spacing: var(--track-tight);
+    color: var(--ink);
+  }
+
+  .info__blocks {
+    display: grid;
+    gap: var(--space-xl) var(--space-lg);
+  }
+  @container (min-width: 60rem) {
+    .info__blocks {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

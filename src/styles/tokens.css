@@ -16,9 +16,13 @@
   --ink-2:        #54565A; /* secondary text */
   --ink-3:        #8A8C90; /* muted / captions */
 
-  /* ---- Colour: accent (alpine / trail orange, used sparingly) ---- */
+  /* ---- Colour: accent (alpine / trail orange, used sparingly) ----
+     AA note: vivid --accent on paper is ~3.9:1, so it is for fills, marks and
+     the focus ring only. For accent-coloured TEXT or white-on-accent buttons,
+     use --accent-deep (~5.7:1 with white / on paper) and --accent-press on hover. */
   --accent:       #DD4F23;
-  --accent-deep:  #B23D18; /* hover / pressed */
+  --accent-deep:  #B23D18; /* accent text, solid button fill */
+  --accent-press: #8E3012; /* hover / pressed */
 
   /* ---- Colour: warm neutral ---- */
   --sand:         #B8AFA3;
@@ -73,8 +77,8 @@
   /* ---- Brand-graded gradient: stand-in for hero imagery until real
      assets drop in. Cool chrome highlight, warm stone midtone, the single
      alpine-orange pop reserved low in the frame. See ASSETS.md grade. ---- */
-  --grad-hero: linear-gradient(195deg, rgba(221, 79, 35, 0) 58%, rgba(221, 79, 35, 0.18) 100%),
-               radial-gradient(120% 90% at 72% 18%, #F6F4F1 0%, #E8E7E4 38%, #CDD2D6 70%, #A9B0B6 100%);
+  --grad-hero: linear-gradient(192deg, rgba(221, 79, 35, 0) 68%, rgba(221, 79, 35, 0.12) 100%),
+               radial-gradient(125% 95% at 70% 18%, #F8F6F3 0%, #EDEBE8 42%, #DEE1E4 74%, #D7DBDE 100%);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
