@@ -118,8 +118,10 @@ import videoSrc from "../../asset/video-loop.mp4";
                                 </span>
                             </button>
 
-                            {/* Korean dropdown paused for now — markup kept so
-                            we can re-enable when translation copy is ready. */}
+                            {
+                                /* Korean dropdown paused for now — markup kept so
+                            we can re-enable when translation copy is ready. */
+                            }
                             <ul
                                 class="a2-lang__menu"
                                 role="listbox"
@@ -130,8 +132,8 @@ import videoSrc from "../../asset/video-loop.mp4";
                                     <button
                                         type="button"
                                         class="a2-lang__option"
-                                        data-lang="ko"
-                                    >Korean</button>
+                                        data-lang="ko">Korean</button
+                                    >
                                 </li>
                             </ul>
                         </div>
@@ -269,6 +271,12 @@ import videoSrc from "../../asset/video-loop.mp4";
         height: 100%;
         object-fit: cover;
         object-position: center;
+        /* TEMP — heavy blur on the stock video while sharing with the owner so
+           the licensed footage isn't recognisable. Scaled up slightly so the
+           blur radius doesn't reveal transparent edges. Delete `filter` and
+           `transform` to restore the real footage. */
+        filter: blur(8px) saturate(115%);
+        transform: scale(-1.15, 1.15);
         /* Cinema reveal: starts as a cropped box (set by --cinema-from), eases
            out to full screen, then holds. The from-state is a CSS variable so
            media queries can change it (landscape vs portrait) WITHOUT swapping
@@ -276,7 +284,9 @@ import videoSrc from "../../asset/video-loop.mp4";
            every resize across the breakpoint. With fill-mode: both, once the
            animation completes the element holds inset(0) and changing the
            variable has no visible effect (so resize is safe). */
-        --cinema-from: inset(30% 14% 30% 14% round 18px); /* landscape: wider cinema box (~2.9-3.4:1 on 16:10/9 displays), soft corners */
+        --cinema-from: inset(
+            30% 14% 30% 14% round 18px
+        ); /* landscape: wider cinema box (~2.9-3.4:1 on 16:10/9 displays), soft corners */
         animation: a2-hero-cinema 1000ms cubic-bezier(0.65, 0, 0.35, 1) both;
         will-change: clip-path;
     }
@@ -633,6 +643,21 @@ import videoSrc from "../../asset/video-loop.mp4";
         padding-inline: var(--section-pad-inline);
     }
 
+    /* At mobile + half-laptop the MapBlock stacks (map on top, details below).
+       By default the details are left-aligned and create a sparse left-leaning
+       block with lots of empty space on the right. Centring the eyebrow, h2,
+       address and the "Open in Google Maps" link gives the stack a balanced
+       postcard look that mirrors the panel/footer treatment elsewhere. */
+    @media (max-width: 47rem) {
+        .a2-find :global(.map__details) {
+            align-items: center;
+            text-align: center;
+        }
+        .a2-find :global(.map__link) {
+            align-self: center;
+        }
+    }
+
     /* ---- Mobile / half-laptop reshuffle (matches the Nivis breakpoint) ------
        Below 47rem (~752px) — measured from nivisgear.com: the entire nav
        becomes the dark translucent strip (the lang button's own wrap goes
@@ -657,7 +682,8 @@ import videoSrc from "../../asset/video-loop.mp4";
            on/off in a single frame via the @media rule above, no 1.5s delay
            replay, no per-property flicker. */
         .a2:not(.is-revealed) .a2-nav {
-            animation: a2-navbar-reveal var(--reveal-duration, 700ms) var(--ease-out) 1500ms both;
+            animation: a2-navbar-reveal var(--reveal-duration, 700ms)
+                var(--ease-out) 1500ms both;
         }
         .a2-lang-wrap {
             background: transparent;
@@ -722,7 +748,8 @@ import videoSrc from "../../asset/video-loop.mp4";
     // across the 47rem breakpoint just tweens the opacity over 250ms,
     // instead of replaying the 1500ms-delayed reveal. This is what stops
     // the strip from flickering during drag-resize.
-    const markRevealed = () => document.querySelector(".a2")?.classList.add("is-revealed");
+    const markRevealed = () =>
+        document.querySelector(".a2")?.classList.add("is-revealed");
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         markRevealed();
     } else {
