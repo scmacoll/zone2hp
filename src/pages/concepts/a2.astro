@@ -83,11 +83,12 @@ import videoSrc from "../../asset/video-loop.mp4";
                         <div
                             class="a2-lang-wrap reveal"
                             style="--reveal-delay: 1620ms"
+                            data-lang-current="en"
                         >
                             <button
                                 type="button"
                                 class="a2-lang"
-                                aria-label="Language: English selected"
+                                aria-label="Language: English"
                             >
                                 <span
                                     class="a2-lang__label a2-lang__label--full"
@@ -116,6 +117,23 @@ import videoSrc from "../../asset/video-loop.mp4";
                                     </svg>
                                 </span>
                             </button>
+
+                            {/* Korean dropdown paused for now — markup kept so
+                            we can re-enable when translation copy is ready. */}
+                            <ul
+                                class="a2-lang__menu"
+                                role="listbox"
+                                aria-label="Language"
+                                hidden
+                            >
+                                <li role="option" aria-selected="false">
+                                    <button
+                                        type="button"
+                                        class="a2-lang__option"
+                                        data-lang="ko"
+                                    >Korean</button>
+                                </li>
+                            </ul>
                         </div>
                     </header>
 
@@ -258,7 +276,7 @@ import videoSrc from "../../asset/video-loop.mp4";
            every resize across the breakpoint. With fill-mode: both, once the
            animation completes the element holds inset(0) and changing the
            variable has no visible effect (so resize is safe). */
-        --cinema-from: inset(38% 0% 38% 0%); /* landscape: horizontal letterbox */
+        --cinema-from: inset(30% 14% 30% 14% round 18px); /* landscape: wider cinema box (~2.9-3.4:1 on 16:10/9 displays), soft corners */
         animation: a2-hero-cinema 1000ms cubic-bezier(0.65, 0, 0.35, 1) both;
         will-change: clip-path;
     }
@@ -268,7 +286,28 @@ import videoSrc from "../../asset/video-loop.mp4";
             clip-path: var(--cinema-from);
         }
         to {
-            clip-path: inset(0% 0% 0% 0%);
+            clip-path: inset(0% 0% 0% 0% round 0);
+        }
+    }
+
+    /* Mobile navbar background fade-in (<=47rem only). The translucent strip
+       behind the nav used to be visible from page-load 0ms — beating the
+       chrome reveals (brand at 1500ms, etc) to the screen. This keyframe
+       starts transparent + no-blur, eases to its final translucent state at
+       the same 1500ms mark the brand starts revealing, so the strip appears
+       AS PART OF the chrome reveal sequence rather than before it. */
+    @keyframes a2-navbar-reveal {
+        from {
+            background-color: transparent;
+            border-color: transparent;
+            -webkit-backdrop-filter: blur(0) saturate(100%);
+            backdrop-filter: blur(0) saturate(100%);
+        }
+        to {
+            background-color: rgba(15, 16, 19, 0.55);
+            border-color: rgba(255, 255, 255, 0.08);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            backdrop-filter: blur(16px) saturate(120%);
         }
     }
 
@@ -296,20 +335,19 @@ import videoSrc from "../../asset/video-loop.mp4";
         }
     }
 
-    /* ---- Top bar: logo left, EN pill right ----------------------------------- */
+    /* ---- Top bar: logo left, EN pill right -----------------------------------
+       Only padding has a transition. The bg/border/backdrop are intentionally
+       NOT transitioned — they appear/disappear in a single frame whenever the
+       @media breakpoint flips. Transitioning them caused a perceived
+       "background and outline arrive at different times" flicker during
+       drag-resize because each property repaints on its own pass. */
     .a2-nav {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: var(--space-sm);
         width: 100%;
-        /* Smooth the snap when the translucent strip fades in/out around 47rem. */
-        transition:
-            background-color 350ms var(--ease-out),
-            border-color 350ms var(--ease-out),
-            padding 350ms var(--ease-out),
-            -webkit-backdrop-filter 350ms var(--ease-out),
-            backdrop-filter 350ms var(--ease-out);
+        transition: padding 350ms var(--ease-out);
     }
     .a2-brand {
         display: inline-flex;
@@ -368,6 +406,7 @@ import videoSrc from "../../asset/video-loop.mp4";
     }
 
     .a2-lang-wrap {
+        position: relative;
         padding: 0.3rem;
         background: rgba(15, 16, 19, 0.35);
         border-radius: var(--m-soft);
@@ -379,6 +418,67 @@ import videoSrc from "../../asset/video-loop.mp4";
             padding 350ms var(--ease-out),
             -webkit-backdrop-filter 350ms var(--ease-out),
             backdrop-filter 350ms var(--ease-out);
+    }
+
+    /* ---- Language dropdown menu --------------------------------------------
+       Hidden by default; opens below the orange En/English button when the
+       user clicks it. Style mirrors the panel + lang-wrap: translucent dark
+       surface, backdrop-blur, soft corners. The orange button stays the
+       "currently selected" affordance — the menu only lists alternatives. */
+    .a2-lang__menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        min-width: 10rem;
+        margin: 0;
+        padding: 0.35rem;
+        list-style: none;
+        background: rgba(15, 16, 19, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--m-soft);
+        -webkit-backdrop-filter: blur(20px) saturate(120%);
+        backdrop-filter: blur(20px) saturate(120%);
+        opacity: 0;
+        transform: translateY(-0.4rem);
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 200ms var(--ease-out),
+            transform 200ms var(--ease-out),
+            visibility 0s linear 200ms;
+        z-index: 5;
+    }
+    .a2-lang-wrap[data-open="true"] .a2-lang__menu {
+        opacity: 1;
+        transform: none;
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+            opacity 200ms var(--ease-out),
+            transform 200ms var(--ease-out),
+            visibility 0s linear;
+    }
+
+    .a2-lang__option {
+        display: block;
+        width: 100%;
+        min-height: 44px;
+        padding: 0.55rem 0.85rem;
+        background: transparent;
+        color: var(--paper);
+        border: 0;
+        border-radius: 4px;
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 150ms var(--ease-out);
+    }
+    .a2-lang__option:hover,
+    .a2-lang__option:focus-visible {
+        background: rgba(255, 255, 255, 0.08);
+        outline: none;
     }
     .a2-lang__label--short {
         display: none;
@@ -544,12 +644,20 @@ import videoSrc from "../../asset/video-loop.mp4";
        when the browser is drag-resized across the breakpoint. */
     @media (max-width: 47rem) {
         .a2-nav {
+            padding: 0.35rem 0.35rem 0.35rem 0.6rem;
             background: rgba(15, 16, 19, 0.55);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--m-soft);
-            padding: 0.35rem 0.35rem 0.35rem 0.6rem;
             -webkit-backdrop-filter: blur(16px) saturate(120%);
             backdrop-filter: blur(16px) saturate(120%);
+        }
+        /* Only run the reveal animation on initial page load. Once .a2.is-revealed
+           lands (~2.5s after load via the script), the animation no longer
+           applies — any later resize across the breakpoint just snaps the strip
+           on/off in a single frame via the @media rule above, no 1.5s delay
+           replay, no per-property flicker. */
+        .a2:not(.is-revealed) .a2-nav {
+            animation: a2-navbar-reveal var(--reveal-duration, 700ms) var(--ease-out) 1500ms both;
         }
         .a2-lang-wrap {
             background: transparent;
@@ -562,12 +670,12 @@ import videoSrc from "../../asset/video-loop.mp4";
             padding: 0.75rem;
             min-height: 18rem;
         }
-        /* Portrait reveal start: a centred ~2:3 box (cropped on all four sides)
-           that eases out to full-screen. Updating just the variable, not the
-           animation-name, prevents the reveal from replaying when the user
-           drags across the breakpoint. */
+        /* Portrait reveal start: a centred ~2:3 box (squarer than the previous
+           tall strip), cropped on all four sides with soft rounded corners.
+           Updating just the variable, not the animation-name, prevents the
+           reveal from replaying when the user drags across the breakpoint. */
         .a2-hero__video {
-            --cinema-from: inset(22% 25% 22% 25%);
+            --cinema-from: inset(28% 18% 28% 18% round 18px);
         }
         /* Force the headline/CTA stack to stay vertical at mobile/half-laptop
            even when the panel's own container query would otherwise make it a
@@ -593,8 +701,12 @@ import videoSrc from "../../asset/video-loop.mp4";
     }
 
     /* Video now plays at every viewport (the small-screen hide rule was
-       removed). Reduced-motion still skips the cinema reveal. */
+       removed). Reduced-motion still skips the cinema reveal and the
+       navbar fade-in. */
     @media (prefers-reduced-motion: reduce) {
+        .a2-nav {
+            animation: none !important;
+        }
         .a2-hero__video {
             display: none;
             animation: none;
@@ -602,3 +714,65 @@ import videoSrc from "../../asset/video-loop.mp4";
         }
     }
 </style>
+
+<script>
+    // After the initial reveal sequence completes (~2.5s buffer), flag the
+    // .a2 wrapper as revealed. Once flagged, the navbar's reveal animation is
+    // dropped in favour of a simple opacity:1 — so any subsequent resize
+    // across the 47rem breakpoint just tweens the opacity over 250ms,
+    // instead of replaying the 1500ms-delayed reveal. This is what stops
+    // the strip from flickering during drag-resize.
+    const markRevealed = () => document.querySelector(".a2")?.classList.add("is-revealed");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        markRevealed();
+    } else {
+        setTimeout(markRevealed, 2500);
+    }
+
+    // Language dropdown: toggle on button click, close on outside click /
+    // Escape. The Korean option is a placeholder (no real translation wired
+    // yet) — selecting it just closes the menu. When the Korean copy lands,
+    // swap the option's onclick for a route change (Astro i18n: /ko/).
+    document.addEventListener("DOMContentLoaded", () => {
+        const wrap = document.querySelector(".a2-lang-wrap");
+        if (!wrap) return;
+        const button = wrap.querySelector(".a2-lang");
+        const menu = wrap.querySelector(".a2-lang__menu");
+        if (!button || !menu) return;
+        // Paused: while the menu carries the `hidden` attribute we don't wire
+        // any toggle behaviour, so clicking the En button is a no-op until
+        // the dropdown is re-enabled.
+        if (menu.hasAttribute("hidden")) return;
+
+        const open = () => {
+            wrap.dataset.open = "true";
+            button.setAttribute("aria-expanded", "true");
+        };
+        const close = () => {
+            delete wrap.dataset.open;
+            button.setAttribute("aria-expanded", "false");
+        };
+
+        button.addEventListener("click", (e) => {
+            e.stopPropagation();
+            wrap.dataset.open === "true" ? close() : open();
+        });
+
+        menu.querySelectorAll(".a2-lang__option").forEach((opt) => {
+            opt.addEventListener("click", (e) => {
+                e.stopPropagation();
+                // TODO: when Korean copy lands, switch route here
+                // const lang = opt.dataset.lang;
+                // if (lang === "ko") window.location.href = "/ko/";
+                close();
+            });
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!wrap.contains(e.target as Node)) close();
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") close();
+        });
+    });
+</script>
