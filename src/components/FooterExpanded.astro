@@ -77,14 +77,17 @@ const year = 2026;
 
 <style>
   .ff {
-    --ff-volt: var(--a1-volt, var(--accent));
-    container-type: inline-size;
+    --ff-volt: var(--concept-volt, var(--a1-volt, var(--accent)));
     position: relative;
     overflow: hidden;
     background: var(--stone);
     border-top: var(--border-hairline);
   }
+  /* Container scope lives on .ff__inner so cqw on the watermark refers to the
+     actual content area (max-width and padded), not the full footer. That's
+     what stops "ZONE TWO" from overflowing the column gutters at any width. */
   .ff__inner {
+    container-type: inline-size;
     position: relative;
     max-width: var(--container-max);
     margin-inline: auto;
@@ -233,7 +236,11 @@ const year = 2026;
     display: block;
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(4.5rem, 19vw, 17rem);
+    /* cqw is 1% of the container's CONTENT-box inline size (not border-box).
+       At 18cqw, "ZONE TWO" with -0.04em tracking renders at ~90% of the
+       content area at every width, so it sits inside the column gutters at
+       half-laptop and never overflows on mobile. */
+    font-size: clamp(3.5rem, 18cqw, 16rem);
     letter-spacing: -0.04em;
     color: var(--chrome-cool);
     white-space: nowrap;
@@ -258,9 +265,4 @@ const year = 2026;
     margin: 0;
   }
 
-  @container (max-width: 32rem) {
-    .ff__watermark {
-      font-size: clamp(3.5rem, 26vw, 7rem);
-    }
-  }
 </style>

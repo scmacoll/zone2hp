@@ -1,0 +1,356 @@
+---
+// Concept A2 — owner-directed iteration on A1. Same Nivis-style template,
+// addressing five things at once:
+//   1) Panel is genuinely translucent (0.55) with stronger backdrop-blur so the
+//      video bleeds through.
+//   2) Volt is brighter and less brown: --concept-volt #FF8419, hue-shifted
+//      from the Nivis lime keeping its energy.
+//   3) Sharper corners across the board (2-4px) per the design system.
+//   4) Z² mark next to the headline keeps the mark, drops the orange circle.
+//   5) EN pill loses the globe and gets two vertical dots on the right, like
+//      the Quechua lookbook ":" affordance.
+// Typography: Archivo replaced with Geist (variable) for display and body on
+// this page only, scoped to .a2 so it doesn't leak. The mono labels stay Geist
+// Mono. Closer to the Nivis / Quechua reference grotesque than Archivo was.
+import Base from "../../layouts/Base.astro";
+import ServicesLine from "../../components/ServicesLine.astro";
+import MapBlock from "../../components/MapBlock.astro";
+import FooterExpanded from "../../components/FooterExpanded.astro";
+---
+
+<Base>
+  <div class="a2">
+    <main id="main">
+      <section class="a2-hero">
+        <div class="a2-hero__media" aria-hidden="true">
+          <video
+            class="a2-hero__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            poster="/images/hero-a2-poster.jpg"
+          >
+            <source src="/video/hero-a2.webm" type="video/webm" />
+            <source src="/video/hero-a2.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="a2-hero__chrome">
+          <header class="a2-nav">
+            <a class="a2-brand" href="#main" aria-label="Zone Two Health and Performance, top of page">
+              <span class="a2-brand__mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="40" height="40" role="img" aria-label="">
+                  <rect width="32" height="32" rx="2" fill="#0F1013" />
+                  <text
+                    x="14.5"
+                    y="22.5"
+                    text-anchor="middle"
+                    font-family="Geist Variable, Geist, system-ui, sans-serif"
+                    font-size="20"
+                    font-weight="700"
+                    letter-spacing="-0.5"
+                    fill="#FBFAF8">Z</text>
+                  <text
+                    x="25"
+                    y="13"
+                    text-anchor="middle"
+                    font-family="Geist Variable, Geist, system-ui, sans-serif"
+                    font-size="9.5"
+                    font-weight="700"
+                    fill="#FF8419">2</text>
+                </svg>
+              </span>
+              <span class="a2-brand__type">ZONE TWO</span>
+            </a>
+
+            <button type="button" class="a2-lang" aria-label="Language: English selected">
+              <span class="a2-lang__label">En</span>
+              <span class="a2-lang__sep" aria-hidden="true">
+                <svg viewBox="0 0 4 14" width="4" height="14">
+                  <circle cx="2" cy="5" r="1.2" fill="currentColor" />
+                  <circle cx="2" cy="9" r="1.2" fill="currentColor" />
+                </svg>
+              </span>
+            </button>
+          </header>
+
+          <div class="a2-panel">
+            <div class="a2-panel__labels">
+              <ServicesLine class="a2-services" />
+            </div>
+
+            <div class="a2-panel__main">
+              <h1 class="a2-headline">
+                Coming<span class="a2-headline__mark" aria-hidden="true">Z<sup>2</sup></span><br />soon.
+              </h1>
+
+              <a class="a2-discover" href="#find-us">
+                <span class="a2-discover__text">Discover<br />our services</span>
+                <span class="a2-discover__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path
+                      d="M12 5v14M6 13l6 6 6-6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="find-us" class="a2-find" aria-label="Where to find us">
+        <MapBlock />
+      </section>
+    </main>
+
+    <FooterExpanded />
+  </div>
+</Base>
+
+<style>
+  /* Scope all token overrides to .a2 so they cascade into every descendant —
+     reused components (ServicesLine, MapBlock, FooterExpanded) reskin without
+     edits. */
+  .a2 {
+    /* Volt (hue-shifted from Nivis lime, same saturation + brightness). */
+    --concept-volt: #ff8419;
+    --concept-volt-press: #e66a0f;
+
+    /* Hero grade fallback when no real video is present. */
+    --grad-hero: var(--grad-hero-a1);
+
+    /* Typography swap. Geist for display and body, mono untouched. */
+    --font-display: "Geist Variable", Geist, system-ui, sans-serif;
+    --font-body: "Geist Variable", Geist, system-ui, sans-serif;
+
+    /* Sharper corners across the page (was 10-14px on A1). */
+    --r-sharp: 2px;
+    --r-soft: 4px;
+  }
+
+  /* ---- Hero ---------------------------------------------------------------- */
+  .a2-hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: clip;
+    isolation: isolate;
+  }
+  .a2-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--grad-hero);
+  }
+  .a2-hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .a2-hero__chrome {
+    position: relative;
+    z-index: 1;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: clamp(1rem, 0.7rem + 1.4vw, 1.75rem);
+  }
+
+  /* ---- Top bar: logo left, EN pill right ----------------------------------- */
+  .a2-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+  }
+  .a2-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .a2-brand__mark {
+    display: inline-flex;
+    width: clamp(36px, 3vw + 28px, 44px);
+    height: clamp(36px, 3vw + 28px, 44px);
+  }
+  .a2-brand__mark svg {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-sharp);
+  }
+  .a2-brand__type {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(0.95rem, 0.85rem + 0.3vw, 1.05rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .a2-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0 0.85rem;
+    background: var(--concept-volt);
+    color: var(--ink);
+    border: 0;
+    border-radius: var(--r-soft);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    transition: background-color 150ms var(--ease-out);
+  }
+  .a2-lang:hover {
+    background: var(--concept-volt-press);
+  }
+  .a2-lang__label {
+    line-height: 1;
+  }
+  .a2-lang__sep {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ink);
+    opacity: 0.7;
+  }
+
+  /* ---- Dark, MORE translucent panel ---------------------------------------- */
+  .a2-panel {
+    container-type: inline-size;
+    margin-top: auto;
+    width: 100%;
+    max-width: 60rem;
+    margin-inline: auto;
+    /* Re-skin reused mono labels for the dark surface. */
+    --ink-2: rgba(255, 255, 255, 0.7);
+    --accent: var(--concept-volt);
+    padding: clamp(1.25rem, 1rem + 1.4vw, 2rem);
+    background: rgba(15, 16, 19, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--r-soft);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+    backdrop-filter: blur(16px) saturate(120%);
+    color: var(--paper);
+  }
+  .a2-panel__labels {
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .a2-panel :global(.a2-services) {
+    font-size: var(--step-label);
+  }
+
+  .a2-panel__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-top: var(--space-md);
+  }
+  @container (min-width: 34rem) {
+    .a2-panel__main {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-lg);
+    }
+  }
+
+  /* Geist tuned for the headline: medium-bold, tight tracking, near-1 leading.
+     Replaces Archivo 800 expanded which was too inflated. */
+  .a2-headline {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.5rem, 1.4rem + 4.4vw, 4.75rem);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--paper);
+  }
+  /* Z² mark inline, no orange backdrop. Just the volt on the 2 to keep the
+     accent without the cartoony chip. */
+  .a2-headline__mark {
+    display: inline-block;
+    margin-left: 0.18em;
+    font-size: 0.32em;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    vertical-align: 0.95em;
+    color: var(--paper);
+  }
+  .a2-headline__mark sup {
+    color: var(--concept-volt);
+    font-size: 0.8em;
+    vertical-align: super;
+    line-height: 0;
+    margin-left: 0.04em;
+  }
+
+  /* ---- Discover CTA -------------------------------------------------------- */
+  .a2-discover {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 44px;
+    align-self: flex-start;
+    padding: 0.8rem 1.05rem;
+    background: var(--concept-volt);
+    color: var(--ink);
+    border-radius: var(--r-soft);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+    transition: background-color 150ms var(--ease-out);
+  }
+  .a2-discover:hover {
+    background: var(--concept-volt-press);
+  }
+  @container (min-width: 34rem) {
+    .a2-discover {
+      align-self: flex-end;
+    }
+  }
+  .a2-discover__arrow {
+    display: inline-flex;
+  }
+
+  /* ---- Find-us (map) section ---------------------------------------------- */
+  .a2-find {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-block: var(--section-pad-block);
+    padding-inline: var(--section-pad-inline);
+  }
+
+  /* Hide the video on small screens (it isn't compressed for that) and under
+     reduced motion. Falls back to the gradient on .a2-hero__media. */
+  @media (max-width: 40rem) {
+    .a2-hero__video {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .a2-hero__video {
+      display: none;
+    }
+  }
+</style>
