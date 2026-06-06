@@ -80,6 +80,17 @@
   --grad-hero: linear-gradient(192deg, rgba(221, 79, 35, 0) 68%, rgba(221, 79, 35, 0.12) 100%),
                radial-gradient(125% 95% at 70% 18%, #F8F6F3 0%, #EDEBE8 42%, #DEE1E4 74%, #D7DBDE 100%);
 
+  /* Per-concept hero grades (DESIGN-SYSTEM: "tune per concept"). Each concept
+     overrides --grad-hero with its own, so the real hero-{id} still/video can
+     still drop into the same Hero slot later with no relayout.
+     A1 (The Film, snow / blizzard): cooler and brighter than the default warm
+     grade. Snow-bright cool highlight up high, a cool blue-grey cast settling
+     low, and the single alpine-orange pop kept faint and low in the frame (the
+     distant figure mid-descent). Stays light, so charcoal hero text keeps AA. */
+  --grad-hero-a1: radial-gradient(38% 30% at 36% 84%, rgba(221, 79, 35, 0.1) 0%, rgba(221, 79, 35, 0) 60%),
+                  radial-gradient(125% 95% at 62% 12%, #FCFDFE 0%, #EEF1F3 42%, #DCE2E7 74%, #CED6DC 100%),
+                  linear-gradient(196deg, rgba(201, 205, 210, 0) 56%, rgba(201, 205, 210, 0.34) 100%);
+
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --reveal-duration: 700ms;

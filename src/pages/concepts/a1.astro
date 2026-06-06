@@ -1,0 +1,106 @@
+---
+// Concept A1 — Direction A, "The Film" (cinematic, snow / blizzard).
+// Same required information as every concept; only the look changes. A1's lean
+// (CONCEPTS.md): near full-bleed hero, minimal chrome, "Archivo display, cool +
+// orange pop", headline "Stay in the season.", then a compact info band below.
+//
+// Hero media is a brand-graded gradient placeholder (--grad-hero-a1, set on
+// .page-a1 and inherited by Hero's media layer). No real media yet. When the
+// real still/loop lands it drops straight into the Hero slot, no relayout:
+//   <Hero poster="/images/hero-a1-poster.jpg"
+//         video={{ webm: '/video/hero-a1.webm', mp4: '/video/hero-a1.mp4' }} scrollCue>
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import Wordmark from '../../components/Wordmark.astro';
+import ServicesLine from '../../components/ServicesLine.astro';
+import MapBlock from '../../components/MapBlock.astro';
+import ContactBlock from '../../components/ContactBlock.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Base>
+  <main id="main" class="page-a1">
+    <Hero scrollCue align="center">
+      <Wordmark as="div" size="lg" mark class="reveal" style="--reveal-delay: 0ms" />
+      <h1 class="hero__headline reveal" style="--reveal-delay: 120ms">Stay in the season.</h1>
+      <p class="hero__opening reveal" style="--reveal-delay: 240ms">Opening soon in Eastwood.</p>
+    </Hero>
+
+    <section class="info" aria-label="Location and contact">
+      <p class="info__arc">Recover. Rebuild. Perform.</p>
+      <ServicesLine class="info__services" />
+      <div class="info__blocks">
+        <MapBlock />
+        <ContactBlock />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  /* A1 hero grade: cascades through the component boundary into Hero's
+     .hero__media (background: var(--grad-hero)). No Hero edit needed. */
+  .page-a1 {
+    --grad-hero: var(--grad-hero-a1);
+  }
+
+  /* Cinematic type lean: Archivo heavier + expanded width, tighter, larger. */
+  .hero__headline {
+    font-size: clamp(3rem, 1.4rem + 7vw, 8rem);
+    font-weight: 800;
+    font-stretch: 110%;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    max-width: 14ch;
+  }
+
+  /* Required opening-soon statement, kept quiet beneath the headline. */
+  .hero__opening {
+    font-size: var(--step-h3);
+    color: var(--ink-2);
+  }
+
+  /* Compact info band (services line, map, contact). Mirrors index.astro's
+     pattern; .info is its own query container so the blocks reflow on their
+     own width, not the viewport. */
+  .info {
+    container-type: inline-size;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-block: var(--section-pad-block);
+    padding-inline: var(--section-pad-inline);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .info__arc {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-h2);
+    letter-spacing: var(--track-tight);
+    color: var(--ink);
+  }
+
+  .info__services {
+    font-size: var(--step-small);
+  }
+
+  .info__blocks {
+    display: grid;
+    gap: var(--space-xl) var(--space-lg);
+  }
+  /* Map | contact side by side once the band has room. Threshold tuned against
+     the band's own container width so the common split / small-laptop viewports
+     (~900 and ~1024) both land in two columns rather than a sparse full-width
+     contact stacked under the map. Two-column engages from ~852px viewport up;
+     768 and narrower stay single-column so neither block gets cramped. */
+  @container (min-width: 48rem) {
+    .info__blocks {
+      grid-template-columns: 1.5fr 1fr;
+      align-items: start;
+    }
+  }
+</style>
