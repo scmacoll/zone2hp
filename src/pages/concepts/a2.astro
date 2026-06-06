@@ -80,29 +80,43 @@ import videoSrc from "../../asset/video-loop.mp4";
                             <span class="a2-brand__type">ZONE TWO</span>
                         </a>
 
-                        <button
-                            type="button"
-                            class="a2-lang reveal"
+                        <div
+                            class="a2-lang-wrap reveal"
                             style="--reveal-delay: 120ms"
-                            aria-label="Language: English selected"
                         >
-                            <span class="a2-lang__label">En</span>
-                            <!-- <span class="a2-lang__label">English</span> -->
-                            <span class="a2-lang__sep" aria-hidden="true">
-                                <svg viewBox="0 0 4 14" width="6" height="21">
-                                    <circle
-                                        cx="2"
-                                        cy="5"
-                                        r="1.2"
-                                        fill="currentColor"></circle>
-                                    <circle
-                                        cx="2"
-                                        cy="9"
-                                        r="1.2"
-                                        fill="currentColor"></circle>
-                                </svg>
-                            </span>
-                        </button>
+                            <button
+                                type="button"
+                                class="a2-lang"
+                                aria-label="Language: English selected"
+                            >
+                                <span
+                                    class="a2-lang__label a2-lang__label--full"
+                                    >English</span
+                                >
+                                <span
+                                    class="a2-lang__label a2-lang__label--short"
+                                    >En</span
+                                >
+                                <span class="a2-lang__sep" aria-hidden="true">
+                                    <svg
+                                        viewBox="0 0 4 14"
+                                        width="6"
+                                        height="21"
+                                    >
+                                        <circle
+                                            cx="2"
+                                            cy="5"
+                                            r="1.2"
+                                            fill="currentColor"></circle>
+                                        <circle
+                                            cx="2"
+                                            cy="9"
+                                            r="1.2"
+                                            fill="currentColor"></circle>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
                     </header>
 
                     <div class="a2-panel reveal" style="--reveal-delay: 320ms">
@@ -212,7 +226,8 @@ import videoSrc from "../../asset/video-loop.mp4";
 
         /* Sharper corners across the page (was 10-14px on A1). */
         --r-sharp: 2px;
-        --r-soft: 4px;
+        --m-soft: 8px;
+        --r-soft: 6px;
     }
 
     /* ---- Hero ---------------------------------------------------------------- */
@@ -245,7 +260,7 @@ import videoSrc from "../../asset/video-loop.mp4";
         display: flex;
         flex-direction: column;
         gap: var(--space-md);
-        padding: clamp(1rem, 0.7rem + 1.4vw, 1.75rem);
+        padding: 2.66rem 1.33rem 1.33rem;
     }
 
     /* ---- Top bar: logo left, EN pill right ----------------------------------- */
@@ -311,6 +326,28 @@ import videoSrc from "../../asset/video-loop.mp4";
         opacity: 0.7;
     }
 
+    .a2-lang-wrap {
+        padding: 0.3rem;
+        background: rgba(15, 16, 19, 0.35);
+        border-radius: var(--m-soft);
+        -webkit-backdrop-filter: blur(16px) saturate(120%);
+        backdrop-filter: blur(16px) saturate(120%);
+    }
+    .a2-lang__label--short {
+        display: none;
+    }
+    .a2-lang__label--full {
+        display: inline;
+    }
+    @media (max-width: 56rem) {
+        .a2-lang__label--full {
+            display: none;
+        }
+        .a2-lang__label--short {
+            display: inline;
+        }
+    }
+
     /* ---- Dark, MORE translucent panel ---------------------------------------- */
     .a2-panel {
         container-type: inline-size;
@@ -326,7 +363,7 @@ import videoSrc from "../../asset/video-loop.mp4";
         padding: clamp(1.25rem, 1rem + 1.4vw, 2rem);
         background: rgba(15, 16, 19, 0.55);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: var(--r-soft);
+        border-radius: var(--m-soft);
         -webkit-backdrop-filter: blur(16px) saturate(120%);
         backdrop-filter: blur(16px) saturate(120%);
         color: var(--paper);
