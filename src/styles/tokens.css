@@ -1,0 +1,82 @@
+/* Zone Two Health and Performance — design tokens.
+   Single source of truth. Values follow DESIGN-SYSTEM.md.
+   These are plain CSS variables; global.css re-exposes the useful ones
+   to Tailwind via @theme inline, so utilities and tokens never diverge. */
+
+:root {
+  /* ---- Colour: base (white and light dominant, warm off-white) ---- */
+  --paper:        #FBFAF8; /* page background, warm off-white */
+  --stone:        #F2EFEA; /* secondary surface, warm */
+  --chrome:       #E7E6E2; /* cool light surface */
+  --chrome-line:  #D7D5CF; /* hairline borders */
+  --chrome-cool:  #C9CDD2; /* cooler metallic grey */
+
+  /* ---- Colour: ink (charcoal, never pure black) ---- */
+  --ink:          #1C1D1F; /* primary text */
+  --ink-2:        #54565A; /* secondary text */
+  --ink-3:        #8A8C90; /* muted / captions */
+
+  /* ---- Colour: accent (alpine / trail orange, used sparingly) ---- */
+  --accent:       #DD4F23;
+  --accent-deep:  #B23D18; /* hover / pressed */
+
+  /* ---- Colour: warm neutral ---- */
+  --sand:         #B8AFA3;
+
+  /* ---- Type families (self-hosted via Fontsource, imported in Base) ---- */
+  --font-display: 'Archivo Variable', Archivo, system-ui, sans-serif;
+  --font-body:    'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:    'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* ---- Fluid type scale: clamp() so headlines never break awkwardly ---- */
+  --step-hero:  clamp(2.75rem, 1.5rem + 6vw, 7rem);
+  --step-h2:    clamp(1.75rem, 1.2rem + 2.5vw, 3rem);
+  --step-h3:    clamp(1.25rem, 1.05rem + 1vw, 1.75rem);
+  --step-body:  clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-small: 0.875rem;
+  --step-label: 0.78rem; /* uppercase, letter-spaced labels */
+
+  /* ---- Tracking ---- */
+  --track-label: 0.12em;  /* eyebrows / mono labels */
+  --track-tight: -0.02em; /* large display */
+
+  /* ---- Fluid spacing scale ---- */
+  --space-2xs: clamp(0.5rem, 0.45rem + 0.2vw, 0.625rem);
+  --space-xs:  clamp(0.75rem, 0.7rem + 0.25vw, 1rem);
+  --space-sm:  clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+  --space-md:  clamp(1.5rem, 1.3rem + 1vw, 2.5rem);
+  --space-lg:  clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+  --space-xl:  clamp(4rem, 3rem + 5vw, 8rem);
+  --space-2xl: clamp(6rem, 4rem + 8vw, 12rem);
+
+  /* Section padding grows with viewport */
+  --section-pad-block:  clamp(3rem, 2rem + 6vw, 7rem);
+  --section-pad-inline: clamp(1.25rem, 0.5rem + 4vw, 4rem);
+
+  /* ---- Widths ---- */
+  --measure:       62ch; /* readable text measure */
+  --container-max: 80rem; /* page max ~1280px */
+
+  /* ---- Radii: technical, near-sharp ---- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* ---- Hairline border ---- */
+  --border-hairline: 1px solid var(--chrome-line);
+
+  /* ---- Texture: fine grain so the white never feels sterile ---- */
+  --grain-opacity: 0.04;
+
+  /* ---- Faint metallic gradient for chrome surfaces ---- */
+  --grad-chrome: linear-gradient(180deg, #F4F3F0 0%, var(--chrome) 100%);
+
+  /* ---- Brand-graded gradient: stand-in for hero imagery until real
+     assets drop in. Cool chrome highlight, warm stone midtone, the single
+     alpine-orange pop reserved low in the frame. See ASSETS.md grade. ---- */
+  --grad-hero: linear-gradient(195deg, rgba(221, 79, 35, 0) 58%, rgba(221, 79, 35, 0.18) 100%),
+               radial-gradient(120% 90% at 72% 18%, #F6F4F1 0%, #E8E7E4 38%, #CDD2D6 70%, #A9B0B6 100%);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-duration: 700ms;
+}
