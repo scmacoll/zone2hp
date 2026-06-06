@@ -24,26 +24,38 @@ the whole tree. Specs (`README`, `CLAUDE`, `BRAND-AND-VOICE`, `DESIGN-SYSTEM`,
   `ContactBlock`, `CtaButton`, `Footer`.
 - `src/pages/index.astro` — TEMPORARY system demo. The winning concept replaces it.
 
-### Phase 2 — concept A1 (commit `feat: concept A1 ...`)
-- `src/pages/concepts/a1.astro` — Direction A "The Film", snow / blizzard. Reuses
-  every Phase 1 component unchanged (no component edits). Cinematic centred hero:
-  Wordmark (lg, `mark`) + h1 `Stay in the season.` + opening-soon sub + scroll cue,
-  over the A1 grade; then a compact info band (arc line, ServicesLine, MapBlock |
-  ContactBlock) + Footer.
-- `src/styles/tokens.css` — added `--grad-hero-a1` (cooler/brighter snow grade,
-  faint orange pop low). Applied by setting `--grad-hero: var(--grad-hero-a1)` on
-  `.page-a1` (cascades into Hero's `.hero__media`, so Hero needs no prop/edit).
-  This is the pattern for the other four concepts: add `--grad-hero-{id}`, set it
-  on the page wrapper.
-- A1 type lean lives in the page's scoped `<style>`: headline Archivo `wght 800`,
-  `font-stretch 110%`, tighter tracking, larger clamp. Motion = shared `.reveal`
-  stagger + scroll cue only (screenshots can't show motion; grade carries the look).
-- Info `.info__blocks` two-column threshold is `@container (min-width: 48rem)` (NOT
-  index's 60rem): tuned so ~900 and ~1024 both land in two-column map | contact
-  rather than a sparse full-width contact. Verified: 1024 map(512)|contact(341),
-  900 map(446)|contact(297), no overflow; 768 and narrower stay single-column.
-- Media swap later: pass `poster="/images/hero-a1-poster.jpg"` +
-  `video={{ webm:'/video/hero-a1.webm', mp4:'/video/hero-a1.mp4' }}` to `<Hero>`.
+### Phase 2 — concept A1 (commit `feat: concept A1 ...`, then reworked to Nivis style)
+- `src/styles/tokens.css` — `--grad-hero-a1` (cool/snow grade) still the hero
+  placeholder. Pattern for other concepts: add `--grad-hero-{id}`, set on the page.
+- **A1 was reworked at the owner's request to clone the Nivis hero template**
+  (was: a light centred cinematic hero; now: full-bleed video + dark translucent
+  panel, Myodetox-style footer). The light version lives in git history if needed.
+- `src/pages/concepts/a1.astro` (current):
+  - Full-bleed hero with a `<video>` slot (owner supplies the mp4; empty video
+    falls back to `--grad-hero-a1`). Swap path: `/video/hero-a1.{webm,mp4}`,
+    poster `/images/hero-a1-poster.jpg` — already wired on the `<video>`.
+  - Top bar: dark `favicon.svg` logo box + reused `Wordmark` (`--ink` kept dark so
+    it reads on the light snow) ... orange `EN` language pill (globe icon). CART
+    removed (owner choice). Pill = volt fill + dark text.
+  - Dark translucent rounded panel (`rgba(15,16,19,.82)`, 14px, backdrop-blur):
+    top row = reused `ServicesLine` (panel re-points `--ink-2` light + `--accent`
+    volt so it reads on dark); h1 `Coming soon.` (lowercase to match the template;
+    owner can flip to caps) with a volt Z² badge; volt `DISCOVER OUR SERVICES` CTA.
+  - `#find-us` light section reuses `MapBlock` unchanged ("relatively the same").
+- `src/components/FooterExpanded.astro` (NEW, reusable) — Myodetox-style: bullet
+  (`●`) headed auto-fit columns (Services text / Visit / Contact / Keep in touch),
+  a giant clipped `ZONE TWO` watermark, a no-backend **mailto** subscribe field
+  (`<form action="mailto:…">`, no storage), legal bar. Only live links (maps,
+  mailto, tel) — no dead nav. Reads `var(--a1-volt, var(--accent))` so it falls
+  back to brand orange outside the A1 wrapper.
+- **Colour**: Nivis lime → same-brightness orange `--a1-volt #F58A2E`, defined on
+  the `.a1` wrapper (wraps main + footer). Used as a FILL with dark text only
+  (pill, CTA, badge, dots, send) — AA ~7.5:1. Accent TEXT stays the deeper brand
+  orange (AA on light). Do NOT use volt for text or focus rings on light (fails
+  contrast). Archivo stands in for the Nivis typeface (can't license theirs).
+- Verified (build + eval/inspect + visuals): no overflow 360/768/900/1024/1280/
+  1440; footer auto-fit reflows 4→3→2→1; map two-col down to 768; panel headline/
+  CTA row at ≥34rem container else stacked; single h1; AA contrast on all fills.
 
 ## Component contracts worth knowing
 

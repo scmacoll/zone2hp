@@ -1,0 +1,266 @@
+---
+// Expanded site footer (Myodetox-style): bullet-headed columns, a giant
+// wordmark watermark, a KEEP IN TOUCH mailto field, and a legal bar. Light
+// surface, dark text. Built for the A1 "Film" concept but reusable: the bright
+// accent reads --a1-volt when present, else falls back to the brand --accent.
+// Columns carry only what exists now for a coming-soon clinic (no dead links).
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
+const email = 'info@zone2hp.com';
+const phoneDisplay = '(00) 0000 0000';
+const phoneHref = 'tel:0000000000'; // placeholder until the real number is live
+const mapsQuery = 'Suite 104/2 Rowe St, Eastwood NSW 2122';
+const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+const services = ['Chiropractic', 'Rehab', 'Exercise Physiology', 'Dry Needling'];
+const year = 2026;
+---
+
+<footer class:list={['ff', className]}>
+  <div class="ff__inner">
+    <div class="ff__cols">
+      <section class="ff__col" aria-labelledby="ff-services">
+        <h2 class="ff__head" id="ff-services"><span class="ff__dot" aria-hidden="true"></span>Services</h2>
+        <ul class="ff__list" role="list">
+          {services.map((s) => <li>{s}</li>)}
+        </ul>
+      </section>
+
+      <section class="ff__col" aria-labelledby="ff-visit">
+        <h2 class="ff__head" id="ff-visit"><span class="ff__dot" aria-hidden="true"></span>Visit</h2>
+        <address class="ff__address">Suite 104 / 2 Rowe St,<br />Eastwood, NSW 2122</address>
+        <a class="ff__link" href={mapsLink} target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+      </section>
+
+      <section class="ff__col" aria-labelledby="ff-contact">
+        <h2 class="ff__head" id="ff-contact"><span class="ff__dot" aria-hidden="true"></span>Contact</h2>
+        <a class="ff__link" href={`mailto:${email}`}>{email}</a>
+        <a class="ff__link" href={phoneHref}>{phoneDisplay}</a>
+        <span class="ff__note">Number live at launch</span>
+      </section>
+
+      <section class="ff__col ff__col--touch" aria-labelledby="ff-touch">
+        <h2 class="ff__head" id="ff-touch"><span class="ff__dot" aria-hidden="true"></span>Keep in touch</h2>
+        <p class="ff__blurb">Be first to know when we open in Eastwood.</p>
+        <form class="ff__subscribe" action={`mailto:${email}`} method="post" enctype="text/plain">
+          <input
+            class="ff__input"
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder="EMAIL"
+            aria-label="Your email address"
+          />
+          <button class="ff__send" type="submit" aria-label="Email us to stay posted">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+              <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <div class="ff__brandrow" aria-hidden="true">
+      <span class="ff__watermark">ZONE TWO</span>
+    </div>
+
+    <div class="ff__legal">
+      <p class="ff__copy">&copy; {year} Zone Two Health and Performance</p>
+      <p class="ff__place">Eastwood, NSW &middot; Australia</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ff {
+    --ff-volt: var(--a1-volt, var(--accent));
+    container-type: inline-size;
+    position: relative;
+    overflow: hidden;
+    background: var(--stone);
+    border-top: var(--border-hairline);
+  }
+  .ff__inner {
+    position: relative;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-block: clamp(2.5rem, 1.8rem + 3vw, 4.5rem) clamp(1.25rem, 1rem + 1vw, 2rem);
+    padding-inline: var(--section-pad-inline);
+  }
+
+  /* Columns: intrinsic auto-fit grid so they reflow without magic breakpoints. */
+  .ff__cols {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .ff__head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .ff__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--ff-volt);
+  }
+
+  .ff__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    color: var(--ink-2);
+  }
+
+  .ff__address {
+    font-style: normal;
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin-bottom: var(--space-sm);
+  }
+
+  .ff__link,
+  .ff__note {
+    display: block;
+  }
+  .ff__link {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--ink);
+    text-decoration: none;
+    width: fit-content;
+    border-bottom: 1px solid transparent;
+    transition: border-color 150ms var(--ease-out);
+  }
+  .ff__link:hover {
+    border-color: var(--ff-volt);
+  }
+  .ff__note {
+    margin-top: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  .ff__blurb {
+    color: var(--ink-2);
+    max-width: 24ch;
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Mailto field: looks like the Myo email input + arrow. No backend, no
+     storage; submitting opens the visitor's mail client to info@zone2hp.com. */
+  .ff__subscribe {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 22rem;
+    padding: 0.35rem 0.35rem 0.35rem 1rem;
+    background: var(--paper);
+    border: 1px solid var(--chrome-line);
+    border-radius: 999px;
+  }
+  .ff__subscribe:focus-within {
+    border-color: var(--ff-volt);
+  }
+  .ff__input {
+    flex: 1;
+    min-width: 0;
+    min-height: 2.5rem;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--step-small);
+    letter-spacing: 0.04em;
+  }
+  .ff__input::placeholder {
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: var(--track-label);
+  }
+  .ff__input:focus-visible {
+    outline: none;
+  }
+  .ff__send {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ff-volt);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 150ms var(--ease-out);
+  }
+  .ff__send:hover {
+    background: var(--a1-volt-press, var(--accent-deep));
+  }
+
+  /* Giant clipped wordmark watermark, the Myo move. Decorative. */
+  .ff__brandrow {
+    position: relative;
+    z-index: 1;
+    margin-top: clamp(1.5rem, 1rem + 4vw, 4rem);
+    line-height: 0.74;
+  }
+  .ff__watermark {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(4.5rem, 19vw, 17rem);
+    letter-spacing: -0.04em;
+    color: var(--chrome-cool);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .ff__legal {
+    position: relative;
+    z-index: 2;
+    margin-top: clamp(0.5rem, 0.2rem + 1vw, 1.25rem);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .ff__legal p {
+    margin: 0;
+  }
+
+  @container (max-width: 32rem) {
+    .ff__watermark {
+      font-size: clamp(3.5rem, 26vw, 7rem);
+    }
+  }
+</style>
