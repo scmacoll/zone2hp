@@ -39,7 +39,7 @@ import videoSrc from "../../asset/video-loop.mp4";
                     <header class="a2-nav">
                         <a
                             class="a2-brand reveal"
-                            style="--reveal-delay: 0ms"
+                            style="--reveal-delay: 1500ms"
                             href="#main"
                             aria-label="Zone Two Health and Performance, top of page"
                         >
@@ -82,7 +82,7 @@ import videoSrc from "../../asset/video-loop.mp4";
 
                         <div
                             class="a2-lang-wrap reveal"
-                            style="--reveal-delay: 120ms"
+                            style="--reveal-delay: 1620ms"
                         >
                             <button
                                 type="button"
@@ -119,7 +119,7 @@ import videoSrc from "../../asset/video-loop.mp4";
                         </div>
                     </header>
 
-                    <div class="a2-panel reveal" style="--reveal-delay: 320ms">
+                    <div class="a2-panel reveal" style="--reveal-delay: 1820ms">
                         <div class="a2-panel__labels">
                             <ServicesLine class="a2-services" />
                         </div>
@@ -127,7 +127,7 @@ import videoSrc from "../../asset/video-loop.mp4";
                         <div class="a2-panel__main">
                             <h1
                                 class="a2-headline reveal"
-                                style="--reveal-delay: 700ms"
+                                style="--reveal-delay: 2200ms"
                             >
                                 Modern
                                 <span
@@ -164,12 +164,12 @@ import videoSrc from "../../asset/video-loop.mp4";
                                             fill="#FF8419">2</text
                                         >
                                     </svg>
-                                </span><br />Chiropractic<br />Therapy.
+                                </span><br />Chiropractic Therapy.
                             </h1>
 
                             <a
                                 class="a2-discover reveal"
-                                style="--reveal-delay: 900ms"
+                                style="--reveal-delay: 2400ms"
                                 href="#find-us"
                             >
                                 <span class="a2-discover__text uppercase"
@@ -251,6 +251,25 @@ import videoSrc from "../../asset/video-loop.mp4";
         height: 100%;
         object-fit: cover;
         object-position: center;
+        /* Cinema reveal: starts as a cropped box (set by --cinema-from), eases
+           out to full screen, then holds. The from-state is a CSS variable so
+           media queries can change it (landscape vs portrait) WITHOUT swapping
+           animation-name — swapping animation-name restarts the animation on
+           every resize across the breakpoint. With fill-mode: both, once the
+           animation completes the element holds inset(0) and changing the
+           variable has no visible effect (so resize is safe). */
+        --cinema-from: inset(38% 0% 38% 0%); /* landscape: horizontal letterbox */
+        animation: a2-hero-cinema 1000ms cubic-bezier(0.65, 0, 0.35, 1) both;
+        will-change: clip-path;
+    }
+
+    @keyframes a2-hero-cinema {
+        from {
+            clip-path: var(--cinema-from);
+        }
+        to {
+            clip-path: inset(0% 0% 0% 0%);
+        }
     }
 
     .a2-hero__chrome {
@@ -261,6 +280,20 @@ import videoSrc from "../../asset/video-loop.mp4";
         flex-direction: column;
         gap: var(--space-md);
         padding: 2.66rem 1.33rem 1.33rem;
+        transition: padding 350ms var(--ease-out);
+    }
+    /* At half-browser (~848px = 53rem) the panel's max-width (48rem) starts
+       leaving a 40px gap to each viewport edge. Lift the chrome's side padding
+       to 2.5rem (40px) at and above this threshold so the nav keeps the SAME
+       40px gap as that point at every wider viewport. Below half-browser the
+       chrome stays at 1.33rem so mobile doesn't waste space. The nav itself
+       just fills the chrome content area (no max-width / margin-auto), so at
+       wider viewports the header is genuinely wider than the panel while both
+       align at exactly half-browser. */
+    @media (min-width: 53rem) {
+        .a2-hero__chrome {
+            padding: 2.66rem 2.5rem 1.33rem;
+        }
     }
 
     /* ---- Top bar: logo left, EN pill right ----------------------------------- */
@@ -269,6 +302,14 @@ import videoSrc from "../../asset/video-loop.mp4";
         align-items: center;
         justify-content: space-between;
         gap: var(--space-sm);
+        width: 100%;
+        /* Smooth the snap when the translucent strip fades in/out around 47rem. */
+        transition:
+            background-color 350ms var(--ease-out),
+            border-color 350ms var(--ease-out),
+            padding 350ms var(--ease-out),
+            -webkit-backdrop-filter 350ms var(--ease-out),
+            backdrop-filter 350ms var(--ease-out);
     }
     .a2-brand {
         display: inline-flex;
@@ -332,6 +373,12 @@ import videoSrc from "../../asset/video-loop.mp4";
         border-radius: var(--m-soft);
         -webkit-backdrop-filter: blur(16px) saturate(120%);
         backdrop-filter: blur(16px) saturate(120%);
+        /* Smooth fade as this box dissolves into the parent nav strip at <47rem. */
+        transition:
+            background-color 350ms var(--ease-out),
+            padding 350ms var(--ease-out),
+            -webkit-backdrop-filter 350ms var(--ease-out),
+            backdrop-filter 350ms var(--ease-out);
     }
     .a2-lang__label--short {
         display: none;
@@ -339,7 +386,7 @@ import videoSrc from "../../asset/video-loop.mp4";
     .a2-lang__label--full {
         display: inline;
     }
-    @media (max-width: 56rem) {
+    @media (max-width: 47rem) {
         .a2-lang__label--full {
             display: none;
         }
@@ -354,7 +401,7 @@ import videoSrc from "../../asset/video-loop.mp4";
         margin-top: auto;
         width: 100%;
         max-width: 48rem;
-        min-height: 22rem;
+        min-height: 20rem;
         margin-inline: auto;
         display: flex; /* ADD */
         flex-direction: column; /* ADD */
@@ -367,6 +414,8 @@ import videoSrc from "../../asset/video-loop.mp4";
         -webkit-backdrop-filter: blur(16px) saturate(120%);
         backdrop-filter: blur(16px) saturate(120%);
         color: var(--paper);
+        /* Smooth padding shrink at the mobile breakpoint. */
+        transition: padding 350ms var(--ease-out);
     }
     .a2-panel__labels {
         padding-bottom: var(--space-sm);
@@ -460,7 +509,9 @@ import videoSrc from "../../asset/video-loop.mp4";
         font-weight: 600;
         letter-spacing: -0.005em;
         line-height: 1.2;
-        transition: background-color 150ms var(--ease-out);
+        transition:
+            background-color 150ms var(--ease-out),
+            padding 350ms var(--ease-out);
     }
     .a2-discover:hover {
         background: var(--concept-volt-press);
@@ -482,16 +533,72 @@ import videoSrc from "../../asset/video-loop.mp4";
         padding-inline: var(--section-pad-inline);
     }
 
-    /* Hide the video on small screens (it isn't compressed for that) and under
-     reduced motion. Falls back to the gradient on .a2-hero__media. */
-    @media (max-width: 40rem) {
+    /* ---- Mobile / half-laptop reshuffle (matches the Nivis breakpoint) ------
+       Below 47rem (~752px) — measured from nivisgear.com: the entire nav
+       becomes the dark translucent strip (the lang button's own wrap goes
+       transparent so we don't double-box); the panel padding tightens; the
+       discover CTA stretches to the full panel width with the arrow pushed
+       to the right; the services line lays out in a clean 2x2 grid with the
+       separator dots hidden. Above 47rem reverts to the desktop layout above.
+       Transitions on the affected elements make the snap feel like a slide
+       when the browser is drag-resized across the breakpoint. */
+    @media (max-width: 47rem) {
+        .a2-nav {
+            background: rgba(15, 16, 19, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--m-soft);
+            padding: 0.35rem 0.35rem 0.35rem 0.6rem;
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            backdrop-filter: blur(16px) saturate(120%);
+        }
+        .a2-lang-wrap {
+            background: transparent;
+            border: 0;
+            padding: 0;
+            -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+        }
+        .a2-panel {
+            padding: 0.75rem;
+            min-height: 18rem;
+        }
+        /* Portrait reveal start: a centred ~2:3 box (cropped on all four sides)
+           that eases out to full-screen. Updating just the variable, not the
+           animation-name, prevents the reveal from replaying when the user
+           drags across the breakpoint. */
         .a2-hero__video {
+            --cinema-from: inset(22% 25% 22% 25%);
+        }
+        /* Force the headline/CTA stack to stay vertical at mobile/half-laptop
+           even when the panel's own container query would otherwise make it a
+           row at >= 34rem panel width. CTA stretches full width of the panel. */
+        .a2-panel__main {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .a2-discover {
+            width: 100%;
+            align-self: stretch;
+            justify-content: space-between;
+            padding: 1rem 1.05rem;
+        }
+        .a2-panel :global(.a2-services) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.55rem 1rem;
+        }
+        .a2-panel :global(.a2-services .services__sep) {
             display: none;
         }
     }
+
+    /* Video now plays at every viewport (the small-screen hide rule was
+       removed). Reduced-motion still skips the cinema reveal. */
     @media (prefers-reduced-motion: reduce) {
         .a2-hero__video {
             display: none;
+            animation: none;
+            clip-path: inset(0);
         }
     }
 </style>

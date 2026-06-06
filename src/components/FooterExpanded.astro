@@ -11,7 +11,7 @@ interface Props {
 const { class: className = "" } = Astro.props;
 
 const email = "info@zone2hp.com";
-const phoneDisplay = "0430 301 168";
+const phoneDisplay = "0450 222 122";
 const phoneHref = "tel:0000000000"; // placeholder until the real number is live
 const mapsQuery = "Suite 104/2 Rowe St, Eastwood NSW 2122";
 const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
@@ -70,9 +70,8 @@ const year = 2026;
                 </p>
                 <form
                     class="ff__subscribe"
-                    action={`mailto:${email}`}
-                    method="post"
-                    enctype="text/plain"
+                    action="https://formspree.io/f/REPLACE_WITH_FORMSPREE_ID"
+                    method="POST"
                 >
                     <input
                         class="ff__input"
@@ -82,11 +81,27 @@ const year = 2026;
                         autocomplete="email"
                         placeholder="EMAIL"
                         aria-label="Your email address"
+                        required
+                        pattern="[^@\\s]+@[^@\\s]+\\.[^@\\s]+"
+                    />
+                    <!-- Honeypot anti-spam: real users won't fill this; bots will. Formspree drops the submission. -->
+                    <input
+                        type="text"
+                        name="_gotcha"
+                        tabindex="-1"
+                        autocomplete="off"
+                        style="position:absolute; left:-9999px;"
+                        aria-hidden="true"
+                    />
+                    <input
+                        type="hidden"
+                        name="_subject"
+                        value="Zone Two — new keep-in-touch signup"
                     />
                     <button
                         class="ff__send"
                         type="submit"
-                        aria-label="Email us to stay posted"
+                        aria-label="Subscribe to keep-in-touch updates"
                     >
                         <svg
                             viewBox="0 0 24 24"
@@ -141,13 +156,25 @@ const year = 2026;
         padding-inline: var(--section-pad-inline);
     }
 
-    /* Columns: intrinsic auto-fit grid so they reflow without magic breakpoints. */
+    /* Columns. At mobile + half-laptop (<56rem) we force 2x2 so the four
+       blocks pair up (Services|Visit, Contact|Keep in touch) instead of
+       eating a full column of vertical empty space each. At >=56rem the
+       intrinsic auto-fit grid takes over (3-4 cols depending on width). */
     .ff__cols {
         position: relative;
         z-index: 2;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        /* minmax(0, 1fr) lets the columns shrink to true equal halves even
+           when an inner element (the EMAIL form is the worst offender) has a
+           larger intrinsic size; without min:0 the form pushes its column
+           wide and the other column collapses. */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: var(--space-lg) var(--space-md);
+    }
+    @media (min-width: 47rem) {
+        .ff__cols {
+            grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        }
     }
 
     .ff__head {
@@ -193,7 +220,7 @@ const year = 2026;
     }
     .ff__link {
         min-height: 2.75rem;
-        display: inline-flex;
+        display: flex;
         align-items: center;
         color: var(--ink);
         text-decoration: none;
