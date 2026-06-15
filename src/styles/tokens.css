@@ -27,6 +27,14 @@
   /* ---- Colour: warm neutral ---- */
   --sand:         #B8AFA3;
 
+  /* ---- Colour: selection ----
+     A muted alpine steel-blue for "selected" tiles (the chosen date, the chosen
+     visit options). Deliberately a different family from the orange accent so the
+     orange stays the flow/progress signal and never competes with selection.
+     Sits in the cool-grey family (a saturated --chrome-cool). Carries white text
+     at AA (~6.7:1 on --paper-white). */
+  --select:       #3E5C76;
+
   /* ---- Type families (self-hosted via Fontsource, imported in Base) ---- */
   --font-display: 'Archivo Variable', Archivo, system-ui, sans-serif;
   --font-body:    'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, sans-serif;

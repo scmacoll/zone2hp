@@ -273,8 +273,8 @@
     border-color: var(--chrome-cool);
 }
 .book .date.is-selected {
-    background: var(--accent-deep);
-    border-color: var(--accent-deep);
+    background: var(--select);
+    border-color: var(--select);
 }
 .book .date__wd {
     font-family: var(--font-mono);
@@ -673,8 +673,8 @@
     border-color: var(--chrome-cool);
 }
 .book .seg__btn.is-selected {
-    background: var(--accent-deep);
-    border-color: var(--accent-deep);
+    background: var(--select);
+    border-color: var(--select);
     color: var(--paper);
 }
 .book .scope-readout {
