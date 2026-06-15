@@ -82,7 +82,8 @@ const ICON: Record<string, string> = {
           <h1 class="book__title">{STEP_TITLE[step]}</h1>
         </header>
 
-        <nav class="steps-nav" aria-label="Booking steps">
+        {!locked && (
+          <nav class="steps-nav" aria-label="Booking steps">
           <ol class="steps">
             {
               stepperSteps.map((s, i) => {
@@ -111,7 +112,8 @@ const ICON: Record<string, string> = {
               })
             }
           </ol>
-        </nav>
+          </nav>
+        )}
 
         <slot />
 
