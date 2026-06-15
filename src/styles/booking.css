@@ -163,7 +163,7 @@
         border-color 150ms var(--ease-out);
 }
 .book .choice:hover {
-    background: var(--stone);
+    background: var(--stone-cool);
     border-color: var(--chrome-cool);
 }
 .book .choice__title {
@@ -193,7 +193,7 @@
     gap: var(--space-md);
     margin-top: var(--space-md);
     padding: var(--space-md);
-    background: var(--stone);
+    background: var(--grad-stone-cool);
     border: var(--border-hairline);
     border-radius: var(--radius-md);
 }
@@ -330,7 +330,7 @@
         border-color 150ms var(--ease-out);
 }
 .book .slot:hover {
-    background: var(--stone);
+    background: var(--stone-cool);
     border-color: var(--accent);
 }
 .book .duration-note {
@@ -423,7 +423,7 @@
 /* ---- Mismatch (existing patient not found) ------------------------------ */
 .book .mismatch {
     padding: var(--space-md);
-    background: var(--stone);
+    background: var(--grad-stone-cool);
     border: 1px solid var(--accent-deep);
     border-radius: var(--radius-md);
 }
@@ -537,7 +537,7 @@
     border-color: var(--chrome-line);
 }
 .book .btn--outline:hover {
-    background: var(--stone);
+    background: var(--stone-cool);
     border-color: var(--chrome-cool);
 }
 .book .btn--ghost {
@@ -553,9 +553,10 @@
 .book .bsummary {
     align-self: start;
     padding: var(--space-md);
-    background: var(--paper);
+    background: var(--grad-stone-cool);
     border: var(--border-hairline);
     border-radius: var(--radius-md);
+    box-shadow: var(--glow-chrome);
 }
 @media (min-width: 60rem) {
     .book .bsummary {
@@ -704,7 +705,7 @@
 }
 .book .funding-result {
     padding: var(--space-md);
-    background: var(--stone);
+    background: var(--grad-stone-cool);
     border: var(--border-hairline);
     border-radius: var(--radius-md);
 }
@@ -836,7 +837,7 @@
     display: grid;
     gap: var(--space-md);
     padding: var(--space-md);
-    background: var(--stone);
+    background: var(--grad-stone-cool);
     border: var(--border-hairline);
     border-radius: var(--radius-md);
 }
@@ -868,7 +869,7 @@
     color: var(--ink-3);
 }
 .book .field input.is-locked {
-    background: var(--stone);
+    background: var(--stone-cool);
     color: var(--ink-2);
     cursor: default;
 }

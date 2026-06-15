@@ -74,6 +74,26 @@
   /* ---- Faint metallic gradient for chrome surfaces ---- */
   --grad-chrome: linear-gradient(180deg, #F4F3F0 0%, var(--chrome) 100%);
 
+  /* ---- Cool stone: a light-grey companion to the warm --stone ----
+     Lightness-matched to --stone (#F2EFEA), so every ink token keeps exactly the
+     contrast it had on the warm stone (AA-neutral), but shifted to a cool grey
+     hue: the "cool chrome greys for surfaces" the design system asks for. The
+     warm --stone stays on the marketing footers; this cooler grey dresses the
+     functional booking surfaces. Textured, never flat: a faint metallic gradient
+     (below) reads under the page-wide grain overlay. */
+  --stone-cool:      #EEEFF1; /* light cool-grey surface */
+  --grad-stone-cool: linear-gradient(180deg, #F5F6F7 0%, var(--stone-cool) 100%);
+
+  /* ---- Subtle chrome glow ----
+     A lit-from-above quality for chrome surfaces: a near-white inner top
+     highlight plus a soft, cool ambient bloom. Box-shadow only, so it is pure
+     decoration and never affects text contrast. Used on the booking chrome
+     (header, sticky summary) and the home map surface. */
+  --glow-chrome:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 1px 2px rgba(28, 29, 31, 0.05),
+    0 16px 44px -24px rgba(120, 132, 145, 0.4);
+
   /* ---- Brand-graded gradient: stand-in for hero imagery until real
      assets drop in. Cool chrome highlight, warm stone midtone, the single
      alpine-orange pop reserved low in the frame. See ASSETS.md grade. ---- */

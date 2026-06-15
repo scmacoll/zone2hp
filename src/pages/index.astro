@@ -752,6 +752,15 @@ const showLinks = bookingConfig.linksVisible;
         padding-inline: var(--section-pad-inline);
     }
 
+    /* Subtle chrome glow on the map card: the map frame is already a --chrome
+       surface, so the lit-from-above bloom reinforces its metallic quality and
+       lifts it off the warm paper. Decoration only (box-shadow) — no contrast or
+       layout impact. The inner highlight is hidden behind the opaque iframe; the
+       soft outer bloom is what reads on the light page. */
+    .a2-find :global(.map__frame) {
+        box-shadow: var(--glow-chrome);
+    }
+
     /* At mobile + half-laptop the MapBlock stacks (map on top, details below).
        By default the details are left-aligned and create a sparse left-leaning
        block with lots of empty space on the right. Centring the eyebrow, h2,

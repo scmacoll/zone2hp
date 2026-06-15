@@ -125,6 +125,33 @@ the static site, built so a real provider/backend later is a localised swap. Ful
 - Deleted: `BookingFlow.astro`; `Service.requiresExistingIssueCheck`; the inline
   patient-normalisation in `mock.ts` (now `patients.ts`).
 
+### Phase 5 — design pass: cool stone surface + chrome glow (2026-06-15)
+Paint-only refinement of the functional/booking chrome per `DESIGN-SYSTEM.md`. No
+layout or copy change; build (12 pages) + the 61 Vitest tests stay green.
+- **New cool, textured stone** in `tokens.css`: `--stone-cool` (#EEEFF1) +
+  `--grad-stone-cool` (faint metallic gradient). It is **lightness-matched to the
+  warm `--stone`** (#F2EFEA) on purpose — same luminance, cooler hue — so every ink
+  token keeps the exact contrast it had on the warm stone (AA-neutral). Exposed to
+  Tailwind as `--color-stone-cool` in `global.css`. The page-wide grain overlay reads
+  over it, so the surface is textured, not a flat fill.
+- Applied to the **booking funnel surfaces** in `booking.css`: practitioner card,
+  funding result, existing-patient identify panel, no-match panel, sticky Booking
+  summary, locked pre-filled inputs, and the choice/slot/outline-button hovers. The
+  **warm `--stone` stays on both footers** (`Footer`, `FooterExpanded`) and the
+  out-of-scope account/embed components — confirmed `rgb(242,239,234)` at runtime.
+- **Subtle chrome glow** `--glow-chrome` (inner white top highlight + soft cool
+  bloom, box-shadow only so it never touches text contrast). On the **booking chrome**
+  (`PageHeader`, now on `--grad-chrome`; the sticky `.bsummary`) and on **home** (the
+  `.map__frame` in `index.astro` — already a `--chrome` surface).
+- Verified: CSS live via computed styles; no console errors; **no horizontal overflow**
+  at 320/390/768/900/1024/1280/1920 on the two-column `/book/time`, nor on home at
+  390/1280. Screenshotted the booking chrome across the width matrix (1920→320). The
+  home map glow is verified by computed style only: the offline preview sandbox blanks
+  the map iframe AND the tall-hero home page desyncs screenshot capture (both are the
+  pre-existing env gotchas below).
+- Dev note: this worktree's `/book` preview ran on **port 4322** (`dev-wt` config added
+  to `.claude/launch.json`) because 4321 was held by a server in another worktree.
+
 ## Component contracts worth knowing
 
 - **Hero** (`src/components/Hero.astro`): gradient (`--grad-hero`) is the always-on
