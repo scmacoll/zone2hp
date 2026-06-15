@@ -12,10 +12,14 @@ describe('parseBookingParams', () => {
   it('reads an opaque existing-patient id', () => {
     expect(parseBookingParams(new URLSearchParams('pid=pat-alex')).pid).toBe('pat-alex');
   });
-  it('reads scope duration and funding fund', () => {
-    const p = parseBookingParams(new URLSearchParams('dur=45&fund=bupa'));
+  it('reads scope duration, visit and funding fund', () => {
+    const p = parseBookingParams(new URLSearchParams('dur=45&visit=both&fund=bupa'));
     expect(p.dur).toBe('45');
+    expect(p.visit).toBe('both');
     expect(p.fund).toBe('bupa');
+  });
+  it('drops an invalid visit value', () => {
+    expect(parseBookingParams(new URLSearchParams('visit=maybe')).visit).toBeUndefined();
   });
   it('returns an empty object for no params', () => {
     expect(parseBookingParams(new URLSearchParams(''))).toEqual({});
@@ -53,12 +57,12 @@ describe('buildStepUrl', () => {
     expect(buildStepUrl('time', p)).toBe('/book/time?customer=existing&pid=pat-alex&type=standard');
     expect(buildStepUrl('customer', p)).toBe('/book');
   });
-  it('carries scope duration and funding fund forward into time', () => {
-    const p = { customer: 'new', type: 'standard', dur: '45', fund: 'frank' } as const;
-    expect(buildStepUrl('time', p)).toBe('/book/time?customer=new&type=standard&dur=45&fund=frank');
+  it('carries scope duration, visit and funding fund forward into time', () => {
+    const p = { customer: 'new', type: 'standard', dur: '45', visit: 'both', fund: 'frank' } as const;
+    expect(buildStepUrl('time', p)).toBe('/book/time?customer=new&type=standard&dur=45&visit=both&fund=frank');
   });
-  it('jumping back to scope drops dur, fund (both decided on the scope step)', () => {
-    const p = { customer: 'existing', type: 'epc', dur: '30', fund: 'bupa' } as const;
+  it('jumping back to scope drops dur, visit, fund (all decided on the scope step)', () => {
+    const p = { customer: 'existing', type: 'epc', dur: '30', visit: 'rehab', fund: 'bupa' } as const;
     expect(buildStepUrl('scope', p)).toBe('/book/scope?customer=existing&type=epc');
   });
 });

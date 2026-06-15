@@ -1,4 +1,5 @@
 import type { BookingType, CustomerKind, FunnelStep } from './funnel';
+import type { VisitWants } from './duration';
 import { FUNNEL_ORDER } from './funnel';
 
 /**
@@ -15,6 +16,8 @@ export interface BookingParams {
   type?: BookingType;
   /** Appointment length token (decided on the scope step): "45" or "60+" (minimum). */
   dur?: string;
+  /** What the visit includes (decided on the scope step): both / treatment / rehab. */
+  visit?: VisitWants;
   /** Chosen health fund id (decided in the funding section of the scope step). */
   fund?: string;
   /** Chosen slot, ISO 8601. */
@@ -38,12 +41,14 @@ const PARAM_STEP: Record<keyof BookingParams, FunnelStep> = {
   pid: 'customer',
   type: 'type',
   dur: 'scope',
+  visit: 'scope',
   fund: 'scope',
   slot: 'time',
   ref: 'details',
 };
 
 const CUSTOMER_KINDS: readonly CustomerKind[] = ['new', 'existing'];
+const VISIT_WANTS: readonly VisitWants[] = ['both', 'treatment', 'rehab'];
 
 export const stepPath = (step: FunnelStep): string => STEP_PATHS[step];
 
@@ -60,6 +65,10 @@ export function parseBookingParams(search: URLSearchParams): BookingParams {
   if (type) params.type = type as BookingType;
   const dur = search.get('dur');
   if (dur) params.dur = dur;
+  const visit = search.get('visit');
+  if (visit && (VISIT_WANTS as readonly string[]).includes(visit)) {
+    params.visit = visit as VisitWants;
+  }
   const fund = search.get('fund');
   if (fund) params.fund = fund;
   const slot = search.get('slot');

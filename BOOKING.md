@@ -176,7 +176,8 @@ Mintae Kim card) → `/book/details` (first + last name, email required, **mobil
 notes; pre-filled and LOCKED for a matched existing patient) → `/book/confirm`.
 
 State travels in the URL query string — only NON-sensitive values (`customer`, `pid`
-(opaque existing-patient id), `type`, `dur`, `fund`, `slot`, `ref`); name/email/phone/notes
+(opaque existing-patient id), `type`, `dur`, `visit` (treatment/rehab composition), `fund`,
+`slot`, `ref`); name/email/phone/notes
 are never in a URL. The appointment length carries as a token: `45` or `60+` (an open-ended
 "minimum 60 minutes"). Because the site
 is STATIC, page frontmatter has no per-request query string, so the param-dependent

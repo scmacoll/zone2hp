@@ -67,3 +67,13 @@ export function parseDurationToken(token: string | undefined): DurationEstimate 
 export function formatDuration(estimate: DurationEstimate): string {
   return estimate.isMinimum ? `minimum ${estimate.minutes} minutes` : `${estimate.minutes} minutes`;
 }
+
+/** What the visit should include, as chosen on the scope step. */
+export type VisitWants = 'both' | 'treatment' | 'rehab';
+
+/** Human label for the visit composition, e.g. "Treatment & rehab". */
+export function visitWantsLabel(wants: VisitWants): string {
+  if (wants === 'treatment') return 'Treatment';
+  if (wants === 'rehab') return 'Rehab';
+  return 'Treatment & rehab';
+}

@@ -4,6 +4,7 @@ import {
   durationToken,
   parseDurationToken,
   formatDuration,
+  visitWantsLabel,
   type DurationInput,
 } from './duration';
 
@@ -92,5 +93,13 @@ describe('duration tokens and formatting', () => {
   it('formats fixed and minimum lengths for display', () => {
     expect(formatDuration({ minutes: 45, isMinimum: false })).toBe('45 minutes');
     expect(formatDuration({ minutes: 60, isMinimum: true })).toBe('minimum 60 minutes');
+  });
+});
+
+describe('visitWantsLabel', () => {
+  it('labels each visit composition', () => {
+    expect(visitWantsLabel('both')).toBe('Treatment & rehab');
+    expect(visitWantsLabel('treatment')).toBe('Treatment');
+    expect(visitWantsLabel('rehab')).toBe('Rehab');
   });
 });

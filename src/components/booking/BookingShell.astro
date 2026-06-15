@@ -155,6 +155,7 @@ const ICON: Record<string, string> = {
               </span>
               <div class="bsummary__body">
                 <p class="bsummary__value" data-summary-value={b.key} />
+                <p class="bsummary__sub" data-summary-sub={b.key} hidden />
                 {!locked && (
                   <a class="bsummary__change" data-step-link={b.change} href={stepPath(b.change)} hidden>
                     Change
@@ -174,7 +175,7 @@ const ICON: Record<string, string> = {
   import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
   import { bookingTypeInfo } from '../../lib/booking/funnel';
   import { fundName, estimateFunding, priceForDuration, formatAud } from '../../lib/booking/funding';
-  import { parseDurationToken, formatDuration } from '../../lib/booking/duration';
+  import { parseDurationToken, formatDuration, visitWantsLabel } from '../../lib/booking/duration';
 
   const params = parseBookingParams(new URLSearchParams(window.location.search));
   const durEstimate = parseDurationToken(params.dur);
@@ -208,12 +209,23 @@ const ICON: Record<string, string> = {
     funding: fundingValue(),
     time: params.slot ? slotFmt.format(new Date(params.slot)) : '',
   };
+  // Secondary lines under a value (same style as the address), e.g. the visit
+  // composition under the appointment length.
+  const subValues: Record<string, string> = {
+    scope: params.visit ? visitWantsLabel(params.visit) : '',
+  };
   for (const key of Object.keys(values)) {
     const value = values[key] ?? '';
     const block = document.querySelector<HTMLElement>(`[data-summary="${key}"]`);
     const valueEl = document.querySelector<HTMLElement>(`[data-summary-value="${key}"]`);
     if (block) block.hidden = value === '';
     if (valueEl) valueEl.textContent = value;
+    const subEl = document.querySelector<HTMLElement>(`[data-summary-sub="${key}"]`);
+    const sub = subValues[key] ?? '';
+    if (subEl) {
+      subEl.textContent = sub;
+      subEl.hidden = sub === '' || value === '';
+    }
     if (value && !locked) {
       block?.querySelector<HTMLElement>('.bsummary__change')?.removeAttribute('hidden');
     }

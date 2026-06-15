@@ -155,7 +155,13 @@ const fundingEnabled = bookingConfig.fundingEnabled;
 
 <script>
   import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
-  import { estimateDuration, durationToken, formatDuration, type DurationEstimate } from '../../lib/booking/duration';
+  import {
+    estimateDuration,
+    durationToken,
+    formatDuration,
+    type DurationEstimate,
+    type VisitWants,
+  } from '../../lib/booking/duration';
   import {
     estimateFunding,
     priceForDuration,
@@ -180,7 +186,7 @@ const fundingEnabled = bookingConfig.fundingEnabled;
 
   // ---- Visit selections -> duration estimate ----
   let parts: number | null = null;
-  let wants: 'both' | 'treatment' | 'rehab' | null = null;
+  let wants: VisitWants | null = null;
   let estimate: DurationEstimate | null = null;
 
   function computeEstimate(): void {
@@ -216,7 +222,7 @@ const fundingEnabled = bookingConfig.fundingEnabled;
     });
   }
   wireSeg('parts', (v) => (parts = Number(v)));
-  wireSeg('wants', (v) => (wants = v as 'both' | 'treatment' | 'rehab'));
+  wireSeg('wants', (v) => (wants = v as VisitWants));
   $<HTMLInputElement>('[data-lapsed]')?.addEventListener('change', () => {
     computeEstimate();
     refresh();
@@ -328,7 +334,12 @@ const fundingEnabled = bookingConfig.fundingEnabled;
     if (!estimate) return;
     const f = fundingFields();
     const fund = fundingComplete(f) ? (f.fundId ?? undefined) : undefined;
-    window.location.href = buildStepUrl('time', { ...params, dur: durationToken(estimate), fund });
+    window.location.href = buildStepUrl('time', {
+      ...params,
+      dur: durationToken(estimate),
+      visit: wants ?? undefined,
+      fund,
+    });
   }
 
   function clearFundingErrors(): void {
