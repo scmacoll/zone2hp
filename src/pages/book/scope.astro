@@ -1,0 +1,318 @@
+---
+// Step 3: "Visit" — areas + treatment/rehab decide the appointment length
+// (duration.ts), with private health cover folded in below as an optional
+// accordion section (shown when bookingConfig.fundingEnabled). New patients answer
+// the same questions as existing patients but get the "extended" lengths and no
+// ">3 months" control. The chosen length (`dur`) and fund (`fund`) carry forward.
+import BookingShell from '../../components/booking/BookingShell.astro';
+import { HEALTH_FUNDS } from '../../lib/booking/funding';
+import { bookingConfig } from '../../lib/booking/config';
+
+const fundingEnabled = bookingConfig.fundingEnabled;
+---
+
+<BookingShell step="scope">
+  <p class="step__lede" data-lede-existing>
+    A couple of quick questions so we book the right length of appointment.
+  </p>
+  <p class="step__lede" data-lede-new hidden>
+    As a new patient your first visit is an initial consultation. The length depends on how much you
+    would like us to look at.
+  </p>
+
+  <div class="accordion" data-accordion>
+    <section class="acc is-open" data-acc="visit">
+      <h2 class="acc__h">
+        <button
+          type="button"
+          class="acc__head"
+          data-acc-head="visit"
+          aria-expanded="true"
+          aria-controls="acc-visit"
+        >
+          <span class="acc__title">Your visit</span>
+          <span class="acc__meta" data-acc-summary="visit"></span>
+          <span class="acc__chev" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="acc__panel" id="acc-visit" data-acc-panel="visit">
+        <fieldset class="scope-field">
+          <legend>How many areas would you like us to look at?</legend>
+          <div class="seg" role="group" aria-label="Number of areas" data-parts>
+            <button type="button" class="seg__btn" data-val="1">1</button>
+            <button type="button" class="seg__btn" data-val="2">2</button>
+            <button type="button" class="seg__btn" data-val="3">3</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="scope-field">
+          <legend>What would you like in this visit?</legend>
+          <div class="seg" role="group" aria-label="Treatment or rehab" data-wants>
+            <button type="button" class="seg__btn" data-val="both">Treatment &amp; rehab</button>
+            <button type="button" class="seg__btn" data-val="treatment">Treatment only</button>
+            <button type="button" class="seg__btn" data-val="rehab">Rehab only</button>
+          </div>
+        </fieldset>
+
+        <label class="check" data-lapsed-row>
+          <input type="checkbox" data-lapsed />
+          <span>It has been more than 3 months since my last visit.</span>
+        </label>
+
+        <p class="scope-readout" data-readout hidden>
+          Estimated length: <strong data-dur-label></strong>.
+        </p>
+        <p class="scope-hint">This is a guide and is confirmed when you book.</p>
+      </div>
+    </section>
+
+    {
+      fundingEnabled && (
+        <section class="acc" data-acc="funding">
+          <h2 class="acc__h">
+            <button
+              type="button"
+              class="acc__head"
+              data-acc-head="funding"
+              aria-expanded="false"
+              aria-controls="acc-funding"
+            >
+              <span class="acc__title">
+                Private health cover <span class="acc__opt">optional</span>
+              </span>
+              <span class="acc__meta" data-acc-summary="funding" />
+              <span class="acc__chev" aria-hidden="true" />
+            </button>
+          </h2>
+          <div class="acc__panel" id="acc-funding" data-acc-panel="funding" hidden>
+            <p class="step__lede">
+              Add your private health cover to see your rebate and estimated out-of-pocket gap. This
+              is an estimate, not a quote. You can skip this and settle at the clinic.
+            </p>
+            <div class="funding-form">
+              <div class="field">
+                <label for="fund">Health fund</label>
+                <select id="fund" data-fund>
+                  <option value="">Select your fund</option>
+                  {HEALTH_FUNDS.map((f) => (
+                    <option value={f.id}>{f.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div class="field">
+                <label for="member">Member number</label>
+                <input id="member" data-member type="text" inputmode="numeric" autocomplete="off" />
+              </div>
+              <div class="ident__grid">
+                <div class="field">
+                  <label for="card-issue">Card issue number</label>
+                  <input id="card-issue" data-card-issue type="text" inputmode="numeric" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label for="reference">Reference number</label>
+                  <input id="reference" data-reference type="text" inputmode="numeric" autocomplete="off" />
+                </div>
+              </div>
+              <p class="field__error" data-funding-error hidden>
+                Add your fund and member number to estimate, or clear these fields to skip.
+              </p>
+
+              <div class="funding-result" data-result hidden>
+                <dl class="funding-lines">
+                  <div class="funding-line">
+                    <dt>Appointment</dt>
+                    <dd data-price />
+                  </div>
+                  <div class="funding-line">
+                    <dt>Estimated rebate</dt>
+                    <dd data-rebate />
+                  </div>
+                  <div class="funding-line funding-line--total">
+                    <dt>Estimated gap</dt>
+                    <dd data-gap />
+                  </div>
+                </dl>
+                <p class="funding-note">An estimate only. Your fund confirms the actual rebate at your visit.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <a slot="action" class="btn btn--solid" data-continue aria-disabled="true">Continue</a>
+
+  <noscript>
+    <p class="status-line">
+      This step needs JavaScript. To book, email <a href="mailto:info@zone2hp.com">info@zone2hp.com</a>.
+    </p>
+  </noscript>
+</BookingShell>
+
+<script>
+  import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
+  import { estimateDuration, durationToken, formatDuration, type DurationEstimate } from '../../lib/booking/duration';
+  import {
+    estimateFunding,
+    priceForDuration,
+    formatAud,
+    canContinueFunding,
+    fundingComplete,
+    type FundingFields,
+  } from '../../lib/booking/funding';
+
+  const params = parseBookingParams(new URLSearchParams(window.location.search));
+  const isNew = params.customer === 'new';
+  const $ = <T extends HTMLElement>(s: string) => document.querySelector<T>(s);
+  const $$ = <T extends HTMLElement>(s: string) => Array.from(document.querySelectorAll<T>(s));
+
+  // New patients: swap the lede and drop the ">3 months" control (they are always extended).
+  if (isNew) {
+    $('[data-lede-existing]')?.setAttribute('hidden', '');
+    $('[data-lede-new]')?.removeAttribute('hidden');
+    $('[data-lapsed-row]')?.setAttribute('hidden', '');
+  }
+
+  // ---- Visit selections -> duration estimate ----
+  let parts: number | null = null;
+  let wants: 'both' | 'treatment' | 'rehab' | null = null;
+  let estimate: DurationEstimate | null = null;
+
+  function computeEstimate(): void {
+    const meta = $('[data-acc-summary="visit"]');
+    if (parts == null || wants == null) {
+      estimate = null;
+      if (meta) meta.textContent = '';
+      return;
+    }
+    const lapsed = !isNew && ($<HTMLInputElement>('[data-lapsed]')?.checked ?? false);
+    estimate = estimateDuration({
+      areas: parts,
+      wants: { treatment: wants !== 'rehab', rehab: wants !== 'treatment' },
+      isNewPatient: isNew,
+      lapsed,
+    });
+    const label = $('[data-dur-label]');
+    if (label) label.textContent = formatDuration(estimate);
+    $('[data-readout]')?.removeAttribute('hidden');
+    if (meta) meta.textContent = formatDuration(estimate);
+  }
+
+  function wireSeg(group: string, set: (value: string) => void): void {
+    const wrap = $(`[data-${group}]`);
+    wrap?.querySelectorAll<HTMLButtonElement>('.seg__btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        wrap.querySelectorAll('.seg__btn').forEach((b) => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        set(btn.dataset.val ?? '');
+        computeEstimate();
+        refresh();
+      });
+    });
+  }
+  wireSeg('parts', (v) => (parts = Number(v)));
+  wireSeg('wants', (v) => (wants = v as 'both' | 'treatment' | 'rehab'));
+  $<HTMLInputElement>('[data-lapsed]')?.addEventListener('change', () => {
+    computeEstimate();
+    refresh();
+  });
+
+  // ---- Funding section ----
+  const hasFunding = !!$('[data-acc-panel="funding"]');
+
+  function fundingFields(): FundingFields {
+    return {
+      fundId: $<HTMLSelectElement>('[data-fund]')?.value || null,
+      memberNumber: $<HTMLInputElement>('[data-member]')?.value ?? '',
+      cardIssueNumber: $<HTMLInputElement>('[data-card-issue]')?.value ?? '',
+      referenceNumber: $<HTMLInputElement>('[data-reference]')?.value ?? '',
+    };
+  }
+
+  function refreshFunding(): void {
+    if (!hasFunding) return;
+    const f = fundingFields();
+    const complete = fundingComplete(f) && !!estimate;
+    const est =
+      complete && estimate ? estimateFunding({ fundId: f.fundId, priceCents: priceForDuration(estimate.minutes) }) : null;
+
+    const result = $('[data-result]');
+    if (est) {
+      const set = (sel: string, text: string) => {
+        const el = $(sel);
+        if (el) el.textContent = text;
+      };
+      set('[data-price]', formatAud(est.priceCents));
+      set('[data-rebate]', `- ${formatAud(est.rebateCents)}`);
+      set('[data-gap]', formatAud(est.gapCents));
+      result?.removeAttribute('hidden');
+    } else {
+      result?.setAttribute('hidden', '');
+    }
+
+    const warn = $('[data-funding-error]');
+    if (warn) warn.hidden = canContinueFunding(f);
+    const meta = $('[data-acc-summary="funding"]');
+    if (meta) meta.textContent = est ? `gap ${formatAud(est.gapCents)}` : '';
+  }
+
+  ['[data-fund]', '[data-member]', '[data-card-issue]', '[data-reference]'].forEach((sel) => {
+    const el = $(sel);
+    el?.addEventListener('input', refresh);
+    el?.addEventListener('change', refresh);
+  });
+
+  // ---- Accordion ----
+  type Section = 'visit' | 'funding';
+  let current: Section = 'visit';
+
+  function openSection(name: Section): void {
+    current = name;
+    $$('[data-acc]').forEach((sec) => {
+      const isTarget = sec.dataset.acc === name;
+      sec.classList.toggle('is-open', isTarget);
+      sec.querySelector('.acc__head')?.setAttribute('aria-expanded', String(isTarget));
+      const panel = sec.querySelector<HTMLElement>('.acc__panel');
+      if (panel) panel.hidden = !isTarget;
+    });
+    if (name === 'funding') $<HTMLSelectElement>('[data-fund]')?.focus();
+    refresh();
+  }
+  $$('[data-acc-head]').forEach((head) => {
+    head.addEventListener('click', () => openSection(head.dataset.accHead as Section));
+  });
+
+  // ---- Continue (footer action) ----
+  const cont = $<HTMLAnchorElement>('[data-continue]');
+
+  function canContinue(): boolean {
+    if (!estimate) return false;
+    if (current === 'visit') return true; // visit complete; advances to funding or time
+    return canContinueFunding(fundingFields());
+  }
+
+  function refresh(): void {
+    refreshFunding();
+    cont?.setAttribute('aria-disabled', canContinue() ? 'false' : 'true');
+  }
+
+  function goToTime(): void {
+    if (!estimate) return;
+    const f = fundingFields();
+    const fund = fundingComplete(f) ? (f.fundId ?? undefined) : undefined;
+    window.location.href = buildStepUrl('time', { ...params, dur: durationToken(estimate), fund });
+  }
+
+  cont?.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (cont.getAttribute('aria-disabled') === 'true') return;
+    if (current === 'visit' && hasFunding) {
+      openSection('funding'); // finish the visit section, unfold cover
+      return;
+    }
+    goToTime();
+  });
+
+  refresh();
+</script>

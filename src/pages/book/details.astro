@@ -1,0 +1,192 @@
+---
+// Step 5: contact details. An island validates, submits the booking request, then
+// navigates to /book/confirm with the reference. Name is first + last; email is
+// required; mobile is optional. An existing patient (matched at step 1, carried as
+// `pid`) has their details pre-filled and locked. The submit button sits in the
+// shell's bottom action row, next to Back.
+import BookingShell from '../../components/booking/BookingShell.astro';
+---
+
+<BookingShell step="details">
+  <form class="details-form" id="bk-form" data-details-form novalidate>
+    <div class="ident__grid">
+      <div class="field">
+        <label for="bk-first">First name</label>
+        <input id="bk-first" name="firstName" type="text" autocomplete="given-name" required aria-describedby="bk-first-error" />
+        <p class="field__error" id="bk-first-error" data-error="firstName" hidden></p>
+      </div>
+      <div class="field">
+        <label for="bk-last">Last name</label>
+        <input id="bk-last" name="lastName" type="text" autocomplete="family-name" required aria-describedby="bk-last-error" />
+        <p class="field__error" id="bk-last-error" data-error="lastName" hidden></p>
+      </div>
+    </div>
+    <div class="field">
+      <label for="bk-email">Email</label>
+      <input id="bk-email" name="email" type="email" autocomplete="email" required aria-describedby="bk-email-error" />
+      <p class="field__error" id="bk-email-error" data-error="email" hidden></p>
+    </div>
+    <div class="field">
+      <label for="bk-phone">Mobile <span class="field__opt">(optional)</span></label>
+      <input id="bk-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+    </div>
+    <p class="form-note" data-locked-note hidden>
+      These details are from your record. Need a change? Contact the clinic.
+    </p>
+
+    <div class="field">
+      <label for="bk-notes">Notes for your booking <span class="field__opt">(optional)</span></label>
+      <textarea id="bk-notes" name="notes" rows="3" aria-describedby="bk-notes-hint"></textarea>
+      <p class="field__hint" id="bk-notes-hint">
+        Anything helpful for your visit, like access needs. You do not need to share health details here.
+      </p>
+    </div>
+
+    <label class="check" data-account-option>
+      <input type="checkbox" name="createAccount" />
+      <span>Create an account to book faster next time.</span>
+    </label>
+    <label class="check">
+      <input type="checkbox" name="marketing" />
+      <span>Email me occasional updates and early access news from Zone Two. You can unsubscribe at any time.</span>
+    </label>
+    <p class="privacy">
+      We collect your name and email to manage this booking request. A full privacy policy will be
+      published before launch.
+    </p>
+    <p class="form-error" data-form-error role="alert" hidden></p>
+  </form>
+
+  <button slot="action" type="submit" form="bk-form" class="btn btn--solid" data-submit>Request this time</button>
+
+  <noscript>
+    <p class="status-line">
+      Booking needs JavaScript. To book, email <a href="mailto:info@zone2hp.com">info@zone2hp.com</a>.
+    </p>
+  </noscript>
+</BookingShell>
+
+<script>
+  import { submitBookingRequest, getPatient } from '../../lib/booking/client';
+  import { getAuthProvider } from '../../lib/auth/index';
+  import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
+
+  const params = parseBookingParams(new URLSearchParams(window.location.search));
+  const form = document.querySelector<HTMLFormElement>('[data-details-form]');
+
+  if (form) {
+    void prefill();
+
+    function setVal(name: string, value: string, lock: boolean): void {
+      const input = form!.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      if (!input) return;
+      if (value) input.value = value;
+      if (lock) {
+        input.readOnly = true;
+        input.classList.add('is-locked');
+      }
+    }
+
+    async function prefill(): Promise<void> {
+      // Existing patient: pre-fill from the matched record and lock those fields.
+      if (params.customer === 'existing' && params.pid) {
+        const record = await getPatient(params.pid);
+        if (record) {
+          setVal('firstName', record.firstName, true);
+          setVal('lastName', record.lastName, true);
+          if (record.email) setVal('email', record.email, true);
+          if (record.phone) setVal('phone', record.phone, true);
+          form!.querySelector<HTMLElement>('[data-locked-note]')?.removeAttribute('hidden');
+          form!.querySelector<HTMLElement>('[data-account-option]')?.setAttribute('hidden', '');
+          return;
+        }
+      }
+      // Otherwise, pre-fill from a signed-in account (no-op in the static mock; ready for real auth).
+      const account = getAuthProvider().getCurrentAccount();
+      if (account) {
+        const [first, ...rest] = account.name.split(' ');
+        setVal('firstName', first ?? '', false);
+        setVal('lastName', rest.join(' '), false);
+        setVal('email', account.email, false);
+        form!.querySelector<HTMLElement>('[data-account-option]')?.setAttribute('hidden', '');
+      }
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void handleSubmit();
+    });
+
+    async function handleSubmit(): Promise<void> {
+      if (!validate()) {
+        form!.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+        return;
+      }
+      const data = new FormData(form!);
+      const first = String(data.get('firstName') ?? '').trim();
+      const last = String(data.get('lastName') ?? '').trim();
+      const name = `${first} ${last}`.trim();
+      const email = String(data.get('email') ?? '').trim();
+      const phone = String(data.get('phone') ?? '').trim();
+      const notes = String(data.get('notes') ?? '').trim();
+      setBusy(true);
+      hideFormError();
+      try {
+        if (data.get('createAccount') === 'on') {
+          void getAuthProvider().signUp({ name, email, password: '', marketingOptIn: data.get('marketing') === 'on' });
+        }
+        const result = await submitBookingRequest({
+          bookingType: params.type,
+          customerKind: params.customer,
+          slotStartIso: params.slot ?? '',
+          notes: notes || undefined,
+          contact: { name, email, phone: phone || undefined, marketingOptIn: data.get('marketing') === 'on' },
+        });
+        window.location.href = buildStepUrl('confirm', { ...params, ref: result.reference });
+      } catch {
+        showFormError('Something went wrong sending your request. Please try again.');
+        setBusy(false);
+      }
+    }
+
+    function validate(): boolean {
+      const first = checkField('firstName', (v) => v.trim().length > 0, 'Please enter your first name.');
+      const last = checkField('lastName', (v) => v.trim().length > 0, 'Please enter your last name.');
+      const email = checkField(
+        'email',
+        (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+        'Please enter a valid email address.',
+      );
+      return first && last && email;
+    }
+
+    function checkField(name: string, test: (value: string) => boolean, message: string): boolean {
+      const input = form!.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      const error = form!.querySelector<HTMLElement>(`[data-error="${name}"]`);
+      if (!input) return true;
+      const valid = test(input.value);
+      input.setAttribute('aria-invalid', valid ? 'false' : 'true');
+      if (error) {
+        error.hidden = valid;
+        error.textContent = valid ? '' : message;
+      }
+      return valid;
+    }
+
+    function setBusy(busy: boolean): void {
+      form!.setAttribute('aria-busy', busy ? 'true' : 'false');
+      const submit = document.querySelector<HTMLButtonElement>('[data-submit]');
+      if (submit) submit.disabled = busy;
+    }
+    function showFormError(message: string): void {
+      const el = form!.querySelector<HTMLElement>('[data-form-error]');
+      if (el) {
+        el.textContent = message;
+        el.hidden = false;
+      }
+    }
+    function hideFormError(): void {
+      form!.querySelector<HTMLElement>('[data-form-error]')?.setAttribute('hidden', '');
+    }
+  }
+</script>

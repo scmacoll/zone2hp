@@ -1,0 +1,223 @@
+---
+// Shared chrome for the routed /book/* steps: page shell, header, the step intro,
+// a stepper whose completed steps link back, a sticky Booking summary with
+// "Change" links, and a bottom action row (Back at bottom-left, next to the step's
+// primary action supplied via the `action` named slot). Step content goes in the
+// default slot.
+//
+// The site is STATIC, so the frontmatter has no per-request query string. Anything
+// that depends on the funnel params (summary values, param-carrying hrefs) is
+// hydrated client-side from window.location.search by the script below. The step
+// STATE (which step) is known at build, so only the param-carrying bits defer.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../PageHeader.astro';
+import Footer from '../Footer.astro';
+import Eyebrow from '../Eyebrow.astro';
+import { funnelOrder, prevStep, type FunnelStep } from '../../lib/booking/funnel';
+import { stepPath } from '../../lib/booking/funnel-state';
+import '../../styles/booking.css';
+
+interface Props {
+  step: FunnelStep;
+}
+const { step } = Astro.props;
+
+const STEP_TITLE: Record<FunnelStep, string> = {
+  customer: 'Book an appointment',
+  type: 'Choose a booking type',
+  scope: 'About your visit',
+  time: 'Choose a time',
+  details: 'Your details',
+  confirm: 'Request received',
+};
+const STEP_LABEL: Record<FunnelStep, string> = {
+  customer: 'Patient',
+  type: 'Type',
+  scope: 'Visit',
+  time: 'Time',
+  details: 'Details',
+  confirm: 'Done',
+};
+
+const visibleOrder = funnelOrder();
+const stepperSteps = visibleOrder.filter((s) => s !== 'confirm');
+const currentIndex = visibleOrder.indexOf(step);
+const locked = step === 'confirm';
+const prevId = prevStep(step);
+const hasAction = Astro.slots.has('action');
+const showFoot = (!!prevId && !locked) || hasAction;
+
+// Summary rows. `funding` is a value row (your cover), not a funnel step; its
+// Change link points at the Visit step where the cover section now lives.
+const SUMMARY_BLOCKS: { key: string; change: FunnelStep }[] = [
+  { key: 'customer', change: 'customer' },
+  { key: 'type', change: 'type' },
+  { key: 'scope', change: 'scope' },
+  { key: 'funding', change: 'scope' },
+  { key: 'time', change: 'time' },
+];
+const ICON: Record<string, string> = {
+  customer:
+    '<circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  type: '<rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9h17M8 3.5v3M16 3.5v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  scope:
+    '<rect x="5" y="3.5" width="14" height="17" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 9h6M9 13h6M9 17h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  funding:
+    '<path d="M12 3l7 3v5c0 4.6-3 7.7-7 9-4-1.3-7-4.4-7-9V6l7-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.5 12l1.7 1.7L15 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  time: '<circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+};
+---
+
+<Base
+  title={`${STEP_TITLE[step]} | Zone Two Health and Performance`}
+  description="Book an appointment with Zone Two Health and Performance in Eastwood, NSW."
+  noindex
+>
+  <PageHeader />
+  <main id="main" class="book" data-booking-step={step}>
+    <div class="book__layout">
+      <div class="book__main">
+        <header class="book__intro">
+          <Eyebrow tone="accent">{locked ? 'Confirmation' : 'Booking'}</Eyebrow>
+          <h1 class="book__title">{STEP_TITLE[step]}</h1>
+        </header>
+
+        <nav class="steps-nav" aria-label="Booking steps">
+          <ol class="steps">
+            {
+              stepperSteps.map((s, i) => {
+                const idx = visibleOrder.indexOf(s);
+                const isCurrent = s === step;
+                const isDone = idx < currentIndex;
+                const clickable = isDone && !locked;
+                const cls = ['steps__item', isCurrent ? 'is-current' : '', isDone ? 'is-done' : '']
+                  .filter(Boolean)
+                  .join(' ');
+                return (
+                  <li class={cls}>
+                    {clickable ? (
+                      <a class="steps__btn" data-step-link={s} href={stepPath(s)}>
+                        <span class="steps__num">{i + 1}</span>
+                        {STEP_LABEL[s]}
+                      </a>
+                    ) : (
+                      <span class="steps__btn" aria-current={isCurrent ? 'step' : undefined}>
+                        <span class="steps__num">{i + 1}</span>
+                        {STEP_LABEL[s]}
+                      </span>
+                    )}
+                  </li>
+                );
+              })
+            }
+          </ol>
+        </nav>
+
+        <slot />
+
+        {
+          showFoot && (
+            <div class="step__foot">
+              {prevId && !locked && (
+                <a class="book__back" data-step-link={prevId} href={stepPath(prevId)}>
+                  &lsaquo; Back
+                </a>
+              )}
+              <slot name="action" />
+            </div>
+          )
+        }
+      </div>
+
+      <aside class="bsummary" aria-label="Booking summary">
+        <h2 class="bsummary__title">Booking summary</h2>
+
+        <div class="bsummary__block">
+          <span class="bsummary__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+              <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" stroke="currentColor" stroke-width="1.6" />
+              <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6" />
+            </svg>
+          </span>
+          <div class="bsummary__body">
+            <p class="bsummary__value">Zone Two Health and Performance</p>
+            <p class="bsummary__sub">Suite 104 / 2 Rowe St<br />Eastwood, NSW 2122</p>
+          </div>
+        </div>
+
+        {
+          SUMMARY_BLOCKS.map((b) => (
+            <div class="bsummary__block" data-summary={b.key} hidden>
+              <span class="bsummary__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" width="18" height="18" set:html={ICON[b.key]} />
+              </span>
+              <div class="bsummary__body">
+                <p class="bsummary__value" data-summary-value={b.key} />
+                {!locked && (
+                  <a class="bsummary__change" data-step-link={b.change} href={stepPath(b.change)} hidden>
+                    Change
+                  </a>
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </aside>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
+  import { bookingTypeInfo } from '../../lib/booking/funnel';
+  import { fundName, estimateFunding, priceForDuration, formatAud } from '../../lib/booking/funding';
+  import { parseDurationToken, formatDuration } from '../../lib/booking/duration';
+
+  const params = parseBookingParams(new URLSearchParams(window.location.search));
+  const durEstimate = parseDurationToken(params.dur);
+  const locked = document.querySelector<HTMLElement>('[data-booking-step]')?.dataset.bookingStep === 'confirm';
+
+  // 1. Point every param-carrying link (stepper, Change, Back) at the right URL.
+  document.querySelectorAll<HTMLAnchorElement>('[data-step-link]').forEach((a) => {
+    a.href = buildStepUrl(a.dataset.stepLink as any, params);
+  });
+
+  // 2. Fill the booking summary from the params.
+  const slotFmt = new Intl.DateTimeFormat('en-AU', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+  function fundingValue(): string {
+    if (!params.fund) return '';
+    const name = fundName(params.fund);
+    if (!durEstimate) return name;
+    const est = estimateFunding({ fundId: params.fund, priceCents: priceForDuration(durEstimate.minutes) });
+    return `${name} (gap ${formatAud(est.gapCents)})`;
+  }
+  const values: Record<string, string> = {
+    customer: params.customer === 'new' ? 'New patient' : params.customer === 'existing' ? 'Existing patient' : '',
+    type: params.type ? (bookingTypeInfo(params.type)?.label ?? '') : '',
+    scope: durEstimate ? formatDuration(durEstimate) : '',
+    funding: fundingValue(),
+    time: params.slot ? slotFmt.format(new Date(params.slot)) : '',
+  };
+  for (const key of Object.keys(values)) {
+    const value = values[key] ?? '';
+    const block = document.querySelector<HTMLElement>(`[data-summary="${key}"]`);
+    const valueEl = document.querySelector<HTMLElement>(`[data-summary-value="${key}"]`);
+    if (block) block.hidden = value === '';
+    if (valueEl) valueEl.textContent = value;
+    if (value && !locked) {
+      block?.querySelector<HTMLElement>('.bsummary__change')?.removeAttribute('hidden');
+    }
+  }
+
+  // 3. Fill the confirmation reference, if present on the page.
+  const refEl = document.querySelector<HTMLElement>('[data-ref]');
+  if (refEl) refEl.textContent = params.ref ?? '';
+</script>

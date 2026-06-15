@@ -1,0 +1,24 @@
+---
+// Step 5: confirmation. Fully static; the reference + summary are hydrated from
+// the URL params by BookingShell. The summary is locked (no Change links).
+import BookingShell from '../../components/booking/BookingShell.astro';
+---
+
+<BookingShell step="confirm">
+  <p class="confirm__lede">
+    Your booking request has been received. The clinic will contact you by email to confirm your
+    appointment. Please note that the appointment is not confirmed until you receive that confirmation.
+  </p>
+  <p class="confirm__ref">Reference <span data-ref></span></p>
+  <div class="confirm__cancel">
+    <p class="confirm__cancel-title">Need to change or cancel?</p>
+    <p class="confirm__cancel-body">
+      Please call the clinic on <a href="tel:0000000000">0450 222 122</a> (preferred) or email
+      <a href="mailto:info@zone2hp.com">info@zone2hp.com</a>.
+    </p>
+  </div>
+  <div class="confirm__actions">
+    <a class="btn btn--outline" href="/">Back to home</a>
+    <a class="btn btn--ghost" href="/book">Book another appointment</a>
+  </div>
+</BookingShell>

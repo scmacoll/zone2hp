@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import AccountForm from '../../components/account/AccountForm.astro';
+---
+
+<Base
+  title="Sign in | Zone Two Health and Performance"
+  description="Sign in to your Zone Two Health and Performance account."
+  noindex
+>
+  <PageHeader />
+  <main id="main" class="account">
+    <header class="account__intro">
+      <Eyebrow tone="accent">Account</Eyebrow>
+      <h1 class="account__title">Sign in</h1>
+      <p class="account__lede">
+        Sign in to manage your updates and early access. This is a general account, not a patient or
+        medical record.
+      </p>
+      <p class="account__preview">Preview: accounts are not connected to a live system yet.</p>
+    </header>
+
+    <AccountForm mode="login" />
+
+    <p class="account__alt">New here? <a href="/account/signup">Create an account</a>.</p>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .account__intro {
+    max-width: 28rem;
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-md);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .account__title {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  }
+  .account__lede {
+    color: var(--ink-2);
+  }
+  .account__preview {
+    margin-top: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--step-small);
+    color: var(--ink-3);
+  }
+  .account__alt {
+    max-width: 28rem;
+    margin-inline: auto;
+    margin-top: var(--space-md);
+    padding-inline: var(--section-pad-inline);
+    padding-bottom: var(--space-2xl);
+    font-size: var(--step-small);
+    color: var(--ink-2);
+  }
+  .account__alt a {
+    color: var(--accent-deep);
+  }
+</style>

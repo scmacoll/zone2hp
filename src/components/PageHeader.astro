@@ -1,0 +1,57 @@
+---
+// Light functional-page chrome (booking, account). NOT the dark hero chrome —
+// these pages use the paper design language. Reuses the Wordmark as a home link.
+import Wordmark from './Wordmark.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<header class:list={['page-header', className]}>
+  <Wordmark
+    as="a"
+    href="/"
+    size="sm"
+    mark
+    aria-label="Zone Two Health and Performance, home"
+    class="page-header__brand"
+  />
+  <a class="page-header__back" href="/">Back to site</a>
+</header>
+
+<style>
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding-block: var(--space-sm);
+    padding-inline: var(--section-pad-inline);
+    border-bottom: var(--border-hairline);
+    background: var(--paper);
+  }
+  /* Wordmark renders its own element; target the passed class globally. */
+  .page-header :global(.page-header__brand) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  .page-header__back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+  .page-header__back:hover {
+    color: var(--accent-deep);
+  }
+</style>

@@ -1,0 +1,874 @@
+/* Booking funnel styles — shared across the routed /book/* steps. Namespaced
+   under .book so they never leak site-wide, and global (not Astro-scoped) so they
+   also reach the date/slot/option nodes the step islands create at runtime. */
+
+.book__layout {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-block: var(--space-lg);
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: 1fr;
+}
+@media (min-width: 60rem) {
+    .book__layout {
+        grid-template-columns: minmax(0, 1fr) 19rem;
+        align-items: start;
+        gap: var(--space-xl);
+    }
+}
+.book__main {
+    min-width: 0;
+}
+.book__intro {
+    padding-bottom: var(--space-sm);
+}
+.book__title {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+    line-height: 1.04;
+}
+.book__lede {
+    margin-top: var(--space-2xs);
+    color: var(--ink-2);
+    max-width: 56ch;
+}
+
+.book .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---- Stepper (links to completed steps) --------------------------------- */
+.book .steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-md);
+    margin: 0 0 var(--space-lg);
+    padding: 0;
+    list-style: none;
+}
+.book .steps__item {
+    display: inline-flex;
+}
+.book .steps__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-3);
+    transition: color 150ms var(--ease-out);
+}
+.book .steps__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: var(--border-hairline);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    transition:
+        border-color 150ms var(--ease-out),
+        background-color 150ms var(--ease-out);
+}
+.book .steps__item.is-current .steps__btn {
+    color: var(--ink);
+}
+.book .steps__item.is-current .steps__num {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+}
+.book .steps__item.is-done .steps__btn {
+    color: var(--ink-2);
+}
+.book .steps__item.is-done .steps__num {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+}
+.book a.steps__btn:hover {
+    color: var(--accent-deep);
+}
+.book a.steps__btn:hover .steps__num {
+    border-color: var(--accent);
+}
+
+/* ---- Step content ------------------------------------------------------- */
+.book .step__title {
+    font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem);
+}
+.book .step__lede {
+    margin-top: var(--space-2xs);
+    color: var(--ink-2);
+}
+.book .region {
+    margin-top: var(--space-md);
+}
+/* Bottom action row: Back at bottom-left, next to the step's primary action
+   (Cliniko/Calendly convention). Back alone sits left; with an action it spreads. */
+.book .step__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: var(--border-hairline);
+}
+.book .step__foot > .btn {
+    margin-left: auto;
+}
+.book .status-line {
+    color: var(--ink-2);
+}
+.book .status-line--error {
+    color: var(--accent-deep);
+    margin-bottom: var(--space-sm);
+}
+
+/* ---- Choice tiles (customer / booking type) ----------------------------- */
+.book .choices {
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    margin-top: var(--space-md);
+}
+.book .choice {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+    min-height: 44px;
+    padding: var(--space-md);
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition:
+        background-color 150ms var(--ease-out),
+        border-color 150ms var(--ease-out);
+}
+.book .choice:hover {
+    background: var(--stone);
+    border-color: var(--chrome-cool);
+}
+.book .choice__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-h3);
+    color: var(--ink);
+}
+.book .choice__blurb {
+    font-size: var(--step-small);
+    color: var(--ink-2);
+    line-height: 1.45;
+}
+.book .alt-line {
+    margin-top: var(--space-md);
+    font-size: var(--step-small);
+    color: var(--ink-2);
+}
+.book .alt-line a {
+    color: var(--accent-deep);
+}
+
+/* ---- Practitioner card -------------------------------------------------- */
+.book .pcard {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: var(--stone);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+}
+.book .pcard__photo,
+.book .pcard__avatar {
+    width: 5.5rem;
+    height: 5.5rem;
+    flex: none;
+    border-radius: var(--radius-md);
+    background: var(--chrome);
+}
+.book .pcard__photo {
+    object-fit: cover;
+    object-position: 72% 24%;
+}
+.book .pcard__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+.book .pcard__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--accent-deep);
+}
+.book .pcard__name {
+    margin: 0.1rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-h3);
+    color: var(--ink);
+}
+.book .pcard__quals {
+    margin: 0.1rem 0 0;
+    font-size: var(--step-small);
+    color: var(--ink-3);
+}
+.book .pcard__bio {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--step-small);
+    color: var(--ink-2);
+    line-height: 1.5;
+}
+
+/* ---- Date strip --------------------------------------------------------- */
+.book .dates {
+    display: flex;
+    gap: var(--space-2xs);
+    overflow-x: auto;
+    padding-bottom: var(--space-2xs);
+    scrollbar-width: thin;
+}
+.book .date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    flex: 0 0 auto;
+    min-width: 4rem;
+    min-height: 44px;
+    padding: 0.5rem 0.65rem;
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition:
+        background-color 150ms var(--ease-out),
+        border-color 150ms var(--ease-out);
+}
+.book .date:hover {
+    border-color: var(--chrome-cool);
+}
+.book .date.is-selected {
+    background: var(--ink);
+    border-color: var(--ink);
+}
+.book .date__wd {
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-3);
+}
+.book .date__dm {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+    white-space: nowrap;
+}
+.book .date.is-selected .date__wd {
+    color: rgba(255, 255, 255, 0.7);
+}
+.book .date.is-selected .date__dm {
+    color: var(--paper);
+}
+
+/* ---- Time groups -------------------------------------------------------- */
+.book .timegroup {
+    margin-top: var(--space-md);
+}
+.book .timegroup__label {
+    margin: 0 0 var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+}
+.book .timegroup__slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+    gap: var(--space-2xs);
+}
+.book .slot {
+    min-height: 44px;
+    padding-inline: var(--space-2xs);
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: var(--step-small);
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+        background-color 150ms var(--ease-out),
+        border-color 150ms var(--ease-out);
+}
+.book .slot:hover {
+    background: var(--stone);
+    border-color: var(--accent);
+}
+.book .duration-note {
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: var(--border-hairline);
+    font-size: var(--step-small);
+    color: var(--ink-3);
+}
+
+/* ---- Details form ------------------------------------------------------- */
+.book .details-form {
+    display: grid;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+.book .field {
+    display: grid;
+    gap: 0.4rem;
+}
+.book .field label {
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+}
+.book .field__opt {
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-3);
+}
+.book .field input,
+.book .field textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--step-body);
+    color: var(--ink);
+}
+.book .field input {
+    min-height: 44px;
+}
+.book .field textarea {
+    resize: vertical;
+    min-height: 5rem;
+}
+.book .field input[aria-invalid="true"] {
+    border-color: var(--accent-deep);
+}
+.book .field__error {
+    color: var(--accent-deep);
+    font-size: var(--step-small);
+}
+.book .field__hint {
+    color: var(--ink-3);
+    font-size: var(--step-small);
+}
+.book .check {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    color: var(--ink-2);
+    font-size: var(--step-small);
+    cursor: pointer;
+}
+.check {
+    margin-top: var(--space-xs);
+}
+.book .check input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.1rem;
+    flex: none;
+    accent-color: var(--accent-deep);
+}
+.book .privacy {
+    color: var(--ink-3);
+    font-size: var(--step-small);
+    max-width: 56ch;
+}
+.book .form-error {
+    color: var(--accent-deep);
+    font-size: var(--step-small);
+}
+
+/* ---- Mismatch (existing patient not found) ------------------------------ */
+.book .mismatch {
+    padding: var(--space-md);
+    background: var(--stone);
+    border: 1px solid var(--accent-deep);
+    border-radius: var(--radius-md);
+}
+.book .mismatch__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink);
+}
+.book .mismatch__body {
+    margin: var(--space-2xs) 0 var(--space-sm);
+    color: var(--ink-2);
+    font-size: var(--step-small);
+}
+.book .mismatch__list {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.35rem;
+    color: var(--ink-2);
+    font-size: var(--step-small);
+}
+.book .mismatch a,
+.book .link-btn {
+    color: var(--accent-deep);
+}
+.book .link-btn {
+    padding: 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* ---- Confirmation ------------------------------------------------------- */
+.book .confirm__lede {
+    margin-top: var(--space-sm);
+    color: var(--ink-2);
+    max-width: 60ch;
+}
+.book .confirm__ref {
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    color: var(--ink);
+}
+.book .confirm__cancel {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: var(--border-hairline);
+}
+.book .confirm__cancel-title {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+}
+.book .confirm__cancel-body {
+    margin: 0.3rem 0 0;
+    color: var(--ink-2);
+    font-size: var(--step-small);
+}
+.book .confirm__cancel-body a {
+    color: var(--accent-deep);
+}
+.book .confirm__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+/* ---- Buttons ------------------------------------------------------------ */
+.book .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.875rem;
+    padding-inline: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+        background-color 150ms var(--ease-out),
+        border-color 150ms var(--ease-out),
+        color 150ms var(--ease-out);
+}
+.book .btn--solid {
+    background: var(--accent-deep);
+    color: var(--paper);
+}
+.book .btn--solid:hover {
+    background: var(--accent-press);
+}
+.book .btn--solid:disabled,
+.book .btn[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: default;
+}
+.book .btn--outline {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--chrome-line);
+}
+.book .btn--outline:hover {
+    background: var(--stone);
+    border-color: var(--chrome-cool);
+}
+.book .btn--ghost {
+    background: transparent;
+    color: var(--ink-2);
+    padding-inline: 0;
+}
+.book .btn--ghost:hover {
+    color: var(--accent-deep);
+}
+
+/* ---- Booking summary ---------------------------------------------------- */
+.book .bsummary {
+    align-self: start;
+    padding: var(--space-md);
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+}
+@media (min-width: 60rem) {
+    .book .bsummary {
+        position: sticky;
+        top: var(--space-md);
+    }
+}
+.book .bsummary__title {
+    margin: 0 0 var(--space-sm);
+    padding-bottom: var(--space-sm);
+    border-bottom: var(--border-hairline);
+    font-size: var(--step-h3);
+}
+.book .bsummary__block {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    padding-block: var(--space-sm);
+}
+.book .bsummary__block + .bsummary__block {
+    border-top: var(--border-hairline);
+}
+.book .bsummary__icon {
+    display: inline-flex;
+    color: var(--ink-3);
+    padding-top: 0.1rem;
+}
+.book .bsummary__body {
+    min-width: 0;
+}
+.book .bsummary__value {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 600;
+}
+.book .bsummary__sub {
+    margin: 0.2rem 0 0;
+    color: var(--ink-2);
+    font-size: var(--step-small);
+    line-height: 1.45;
+}
+.book .bsummary__change {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    text-decoration: none;
+}
+.book .bsummary__change:hover {
+    color: var(--accent-press);
+}
+
+.book .noscript-notice {
+    color: var(--ink-2);
+}
+
+/* ---- Back link (sits in .step__foot, bottom-left) ----------------------- */
+.book .book__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+}
+.book .book__back:hover {
+    color: var(--accent-deep);
+}
+
+/* ---- Scope step (segmented controls + duration readout) ----------------- */
+.book .scope-field {
+    border: 0;
+    padding: 0;
+    margin: var(--space-md) 0 0;
+}
+.book .scope-field legend {
+    padding: 0;
+    margin-bottom: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+}
+.book .seg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+}
+.book .seg__btn {
+    min-height: 44px;
+    padding: 0 var(--space-md);
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--step-body);
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+        background-color 150ms var(--ease-out),
+        border-color 150ms var(--ease-out),
+        color 150ms var(--ease-out);
+}
+.book .seg__btn:hover {
+    border-color: var(--chrome-cool);
+}
+.book .seg__btn.is-selected {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+}
+.book .scope-readout {
+    margin-top: var(--space-md);
+    color: var(--ink);
+}
+.book .scope-hint {
+    margin-top: var(--space-2xs);
+    font-size: var(--step-small);
+    color: var(--ink-3);
+}
+
+/* ---- Funding step (HALTH-style prototype) ------------------------------- */
+.book .funding-form {
+    display: grid;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+    max-width: 32rem;
+}
+.book .funding-form select {
+    min-height: 44px;
+    padding: 0.6rem 0.75rem;
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--step-body);
+    color: var(--ink);
+}
+.book .funding-result {
+    padding: var(--space-md);
+    background: var(--stone);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+}
+.book .funding-lines {
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+}
+.book .funding-line {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+}
+.book .funding-line dt {
+    margin: 0;
+    color: var(--ink-2);
+}
+.book .funding-line dd {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--font-mono);
+}
+.book .funding-line--total {
+    padding-top: 0.5rem;
+    margin-top: 0.2rem;
+    border-top: var(--border-hairline);
+}
+.book .funding-line--total dt,
+.book .funding-line--total dd {
+    color: var(--ink);
+    font-weight: 700;
+}
+.book .funding-note {
+    margin-top: var(--space-sm);
+    font-size: var(--step-small);
+    color: var(--ink-3);
+}
+
+/* ---- Choice tiles that are buttons (existing-patient toggle) ------------- */
+.book button.choice {
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* ---- Accordion (Visit questions + optional cover) ----------------------- */
+.book .accordion {
+    margin-top: var(--space-md);
+    display: grid;
+    gap: var(--space-sm);
+}
+.book .acc {
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+.book .acc__h {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+}
+.book .acc__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    min-height: 44px;
+    padding: var(--space-md);
+    background: none;
+    border: 0;
+    text-align: left;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-h3);
+    color: var(--ink);
+    cursor: pointer;
+}
+.book .acc__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.book .acc__opt {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-3);
+}
+.book .acc__meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: var(--step-small);
+    color: var(--accent-deep);
+    white-space: nowrap;
+}
+.book .acc.is-open .acc__meta {
+    display: none;
+}
+.book .acc__chev {
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid var(--ink-3);
+    border-bottom: 2px solid var(--ink-3);
+    transform: rotate(-45deg);
+    transition: transform 150ms var(--ease-out);
+}
+.book .acc.is-open .acc__chev {
+    transform: rotate(45deg);
+}
+.book .acc__panel {
+    padding: 0 var(--space-md) var(--space-md);
+}
+@media (prefers-reduced-motion: reduce) {
+    .book .acc__chev {
+        transition: none;
+    }
+}
+
+/* ---- Identify form (existing patient) + two-column field rows ----------- */
+.book .ident {
+    margin-top: var(--space-md);
+    max-width: 32rem;
+    display: grid;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--stone);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+}
+.book .ident__lede {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--step-small);
+}
+.book .ident__grid {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 26rem) {
+    .book .ident__grid {
+        grid-template-columns: 1fr;
+    }
+}
+.book .ident__nav .btn {
+    width: 100%;
+}
+.book .mismatch .btn {
+    margin-top: var(--space-sm);
+}
+
+/* ---- Locked (pre-filled existing-patient) fields ------------------------ */
+.book .form-note {
+    font-size: var(--step-small);
+    color: var(--ink-3);
+}
+.book .field input.is-locked {
+    background: var(--stone);
+    color: var(--ink-2);
+    cursor: default;
+}

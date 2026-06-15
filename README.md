@@ -2,6 +2,10 @@
 
 This is the planning and design spec set for the Zone Two Health and Performance coming-soon site. It is written to be handed to Claude Code (or any coding agent) to build from. Read this file first, then `CLAUDE.md`.
 
+## Current status (update)
+
+The five-concept review is resolved: concept **A2** was chosen and is live (promoted to `src/pages/index.astro`). Work has moved on to (1) a booking and non-clinical accounts surface, currently a mock-first review build behind config flags (see `BOOKING.md`), and (2) the full multi-section site (phase-2 IA in `CONCEPTS.md`). The sections below describe the original coming-soon brief and remain the design source of truth. `PROGRESS.md` tracks the live build state.
+
 ## Project facts
 
 - **Business:** Zone Two Health and Performance
