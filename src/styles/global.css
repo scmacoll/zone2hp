@@ -90,7 +90,7 @@
     top: -3.5rem;
     z-index: 50;
     padding: 0.5rem 0.875rem;
-    background: var(--ink);
+    background: var(--accent-deep);
     color: var(--paper);
     border-radius: var(--radius-sm);
     transition: top 150ms var(--ease-out);

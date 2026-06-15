@@ -8,7 +8,7 @@ import type {
   Practitioner,
   Service,
 } from './types';
-import { findMatchingPatient } from './patients';
+import { normalizeEmail, normalizeName } from './patients';
 
 /**
  * Mock booking provider — a plain object of pure-ish async functions (no class).
@@ -74,13 +74,12 @@ const PRACTITIONERS: Practitioner[] = [
 
 /**
  * Mock existing-patient records. The real provider replaces this with a patient
- * search. Match on any of these emails/phones at the first step to proceed as an
+ * search. For the review build there is a single demo credential: the EXACT name
+ * and email must both match (Jane Doe / janedoe@gmail.com) to proceed as an
  * existing patient; anything else shows the no-match panel.
  */
 const EXISTING_PATIENTS: PatientRecord[] = [
-  { id: 'pat-alex', firstName: 'Alex', lastName: 'Taylor', email: 'alex@example.com', phone: '0412 345 678' },
-  { id: 'pat-jordan', firstName: 'Jordan', lastName: 'Lee', email: 'jordan.lee@example.com', phone: '0423 456 789' },
-  { id: 'pat-sam', firstName: 'Sam', lastName: 'Nguyen', email: 'sam.nguyen@example.com', phone: '0434 567 890' },
+  { id: 'pat-jane', firstName: 'Jane', lastName: 'Doe', email: 'janedoe@gmail.com' },
 ];
 
 function startOfTomorrow(): Date {
@@ -150,7 +149,18 @@ export const mockBookingProvider: BookingProvider = {
 
   async findPatient(query: PatientQuery) {
     await sleep(300);
-    return findMatchingPatient(query, EXISTING_PATIENTS);
+    // Demo build: only the exact credential proceeds — the name AND the email
+    // must both match. A real provider would do a proper patient search here.
+    return (
+      EXISTING_PATIENTS.find(
+        (p) =>
+          !!query.name &&
+          normalizeName(query.name) === normalizeName(`${p.firstName} ${p.lastName}`) &&
+          !!query.email &&
+          !!p.email &&
+          normalizeEmail(query.email) === normalizeEmail(p.email),
+      ) ?? null
+    );
   },
 
   async getPatient(id: string) {

@@ -71,6 +71,7 @@ const useEmbed = bookingConfig.mode === "embedded";
                             name="firstName"
                             type="text"
                             autocomplete="given-name"
+                            value="Jane"
                         />
                     </div>
                     <div class="field">
@@ -80,6 +81,7 @@ const useEmbed = bookingConfig.mode === "embedded";
                             name="lastName"
                             type="text"
                             autocomplete="family-name"
+                            value="Doe"
                         />
                     </div>
                 </div>
@@ -91,6 +93,7 @@ const useEmbed = bookingConfig.mode === "embedded";
                         type="text"
                         autocomplete="email"
                         inputmode="email"
+                        value="janedoe@gmail.com"
                         aria-describedby="id-contact-error"
                     />
                     <p
@@ -139,7 +142,7 @@ const useEmbed = bookingConfig.mode === "embedded";
 <script>
     import { buildStepUrl } from "../../lib/booking/funnel-state";
     import { findPatient } from "../../lib/booking/client";
-    import { emailOrPhone } from "../../lib/booking/patients";
+    import { emailOrPhone, isEmailOrMobile } from "../../lib/booking/patients";
 
     const toggle = document.querySelector<HTMLButtonElement>(
         "[data-existing-toggle]",
@@ -189,6 +192,8 @@ const useEmbed = bookingConfig.mode === "embedded";
         if (!first || !last)
             return showError("Please enter your first and last name.");
         if (!contact) return showError("Please enter your email or mobile.");
+        if (!isEmailOrMobile(contact))
+            return showError("Please enter a valid email address or mobile number.");
 
         errorEl?.setAttribute("hidden", "");
         contactInput.removeAttribute("aria-invalid");
@@ -198,7 +203,10 @@ const useEmbed = bookingConfig.mode === "embedded";
             findBtn.textContent = "Checking";
         }
 
-        const record = await findPatient(emailOrPhone(contact));
+        const record = await findPatient({
+            ...emailOrPhone(contact),
+            name: `${first} ${last}`,
+        });
 
         if (findBtn) {
             findBtn.disabled = false;

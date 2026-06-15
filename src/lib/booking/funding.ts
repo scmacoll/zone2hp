@@ -72,15 +72,23 @@ export function fundingEngaged(f: FundingFields): boolean {
   return [f.memberNumber, f.cardIssueNumber, f.referenceNumber].some((v) => v.trim() !== '');
 }
 
-/** Enough to produce an estimate: a fund and a member number (card/reference are optional). */
+/**
+ * A fully complete cover: a fund selected AND all three card numbers (member,
+ * card issue and reference) entered. Anything short of that is not a usable set.
+ */
 export function fundingComplete(f: FundingFields): boolean {
-  return !!f.fundId && f.memberNumber.trim() !== '';
+  return (
+    !!f.fundId &&
+    f.memberNumber.trim() !== '' &&
+    f.cardIssueNumber.trim() !== '' &&
+    f.referenceNumber.trim() !== ''
+  );
 }
 
 /**
- * Continue is allowed when cover is left empty (skipped) OR completed enough to
- * estimate. It is blocked only in between — some card detail entered but not a
- * full, estimable set. Complete-or-empty, never a half-filled estimate.
+ * Continue is allowed when cover is left empty (skipped) OR fully completed. It
+ * is blocked only in between — some card detail entered but not a full set with a
+ * fund. Complete-or-empty, never a half-filled cover.
  */
 export function canContinueFunding(f: FundingFields): boolean {
   return !fundingEngaged(f) || fundingComplete(f);

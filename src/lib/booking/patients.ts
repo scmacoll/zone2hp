@@ -38,3 +38,19 @@ export function emailOrPhone(value: string): PatientQuery {
   if (!v) return {};
   return v.includes('@') ? { email: v } : { phone: v };
 }
+
+/** A plausibly valid email address (same shape the details form accepts). */
+export const isEmail = (s: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
+
+/** A valid Australian mobile number: 04xxxxxxxx (a leading +61 4 is normalised to 0). */
+export const isAuMobile = (s: string): boolean => /^04\d{8}$/.test(normalizePhone(s));
+
+/**
+ * Validate the combined "email or mobile" field: a value with "@" must be a valid
+ * email, otherwise it must be a valid AU mobile number.
+ */
+export function isEmailOrMobile(value: string): boolean {
+  const v = value.trim();
+  if (!v) return false;
+  return v.includes('@') ? isEmail(v) : isAuMobile(v);
+}

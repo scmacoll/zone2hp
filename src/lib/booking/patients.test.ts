@@ -7,6 +7,9 @@ import {
   matchesPatient,
   findMatchingPatient,
   emailOrPhone,
+  isEmail,
+  isAuMobile,
+  isEmailOrMobile,
 } from './patients';
 
 describe('normalizeEmail', () => {
@@ -70,5 +73,28 @@ describe('emailOrPhone', () => {
   });
   it('returns an empty query for blank input', () => {
     expect(emailOrPhone('   ')).toEqual({});
+  });
+});
+
+describe('isEmailOrMobile', () => {
+  it('accepts a valid email', () => {
+    expect(isEmail('janedoe@gmail.com')).toBe(true);
+    expect(isEmailOrMobile('janedoe@gmail.com')).toBe(true);
+  });
+  it('rejects a malformed email', () => {
+    expect(isEmailOrMobile('jane@')).toBe(false);
+    expect(isEmailOrMobile('jane.doe.com')).toBe(false);
+  });
+  it('accepts a valid AU mobile in common formats', () => {
+    expect(isAuMobile('0412 345 678')).toBe(true);
+    expect(isEmailOrMobile('0412345678')).toBe(true);
+    expect(isEmailOrMobile('+61 412 345 678')).toBe(true);
+  });
+  it('rejects a landline or too-short number', () => {
+    expect(isAuMobile('02 1234 5678')).toBe(false);
+    expect(isEmailOrMobile('1234')).toBe(false);
+  });
+  it('rejects blank input', () => {
+    expect(isEmailOrMobile('   ')).toBe(false);
   });
 });

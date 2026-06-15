@@ -60,27 +60,35 @@ describe('formatAud', () => {
 
 describe('funding gate (complete-or-empty)', () => {
   const empty: FundingFields = { fundId: null, memberNumber: '', cardIssueNumber: '', referenceNumber: '' };
+  // A fully complete cover: fund + all three card numbers.
+  const full: FundingFields = { fundId: 'bupa', memberNumber: '12345', cardIssueNumber: '1', referenceNumber: '9' };
 
   it('allows continue when nothing is entered', () => {
     expect(canContinueFunding(empty)).toBe(true);
   });
-  it('allows continue when only a fund is picked (no card details)', () => {
+  it('allows continue when only a fund is picked (no card numbers)', () => {
     expect(canContinueFunding({ ...empty, fundId: 'bupa' })).toBe(true);
   });
-  it('blocks continue when card details are partially entered', () => {
+  it('blocks continue when any card number is entered but the set is incomplete', () => {
     expect(canContinueFunding({ ...empty, memberNumber: '12345' })).toBe(false);
     expect(canContinueFunding({ ...empty, referenceNumber: '9' })).toBe(false);
     expect(canContinueFunding({ ...empty, fundId: 'bupa', cardIssueNumber: '1' })).toBe(false);
+    // all three numbers but no fund selected
+    expect(canContinueFunding({ ...full, fundId: null })).toBe(false);
+    // a fund and two of three numbers
+    expect(canContinueFunding({ ...full, referenceNumber: '' })).toBe(false);
   });
-  it('allows continue once a fund and member number are present', () => {
-    expect(canContinueFunding({ ...empty, fundId: 'bupa', memberNumber: '12345' })).toBe(true);
+  it('allows continue once a fund and all three numbers are present', () => {
+    expect(canContinueFunding(full)).toBe(true);
   });
   it('treats whitespace-only fields as empty', () => {
     expect(canContinueFunding({ ...empty, memberNumber: '   ' })).toBe(true);
   });
-  it('an estimate needs a fund and a member number', () => {
+  it('a complete cover needs a fund and all three card numbers', () => {
     expect(fundingComplete({ ...empty, fundId: 'bupa' })).toBe(false);
     expect(fundingComplete({ ...empty, memberNumber: '1' })).toBe(false);
-    expect(fundingComplete({ ...empty, fundId: 'bupa', memberNumber: '1' })).toBe(true);
+    expect(fundingComplete({ ...empty, fundId: 'bupa', memberNumber: '1' })).toBe(false);
+    expect(fundingComplete({ ...full, referenceNumber: '' })).toBe(false);
+    expect(fundingComplete(full)).toBe(true);
   });
 });

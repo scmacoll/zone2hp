@@ -201,12 +201,15 @@ lock and the heading becomes "Request received".
 ### Existing-patient identification (at step 1)
 
 When the customer chooses **Existing Patient** at `/book`, they enter their name (first +
-last) and one combined "email or mobile" field, matched against the patient record by
-email OR phone (`findPatient` → `findMatchingPatient`; mock DB now, Cliniko patient-search
-later). A match carries an opaque `pid` forward; `/book/details` then resolves it
-(`getPatient`) to pre-fill and LOCK their details. No match shows a gentle panel (re-check,
-or continue as a new patient). A real backend MUST authorise `getPatient` (it returns PII
-by id). Name/email/phone never travel in the URL — only the opaque `pid` does.
+last) and one combined "email or mobile" field, matched against the patient record
+(`findPatient`; mock DB now, Cliniko patient-search later). The review build has a SINGLE
+demo credential and matches strictly: the exact name AND email must both line up
+(**Jane Doe / janedoe@gmail.com**, shown as placeholders) — nothing else proceeds. A match
+carries an opaque `pid` forward; `/book/details` then resolves it (`getPatient`) to pre-fill
+and LOCK their details. No match shows a gentle panel (re-check, or continue as a new
+patient). A real backend MUST authorise `getPatient` (it returns PII by id), and would
+search on email/phone rather than this fixed credential. Name/email/phone never travel in
+the URL — only the opaque `pid` does.
 
 The practitioner card shows `Practitioner.photo`
 (`/images/practitioners/mintae-kim.png`), falling back to initials until present.
@@ -225,11 +228,11 @@ server-only and unused until a backend exists.
   back/forward and the summary "Change" links navigate. Runs on mock data.
 - Tests: `npm run test:run` (Vitest) covers the pure core — `funnel`,
   `funnel-state` (URL building), `duration` (PROVISIONAL rules), `patients`.
-- Existing-patient match (step 1): choose Existing Patient, enter a name + a matching
-  email or mobile (`alex@example.com` / `0412 345 678`, or `jordan.lee@example.com`,
-  `sam.nguyen@example.com`) to proceed; anything else shows the no-match panel. The matched
-  patient's details are pre-filled and locked at `/book/details`. Click a completed step
-  title to jump back.
+- Existing-patient match (step 1): choose Existing Patient, then enter the demo
+  credential exactly — First name `Jane`, Last name `Doe`, Email `janedoe@gmail.com`
+  (shown as placeholders). Only that exact name + email proceeds; anything else shows the
+  no-match panel. The matched patient's details are pre-filled and locked at
+  `/book/details`. Click a completed step title to jump back.
 - Dev-only state simulation (stripped from production): `/book?sim=empty`,
   `/book?sim=error`, `/book?sim=slow`, `/book?sim=nomatch` force those states.
 - `PUBLIC_BOOKING_MODE=embedded` → `/book` renders the hosted-page placeholder.

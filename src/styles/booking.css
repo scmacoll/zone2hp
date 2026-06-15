@@ -97,9 +97,9 @@
     color: var(--ink-2);
 }
 .book .steps__item.is-done .steps__num {
-    background: var(--ink);
+    background: var(--accent-deep);
     color: var(--paper);
-    border-color: var(--ink);
+    border-color: var(--accent-deep);
 }
 .book a.steps__btn:hover {
     color: var(--accent-deep);
@@ -194,7 +194,6 @@
     margin-top: var(--space-md);
     padding: var(--space-md);
     background: var(--grad-stone-cool);
-    border: var(--border-hairline);
     border-radius: var(--radius-md);
 }
 .book .pcard__photo,
@@ -274,8 +273,8 @@
     border-color: var(--chrome-cool);
 }
 .book .date.is-selected {
-    background: var(--ink);
-    border-color: var(--ink);
+    background: var(--accent-deep);
+    border-color: var(--accent-deep);
 }
 .book .date__wd {
     font-family: var(--font-mono);
@@ -292,7 +291,7 @@
     white-space: nowrap;
 }
 .book .date.is-selected .date__wd {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
 }
 .book .date.is-selected .date__dm {
     color: var(--paper);
@@ -381,7 +380,9 @@
     resize: vertical;
     min-height: 5rem;
 }
-.book .field input[aria-invalid="true"] {
+.book .field input[aria-invalid="true"],
+.book .field select[aria-invalid="true"],
+.book .funding-form select[aria-invalid="true"] {
     border-color: var(--accent-deep);
 }
 .book .field__error {
@@ -672,8 +673,8 @@
     border-color: var(--chrome-cool);
 }
 .book .seg__btn.is-selected {
-    background: var(--ink);
-    border-color: var(--ink);
+    background: var(--accent-deep);
+    border-color: var(--accent-deep);
     color: var(--paper);
 }
 .book .scope-readout {

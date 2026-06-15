@@ -52,6 +52,9 @@ const fundingEnabled = bookingConfig.fundingEnabled;
             <button type="button" class="seg__btn" data-val="treatment">Treatment only</button>
             <button type="button" class="seg__btn" data-val="rehab">Rehab only</button>
           </div>
+          <p class="scope-hint" data-norm-hint hidden>
+            Treatment and rehab is the usual choice for a first visit. You can change this.
+          </p>
         </fieldset>
 
         <label class="check" data-lapsed-row>
@@ -114,7 +117,7 @@ const fundingEnabled = bookingConfig.fundingEnabled;
                 </div>
               </div>
               <p class="field__error" data-funding-error hidden>
-                Add your fund and member number to estimate, or clear these fields to skip.
+                To use your cover, select your fund and complete all three numbers. Or clear these fields to skip.
               </p>
 
               <div class="funding-result" data-result hidden>
@@ -159,6 +162,7 @@ const fundingEnabled = bookingConfig.fundingEnabled;
     formatAud,
     canContinueFunding,
     fundingComplete,
+    fundingEngaged,
     type FundingFields,
   } from '../../lib/booking/funding';
 
@@ -218,6 +222,19 @@ const fundingEnabled = bookingConfig.fundingEnabled;
     refresh();
   });
 
+  // New patients: treatment & rehab is the usual first visit. Pre-select it (an
+  // areas choice is still needed to estimate) and surface the hint.
+  if (isNew) {
+    const both = $<HTMLButtonElement>('[data-wants] .seg__btn[data-val="both"]');
+    if (both) {
+      $$('[data-wants] .seg__btn').forEach((b) => b.classList.remove('is-selected'));
+      both.classList.add('is-selected');
+      wants = 'both';
+      computeEstimate();
+    }
+    $('[data-norm-hint]')?.removeAttribute('hidden');
+  }
+
   // ---- Funding section ----
   const hasFunding = !!$('[data-acc-panel="funding"]');
 
@@ -251,16 +268,25 @@ const fundingEnabled = bookingConfig.fundingEnabled;
       result?.setAttribute('hidden', '');
     }
 
+    // Hide the cover prompt once the section is continuable again; it is shown
+    // only on a blocked Continue attempt (markFundingErrors), not while typing.
     const warn = $('[data-funding-error]');
-    if (warn) warn.hidden = canContinueFunding(f);
+    if (warn && canContinueFunding(f)) warn.hidden = true;
     const meta = $('[data-acc-summary="funding"]');
     if (meta) meta.textContent = est ? `gap ${formatAud(est.gapCents)}` : '';
   }
 
   ['[data-fund]', '[data-member]', '[data-card-issue]', '[data-reference]'].forEach((sel) => {
     const el = $(sel);
-    el?.addEventListener('input', refresh);
-    el?.addEventListener('change', refresh);
+    const onChange = () => {
+      // Clear a field's error border once it has a value, and drop all cover
+      // borders once the section is in a continuable state (empty or complete).
+      if (($<HTMLInputElement>(sel)?.value ?? '').trim() !== '') $(sel)?.setAttribute('aria-invalid', 'false');
+      if (canContinueFunding(fundingFields())) clearFundingErrors();
+      refresh();
+    };
+    el?.addEventListener('input', onChange);
+    el?.addEventListener('change', onChange);
   });
 
   // ---- Accordion ----
@@ -286,15 +312,16 @@ const fundingEnabled = bookingConfig.fundingEnabled;
   // ---- Continue (footer action) ----
   const cont = $<HTMLAnchorElement>('[data-continue]');
 
-  function canContinue(): boolean {
-    if (!estimate) return false;
-    if (current === 'visit') return true; // visit complete; advances to funding or time
-    return canContinueFunding(fundingFields());
+  // The button enables once we have a duration estimate. Cover correctness is
+  // checked on click instead, so we can point at the field that needs completing
+  // (an empty cover and a fully complete cover both pass; partial is blocked).
+  function canAdvance(): boolean {
+    return !!estimate;
   }
 
   function refresh(): void {
     refreshFunding();
-    cont?.setAttribute('aria-disabled', canContinue() ? 'false' : 'true');
+    cont?.setAttribute('aria-disabled', canAdvance() ? 'false' : 'true');
   }
 
   function goToTime(): void {
@@ -304,11 +331,38 @@ const fundingEnabled = bookingConfig.fundingEnabled;
     window.location.href = buildStepUrl('time', { ...params, dur: durationToken(estimate), fund });
   }
 
+  function clearFundingErrors(): void {
+    ['[data-fund]', '[data-member]', '[data-card-issue]', '[data-reference]'].forEach((sel) =>
+      $(sel)?.setAttribute('aria-invalid', 'false'),
+    );
+  }
+
+  // Flag the specific cover fields that still need completing. Only relevant once
+  // the user has started entering card numbers (an empty cover is allowed).
+  function markFundingErrors(): void {
+    const f = fundingFields();
+    if (!fundingEngaged(f)) {
+      clearFundingErrors();
+      return;
+    }
+    const mark = (sel: string, ok: boolean) => $(sel)?.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    mark('[data-member]', f.memberNumber.trim() !== '');
+    mark('[data-card-issue]', f.cardIssueNumber.trim() !== '');
+    mark('[data-reference]', f.referenceNumber.trim() !== '');
+    mark('[data-fund]', !!f.fundId);
+    $('[data-funding-error]')?.removeAttribute('hidden');
+    $('[aria-invalid="true"]')?.focus();
+  }
+
   cont?.addEventListener('click', (event) => {
     event.preventDefault();
-    if (cont.getAttribute('aria-disabled') === 'true') return;
-    if (current === 'visit' && hasFunding) {
-      openSection('funding'); // finish the visit section, unfold cover
+    if (cont.getAttribute('aria-disabled') === 'true') return; // no duration estimate yet
+    // Cover is optional and never forced open: continue straight to time. Only if
+    // the user has opened it and left a partial set do we block and (re)open it to
+    // show which field needs completing.
+    if (hasFunding && !canContinueFunding(fundingFields())) {
+      if (current !== 'funding') openSection('funding');
+      markFundingErrors();
       return;
     }
     goToTime();
