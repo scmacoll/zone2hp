@@ -152,6 +152,36 @@ layout or copy change; build (12 pages) + the 61 Vitest tests stay green.
 - Dev note: this worktree's `/book` preview ran on **port 4322** (`dev-wt` config added
   to `.claude/launch.json`) because 4321 was held by a server in another worktree.
 
+### Phase 6 — owner-review refinements + staging deploy (2026-06-16)
+Client-review round on the booking funnel. Build (12 pages) + 68 Vitest tests green.
+- **Existing-patient demo**: single hardcoded credential, now PRE-FILLED in the inputs
+  (Jane Doe / janedoe@gmail.com) so one click proceeds. Strict match (exact name AND
+  email); the "email or mobile" field is format-validated (`isEmailOrMobile` in
+  `patients.ts`). Old alex/jordan/sam records removed.
+- **Visit step**: "Treatment & rehab" pre-selected for new patients with a "usual first
+  visit" hint. Continue goes straight to the next page — the cover section is NOT
+  force-opened. Partial cover still blocks and re-opens to flag the incomplete field(s).
+- **Private health cover gating** (`funding.ts`): continue allowed only when cover is
+  empty or fully complete (fund + all three numbers); partial blocks with red/orange
+  borders on the specific fields (incl. the fund `select`). `fundingComplete` now needs
+  all three numbers (tests updated).
+- **Colours** (client direction): no flat charcoal/black fills. Stepper PROGRESS badges =
+  brand orange (`--accent-deep`); SELECTION tiles (chosen date, chosen visit options) =
+  a new muted steel-blue `--select` (#3E5C76) so orange (flow) and blue (selection) never
+  compete. Dr profile card is borderless on the cool stone. A2 hero dark panels + Z² logo
+  LEFT as-is (owner-directed design).
+- **Confirmation page**: stepper removed (guarded by `!locked` in `BookingShell`).
+- **Cool stone extended to accounts**: member-area cards + auth success panel →
+  `--grad-stone-cool`.
+- **Visit composition in the summary**: new `visit` param (both/treatment/rehab) carried
+  from the scope step; the summary shows it as a sub-line under the duration in the
+  address style ("45 minutes" / "Treatment & rehab"). Helper `visitWantsLabel` (duration.ts).
+- **Deploy**: `staging` branch created off this work; `staging.zone2hp.com` (Vercel,
+  branch-assigned, Squarespace CNAME) is the client-review URL. `main` = production
+  (`zone2hp.com`) stays untouched until sign-off. Push to `staging` to update the review
+  site; merge to `main` only when ready for customers (and decide `bookingConfig.linksVisible`
+  + which pages drop `noindex`).
+
 ## Component contracts worth knowing
 
 - **Hero** (`src/components/Hero.astro`): gradient (`--grad-hero`) is the always-on
