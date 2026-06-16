@@ -481,6 +481,96 @@
     font-size: var(--step-small);
 }
 
+/* Consent checkboxes grouped tightly (the form's field gap is too loose for
+   related opt-ins, and the global .check margin doubled the spacing). */
+.book .details-consent {
+    display: grid;
+    gap: var(--space-sm);
+}
+.book .details-consent .check {
+    margin-top: 0;
+}
+.book .details-consent .privacy {
+    margin: 0;
+}
+
+/* ---- Review phase (Details step) ---------------------------------------- */
+.book .review {
+    display: grid;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+}
+.book .review__lede {
+    margin: 0;
+    color: var(--ink-2);
+    max-width: 60ch;
+}
+.book .review__lede:focus {
+    outline: none;
+}
+.book .review__group {
+    padding: var(--space-md);
+    background: var(--grad-stone-cool);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+}
+.book .review__ghrow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+.book .review__gh {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--step-h3);
+}
+.book .review__ghrow .review__gh {
+    margin-bottom: 0;
+}
+.book .review__list {
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+}
+.book .review__row {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: var(--space-sm);
+}
+@media (max-width: 26rem) {
+    .book .review__row {
+        grid-template-columns: 1fr;
+        gap: 0.1rem;
+    }
+}
+.book .review__row dt {
+    margin: 0;
+    padding-top: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+}
+.book .review__row dd {
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.45;
+}
+
+/* In the review phase the side summary steps aside (the review already shows
+   every detail) and the review takes the full width. */
+.book[data-phase="review"] .bsummary {
+    display: none;
+}
+.book[data-booking-step="details"][data-phase="review"] .book__layout.has-foot {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "main"
+        "foot";
+}
+
 /* ---- Mismatch (existing patient not found) ------------------------------ */
 .book .mismatch {
     padding: var(--space-md);
