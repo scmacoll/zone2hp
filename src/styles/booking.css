@@ -524,32 +524,35 @@
 .book .review__list {
     margin: 0;
     display: grid;
-    gap: var(--space-sm);
+    grid-template-columns: max-content 1fr;
+    gap: var(--space-sm) var(--space-lg);
+    align-items: baseline;
 }
-.book .review__row {
-    display: grid;
-    grid-template-columns: 6rem 1fr;
-    gap: var(--space-sm);
-}
-@media (max-width: 26rem) {
-    .book .review__row {
-        grid-template-columns: 1fr;
-        gap: 0.1rem;
-    }
-}
-.book .review__row dt {
+.book .review__list dt {
     margin: 0;
-    padding-top: 0.15rem;
     font-family: var(--font-mono);
     font-size: var(--step-label);
     letter-spacing: var(--track-label);
     text-transform: uppercase;
     color: var(--ink-2);
 }
-.book .review__row dd {
+.book .review__list dd {
     margin: 0;
     color: var(--ink);
     line-height: 1.45;
+}
+/* Narrow: stack each label above its value, grouped in pairs. */
+@media (max-width: 26rem) {
+    .book .review__list {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+    }
+    .book .review__list dt {
+        margin-top: var(--space-sm);
+    }
+    .book .review__list dt:first-of-type {
+        margin-top: 0;
+    }
 }
 
 /* In the review phase the side summary steps aside (the review already shows

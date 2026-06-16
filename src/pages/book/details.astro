@@ -183,14 +183,11 @@ import BookingShell from '../../components/booking/BookingShell.astro';
       dl.replaceChildren();
       for (const [key, value] of rows) {
         if (!value) continue;
-        const row = document.createElement('div');
-        row.className = 'review__row';
         const dt = document.createElement('dt');
         dt.textContent = key;
         const dd = document.createElement('dd');
         dd.textContent = value;
-        row.append(dt, dd);
-        dl.append(row);
+        dl.append(dt, dd);
       }
     }
 
