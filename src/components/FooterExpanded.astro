@@ -72,6 +72,8 @@ const year = 2026;
                     class="ff__subscribe"
                     action="https://formspree.io/f/REPLACE_WITH_FORMSPREE_ID"
                     method="POST"
+                    data-subscribe
+                    novalidate
                 >
                     <input
                         class="ff__input"
@@ -81,6 +83,7 @@ const year = 2026;
                         autocomplete="email"
                         placeholder="EMAIL"
                         aria-label="Your email address"
+                        aria-describedby="ff-sub-msg"
                         required
                         pattern="[^@\\s]+@[^@\\s]+\\.[^@\\s]+"
                     />
@@ -96,7 +99,7 @@ const year = 2026;
                     <input
                         type="hidden"
                         name="_subject"
-                        value="Zone Two — new keep-in-touch signup"
+                        value="Zone Two: new keep in touch signup"
                     />
                     <button
                         class="ff__send"
@@ -119,6 +122,22 @@ const year = 2026;
                         </svg>
                     </button>
                 </form>
+                <p
+                    class="ff__submsg ff__submsg--error"
+                    id="ff-sub-msg"
+                    data-sub-error
+                    role="alert"
+                    hidden
+                >
+                </p>
+                <p
+                    class="ff__submsg ff__submsg--ok"
+                    data-sub-ok
+                    role="status"
+                    tabindex="-1"
+                    hidden
+                >
+                </p>
             </section>
         </div>
 
@@ -298,6 +317,24 @@ const year = 2026;
         background: var(--a1-volt-press, var(--accent-deep));
     }
 
+    /* Keep-in-touch inline feedback (validation error / success confirmation). */
+    .ff__submsg {
+        margin: 0.6rem 0 0;
+        max-width: 22rem;
+        font-size: var(--step-small);
+        line-height: 1.45;
+    }
+    .ff__submsg--error {
+        color: var(--accent-deep);
+    }
+    .ff__submsg--ok {
+        color: var(--ink);
+    }
+    .ff__submsg--ok:focus-visible {
+        outline: 2px solid var(--ff-volt);
+        outline-offset: 3px;
+    }
+
     /* Giant clipped wordmark watermark, the Myo move. Decorative. */
     .ff__brandrow {
         position: relative;
@@ -338,3 +375,67 @@ const year = 2026;
         margin: 0;
     }
 </style>
+
+<script>
+    // Keep-in-touch: validate the email inline, then submit to Formspree without
+    // leaving the page (Formspree emails info@zone2hp.com per signup; export the
+    // submissions to a spreadsheet later). Progressive enhancement: with no JS the
+    // form still posts to Formspree's own page.
+    const form = document.querySelector<HTMLFormElement>('[data-subscribe]');
+    if (form) {
+        const input = form.querySelector<HTMLInputElement>('input[name="email"]');
+        const errorEl = document.querySelector<HTMLElement>('[data-sub-error]');
+        const okEl = document.querySelector<HTMLElement>('[data-sub-ok]');
+        const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+        const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+        // Until a real Formspree form id is pasted in, run in preview mode (show the
+        // success state without actually sending).
+        const configured = !form.action.includes('REPLACE_WITH_FORMSPREE_ID');
+
+        const showError = (message: string) => {
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.hidden = false;
+            }
+            input?.setAttribute('aria-invalid', 'true');
+        };
+        const clearError = () => {
+            if (errorEl) errorEl.hidden = true;
+            input?.removeAttribute('aria-invalid');
+        };
+        input?.addEventListener('input', clearError);
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const value = input?.value.trim() ?? '';
+            if (!isEmail(value)) {
+                showError('Please enter a valid email address.');
+                input?.focus();
+                return;
+            }
+            clearError();
+            if (button) button.disabled = true;
+            try {
+                if (configured) {
+                    const res = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: { Accept: 'application/json' },
+                    });
+                    if (!res.ok) throw new Error('Request failed');
+                } else {
+                    console.warn('[keep-in-touch] Formspree not configured; preview success only.');
+                }
+                form.hidden = true;
+                if (okEl) {
+                    okEl.textContent = `Thanks, you're on the list. We'll email you at ${value} when we open in Eastwood.`;
+                    okEl.hidden = false;
+                    okEl.focus();
+                }
+            } catch {
+                if (button) button.disabled = false;
+                showError('Something went wrong. Please try again, or email us at info@zone2hp.com.');
+            }
+        });
+    }
+</script>
