@@ -20,6 +20,8 @@ import BookingShell from '../../components/booking/BookingShell.astro';
     <p class="status-line status-line--error">We could not load times just now.</p>
     <button type="button" class="btn btn--ghost" data-retry>Try again</button>
   </div>
+  <a slot="action" class="btn btn--solid" data-continue aria-disabled="true">Continue</a>
+
   <noscript>
     <p class="status-line">
       Choosing a time needs JavaScript. To book, email
@@ -40,6 +42,7 @@ import BookingShell from '../../components/booking/BookingShell.astro';
   const slotsByDate = new Map<string, AvailabilitySlot[]>();
   let dateOrder: string[] = [];
   let selectedDate: string | null = null;
+  let selectedSlot: string | null = null;
 
   const dayFmt = new Intl.DateTimeFormat('en-AU', { weekday: 'long', day: 'numeric', month: 'long' });
   const timeFmt = new Intl.DateTimeFormat('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -148,28 +151,58 @@ import BookingShell from '../../components/booking/BookingShell.astro';
     }
   }
 
+  // The visible day list: every open day (Mon-Sat) from the first to the last
+  // available date. Days with no slots are shown as fully booked.
+  function buildDays(): { key: string; date: Date; full: boolean }[] {
+    if (dateOrder.length === 0) return [];
+    const fromKey = (k: string) => {
+      const [y, m, d] = k.split('-').map(Number);
+      return new Date(y!, (m ?? 1) - 1, d!);
+    };
+    const end = fromKey(dateOrder[dateOrder.length - 1]!);
+    const days: { key: string; date: Date; full: boolean }[] = [];
+    for (let d = fromKey(dateOrder[0]!); d <= end; d.setDate(d.getDate() + 1)) {
+      if (d.getDay() === 0) continue; // Sunday closed
+      const key = dateKeyOf(d);
+      const has = (slotsByDate.get(key)?.length ?? 0) > 0;
+      days.push({ key, date: new Date(d), full: !has });
+    }
+    return days;
+  }
+
   function renderDates(): void {
     const wrap = $('[data-dates]');
     if (!wrap) return;
     wrap.replaceChildren();
-    for (const key of dateOrder) {
-      const date = new Date(slotsByDate.get(key)![0]!.startIso);
+    for (const day of buildDays()) {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'date' + (key === selectedDate ? ' is-selected' : '');
-      btn.setAttribute('aria-pressed', key === selectedDate ? 'true' : 'false');
+      const selected = !day.full && day.key === selectedDate;
+      btn.className = 'date' + (day.full ? ' date--full' : '') + (selected ? ' is-selected' : '');
       const wd = document.createElement('span');
       wd.className = 'date__wd';
-      wd.textContent = wdFmt.format(date);
+      wd.textContent = wdFmt.format(day.date);
       const dm = document.createElement('span');
       dm.className = 'date__dm';
-      dm.textContent = dmFmt.format(date);
+      dm.textContent = dmFmt.format(day.date);
       btn.append(wd, dm);
-      btn.addEventListener('click', () => {
-        selectedDate = key;
-        renderDates();
-        renderTimes();
-      });
+      if (day.full) {
+        btn.disabled = true;
+        btn.setAttribute('aria-label', `${dayFmt.format(day.date)}, fully booked`);
+        const tag = document.createElement('span');
+        tag.className = 'date__full';
+        tag.textContent = 'Full';
+        btn.append(tag);
+      } else {
+        btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        btn.addEventListener('click', () => {
+          selectedDate = day.key;
+          selectedSlot = null; // changing the day clears the chosen time
+          renderDates();
+          renderTimes();
+          syncContinue();
+        });
+      }
       wrap.append(btn);
     }
   }
@@ -196,13 +229,21 @@ import BookingShell from '../../components/booking/BookingShell.astro';
       grid.className = 'timegroup__slots';
       for (const slot of groupSlots) {
         const date = new Date(slot.startIso);
+        const isSel = slot.startIso === selectedSlot;
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'slot';
+        btn.className = 'slot' + (isSel ? ' is-selected' : '');
         btn.textContent = timeFmt.format(date);
+        btn.setAttribute('aria-pressed', isSel ? 'true' : 'false');
         btn.setAttribute('aria-label', `${timeFmt.format(date)}, ${dayFmt.format(date)}`);
         btn.addEventListener('click', () => {
-          window.location.href = buildStepUrl('details', { ...params, slot: slot.startIso });
+          selectedSlot = slot.startIso;
+          document.querySelectorAll<HTMLButtonElement>('[data-times] .slot').forEach((s) => {
+            const on = s === btn;
+            s.classList.toggle('is-selected', on);
+            s.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          syncContinue();
         });
         grid.append(btn);
       }
@@ -219,6 +260,17 @@ import BookingShell from '../../components/booking/BookingShell.astro';
       ? `Appointment length: ${estimate.isMinimum ? '' : 'about '}${formatDuration(estimate)}.`
       : 'Appointment length is confirmed when you book.';
   }
+
+  // Continue is enabled only once a time (and therefore a date) is chosen.
+  function syncContinue(): void {
+    $('[data-continue]')?.setAttribute('aria-disabled', selectedSlot ? 'false' : 'true');
+  }
+
+  $('[data-continue]')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (!selectedSlot) return;
+    window.location.href = buildStepUrl('details', { ...params, slot: selectedSlot });
+  });
 
   $('[data-retry]')?.addEventListener('click', () => void load());
   void load();

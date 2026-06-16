@@ -256,6 +256,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.15rem;
     flex: 0 0 auto;
     min-width: 4rem;
@@ -297,6 +298,30 @@
     color: var(--paper);
 }
 
+/* Fully booked day: visible but not selectable (rendered as a disabled button).
+   Muted, dashed border and a "Full" tag read as unavailable without a hard block. */
+.book .date--full {
+    cursor: default;
+    background: var(--stone-cool);
+    border-style: dashed;
+    border-color: var(--chrome-line);
+}
+.book .date--full:hover {
+    border-color: var(--chrome-line);
+}
+.book .date--full .date__wd,
+.book .date--full .date__dm {
+    color: var(--ink-3);
+}
+.book .date__full {
+    margin-top: 0.05rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-3);
+}
+
 /* ---- Time groups -------------------------------------------------------- */
 .book .timegroup {
     margin-top: var(--space-md);
@@ -331,6 +356,14 @@
 .book .slot:hover {
     background: var(--stone-cool);
     border-color: var(--accent);
+}
+.book .slot.is-selected {
+    background: var(--select);
+    border-color: var(--select);
+    color: var(--paper);
+}
+.book .slot.is-selected:hover {
+    background: var(--select);
 }
 .book .duration-note {
     margin-top: var(--space-md);

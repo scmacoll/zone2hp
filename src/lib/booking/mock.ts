@@ -99,11 +99,16 @@ function generateSlots(practitionerId: string): AvailabilitySlot[] {
   const slots: AvailabilitySlot[] = [];
   const seed = practitionerId.charCodeAt(1) || 1;
   const first = startOfTomorrow();
+  let openDay = -1;
   for (let dayOffset = 0; dayOffset < 28; dayOffset++) {
     const date = new Date(first);
     date.setDate(first.getDate() + dayOffset);
     const weekday = date.getDay();
     if (weekday === 0) continue; // Sunday closed
+    openDay++;
+    // Leave the 2nd open day fully booked (no slots) — a deterministic example of
+    // a "fully booked" day, always within the first visible week of the date strip.
+    if (openDay === 1) continue;
     const lastHour = weekday === 6 ? 11 : 18; // Saturday mornings only (9am-12pm)
     for (let hour = 9; hour <= lastHour; hour++) {
       if ((hour + dayOffset + seed) % 3 === 0) continue; // some slots already taken
