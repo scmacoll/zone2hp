@@ -257,6 +257,14 @@ import BookingShell from '../../components/booking/BookingShell.astro';
           notes: notes || undefined,
           contact: { name, email, phone: phone || undefined, marketingOptIn: data.get('marketing') === 'on' },
         });
+        // Hand the contact details to the confirmation page through a one-time,
+        // clearly-fenced sessionStorage key — they are never put in the URL, and a
+        // real backend would re-fetch the booking by reference. Cleared on read.
+        try {
+          sessionStorage.setItem('z2-confirm', JSON.stringify({ ref: result.reference, name, email, phone, notes }));
+        } catch {
+          /* storage unavailable — the confirmation just omits the contact block */
+        }
         window.location.href = buildStepUrl('confirm', { ...params, ref: result.reference });
       } catch {
         setBusy(false);

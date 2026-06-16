@@ -178,7 +178,12 @@ notes; pre-filled and LOCKED for a matched existing patient) → `/book/confirm`
 State travels in the URL query string — only NON-sensitive values (`customer`, `pid`
 (opaque existing-patient id), `type`, `dur`, `visit` (treatment/rehab composition), `fund`,
 `slot`, `ref`); name/email/phone/notes
-are never in a URL. The appointment length carries as a token: `45` or `60+` (an open-ended
+are never in a URL. The one exception to "no browser storage" is a single, one-time
+`z2-confirm` **sessionStorage** key: the Details step writes the entered contact details to
+it just before navigating, and `/book/confirm` reads them once (to show them in the summary)
+then deletes the key. It is clearly fenced demo-scaffolding — a real SSR backend would
+re-fetch the booking by `ref` instead, and the contact details still never go in the URL.
+The appointment length carries as a token: `45` or `60+` (an open-ended
 "minimum 60 minutes"). Because the site
 is STATIC, page frontmatter has no per-request query string, so the param-dependent
 chrome (summary values, stepper links, Change links, type-tile hrefs) is hydrated
