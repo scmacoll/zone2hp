@@ -88,7 +88,7 @@ import BookingShell from '../../components/booking/BookingShell.astro';
 </BookingShell>
 
 <script>
-  import { submitBookingRequest, getPatient } from '../../lib/booking/client';
+  import { submitBookingRequest, getPatient, fetchPractitioners } from '../../lib/booking/client';
   import { getAuthProvider } from '../../lib/auth/index';
   import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
   import { bookingTypeInfo } from '../../lib/booking/funnel';
@@ -105,8 +105,16 @@ import BookingShell from '../../components/booking/BookingShell.astro';
     const backLink = document.querySelector<HTMLAnchorElement>('.book__back');
     const heading = document.querySelector<HTMLElement>('.book__title');
     let phase: 'edit' | 'review' = 'edit';
+    let practitionerName = '';
 
     void prefill();
+    void loadPractitioner();
+
+    async function loadPractitioner(): Promise<void> {
+      if (!params.slot) return;
+      const p = (await fetchPractitioners(params.type))[0];
+      if (p) practitionerName = `${p.honorific ? p.honorific + ' ' : ''}${p.name}`;
+    }
 
     function setVal(name: string, value: string, lock: boolean): void {
       const input = form!.querySelector<HTMLInputElement>(`[name="${name}"]`);
@@ -196,6 +204,7 @@ import BookingShell from '../../components/booking/BookingShell.astro';
         ['Clinic', 'Zone Two Health and Performance, Suite 104 / 2 Rowe St, Eastwood NSW 2122'],
         ['Patient', params.customer === 'new' ? 'New patient' : params.customer === 'existing' ? 'Existing patient' : ''],
         ['Type', params.type ? (bookingTypeInfo(params.type)?.label ?? '') : ''],
+        ['Practitioner', practitionerName],
         ['Visit', [params.visit ? visitWantsLabel(params.visit) : '', dur ? formatDuration(dur) : ''].filter(Boolean).join(', ')],
       ];
       if (params.fund && dur) {

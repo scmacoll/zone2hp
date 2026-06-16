@@ -14,8 +14,9 @@
         "main"
         "summary";
 }
-/* The action row (.step__foot) is a layout-level child, so on the Details step
-   at narrow widths the summary can sit between the form and the actions. */
+/* The action row (.step__foot) is a layout-level grid child (placed via the
+   areas below), which the Details review phase relies on to drop the foot below
+   the full-width review. */
 .book__layout.has-foot {
     grid-template-areas:
         "main"
@@ -34,14 +35,6 @@
         grid-template-areas:
             "main summary"
             "foot summary";
-    }
-}
-@media (max-width: 59.99rem) {
-    .book[data-booking-step="details"] .book__layout.has-foot {
-        grid-template-areas:
-            "main"
-            "summary"
-            "foot";
     }
 }
 .book__main {
@@ -717,64 +710,10 @@
     }
 }
 .book .bsummary__title {
-    font-size: var(--step-h3);
-}
-/* Non-details summaries: a plain bordered heading. */
-.book h2.bsummary__title {
     margin: 0 0 var(--space-sm);
     padding-bottom: var(--space-sm);
     border-bottom: var(--border-hairline);
-}
-/* Details summary: a disclosure button in the heading (foldable at narrow). */
-.book .bsummary__heading {
-    margin: 0;
-}
-.book .bsummary__toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-sm);
-    width: 100%;
-    margin: 0 0 var(--space-sm);
-    padding: 0 0 var(--space-sm);
-    border: 0;
-    border-bottom: var(--border-hairline);
-    background: none;
-    color: inherit;
-    text-align: left;
-    cursor: default;
-}
-.book .bsummary__toggle .bsummary__title {
-    font-weight: 600;
-}
-.book .bsummary__chev {
-    display: none;
-    flex: none;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-right: 2px solid var(--ink-3);
-    border-bottom: 2px solid var(--ink-3);
-    transform: rotate(45deg);
-    transition: transform 150ms var(--ease-out);
-}
-.book .bsummary.is-collapsed .bsummary__chev {
-    transform: rotate(-45deg);
-}
-@media (max-width: 59.99rem) {
-    .book[data-booking-step="details"] .bsummary__toggle {
-        cursor: pointer;
-    }
-    .book[data-booking-step="details"] .bsummary__chev {
-        display: inline-block;
-    }
-    .book[data-booking-step="details"] .bsummary.is-collapsed .bsummary__panel {
-        display: none;
-    }
-}
-@media (prefers-reduced-motion: reduce) {
-    .book .bsummary__chev {
-        transition: none;
-    }
+    font-size: var(--step-h3);
 }
 .book .bsummary__block {
     display: grid;

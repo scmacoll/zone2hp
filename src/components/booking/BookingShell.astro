@@ -119,24 +119,7 @@ const ICON: Record<string, string> = {
       </div>
 
       <aside class="bsummary" aria-label="Booking summary">
-        {
-          step === 'details' ? (
-            <h2 class="bsummary__heading">
-              <button
-                type="button"
-                class="bsummary__toggle"
-                data-summary-toggle
-                aria-controls="bsummary-panel"
-                aria-expanded="true"
-              >
-                <span class="bsummary__title">Booking summary</span>
-                <span class="bsummary__chev" aria-hidden="true" />
-              </button>
-            </h2>
-          ) : (
-            <h2 class="bsummary__title">Booking summary</h2>
-          )
-        }
+        <h2 class="bsummary__title">Booking summary</h2>
 
         <div class="bsummary__panel" id="bsummary-panel">
           <div class="bsummary__block">
@@ -214,6 +197,7 @@ const ICON: Record<string, string> = {
 
 <script>
   import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
+  import { getPatient, fetchPractitioners } from '../../lib/booking/client';
   import { bookingTypeInfo } from '../../lib/booking/funnel';
   import { fundName, estimateFunding, priceForDuration, formatAud } from '../../lib/booking/funding';
   import { parseDurationToken, formatDuration, visitWantsLabel } from '../../lib/booking/duration';
@@ -305,24 +289,32 @@ const ICON: Record<string, string> = {
     }
   }
 
-  // 4. Details step only: at narrow widths the Booking summary sits between the
-  // form and the actions and becomes a foldable panel, folded by default.
-  if (document.querySelector<HTMLElement>('[data-booking-step]')?.dataset.bookingStep === 'details') {
-    const summary = document.querySelector<HTMLElement>('.bsummary');
-    const toggle = summary?.querySelector<HTMLButtonElement>('[data-summary-toggle]');
-    if (summary && toggle) {
-      const narrow = window.matchMedia('(max-width: 59.99rem)');
-      const setExpanded = (expanded: boolean) => {
-        summary.classList.toggle('is-collapsed', !expanded);
-        toggle.setAttribute('aria-expanded', String(expanded));
-      };
-      const reset = () => setExpanded(!narrow.matches); // folded when narrow, open when wide
-      reset();
-      narrow.addEventListener('change', reset);
-      toggle.addEventListener('click', () => {
-        if (!narrow.matches) return; // only foldable at narrow widths
-        setExpanded(summary.classList.contains('is-collapsed'));
-      });
-    }
+  // 4. Existing patient: show their name and contact under "Existing patient" in
+  // the summary (resolved from the opaque pid; a real backend authorises this).
+  // Same style as the address: line 1 the full name, line 2 the email or mobile.
+  if (params.customer === 'existing' && params.pid) {
+    const pid = params.pid;
+    void (async () => {
+      const record = await getPatient(pid);
+      const subEl = document.querySelector<HTMLElement>('[data-summary-sub="customer"]');
+      if (!record || !subEl) return;
+      const contact = record.email || record.phone || '';
+      subEl.textContent = [`${record.firstName} ${record.lastName}`.trim(), contact].filter(Boolean).join('\n');
+      subEl.style.whiteSpace = 'pre-line';
+      subEl.hidden = false;
+    })();
+  }
+
+  // 5. Once a time is chosen, show the practitioner under the consultation type
+  // (same style as the address). Single practitioner today, so we take the first.
+  if (params.slot) {
+    void (async () => {
+      const list = await fetchPractitioners(params.type);
+      const p = list[0];
+      const subEl = document.querySelector<HTMLElement>('[data-summary-sub="type"]');
+      if (!p || !subEl) return;
+      subEl.textContent = `${p.honorific ? p.honorific + ' ' : ''}${p.name}`;
+      subEl.hidden = false;
+    })();
   }
 </script>
