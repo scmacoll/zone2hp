@@ -10,15 +10,42 @@
     display: grid;
     gap: var(--space-lg);
     grid-template-columns: 1fr;
+    grid-template-areas:
+        "main"
+        "summary";
+}
+/* The action row (.step__foot) is a layout-level child, so on the Details step
+   at narrow widths the summary can sit between the form and the actions. */
+.book__layout.has-foot {
+    grid-template-areas:
+        "main"
+        "foot"
+        "summary";
 }
 @media (min-width: 60rem) {
     .book__layout {
         grid-template-columns: minmax(0, 1fr) 19rem;
         align-items: start;
-        gap: var(--space-xl);
+        column-gap: var(--space-xl);
+        row-gap: var(--space-lg);
+        grid-template-areas: "main summary";
+    }
+    .book__layout.has-foot {
+        grid-template-areas:
+            "main summary"
+            "foot summary";
+    }
+}
+@media (max-width: 59.99rem) {
+    .book[data-booking-step="details"] .book__layout.has-foot {
+        grid-template-areas:
+            "main"
+            "summary"
+            "foot";
     }
 }
 .book__main {
+    grid-area: main;
     min-width: 0;
 }
 .book__intro {
@@ -122,11 +149,11 @@
 /* Bottom action row: Back at bottom-left, next to the step's primary action
    (Cliniko/Calendly convention). Back alone sits left; with an action it spreads. */
 .book .step__foot {
+    grid-area: foot;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-md);
-    margin-top: var(--space-lg);
     padding-top: var(--space-md);
     border-top: var(--border-hairline);
 }
@@ -585,6 +612,7 @@
 
 /* ---- Booking summary ---------------------------------------------------- */
 .book .bsummary {
+    grid-area: summary;
     align-self: start;
     padding: var(--space-md);
     background: var(--grad-stone-cool);
@@ -599,10 +627,64 @@
     }
 }
 .book .bsummary__title {
+    font-size: var(--step-h3);
+}
+/* Non-details summaries: a plain bordered heading. */
+.book h2.bsummary__title {
     margin: 0 0 var(--space-sm);
     padding-bottom: var(--space-sm);
     border-bottom: var(--border-hairline);
-    font-size: var(--step-h3);
+}
+/* Details summary: a disclosure button in the heading (foldable at narrow). */
+.book .bsummary__heading {
+    margin: 0;
+}
+.book .bsummary__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    width: 100%;
+    margin: 0 0 var(--space-sm);
+    padding: 0 0 var(--space-sm);
+    border: 0;
+    border-bottom: var(--border-hairline);
+    background: none;
+    color: inherit;
+    text-align: left;
+    cursor: default;
+}
+.book .bsummary__toggle .bsummary__title {
+    font-weight: 600;
+}
+.book .bsummary__chev {
+    display: none;
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid var(--ink-3);
+    border-bottom: 2px solid var(--ink-3);
+    transform: rotate(45deg);
+    transition: transform 150ms var(--ease-out);
+}
+.book .bsummary.is-collapsed .bsummary__chev {
+    transform: rotate(-45deg);
+}
+@media (max-width: 59.99rem) {
+    .book[data-booking-step="details"] .bsummary__toggle {
+        cursor: pointer;
+    }
+    .book[data-booking-step="details"] .bsummary__chev {
+        display: inline-block;
+    }
+    .book[data-booking-step="details"] .bsummary.is-collapsed .bsummary__panel {
+        display: none;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .book .bsummary__chev {
+        transition: none;
+    }
 }
 .book .bsummary__block {
     display: grid;

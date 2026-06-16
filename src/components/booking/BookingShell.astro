@@ -75,7 +75,7 @@ const ICON: Record<string, string> = {
 >
   <PageHeader />
   <main id="main" class="book" data-booking-step={step}>
-    <div class="book__layout">
+    <div class:list={['book__layout', showFoot && 'has-foot']}>
       <div class="book__main">
         <header class="book__intro">
           <Eyebrow tone="accent">{locked ? 'Confirmation' : 'Booking'}</Eyebrow>
@@ -116,25 +116,30 @@ const ICON: Record<string, string> = {
         )}
 
         <slot />
-
-        {
-          showFoot && (
-            <div class="step__foot">
-              {prevId && !locked && (
-                <a class="book__back" data-step-link={prevId} href={stepPath(prevId)}>
-                  &lsaquo; Back
-                </a>
-              )}
-              <slot name="action" />
-            </div>
-          )
-        }
       </div>
 
       <aside class="bsummary" aria-label="Booking summary">
-        <h2 class="bsummary__title">Booking summary</h2>
+        {
+          step === 'details' ? (
+            <h2 class="bsummary__heading">
+              <button
+                type="button"
+                class="bsummary__toggle"
+                data-summary-toggle
+                aria-controls="bsummary-panel"
+                aria-expanded="true"
+              >
+                <span class="bsummary__title">Booking summary</span>
+                <span class="bsummary__chev" aria-hidden="true" />
+              </button>
+            </h2>
+          ) : (
+            <h2 class="bsummary__title">Booking summary</h2>
+          )
+        }
 
-        <div class="bsummary__block">
+        <div class="bsummary__panel" id="bsummary-panel">
+          <div class="bsummary__block">
           <span class="bsummary__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
               <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" stroke="currentColor" stroke-width="1.6" />
@@ -165,7 +170,21 @@ const ICON: Record<string, string> = {
             </div>
           ))
         }
+        </div>
       </aside>
+
+      {
+        showFoot && (
+          <div class="step__foot">
+            {prevId && !locked && (
+              <a class="book__back" data-step-link={prevId} href={stepPath(prevId)}>
+                &lsaquo; Back
+              </a>
+            )}
+            <slot name="action" />
+          </div>
+        )
+      }
     </div>
   </main>
   <Footer />
@@ -234,4 +253,25 @@ const ICON: Record<string, string> = {
   // 3. Fill the confirmation reference, if present on the page.
   const refEl = document.querySelector<HTMLElement>('[data-ref]');
   if (refEl) refEl.textContent = params.ref ?? '';
+
+  // 4. Details step only: at narrow widths the Booking summary sits between the
+  // form and the actions and becomes a foldable panel, folded by default.
+  if (document.querySelector<HTMLElement>('[data-booking-step]')?.dataset.bookingStep === 'details') {
+    const summary = document.querySelector<HTMLElement>('.bsummary');
+    const toggle = summary?.querySelector<HTMLButtonElement>('[data-summary-toggle]');
+    if (summary && toggle) {
+      const narrow = window.matchMedia('(max-width: 59.99rem)');
+      const setExpanded = (expanded: boolean) => {
+        summary.classList.toggle('is-collapsed', !expanded);
+        toggle.setAttribute('aria-expanded', String(expanded));
+      };
+      const reset = () => setExpanded(!narrow.matches); // folded when narrow, open when wide
+      reset();
+      narrow.addEventListener('change', reset);
+      toggle.addEventListener('click', () => {
+        if (!narrow.matches) return; // only foldable at narrow widths
+        setExpanded(summary.classList.contains('is-collapsed'));
+      });
+    }
+  }
 </script>
