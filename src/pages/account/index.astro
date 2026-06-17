@@ -1,0 +1,200 @@
+---
+// Member area DESIGN preview. Reachable by URL for review. Sign-in is not wired
+// up (no real session on a static site), so this renders the design directly
+// with a visible preview note. It holds no health data, so the lack of a real
+// access boundary is acceptable here (see BOOKING.md). Real protection needs
+// server middleware later.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import { bookingConfig } from '../../lib/booking/config';
+
+// Production gate: when booking is not publicly enabled, accounts are off too.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
+---
+
+<Base
+  title="Your account | Zone Two Health and Performance"
+  description="Your Zone Two Health and Performance account."
+  noindex
+>
+  <PageHeader />
+  <main id="main" class="account">
+    <header class="account__intro">
+      <Eyebrow tone="accent">Account</Eyebrow>
+      <h1 class="account__title">Your account</h1>
+      <p class="account__preview">
+        Preview: this is the member area design. Sign-in is not wired up yet, so the page is shown here
+        for review.
+      </p>
+    </header>
+
+    <div class="member">
+      <section class="card">
+        <h2 class="card__title">Early access</h2>
+        <p class="card__body">
+          Be among the first to know when booking opens and when we publish new training notes. We will
+          email you when there is something worth sharing.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">Member notes</h2>
+        <p class="card__body">
+          Movement and training notes, written generally. This is educational reading, not medical
+          advice or a treatment plan.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">Email preferences</h2>
+        <form class="prefs" data-prefs>
+          <label class="check">
+            <input type="checkbox" name="marketing" checked />
+            <span>Email me updates and early access news.</span>
+          </label>
+          <div class="prefs__actions">
+            <button type="submit" class="btn btn--solid" data-save>Save preferences</button>
+            <p class="prefs__saved" data-saved role="status" hidden>Saved (preview).</p>
+          </div>
+        </form>
+      </section>
+
+      <div class="member__actions">
+        <a class="btn btn--ghost" href="/account/login">Sign out</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  // Cosmetic save confirmation for the preview. No real persistence (no storage).
+  const form = document.querySelector<HTMLFormElement>('[data-prefs]');
+  const saved = document.querySelector<HTMLElement>('[data-saved]');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (saved) saved.hidden = false;
+  });
+  form?.addEventListener('change', () => {
+    if (saved) saved.hidden = true;
+  });
+</script>
+
+<style>
+  .account__intro {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-md);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .account__title {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  }
+  .account__preview {
+    margin-top: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--step-small);
+    color: var(--ink-3);
+  }
+
+  .member {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-bottom: var(--space-2xl);
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  }
+  .card {
+    display: grid;
+    gap: var(--space-xs);
+    align-content: start;
+    padding: var(--space-md);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+    background: var(--grad-stone-cool);
+  }
+  .card__title {
+    font-size: var(--step-h3);
+  }
+  .card__body {
+    color: var(--ink-2);
+  }
+  .prefs {
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .check {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    color: var(--ink-2);
+    font-size: var(--step-small);
+    cursor: pointer;
+  }
+  .check input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.1rem;
+    flex: none;
+    accent-color: var(--accent-deep);
+  }
+  .prefs__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+  .prefs__saved {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step-small);
+    color: var(--ink-2);
+  }
+  .member__actions {
+    grid-column: 1 / -1;
+    padding-top: var(--space-sm);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.875rem;
+    padding-inline: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+      background-color 150ms var(--ease-out),
+      border-color 150ms var(--ease-out),
+      color 150ms var(--ease-out);
+  }
+  .btn--solid {
+    background: var(--accent-deep);
+    color: var(--paper);
+  }
+  .btn--solid:hover {
+    background: var(--accent-press);
+  }
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink-2);
+    padding-inline: 0;
+  }
+  .btn--ghost:hover {
+    color: var(--accent-deep);
+  }
+</style>

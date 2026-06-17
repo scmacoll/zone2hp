@@ -1,0 +1,297 @@
+---
+// Shared login / signup form. mode="login" | "signup". Non-clinical accounts:
+// signup collects name, email, password and an unticked marketing opt-in only;
+// no health fields. Client-validates and calls the mock auth provider, then
+// shows an in-place success panel (Option A: a designed, working demo without a
+// cross-page session — see BOOKING.md). The page owns the single <h1>.
+import CtaButton from '../CtaButton.astro';
+
+interface Props {
+  mode: 'login' | 'signup';
+}
+
+const { mode } = Astro.props;
+const isSignup = mode === 'signup';
+---
+
+<div class="auth" data-auth-form data-mode={mode}>
+  <form class="auth__form" novalidate>
+    {
+      isSignup && (
+        <div class="field">
+          <label for="ac-name">Name</label>
+          <input id="ac-name" name="name" type="text" autocomplete="name" required aria-describedby="ac-name-error" />
+          <p class="field__error" id="ac-name-error" data-error="name" hidden />
+        </div>
+      )
+    }
+    <div class="field">
+      <label for="ac-email">Email</label>
+      <input id="ac-email" name="email" type="email" autocomplete="email" required aria-describedby="ac-email-error" />
+      <p class="field__error" id="ac-email-error" data-error="email" hidden></p>
+    </div>
+    <div class="field">
+      <label for="ac-password">Password</label>
+      <input
+        id="ac-password"
+        name="password"
+        type="password"
+        autocomplete={isSignup ? 'new-password' : 'current-password'}
+        required
+        aria-describedby="ac-password-error"
+      />
+      <p class="field__error" id="ac-password-error" data-error="password" hidden></p>
+    </div>
+    {
+      isSignup && (
+        <label class="check">
+          <input type="checkbox" name="marketing" />
+          <span>
+            Email me occasional updates and early access news from Zone Two. You can unsubscribe at any
+            time.
+          </span>
+        </label>
+      )
+    }
+    {
+      isSignup && (
+        <p class="privacy">
+          We collect your name and email only. No health information is collected here. A full privacy
+          policy will be published before launch.
+        </p>
+      )
+    }
+    <p class="form-error" data-form-error role="alert" hidden></p>
+    <button type="submit" class="btn btn--solid" data-submit>{isSignup ? 'Create account' : 'Sign in'}</button>
+  </form>
+
+  <div class="auth__success" data-success role="status" hidden>
+    <p class="auth__success-title" tabindex="-1">{isSignup ? 'Account created' : 'You are signed in'}</p>
+    <p class="auth__success-note" data-success-note></p>
+    <CtaButton href="/account" variant="outline">Go to your account</CtaButton>
+  </div>
+</div>
+
+<script>
+  import { getAuthProvider } from '../../lib/auth/index';
+
+  const root = document.querySelector<HTMLElement>('[data-auth-form]');
+  if (root) {
+    const mode = root.dataset.mode === 'signup' ? 'signup' : 'login';
+    const form = root.querySelector<HTMLFormElement>('form');
+    const success = root.querySelector<HTMLElement>('[data-success]');
+    const note = root.querySelector<HTMLElement>('[data-success-note]');
+    const auth = getAuthProvider();
+
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void handleSubmit();
+    });
+
+    async function handleSubmit(): Promise<void> {
+      if (!form) return;
+      if (!validate()) {
+        form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+        return;
+      }
+      const data = new FormData(form);
+      setBusy(true);
+      hideFormError();
+      try {
+        if (mode === 'signup') {
+          const account = await auth.signUp({
+            name: String(data.get('name') ?? '').trim(),
+            email: String(data.get('email') ?? '').trim(),
+            password: String(data.get('password') ?? ''),
+            marketingOptIn: data.get('marketing') === 'on',
+          });
+          if (note) {
+            note.textContent = account.marketingOptIn
+              ? `Thanks ${account.name}. Your account is set up and you are on the list for early access and updates.`
+              : `Thanks ${account.name}. Your account is set up.`;
+          }
+        } else {
+          const account = await auth.signIn({
+            email: String(data.get('email') ?? '').trim(),
+            password: String(data.get('password') ?? ''),
+          });
+          if (note) note.textContent = `You are signed in as ${account.email}.`;
+        }
+        form.hidden = true;
+        if (success) {
+          success.hidden = false;
+          success.querySelector<HTMLElement>('.auth__success-title')?.focus();
+        }
+      } catch {
+        showFormError('Something went wrong. Please try again.');
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function validate(): boolean {
+      if (!form) return false;
+      let ok = true;
+      if (mode === 'signup') {
+        ok = checkField('name', (v) => v.trim().length > 0, 'Please enter your name.') && ok;
+      }
+      ok =
+        checkField('email', (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), 'Please enter a valid email address.') &&
+        ok;
+      const passwordRule =
+        mode === 'signup'
+          ? { test: (v: string) => v.length >= 8, message: 'Use at least 8 characters.' }
+          : { test: (v: string) => v.length > 0, message: 'Please enter your password.' };
+      ok = checkField('password', passwordRule.test, passwordRule.message) && ok;
+      return ok;
+    }
+
+    function checkField(name: string, test: (value: string) => boolean, message: string): boolean {
+      if (!form) return true;
+      const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      const error = form.querySelector<HTMLElement>(`[data-error="${name}"]`);
+      if (!input) return true;
+      const valid = test(input.value);
+      input.setAttribute('aria-invalid', valid ? 'false' : 'true');
+      if (error) {
+        error.hidden = valid;
+        error.textContent = valid ? '' : message;
+      }
+      return valid;
+    }
+
+    function setBusy(busy: boolean): void {
+      if (!form) return;
+      form.setAttribute('aria-busy', busy ? 'true' : 'false');
+      const submit = form.querySelector<HTMLButtonElement>('[data-submit]');
+      if (submit) submit.disabled = busy;
+    }
+    function showFormError(message: string): void {
+      const el = form?.querySelector<HTMLElement>('[data-form-error]');
+      if (el) {
+        el.textContent = message;
+        el.hidden = false;
+      }
+    }
+    function hideFormError(): void {
+      const el = form?.querySelector<HTMLElement>('[data-form-error]');
+      if (el) el.hidden = true;
+    }
+  }
+</script>
+
+<style>
+  .auth {
+    max-width: 28rem;
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+  }
+  .auth__form {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .field label {
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .field input {
+    min-height: 44px;
+    padding: 0.6rem 0.75rem;
+    background: var(--paper);
+    border: var(--border-hairline);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--step-body);
+    color: var(--ink);
+  }
+  .field input[aria-invalid='true'] {
+    border-color: var(--accent-deep);
+  }
+  .field__error {
+    margin: 0;
+    color: var(--accent-deep);
+    font-size: var(--step-small);
+  }
+  .check {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    color: var(--ink-2);
+    font-size: var(--step-small);
+    cursor: pointer;
+  }
+  .check input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.1rem;
+    flex: none;
+    accent-color: var(--accent-deep);
+  }
+  .privacy {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: var(--step-small);
+  }
+  .form-error {
+    margin: 0;
+    color: var(--accent-deep);
+    font-size: var(--step-small);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.875rem;
+    padding-inline: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+      background-color 150ms var(--ease-out),
+      border-color 150ms var(--ease-out);
+  }
+  .btn--solid {
+    background: var(--accent-deep);
+    color: var(--paper);
+  }
+  .btn--solid:hover {
+    background: var(--accent-press);
+  }
+  .btn--solid:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .auth__success {
+    display: grid;
+    gap: var(--space-sm);
+    justify-items: start;
+    padding: var(--space-md);
+    border: var(--border-hairline);
+    border-radius: var(--radius-md);
+    background: var(--grad-stone-cool);
+  }
+  .auth__success-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-h3);
+    color: var(--ink);
+  }
+  .auth__success-note {
+    margin: 0;
+    color: var(--ink-2);
+  }
+</style>

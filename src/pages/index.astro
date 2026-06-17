@@ -16,8 +16,13 @@ import Base from "../layouts/Base.astro";
 import ServicesLine from "../components/ServicesLine.astro";
 import MapBlock from "../components/MapBlock.astro";
 import FooterExpanded from "../components/FooterExpanded.astro";
+import { bookingConfig } from "../lib/booking/config";
 // import videoSrc from "../asset/video-loop.mp4";
 import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
+
+// Owner asked for a single account button + a Book now CTA in the nav. Gated by
+// the same flag that surfaces public booking/account links (now on by default).
+const showLinks = bookingConfig.linksVisible;
 ---
 
 <Base>
@@ -81,7 +86,8 @@ import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
                             <span class="a2-brand__type">ZONE TWO</span>
                         </a>
 
-                        <div
+                        <div class="a2-actions">
+                            <div
                             class="a2-lang-wrap reveal"
                             style="--reveal-delay: 1620ms"
                             data-lang-current="en"
@@ -137,6 +143,50 @@ import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
                                     >
                                 </li>
                             </ul>
+                            </div>
+
+                            {
+                                showLinks && (
+                                    <div class="a2-cta-group">
+                                        <a
+                                            class="a2-login reveal"
+                                            style="--reveal-delay: 1700ms"
+                                            href="/account/login"
+                                            aria-label="Log in or create an account"
+                                        >
+                                            <svg
+                                                class="a2-login__icon"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                aria-hidden="true"
+                                            >
+                                                <circle
+                                                    cx="12"
+                                                    cy="8.5"
+                                                    r="3.5"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                />
+                                                <path
+                                                    d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                            <span class="a2-login__label">Log in</span>
+                                        </a>
+                                        <a
+                                            class="a2-book reveal"
+                                            style="--reveal-delay: 1780ms"
+                                            href="/book"
+                                        >
+                                            <span class="a2-book__full">Book now</span>
+                                            <span class="a2-book__short">Book</span>
+                                        </a>
+                                    </div>
+                                )
+                            }
                         </div>
                     </header>
 
@@ -386,25 +436,26 @@ import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
         color: var(--paper);
     }
 
+    /* Language: a small, light TEXT toggle (no fill) so it reads as a quiet
+       utility, not a button competing with the action pair. */
     .a2-lang {
         display: inline-flex;
         align-items: center;
-        gap: 0.55rem;
-        min-height: 44px;
-        padding: 0 0.85rem;
-        background: var(--concept-volt);
-        color: var(--ink);
+        gap: 0.4rem;
+        min-height: 40px;
+        padding: 0 0.25rem;
+        background: transparent;
+        color: var(--paper);
         border: 0;
-        border-radius: var(--r-soft);
         font-family: var(--font-display);
-        font-size: 0.95rem;
-        font-weight: 600;
-        letter-spacing: -0.005em;
+        font-size: 0.82rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
         cursor: pointer;
-        transition: background-color 150ms var(--ease-out);
+        transition: color 150ms var(--ease-out);
     }
     .a2-lang:hover {
-        background: var(--concept-volt-press);
+        color: var(--concept-volt);
     }
     .a2-lang__label {
         line-height: 1;
@@ -412,23 +463,83 @@ import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
     .a2-lang__sep {
         display: inline-flex;
         align-items: center;
-        color: var(--ink);
-        opacity: 0.7;
+        color: currentColor;
+        opacity: 0.55;
     }
 
     .a2-lang-wrap {
         position: relative;
-        padding: 0.3rem;
-        background: rgba(15, 16, 19, 0.35);
-        border-radius: var(--m-soft);
-        -webkit-backdrop-filter: blur(16px) saturate(120%);
-        backdrop-filter: blur(16px) saturate(120%);
-        /* Smooth fade as this box dissolves into the parent nav strip at <47rem. */
+    }
+
+    /* ---- Nav actions: account + book CTA (owner request) -------------------
+       Synthesised from the references: one outlined secondary control (Log in,
+       like the Nivis CART box) and one volt-filled primary CTA (Book now, like
+       the Nivis SHOP box / Myo BOOK NOW). Both read on the dark video hero. */
+    .a2-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+    }
+    /* The action pair (Log in + Book now) grouped tighter, separated from the
+       quiet language toggle to its left. */
+    .a2-cta-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .a2-login {
+        display: inline-flex;
+        align-items: center;
+        text-align: center;
+        white-space: nowrap;
+        gap: 0.4rem;
+        min-height: 44px;
+        padding: 0 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: var(--r-soft);
+        background: rgba(15, 16, 19, 0.28);
+        color: var(--paper);
+        text-decoration: none;
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        -webkit-backdrop-filter: blur(12px) saturate(120%);
+        backdrop-filter: blur(12px) saturate(120%);
         transition:
-            background-color 350ms var(--ease-out),
-            padding 350ms var(--ease-out),
-            -webkit-backdrop-filter 350ms var(--ease-out),
-            backdrop-filter 350ms var(--ease-out);
+            background-color 150ms var(--ease-out),
+            border-color 150ms var(--ease-out);
+    }
+    .a2-login:hover {
+        background: rgba(15, 16, 19, 0.45);
+        border-color: rgba(255, 255, 255, 0.85);
+    }
+    .a2-login__icon {
+        width: 18px;
+        height: 18px;
+        flex: none;
+    }
+    .a2-book {
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        min-height: 44px;
+        padding: 0 1.15rem;
+        background: var(--concept-volt);
+        color: var(--ink);
+        border-radius: var(--r-soft);
+        text-decoration: none;
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        transition: background-color 150ms var(--ease-out);
+    }
+    .a2-book:hover {
+        background: var(--concept-volt-press);
+    }
+    .a2-book__short {
+        display: none;
     }
 
     /* ---- Language dropdown menu --------------------------------------------
@@ -644,6 +755,15 @@ import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
         padding-inline: var(--section-pad-inline);
     }
 
+    /* Subtle chrome glow on the map card: the map frame is already a --chrome
+       surface, so the lit-from-above bloom reinforces its metallic quality and
+       lifts it off the warm paper. Decoration only (box-shadow) — no contrast or
+       layout impact. The inner highlight is hidden behind the opaque iframe; the
+       soft outer bloom is what reads on the light page. */
+    .a2-find :global(.map__frame) {
+        box-shadow: var(--glow-chrome);
+    }
+
     /* At mobile + half-laptop the MapBlock stacks (map on top, details below).
        By default the details are left-aligned and create a sparse left-leaning
        block with lots of empty space on the right. Centring the eyebrow, h2,
@@ -693,6 +813,30 @@ import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
             -webkit-backdrop-filter: none;
             backdrop-filter: none;
         }
+        /* Tighten the action cluster on the mobile strip: Log in shows text only
+           (no icon), Book now shortens to "Book". */
+        .a2-actions {
+            gap: 0.5rem;
+        }
+        .a2-cta-group {
+            gap: 0.4rem;
+        }
+        .a2-login {
+            padding: 0 0.75rem;
+            gap: 0;
+        }
+        .a2-login__icon {
+            display: none;
+        }
+        .a2-book {
+            padding: 0 0.85rem;
+        }
+        .a2-book__full {
+            display: none;
+        }
+        .a2-book__short {
+            display: inline;
+        }
         .a2-panel {
             padding: 0.75rem;
             min-height: 18rem;
@@ -730,6 +874,14 @@ import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
     /* Video now plays at every viewport (the small-screen hide rule was
        removed). Reduced-motion still skips the cinema reveal and the
        navbar fade-in. */
+    /* At the very smallest widths, drop the wordmark text to just the Z² mark so
+       the nav actions (language, account, book) keep breathing room. */
+    @media (max-width: 22.5rem) {
+        .a2-brand__type {
+            display: none;
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .a2-nav {
             animation: none !important;

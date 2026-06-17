@@ -1,0 +1,227 @@
+---
+// Step 1: new or existing customer (the funnel entry). In embedded mode this
+// instead frames the provider's hosted booking page. New patients advance straight
+// to the type step; existing patients identify themselves here (name + email or
+// mobile), are matched against the patient record, and carry an opaque `pid`
+// forward so the Details step can pre-fill and lock their details.
+import BookingShell from "../../components/booking/BookingShell.astro";
+import Base from "../../layouts/Base.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import Footer from "../../components/Footer.astro";
+import BookingEmbed from "../../components/BookingEmbed.astro";
+import { bookingConfig } from "../../lib/booking/config";
+import { buildStepUrl } from "../../lib/booking/funnel-state";
+
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect("/");
+
+const useEmbed = bookingConfig.mode === "embedded";
+---
+
+{
+    useEmbed ? (
+        <Base
+            title="Book an appointment | Zone Two Health and Performance"
+            description="Book an appointment with Zone Two Health and Performance in Eastwood, NSW."
+            noindex
+        >
+            <PageHeader />
+            <main id="main">
+                <BookingEmbed />
+            </main>
+            <Footer />
+        </Base>
+    ) : (
+        <BookingShell step="customer">
+            <p class="step__lede">Have you been to Zone Two before?</p>
+            <div class="choices">
+                <a
+                    class="choice"
+                    href={buildStepUrl("type", { customer: "new" })}
+                >
+                    <span class="choice__title">New Patient</span>
+                    <span class="choice__blurb">
+                        This is my first visit to the clinic.
+                    </span>
+                </a>
+                <button
+                    type="button"
+                    class="choice"
+                    data-existing-toggle
+                    aria-expanded="false"
+                    aria-controls="existing-panel"
+                >
+                    <span class="choice__title">Existing Patient</span>
+                    <span class="choice__blurb">
+                        I have been to the clinic before.
+                    </span>
+                </button>
+            </div>
+
+            <form
+                class="ident"
+                id="existing-panel"
+                data-existing-form
+                novalidate
+                hidden
+            >
+                <p class="ident__lede">Find your record to continue.</p>
+                <div class="ident__grid">
+                    <div class="field">
+                        <label for="id-first">First name</label>
+                        <input
+                            id="id-first"
+                            name="firstName"
+                            type="text"
+                            autocomplete="given-name"
+                            value="Jane"
+                        />
+                    </div>
+                    <div class="field">
+                        <label for="id-last">Last name</label>
+                        <input
+                            id="id-last"
+                            name="lastName"
+                            type="text"
+                            autocomplete="family-name"
+                            value="Doe"
+                        />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="id-contact">Email or mobile</label>
+                    <input
+                        id="id-contact"
+                        name="contact"
+                        type="text"
+                        autocomplete="email"
+                        inputmode="email"
+                        value="janedoe@gmail.com"
+                        aria-describedby="id-contact-error"
+                    />
+                    <p
+                        class="field__error"
+                        id="id-contact-error"
+                        data-error
+                        hidden
+                    />
+                </div>
+
+                <div class="mismatch" data-nomatch hidden>
+                    <p class="mismatch__title">We could not find that record</p>
+                    <p class="mismatch__body">
+                        Check your email or mobile and try again, or continue as
+                        a new patient and we will sort it out at your visit.
+                    </p>
+                    <a
+                        class="btn btn--outline"
+                        href={buildStepUrl("type", { customer: "new" })}
+                    >
+                        Continue as new patient
+                    </a>
+                </div>
+
+                <div class="ident__nav">
+                    <button type="submit" class="btn btn--solid" data-find>
+                        Continue
+                    </button>
+                </div>
+            </form>
+
+            <p class="alt-line">
+                Already have an account? <a href="/account/login">Sign in</a>{" "}
+                for faster booking.
+            </p>
+            <noscript>
+                <p class="status-line">
+                    This step needs JavaScript. To book, email
+                    <a href="mailto:info@zone2hp.com">info@zone2hp.com</a>.
+                </p>
+            </noscript>
+        </BookingShell>
+    )
+}
+
+<script>
+    import { buildStepUrl } from "../../lib/booking/funnel-state";
+    import { findPatient } from "../../lib/booking/client";
+    import { emailOrPhone, isEmailOrMobile } from "../../lib/booking/patients";
+
+    const toggle = document.querySelector<HTMLButtonElement>(
+        "[data-existing-toggle]",
+    );
+    const form = document.querySelector<HTMLFormElement>(
+        "[data-existing-form]",
+    );
+    const contactInput =
+        form?.querySelector<HTMLInputElement>('[name="contact"]');
+    const errorEl = form?.querySelector<HTMLElement>("[data-error]");
+    const nomatch = form?.querySelector<HTMLElement>("[data-nomatch]");
+    const findBtn = form?.querySelector<HTMLButtonElement>("[data-find]");
+
+    toggle?.addEventListener("click", () => {
+        const open = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!open));
+        if (form) form.hidden = open;
+        if (!open)
+            form?.querySelector<HTMLInputElement>(
+                '[name="firstName"]',
+            )?.focus();
+    });
+
+    form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        void find();
+    });
+
+    function showError(message: string): void {
+        if (errorEl) {
+            errorEl.textContent = message;
+            errorEl.hidden = false;
+        }
+        contactInput?.setAttribute("aria-invalid", "true");
+    }
+
+    async function find(): Promise<void> {
+        if (!form || !contactInput) return;
+        const value = (name: string) =>
+            form
+                .querySelector<HTMLInputElement>(`[name="${name}"]`)
+                ?.value.trim() ?? "";
+        const first = value("firstName");
+        const last = value("lastName");
+        const contact = contactInput.value.trim();
+
+        if (!first || !last)
+            return showError("Please enter your first and last name.");
+        if (!contact) return showError("Please enter your email or mobile.");
+        if (!isEmailOrMobile(contact))
+            return showError("Please enter a valid email address or mobile number.");
+
+        errorEl?.setAttribute("hidden", "");
+        contactInput.removeAttribute("aria-invalid");
+        nomatch?.setAttribute("hidden", "");
+        if (findBtn) {
+            findBtn.disabled = true;
+            findBtn.textContent = "Checking";
+        }
+
+        const record = await findPatient({
+            ...emailOrPhone(contact),
+            name: `${first} ${last}`,
+        });
+
+        if (findBtn) {
+            findBtn.disabled = false;
+            findBtn.textContent = "Continue";
+        }
+        if (record) {
+            window.location.href = buildStepUrl("type", {
+                customer: "existing",
+                pid: record.id,
+            });
+        } else {
+            nomatch?.removeAttribute("hidden");
+        }
+    }
+</script>

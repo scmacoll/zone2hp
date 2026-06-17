@@ -1,0 +1,281 @@
+---
+// Step 3: choose a time. An island fetches the practitioner + availability and
+// renders a date strip with times grouped Morning / Afternoon / Evening. Picking
+// a slot navigates to /book/details carrying the slot.
+import BookingShell from '../../components/booking/BookingShell.astro';
+import { bookingConfig } from '../../lib/booking/config';
+
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
+---
+
+<BookingShell step="time">
+  <div class="pcard" data-practitioner-card hidden></div>
+  <div class="region" data-region="loading"><p class="status-line">Loading available times.</p></div>
+  <div class="region" data-region="list" hidden>
+    <div class="dates" data-dates role="group" aria-label="Choose a date"></div>
+    <div class="times" data-times></div>
+    <p class="duration-note" data-duration-note></p>
+  </div>
+  <div class="region" data-region="empty" hidden>
+    <p class="status-line">There are no appointments available right now. Please check back soon.</p>
+  </div>
+  <div class="region" data-region="error" hidden>
+    <p class="status-line status-line--error">We could not load times just now.</p>
+    <button type="button" class="btn btn--ghost" data-retry>Try again</button>
+  </div>
+  <a slot="action" class="btn btn--solid" data-continue aria-disabled="true">Continue</a>
+
+  <noscript>
+    <p class="status-line">
+      Choosing a time needs JavaScript. To book, email
+      <a href="mailto:info@zone2hp.com">info@zone2hp.com</a> and we will arrange a time.
+    </p>
+  </noscript>
+</BookingShell>
+
+<script>
+  import { fetchPractitioners, fetchAvailability } from '../../lib/booking/client';
+  import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
+  import { parseDurationToken, formatDuration } from '../../lib/booking/duration';
+  import type { AvailabilitySlot, Practitioner } from '../../lib/booking/types';
+
+  const params = parseBookingParams(new URLSearchParams(window.location.search));
+
+  let practitioner: Practitioner | null = null;
+  const slotsByDate = new Map<string, AvailabilitySlot[]>();
+  let dateOrder: string[] = [];
+  let selectedDate: string | null = null;
+  let selectedSlot: string | null = null;
+
+  const dayFmt = new Intl.DateTimeFormat('en-AU', { weekday: 'long', day: 'numeric', month: 'long' });
+  const timeFmt = new Intl.DateTimeFormat('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true });
+  const wdFmt = new Intl.DateTimeFormat('en-AU', { weekday: 'short' });
+  const dmFmt = new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'short' });
+
+  const dateKeyOf = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+  const $ = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel);
+
+  function showRegion(region: string): void {
+    document.querySelectorAll<HTMLElement>('[data-region]').forEach((el) => {
+      el.hidden = el.dataset.region !== region;
+    });
+  }
+
+  async function load(): Promise<void> {
+    showRegion('loading');
+    try {
+      const list = await fetchPractitioners(params.type);
+      practitioner = list[0] ?? null;
+      renderPractitionerCard();
+      const slots = await fetchAvailability({ practitionerId: practitioner?.id });
+      if (slots.length === 0) {
+        showRegion('empty');
+        return;
+      }
+      indexAvailability(slots);
+      selectedDate = dateOrder[0] ?? null;
+      renderDates();
+      renderTimes();
+      setDurationNote();
+      showRegion('list');
+    } catch {
+      showRegion('error');
+    }
+  }
+
+  function renderPractitionerCard(): void {
+    const card = $('[data-practitioner-card]');
+    if (!card || !practitioner) return;
+    const p = practitioner;
+    card.replaceChildren();
+
+    if (p.photo) {
+      const img = document.createElement('img');
+      img.className = 'pcard__photo';
+      img.src = p.photo;
+      img.alt = `${p.honorific ? p.honorific + ' ' : ''}${p.name}`;
+      img.loading = 'lazy';
+      img.addEventListener('error', () => img.replaceWith(initials(p)));
+      card.append(img);
+    } else {
+      card.append(initials(p));
+    }
+
+    const body = document.createElement('div');
+    body.className = 'pcard__body';
+    const eyebrow = document.createElement('p');
+    eyebrow.className = 'pcard__eyebrow';
+    eyebrow.textContent = p.title.toUpperCase();
+    const name = document.createElement('p');
+    name.className = 'pcard__name';
+    name.textContent = `${p.honorific ? p.honorific + ' ' : ''}${p.name}`;
+    body.append(eyebrow, name);
+    if (p.qualifications) {
+      const q = document.createElement('p');
+      q.className = 'pcard__quals';
+      q.textContent = p.qualifications;
+      body.append(q);
+    }
+    if (p.bio) {
+      const bio = document.createElement('p');
+      bio.className = 'pcard__bio';
+      bio.textContent = p.bio;
+      body.append(bio);
+    }
+    card.append(body);
+    card.hidden = false;
+  }
+
+  function initials(p: Practitioner): HTMLElement {
+    const el = document.createElement('div');
+    el.className = 'pcard__avatar';
+    el.setAttribute('aria-hidden', 'true');
+    el.textContent = p.name
+      .split(' ')
+      .map((w) => w[0] ?? '')
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+    return el;
+  }
+
+  function indexAvailability(slots: AvailabilitySlot[]): void {
+    slotsByDate.clear();
+    dateOrder = [];
+    for (const slot of slots) {
+      const key = dateKeyOf(new Date(slot.startIso));
+      if (!slotsByDate.has(key)) {
+        slotsByDate.set(key, []);
+        dateOrder.push(key);
+      }
+      slotsByDate.get(key)!.push(slot);
+    }
+  }
+
+  // The visible day list: every open day (Mon-Sat) from the first to the last
+  // available date. Days with no slots are shown as fully booked.
+  function buildDays(): { key: string; date: Date; full: boolean }[] {
+    if (dateOrder.length === 0) return [];
+    const fromKey = (k: string) => {
+      const [y, m, d] = k.split('-').map(Number);
+      return new Date(y!, (m ?? 1) - 1, d!);
+    };
+    const end = fromKey(dateOrder[dateOrder.length - 1]!);
+    const days: { key: string; date: Date; full: boolean }[] = [];
+    for (let d = fromKey(dateOrder[0]!); d <= end; d.setDate(d.getDate() + 1)) {
+      if (d.getDay() === 0) continue; // Sunday closed
+      const key = dateKeyOf(d);
+      const has = (slotsByDate.get(key)?.length ?? 0) > 0;
+      days.push({ key, date: new Date(d), full: !has });
+    }
+    return days;
+  }
+
+  function renderDates(): void {
+    const wrap = $('[data-dates]');
+    if (!wrap) return;
+    wrap.replaceChildren();
+    for (const day of buildDays()) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      const selected = !day.full && day.key === selectedDate;
+      btn.className = 'date' + (day.full ? ' date--full' : '') + (selected ? ' is-selected' : '');
+      const wd = document.createElement('span');
+      wd.className = 'date__wd';
+      wd.textContent = wdFmt.format(day.date);
+      const dm = document.createElement('span');
+      dm.className = 'date__dm';
+      dm.textContent = dmFmt.format(day.date);
+      btn.append(wd, dm);
+      if (day.full) {
+        btn.disabled = true;
+        btn.setAttribute('aria-label', `${dayFmt.format(day.date)}, fully booked`);
+        const tag = document.createElement('span');
+        tag.className = 'date__full';
+        tag.textContent = 'Full';
+        btn.append(tag);
+      } else {
+        btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        btn.addEventListener('click', () => {
+          selectedDate = day.key;
+          selectedSlot = null; // changing the day clears the chosen time
+          renderDates();
+          renderTimes();
+          syncContinue();
+        });
+      }
+      wrap.append(btn);
+    }
+  }
+
+  function renderTimes(): void {
+    const wrap = $('[data-times]');
+    if (!wrap || !selectedDate) return;
+    wrap.replaceChildren();
+    const slots = slotsByDate.get(selectedDate) ?? [];
+    const groups: Array<{ label: string; test: (h: number) => boolean }> = [
+      { label: 'Morning', test: (h) => h < 12 },
+      { label: 'Afternoon', test: (h) => h >= 12 && h < 17 },
+      { label: 'Evening', test: (h) => h >= 17 },
+    ];
+    for (const g of groups) {
+      const groupSlots = slots.filter((s) => g.test(new Date(s.startIso).getHours()));
+      if (groupSlots.length === 0) continue;
+      const section = document.createElement('div');
+      section.className = 'timegroup';
+      const label = document.createElement('p');
+      label.className = 'timegroup__label';
+      label.textContent = g.label;
+      const grid = document.createElement('div');
+      grid.className = 'timegroup__slots';
+      for (const slot of groupSlots) {
+        const date = new Date(slot.startIso);
+        const isSel = slot.startIso === selectedSlot;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'slot' + (isSel ? ' is-selected' : '');
+        btn.textContent = timeFmt.format(date);
+        btn.setAttribute('aria-pressed', isSel ? 'true' : 'false');
+        btn.setAttribute('aria-label', `${timeFmt.format(date)}, ${dayFmt.format(date)}`);
+        btn.addEventListener('click', () => {
+          selectedSlot = slot.startIso;
+          document.querySelectorAll<HTMLButtonElement>('[data-times] .slot').forEach((s) => {
+            const on = s === btn;
+            s.classList.toggle('is-selected', on);
+            s.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          syncContinue();
+        });
+        grid.append(btn);
+      }
+      section.append(label, grid);
+      wrap.append(section);
+    }
+  }
+
+  function setDurationNote(): void {
+    const note = $('[data-duration-note]');
+    if (!note) return;
+    const estimate = parseDurationToken(params.dur);
+    note.textContent = estimate
+      ? `Appointment length: ${estimate.isMinimum ? '' : 'about '}${formatDuration(estimate)}.`
+      : 'Appointment length is confirmed when you book.';
+  }
+
+  // Continue is enabled only once a time (and therefore a date) is chosen.
+  function syncContinue(): void {
+    $('[data-continue]')?.setAttribute('aria-disabled', selectedSlot ? 'false' : 'true');
+  }
+
+  $('[data-continue]')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (!selectedSlot) return;
+    window.location.href = buildStepUrl('details', { ...params, slot: selectedSlot });
+  });
+
+  $('[data-retry]')?.addEventListener('click', () => void load());
+  void load();
+</script>

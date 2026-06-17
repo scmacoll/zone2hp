@@ -2,6 +2,8 @@
 
 Each concept is a complete coming-soon landing page in a different aesthetic direction. The owner reviews screenshots and picks one. The winner goes live at zone2hp.com and later grows into the full site (phase-2 IA at the end of this file). All five share the same design system and the same required elements, and all five must pass `COMPLIANCE.md`.
 
+> **Status: resolved.** Concept **A2** (The Film direction) was chosen and is live (`src/pages/index.astro`). A1 remains at `src/pages/concepts/a1.astro` for reference; B1, C1 and C2 were not built. The phase-2 IA at the end of this file still guides the full site.
+
 ## Required on every concept
 
 - Wordmark (ZONE TWO, per `DESIGN-SYSTEM.md`).

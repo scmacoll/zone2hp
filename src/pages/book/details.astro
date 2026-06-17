@@ -1,0 +1,325 @@
+---
+// Step 5: details, then review. Two phases on one page (no route change, so the
+// entered details are not lost): an "edit" phase collects name / email / mobile /
+// notes, and a "review" phase brings the whole booking together (appointment +
+// your details) for a final check before "Request booking". An existing patient
+// (matched at step 1, carried as `pid`) is pre-filled and locked. The action
+// button reads "Review booking" then "Request booking"; the shell Back link goes
+// to Time from edit, and back to edit from review.
+import BookingShell from '../../components/booking/BookingShell.astro';
+import { bookingConfig } from '../../lib/booking/config';
+
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
+---
+
+<BookingShell step="details">
+  <form class="details-form" id="bk-form" data-details-form novalidate>
+    <div class="ident__grid">
+      <div class="field">
+        <label for="bk-first">First name</label>
+        <input id="bk-first" name="firstName" type="text" autocomplete="given-name" required aria-describedby="bk-first-error" />
+        <p class="field__error" id="bk-first-error" data-error="firstName" hidden></p>
+      </div>
+      <div class="field">
+        <label for="bk-last">Last name</label>
+        <input id="bk-last" name="lastName" type="text" autocomplete="family-name" required aria-describedby="bk-last-error" />
+        <p class="field__error" id="bk-last-error" data-error="lastName" hidden></p>
+      </div>
+    </div>
+    <div class="field">
+      <label for="bk-email">Email</label>
+      <input id="bk-email" name="email" type="email" autocomplete="email" required aria-describedby="bk-email-error" />
+      <p class="field__error" id="bk-email-error" data-error="email" hidden></p>
+    </div>
+    <div class="field">
+      <label for="bk-phone">Mobile <span class="field__opt">(optional)</span></label>
+      <input id="bk-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+    </div>
+    <p class="form-note" data-locked-note hidden>
+      These details are from your record. Need a change? Contact the clinic.
+    </p>
+
+    <div class="field">
+      <label for="bk-notes">Notes for your booking <span class="field__opt">(optional)</span></label>
+      <textarea id="bk-notes" name="notes" rows="3" aria-describedby="bk-notes-hint"></textarea>
+      <p class="field__hint" id="bk-notes-hint">
+        Anything helpful for your visit, like access needs. You do not need to share health details here.
+      </p>
+    </div>
+
+    <div class="details-consent">
+      <label class="check" data-account-option>
+        <input type="checkbox" name="createAccount" />
+        <span>Create an account to book faster next time.</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" name="marketing" />
+        <span>Email me occasional updates and early access news from Zone Two. You can unsubscribe at any time.</span>
+      </label>
+      <p class="privacy">
+        We collect your name and email to manage this booking request. A full privacy policy will be
+        published before launch.
+      </p>
+    </div>
+    <p class="form-error" data-form-error role="alert" hidden></p>
+  </form>
+
+  <section class="review" data-review hidden aria-label="Review your booking">
+    <p class="review__lede" data-review-focus tabindex="-1">
+      Please check everything is right, then send your request. We will email you to confirm.
+    </p>
+    <div class="review__group">
+      <h2 class="review__gh">Appointment</h2>
+      <dl class="review__list" data-review-appointment></dl>
+    </div>
+    <div class="review__group">
+      <div class="review__ghrow">
+        <h2 class="review__gh">Your details</h2>
+        <button type="button" class="link-btn" data-edit-details>Edit</button>
+      </div>
+      <dl class="review__list" data-review-details></dl>
+    </div>
+  </section>
+
+  <button slot="action" type="submit" form="bk-form" class="btn btn--solid" data-submit>Review booking</button>
+
+  <noscript>
+    <p class="status-line">
+      Booking needs JavaScript. To book, email <a href="mailto:info@zone2hp.com">info@zone2hp.com</a>.
+    </p>
+  </noscript>
+</BookingShell>
+
+<script>
+  import { submitBookingRequest, getPatient, fetchPractitioners } from '../../lib/booking/client';
+  import { getAuthProvider } from '../../lib/auth/index';
+  import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
+  import { bookingTypeInfo } from '../../lib/booking/funnel';
+  import { parseDurationToken, formatDuration, visitWantsLabel } from '../../lib/booking/duration';
+  import { fundName, estimateFunding, priceForDuration, formatAud } from '../../lib/booking/funding';
+
+  const params = parseBookingParams(new URLSearchParams(window.location.search));
+  const form = document.querySelector<HTMLFormElement>('[data-details-form]');
+
+  if (form) {
+    const book = document.querySelector<HTMLElement>('.book');
+    const reviewEl = document.querySelector<HTMLElement>('[data-review]');
+    const submitBtn = document.querySelector<HTMLButtonElement>('[data-submit]');
+    const backLink = document.querySelector<HTMLAnchorElement>('.book__back');
+    const heading = document.querySelector<HTMLElement>('.book__title');
+    let phase: 'edit' | 'review' = 'edit';
+    let practitionerName = '';
+
+    void prefill();
+    void loadPractitioner();
+
+    async function loadPractitioner(): Promise<void> {
+      if (!params.slot) return;
+      const p = (await fetchPractitioners(params.type))[0];
+      if (p) practitionerName = `${p.honorific ? p.honorific + ' ' : ''}${p.name}`;
+    }
+
+    function setVal(name: string, value: string, lock: boolean): void {
+      const input = form!.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      if (!input) return;
+      if (value) input.value = value;
+      if (lock) {
+        input.readOnly = true;
+        input.classList.add('is-locked');
+      }
+    }
+
+    async function prefill(): Promise<void> {
+      // Existing patient: pre-fill from the matched record and lock those fields.
+      if (params.customer === 'existing' && params.pid) {
+        const record = await getPatient(params.pid);
+        if (record) {
+          setVal('firstName', record.firstName, true);
+          setVal('lastName', record.lastName, true);
+          if (record.email) setVal('email', record.email, true);
+          if (record.phone) setVal('phone', record.phone, true);
+          form!.querySelector<HTMLElement>('[data-locked-note]')?.removeAttribute('hidden');
+          form!.querySelector<HTMLElement>('[data-account-option]')?.setAttribute('hidden', '');
+          return;
+        }
+      }
+      // Otherwise, pre-fill from a signed-in account (no-op in the static mock; ready for real auth).
+      const account = getAuthProvider().getCurrentAccount();
+      if (account) {
+        const [first, ...rest] = account.name.split(' ');
+        setVal('firstName', first ?? '', false);
+        setVal('lastName', rest.join(' '), false);
+        setVal('email', account.email, false);
+        form!.querySelector<HTMLElement>('[data-account-option]')?.setAttribute('hidden', '');
+      }
+    }
+
+    // ---- Phases: edit (the form) <-> review (the consolidated summary) ----
+    function setPhase(next: 'edit' | 'review'): void {
+      phase = next;
+      const review = next === 'review';
+      form!.hidden = review;
+      if (reviewEl) reviewEl.hidden = !review;
+      if (submitBtn) submitBtn.textContent = review ? 'Request booking' : 'Review booking';
+      if (heading) heading.textContent = review ? 'Review your booking' : 'Your details';
+      if (book) book.setAttribute('data-phase', review ? 'review' : 'edit');
+      if (review) {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        document.querySelector<HTMLElement>('[data-review-focus]')?.focus();
+      } else {
+        form!.querySelector<HTMLInputElement>('input:not([readonly])')?.focus();
+      }
+    }
+
+    const slotFmt = new Intl.DateTimeFormat('en-AU', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+
+    function renderList(selector: string, rows: [string, string][]): void {
+      const dl = document.querySelector<HTMLElement>(selector);
+      if (!dl) return;
+      dl.replaceChildren();
+      for (const [key, value] of rows) {
+        if (!value) continue;
+        const dt = document.createElement('dt');
+        dt.textContent = key;
+        const dd = document.createElement('dd');
+        dd.textContent = value;
+        dl.append(dt, dd);
+      }
+    }
+
+    function fieldValue(name: string): string {
+      return form!.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${name}"]`)?.value.trim() ?? '';
+    }
+
+    function populateReview(): void {
+      const dur = parseDurationToken(params.dur);
+      const appointment: [string, string][] = [
+        ['Clinic', 'Zone Two Health and Performance, Suite 104 / 2 Rowe St, Eastwood NSW 2122'],
+        ['Patient', params.customer === 'new' ? 'New patient' : params.customer === 'existing' ? 'Existing patient' : ''],
+        ['Type', params.type ? (bookingTypeInfo(params.type)?.label ?? '') : ''],
+        ['Practitioner', practitionerName],
+        ['Visit', [params.visit ? visitWantsLabel(params.visit) : '', dur ? formatDuration(dur) : ''].filter(Boolean).join(', ')],
+      ];
+      if (params.fund && dur) {
+        const est = estimateFunding({ fundId: params.fund, priceCents: priceForDuration(dur.minutes) });
+        appointment.push(['Cover', `${fundName(params.fund)} (gap ${formatAud(est.gapCents)})`]);
+      }
+      if (params.slot) appointment.push(['Time', slotFmt.format(new Date(params.slot))]);
+      renderList('[data-review-appointment]', appointment);
+
+      renderList('[data-review-details]', [
+        ['Name', `${fieldValue('firstName')} ${fieldValue('lastName')}`.trim()],
+        ['Email', fieldValue('email')],
+        ['Mobile', fieldValue('phone')],
+        ['Notes', fieldValue('notes')],
+      ]);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (phase === 'edit') {
+        if (!validate()) {
+          form!.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+          return;
+        }
+        populateReview();
+        setPhase('review');
+      } else {
+        void handleSubmit();
+      }
+    });
+
+    // Back returns to the form when reviewing; otherwise it navigates to Time.
+    backLink?.addEventListener('click', (event) => {
+      if (phase === 'review') {
+        event.preventDefault();
+        setPhase('edit');
+      }
+    });
+    document.querySelector<HTMLButtonElement>('[data-edit-details]')?.addEventListener('click', () => setPhase('edit'));
+
+    async function handleSubmit(): Promise<void> {
+      const data = new FormData(form!);
+      const first = String(data.get('firstName') ?? '').trim();
+      const last = String(data.get('lastName') ?? '').trim();
+      const name = `${first} ${last}`.trim();
+      const email = String(data.get('email') ?? '').trim();
+      const phone = String(data.get('phone') ?? '').trim();
+      const notes = String(data.get('notes') ?? '').trim();
+      setBusy(true);
+      hideFormError();
+      try {
+        if (data.get('createAccount') === 'on') {
+          void getAuthProvider().signUp({ name, email, password: '', marketingOptIn: data.get('marketing') === 'on' });
+        }
+        const result = await submitBookingRequest({
+          bookingType: params.type,
+          customerKind: params.customer,
+          slotStartIso: params.slot ?? '',
+          notes: notes || undefined,
+          contact: { name, email, phone: phone || undefined, marketingOptIn: data.get('marketing') === 'on' },
+        });
+        // Hand the contact details to the confirmation page through a one-time,
+        // clearly-fenced sessionStorage key — they are never put in the URL, and a
+        // real backend would re-fetch the booking by reference. Cleared on read.
+        try {
+          sessionStorage.setItem('z2-confirm', JSON.stringify({ ref: result.reference, name, email, phone, notes }));
+        } catch {
+          /* storage unavailable — the confirmation just omits the contact block */
+        }
+        window.location.href = buildStepUrl('confirm', { ...params, ref: result.reference });
+      } catch {
+        setBusy(false);
+        setPhase('edit'); // back to the form so the error is visible
+        showFormError('Something went wrong sending your request. Please try again.');
+      }
+    }
+
+    function validate(): boolean {
+      const first = checkField('firstName', (v) => v.trim().length > 0, 'Please enter your first name.');
+      const last = checkField('lastName', (v) => v.trim().length > 0, 'Please enter your last name.');
+      const email = checkField(
+        'email',
+        (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+        'Please enter a valid email address.',
+      );
+      return first && last && email;
+    }
+
+    function checkField(name: string, test: (value: string) => boolean, message: string): boolean {
+      const input = form!.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      const error = form!.querySelector<HTMLElement>(`[data-error="${name}"]`);
+      if (!input) return true;
+      const valid = test(input.value);
+      input.setAttribute('aria-invalid', valid ? 'false' : 'true');
+      if (error) {
+        error.hidden = valid;
+        error.textContent = valid ? '' : message;
+      }
+      return valid;
+    }
+
+    function setBusy(busy: boolean): void {
+      form!.setAttribute('aria-busy', busy ? 'true' : 'false');
+      if (submitBtn) submitBtn.disabled = busy;
+    }
+    function showFormError(message: string): void {
+      const el = form!.querySelector<HTMLElement>('[data-form-error]');
+      if (el) {
+        el.textContent = message;
+        el.hidden = false;
+      }
+    }
+    function hideFormError(): void {
+      form!.querySelector<HTMLElement>('[data-form-error]')?.setAttribute('hidden', '');
+    }
+  }
+</script>
