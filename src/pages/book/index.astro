@@ -12,6 +12,9 @@ import BookingEmbed from "../../components/BookingEmbed.astro";
 import { bookingConfig } from "../../lib/booking/config";
 import { buildStepUrl } from "../../lib/booking/funnel-state";
 
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect("/");
+
 const useEmbed = bookingConfig.mode === "embedded";
 ---
 

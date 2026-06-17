@@ -2,6 +2,10 @@
 // Step 5: confirmation. Fully static; the reference + summary are hydrated from
 // the URL params by BookingShell. The summary is locked (no Change links).
 import BookingShell from '../../components/booking/BookingShell.astro';
+import { bookingConfig } from '../../lib/booking/config';
+
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
 ---
 
 <BookingShell step="confirm">

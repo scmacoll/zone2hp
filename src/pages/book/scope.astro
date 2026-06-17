@@ -8,6 +8,9 @@ import BookingShell from '../../components/booking/BookingShell.astro';
 import { HEALTH_FUNDS } from '../../lib/booking/funding';
 import { bookingConfig } from '../../lib/booking/config';
 
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
+
 const fundingEnabled = bookingConfig.fundingEnabled;
 ---
 

@@ -3,6 +3,10 @@
 // renders a date strip with times grouped Morning / Afternoon / Evening. Picking
 // a slot navigates to /book/details carrying the slot.
 import BookingShell from '../../components/booking/BookingShell.astro';
+import { bookingConfig } from '../../lib/booking/config';
+
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
 ---
 
 <BookingShell step="time">

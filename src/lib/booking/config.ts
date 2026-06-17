@@ -24,8 +24,11 @@ export const bookingConfig = {
   provider: env.PUBLIC_BOOKING_PROVIDER ?? 'mock',
   /** Hosted booking page URL, used by BookingEmbed in 'embedded' mode. */
   embedUrl: (env.PUBLIC_BOOKING_EMBED_URL as string | undefined) ?? null,
-  /** Whether to surface the nav's Log in + Book now links. On by default; set
-      PUBLIC_BOOKING_LINKS_VISIBLE=false to revert the home to coming-soon only. */
+  /** Whether the booking/account surface is publicly enabled. On by default. Set
+      PUBLIC_BOOKING_LINKS_VISIBLE=false (e.g. in the production environment) to
+      hide the nav's Log in + Book now links AND redirect /book and /account/* to
+      home — leaving the coming-soon home page + keep-in-touch email only. The
+      page-level guards live in each /book/* and /account/* frontmatter. */
   linksVisible: env.PUBLIC_BOOKING_LINKS_VISIBLE !== 'false',
   /** Show the private-health-funding (HALTH-style) step. On by default; set
       PUBLIC_BOOKING_FUNDING=false to remove it from the funnel. */

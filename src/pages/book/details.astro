@@ -7,6 +7,10 @@
 // button reads "Review booking" then "Request booking"; the shell Back link goes
 // to Time from edit, and back to edit from review.
 import BookingShell from '../../components/booking/BookingShell.astro';
+import { bookingConfig } from '../../lib/booking/config';
+
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
 ---
 
 <BookingShell step="details">

@@ -4,6 +4,10 @@
 // so they are hydrated by the script below.
 import BookingShell from '../../components/booking/BookingShell.astro';
 import { BOOKING_TYPES } from '../../lib/booking/funnel';
+import { bookingConfig } from '../../lib/booking/config';
+
+// Production gate: when booking is not publicly enabled, this page redirects home.
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
 ---
 
 <BookingShell step="type">
