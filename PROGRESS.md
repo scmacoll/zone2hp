@@ -231,8 +231,10 @@ Client-review round on the booking funnel. Build (12 pages) + 68 Vitest tests gr
 ## Next
 - Concept review is resolved: A2 is the chosen design and is live at `src/pages/index.astro`.
   A1 remains at `src/pages/concepts/a1.astro` for reference; B1/C1/C2 were not needed.
-- Booking/accounts: confirm the provider (likely Cliniko) and the real services /
-  practitioners / host, then implement the real adapter behind `client.ts` (needs an SSR
-  host). See the open questions in `BOOKING.md`.
+- Booking/accounts: **PMS is now Splose, not Cliniko/HALTH** (client decided 2026-07-10).
+  The whole booking strategy is re-open (link to / embed / custom-API on Splose) and the
+  custom funnel may become a prototype rather than production. Opening ~20 Jul 2026;
+  30/60-min appointments only. **See `NEXT-SESSION.md` and the SUPERSEDED block in
+  `BOOKING.md`** — that is the current source of truth, not the Cliniko notes.
 - Full site (phase-2 IA in `CONCEPTS.md`): About, Treatments, the Zone Two Method,
   first-visit, etc., built on the A2 design system.

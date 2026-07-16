@@ -17,7 +17,29 @@ mock):
 - `/book` — the booking flow
 - `/account/signup`, `/account/login`, `/account` — the non-clinical accounts
 
-## Provider direction (decided 2026-06-14, after research)
+## Provider direction
+
+> ### ⚠️ SUPERSEDED (2026-07-10): the PMS is now **Splose**, not Cliniko/HALTH.
+> The client evaluated CRMs and **chose Splose** (`zone-two-health-and-performance.splose.com`,
+> password-protected during setup). Splose is an Australian allied-health PMS that does
+> **online booking, intake, clinical records, payments and health-fund/Medicare claiming
+> natively** — so **HALTH is dropped** (Splose covers funding/payments). The client is
+> configuring appointment types + booking parameters inside Splose; opening date is
+> **~20 July 2026** (tentative), appointments are **30 or 60 minutes only (no 45)**.
+>
+> **This changes the whole booking strategy — the KEY OPEN DECISION for the next session:**
+> does the site (a) **link out** to the Splose booking page, (b) **embed** it (iframe —
+> `BookingEmbed`/`mode=embedded` already exists for this), or (c) build a **custom UI on
+> Splose's API** (swap the `cliniko.ts` seam for a `splose.ts` one)? Given the imminent
+> opening and that Splose provides a hosted booking + payments + intake + consent flow, the
+> pragmatic go-live is almost certainly **(a) or (b)** — which would make the custom mock
+> funnel, the HALTH funding prototype (`funding.ts`), and much of `duration.ts` a
+> **reviewed prototype rather than the production booking**. Confirm with the client, then
+> keep/adapt/retire accordingly. See `NEXT-SESSION.md`.
+>
+> The Cliniko + HALTH research below is kept for history only.
+
+### (historical) Provider direction (decided 2026-06-14, after research)
 
 - **PMS = Cliniko.** The client requires HALTH, and HALTH integrates with Cliniko /
   Nookal / Halaxy but **not Splose** — so Splose (despite stronger document handling +
