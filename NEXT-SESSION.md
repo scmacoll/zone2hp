@@ -166,10 +166,9 @@ The **public booking link and embed code** are a different URL, found inside Spl
      hand-drawn **Z²** (`public/favicon.svg` + the inline SVGs in `index.astro`).
    - **Bio**: Dr Mintae Kim's personal three-quote bio. **Client-directed (2026-07-16):
      em dashes removed (done); change NOTHING else — do not soften or reword**, including
-     the pain/outcome phrases flagged under `COMPLIANCE.md`. Name confirmed
-     **"Dr Mintae Kim"**. **Post-nominals still OPEN** (docx `B.Chir.Sci., M.Chiro.` vs site
-     `B. Chiro. Sci., M. Chiro.`). **Ask the client before any further text change.**
-     Details in `BRANDING-AND-BIO.md`.
+     the pain/outcome phrases flagged under `COMPLIANCE.md`. Name = **"Dr Mintae Kim"**,
+     post-nominals = **`B.Chir.Sci., M.Chiro.`** (both confirmed; `mock.ts` updated).
+     **Ask the client before any further text change.** Details in `BRANDING-AND-BIO.md`.
 6. **Opening ~20 July 2026 (tentative) — but do NOT put a date on the site** (client decided
    2026-07-16). Keep the coming-soon messaging undated.
 
@@ -177,9 +176,11 @@ The **public booking link and embed code** are a different URL, found inside Spl
 
 ## Blocked / needed from the client (chase these)
 
-- **The Splose booking embed code / shareable link** — get it from the client's Splose
-  workspace once he finishes configuring online bookings (Splose → online bookings →
-  share/embed). Needed to wire "Book now".
+- **The Splose booking embed code / shareable link** — ⏳ **the client is providing this at
+  the start of the next session** (he is finishing the Splose online-booking configuration).
+  **If it has not been pasted in, ask for it before starting any booking work.** It comes
+  from Splose → **Settings → Online bookings** (see the Splose access notes above). Needed
+  to wire "Book now".
 - **Cancellation Policy** text — still not supplied, and it is a commercial decision we
   cannot invent (notice period + fee). The client can enter it directly in Splose (the
   booking page supports cancellation policy + terms); ask for the wording if it should
@@ -197,28 +198,53 @@ Security Centre = `https://splose.com/resources/security` and Splose Privacy Pol
 
 ## INTRO PROMPT (copy from here)
 
-> Continue the Zone Two build. Read `CLAUDE.md`, then `BOOKING.md` (note the **SUPERSEDED /
-> Splose** block), `PROGRESS.md`, `FAQ-AND-PRIVACY.md`, and `NEXT-SESSION.md`. Keep the house
-> rules: Australian English, no em dashes, no AI-tell/outcome/compliance-banned words, AA
-> accessibility, no browser storage except the one fenced `z2-confirm` handoff, simple +
-> idiomatic + functional TypeScript, strong TDD (Vitest), and remove redundant code when
-> refactoring.
+> Continue the Zone Two Health and Performance build (Astro + TypeScript + Tailwind, static
+> site on Vercel). Read in this order: `CLAUDE.md`, `NEXT-SESSION.md`, `FAQ-AND-PRIVACY.md`,
+> `BRANDING-AND-BIO.md`, then `BOOKING.md` (note the SUPERSEDED/Splose block) and
+> `PROGRESS.md`. **Start in plan mode** and ask me anything open before building.
 >
-> State: the **home page + keep-in-touch email are done and live on `staging.zone2hp.com`**;
-> a full **mock booking funnel** is on staging for client review; `main` (production) is not
-> yet merged and is gated so it can ship as "home + email only". **The client has switched
-> the PMS to Splose** (Cliniko/HALTH dropped) and is opening ~**20 July 2026**, so the focus
-> now is **go-live**, not more custom-funnel features.
+> **House rules:** Australian English; **no em dashes anywhere in copy**; no AI-tell or
+> outcome/compliance-banned words (`COMPLIANCE.md` is law); AA accessibility; responsive per
+> `DESIGN-SYSTEM.md` (screenshot the test widths before calling anything done); simple,
+> idiomatic, functional TypeScript; TDD with Vitest; remove redundant code when refactoring.
+> **Never edit the client's supplied copy** (bio, privacy, consent) beyond the already
+> approved em-dash removal. Ask me first.
 >
-> Before building, get me to confirm the **booking strategy** (link out to Splose / embed
-> Splose / custom UI on Splose's API) — this decides whether the custom funnel, `funding.ts`
-> and `duration.ts` stay, adapt, or retire. Then the likely work, in order: (1) a public
-> **Privacy Policy / FAQ** page from `FAQ-AND-PRIVACY.md`, linkable from Splose's consent
-> form; (2) wire **"Book now"** to the chosen Splose approach; (3) drop in the **real
-> branding** (logos in `brand/`, bio + slogan in `BRANDING-AND-BIO.md` — the bio needs
-> em-dash + compliance + name fixes first); (4) **30/60-min only** (no 45); (5)
-> opening-date messaging; (6)
-> when approved, set `PUBLIC_BOOKING_LINKS_VISIBLE=false` on Vercel **Production** and merge
-> `staging` → `main`. Start in plan mode; ask me the open questions first.
+> **Where things are.** `zone2hp.com` (production, `main`) is **LIVE**: the new coming-soon
+> home page with a working Formspree keep-in-touch capture, and booking/accounts gated off
+> via `PUBLIC_BOOKING_LINKS_VISIBLE=false` on Vercel Production (verified: no Book/Log in
+> buttons, `/book` and `/account/*` redirect home). `staging.zone2hp.com` (`staging` branch)
+> is the review build and additionally carries a full **mock booking funnel** (68 Vitest
+> tests, 12 pages). Work on `staging`, then merge to `main` by GitHub PR when approved.
+>
+> **The pivot.** The client's PMS is now **Splose** (Cliniko/HALTH dropped — Splose does
+> booking, intake, the online consent signature, payments and claiming natively). **Decision
+> made: use Splose's own booking page via their embed**, not a custom UI on their API —
+> `BookingEmbed.astro` / `mode=embedded` already exists for exactly this. The custom funnel
+> stays as a prototype and doubles as the spec for configuring Splose. Clinic opens ~20 July
+> 2026 (tentative) but **no opening date on the site**. Appointments are **30 or 60 minutes
+> only** (a Splose config detail now).
+>
+> **The client is giving me the Splose booking link / embed code at the start of this
+> session.** If I have not pasted it in, ask me for it before starting the booking work
+> (it comes from Splose → Settings → Online bookings).
+>
+> **Work, in order — the focus is the home page:**
+> 1. **Privacy pages** from `FAQ-AND-PRIVACY.md`: build `/privacy` (this is the URL Splose's
+>    online consent form links to before the patient ticks consent) and
+>    `/privacy/data-security`, linked from the foot of `/privacy`, plus a **Privacy link in
+>    the footer**. Reproduce the client's legal copy faithfully. **No FAQ page** — the source
+>    doc contains no actual questions.
+> 2. **Home page branding**: convert the logos in `brand/` (PDF → SVG; `logotype_icon_hp` is
+>    the full/primary logo, "HP" = Health and Performance) and replace the placeholder **Z²**
+>    mark (`public/favicon.svg` + the inline SVGs in `src/pages/index.astro`); work in the
+>    **slogan** ("slow is fast" / "slowly is the fastest way to get to where you want to
+>    be"); and add an **About section on the home page** using the bio in
+>    `BRANDING-AND-BIO.md` **verbatim** (Dr Mintae Kim, B.Chir.Sci., M.Chiro.).
+> 3. **Wire "Book now"** to the Splose embed once the code arrives, and only un-gate booking
+>    when the client says go.
+>
+> Still outstanding from the client: the **cancellation policy** wording (a commercial
+> decision, do not invent it).
 
 ## (end intro prompt)
