@@ -10,13 +10,23 @@ reproduce it faithfully; do not paraphrase, "improve", or add outcome claims.**
   `BOOKING.md` → provider direction). Splose's online **initial consult form** needs a
   **link back to this website's Privacy Policy** so patients can read it *before* they
   tick the consent box and sign online.
-- So the website needs (at minimum) a public **Privacy Policy** page, and ideally a
-  small **FAQ / legal** area holding the three sections below:
-  1. **Privacy Policy** — the primary page, linked from the Splose consent form.
-  2. **Electronic Health Records and Data Security** — a secondary page (linked after
-     the Privacy Policy) for people who want detail on Splose/data handling.
-  3. **Informed Consent** — the full consent document (mostly signed inside Splose;
-     included here for completeness / in case a web version is wanted).
+### Recommended structure (proposed 2026-07-16)
+
+The client's own notes dictate the shape: the privacy page must be a **stable public URL**
+(so Splose's consent form can link to it), and the data-security text is explicitly "a
+separate page that can link after the one above". So:
+
+| Route | Content | Why |
+|---|---|---|
+| **`/privacy`** | Section 1, Privacy Policy | The URL the Splose consent form links to. Also closes our own "a full privacy policy will be published before launch" promise. |
+| **`/privacy/data-security`** | Section 2, EHR + Splose | The client's "separate page linked after" the privacy policy. |
+| *(none)* | Section 3, Informed Consent | Signed **inside Splose**. Kept here as the source; no web page needed unless asked. |
+
+**Do not build a general FAQ page yet.** The docx is titled "FAQ (section)" but contains
+no actual questions and answers — it is entirely privacy/consent copy. A real FAQ (hours,
+parking, fees, what to expect on a first visit) would be new content we do not have.
+
+Also add a **"Privacy" link in the site footer** so the policy is discoverable.
 - Compliance still applies to every string, but note this is factual legal/consent
   copy (risk disclosures, "no guaranteed outcome" language) — that is appropriate and
   expected here, unlike marketing copy.
@@ -98,8 +108,12 @@ will only disclose your information with your consent, where required or authori
 law, or where necessary to protect your health or safety.
 
 For further information about Splose's privacy and security practices, please refer to:
-- Splose Security Centre  *(get the real URL from the client / Splose)*
-- Splose Privacy Policy    *(get the real URL from the client / Splose)*
+- **Splose Security Centre** → https://splose.com/resources/security
+- **Splose Privacy Policy** → https://splose.com/privacy-policy
+
+*(URLs researched and confirmed 2026-07-16. The client's docx listed these as bullets with
+no links; use the two URLs above. Splose also publishes Terms of Service
+(`/terms-of-service`) and a Cookie Policy (`/cookie-policy`) if ever needed.)*
 
 ---
 

@@ -36,9 +36,8 @@ the branding**. Today the site uses a hand-drawn **Z²** mark — replace it
 after "Dr"), always rendered with the profession per `COMPLIANCE.md`.
 
 - **Title:** Chiropractor
-- **Post-nominals:** ⚠️ **OPEN — ask the client.** The docx writes `B.Chir.Sci., M.Chiro.`;
-  the site/mock currently uses `B. Chiro. Sci., M. Chiro.`. These differ (Chir vs Chiro,
-  and spacing). Do not change either until the client confirms which is correct.
+- **Post-nominals (confirmed 2026-07-16): `B.Chir.Sci., M.Chiro.`** — the docx spelling is
+  correct. `src/lib/booking/mock.ts` has been updated to match; use this everywhere.
 
 > **Compliance note (raised and answered):** I flagged that "Helping someone get out of
 > pain" and "watching them overcome injury, regain confidence" are outcome-adjacent under
@@ -70,8 +69,8 @@ I find great joy in helping the people around me succeed. The journey to becomin
 
 Helping someone get out of pain is a small win. The real reward is being part of their journey, watching them overcome injury, regain confidence, and become the best version of themselves. That is the BIG win.
 
-## Where does the bio go? (open)
-The site is currently a single coming-soon page with no About section, so there is nowhere
-for a three-part bio yet. Needs a decision: a new `/about` page, a section on the home page,
-or (short version only) the practitioner card in the booking flow. The mock bio in
-`src/lib/booking/mock.ts` is placeholder text and should be reconciled once decided.
+## Where does the bio go? (decided 2026-07-16)
+**An "About" section on the home page** — no separate `/about` page for now. The client
+wants the focus kept on the single home page. The placeholder bio in
+`src/lib/booking/mock.ts` (used by the booking practitioner card) is separate mock copy;
+reconcile it with this real bio if/when the booking surface is revisited.
