@@ -4,9 +4,18 @@ Read order for the next session: `CLAUDE.md` → `BOOKING.md` (note the **SUPERS
 Splose** block at the top of "Provider direction") → `PROGRESS.md` → `FAQ-AND-PRIVACY.md`
 → `BRANDING-AND-BIO.md` → this file. Then paste the **INTRO PROMPT** block near the bottom.
 
-Git: all work is on branch **`claude/charming-jackson-fcd1c0`** and **`staging`** (same
-commit, currently `eb49d5f`), deployed to **`staging.zone2hp.com`** (Vercel). **`main`
-= production is NOT yet merged** (still the old page). Local preview: this worktree runs
+Git / deploy status (verified 2026-07-16):
+- **`main` = production IS merged and LIVE** (PR #1, `662f6fa`). **zone2hp.com** now serves
+  the new home page with the working keep-in-touch email capture, and the production gate
+  is confirmed active — **no Book now / Log in buttons** (checked live).
+- **`staging`** + **`claude/charming-jackson-fcd1c0`** are the working branches (currently
+  `e390642`), deployed to **`staging.zone2hp.com`**, and sit **4 commits ahead of main** —
+  those are handoff docs + branding files + one trivial `mock.ts` post-nominal fix, i.e.
+  nothing production is waiting on.
+- Workflow: build on `staging` → client reviews `staging.zone2hp.com` → merge to `main`
+  when approved.
+
+Local preview: this worktree runs
 **`dev-wt`** (port **4322**) — I added that launch config because `4321` was held by
 another worktree's dev server; `dev` (4321) is fine if nothing else holds it. A fresh
 worktree may need its own config.
@@ -48,13 +57,55 @@ Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 t
   home when `bookingConfig.linksVisible` is false, the same flag that hides the nav's
   Book/Log in buttons (`PUBLIC_BOOKING_LINKS_VISIBLE`). On by default (staging = full);
   set it `false` in **Vercel → Production only** to ship "home + email, no booking".
-- **To go live with just the home page**: set that Production env var, then merge `staging`
-  → `main` (GitHub PR `main...staging`, or `git merge`). Not done yet.
-  **Recommended sequencing (2026-07-16): merge NOW, then merge again after branding lands.**
-  The new home is already a large improvement on the old production page and the
-  keep-in-touch capture is live and activated, so with opening ~4 days out every day it is
-  not shipped is lost signups. Shipping twice costs nothing, and merging now proves the
-  production build + the gate under no time pressure rather than on opening day.
+- **DONE (2026-07-16): production has shipped.** The Production env var is set and `staging`
+  was merged to `main` (PR #1). zone2hp.com serves the new home + email capture with booking
+  gated off — verified live. Future releases repeat the same path: merge `staging` → `main`
+  via a GitHub PR (`github.com/scmacoll/zone2hp/compare/main...staging`).
+
+---
+
+## Client communications (the source of everything below)
+
+The client is **Dr Mintae Kim** (chiropractor, the practice owner). Two emails + a call:
+
+**Email 1 (early July 2026, 6 attachments).** Paraphrased: he had been quiet while
+evaluating CRM platforms and has decided to switch to **Splose** — he believes it has more
+capability for automations, patient retention, data analytics and AI. Attached **a bio, the
+slogan, and the logo variations**, noting *"the Logotype+icon+HP is the full logo and I
+would like to use variations of the logo throughout the branding."* He was on the Splose
+trial awaiting full access, after which he would *"be setting up all the online booking
+parameters."* Opening date **20/07, tentative**.
+
+**Email 2 (10 Jul 2026, 17:56, FAQ docx attached).** Gave the Splose workspace link
+`zone-two-health-and-performance.splose.com` **plus a login password (deliberately NOT
+stored in this repo — get it from the client)**. Key line:
+
+> "Adding this into the FAQ section is going to be important as it will serve as link for
+> the details about the consent and privacy policy before they tick the box and sign
+> online."
+
+i.e. the privacy/consent copy goes on **our** website, and **Splose's online consult form
+links to it** before the patient ticks consent and signs. He was on standby over the
+weekend for questions.
+
+**Phone call.** Appointments are **30 or 60 minutes only — no more 45-minute appointments**
+for now.
+
+### Splose access — what that URL actually is, and where the embed code lives
+
+`zone-two-health-and-performance.splose.com` is the practice's **Splose workspace (the staff
+app)**, not the patient booking page — which is why it needs a login. A patient opening it
+would just get a Splose sign-in screen, so **do not link customers to it**.
+
+The **public booking link and embed code** are a different URL, found inside Splose:
+- Enable first: **Settings → Locations** (enable online bookings), **Settings → Services**
+  (enable per service), **Settings → Users → Details** (enable per practitioner, plus an
+  optional professional statement).
+- Then: **Settings → Online bookings** — this shows the copyable **online booking link**,
+  the **embed code** for a website, booking intervals/alerts, and a live preview. The page
+  is brandable (colours, logo, notices, cancellation policy, terms, confirmation message).
+- Sanity check: open the booking link in a **private/incognito window** (logged out) to see
+  exactly what a patient sees.
 
 ---
 
@@ -89,6 +140,16 @@ Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 t
    wasted: it doubles as the spec for configuring Splose (appointment types, 30/60
    durations, terms, confirmation copy). `funding.ts` (HALTH) is dead either way, because
    Splose does claiming natively.
+
+   **"Could we just build the backend instead?"** Technically yes — a Vercel serverless
+   proxy over Splose's availability/appointment endpoints is roughly a day's work, and the
+   `client.ts` seam means the UI would not change. It is still **not** the right MVP: it
+   parks a full-permission patient-data credential on our infrastructure, makes us a
+   health-data custodian (new privacy/consent obligations that contradict the client's own
+   policy, which states records live in Splose), and *still* only covers slot picking
+   before handing off to Splose for intake, consent and payment — a split flow that is
+   worse for the patient than one branded Splose page. **Ship the embed for MVP; revisit
+   custom later only with a concrete reason.**
 3. **Appointments are 30 or 60 minutes only — no 45** (phone call). If the custom funnel is
    kept, remap `duration.ts` (currently emits 30/45/60; the tests are the spec — update both).
    If booking moves to Splose, this is just a Splose config note.
