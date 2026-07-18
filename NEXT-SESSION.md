@@ -59,12 +59,21 @@ Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 t
    (password-protected during setup; client has the password). Splose does booking, intake,
    records, payments and Medicare/health-fund claiming natively, so **HALTH is dropped**.
    The client is setting up appointment types + booking parameters inside Splose.
-2. **KEY OPEN DECISION — booking strategy.** With Splose owning booking + payments + consent,
-   how does the site book? (a) **link out** to Splose, (b) **embed** Splose's page (iframe —
-   `mode=embedded` / `BookingEmbed.astro` already exists), or (c) **custom UI on Splose's
-   API** (add a `splose.ts` behind the `client.ts` seam). Given the ~20 Jul opening, (a)/(b)
-   is the likely go-live; that would make the **custom funnel + `funding.ts` + `duration.ts`
-   a reviewed prototype, not production**. Confirm before building.
+2. **KEY OPEN DECISION — booking strategy.** Intent (2026-07-16) is to keep **our custom UI
+   on the provider's API** — exactly what the `client.ts` seam was built for (swap
+   `cliniko.ts` for a `splose.ts`). Three things must be settled before committing to it:
+   - **a. Verify Splose's API** actually exposes public **availability** + **appointment
+     creation**. Many PMS APIs are admin/practitioner-facing, not patient self-booking.
+     **UNVERIFIED — check Splose's developer docs or ask Splose support first.**
+   - **b. A backend is required** to hold the Splose API key. The site is static today, so
+     this needs an SSR/serverless route (the long-documented "needs an SSR host" item).
+   - **c. Scope.** Splose's hosted flow also does intake, the online **consent signature**
+     and payments/claiming. A custom UI would realistically cover slot selection and hand
+     off to Splose for intake/consent/payment, unless we rebuild all of that (large, and a
+     lot of extra compliance surface).
+   Fast fallback if opening pressure wins: (a) **link out** or (b) **embed**
+   (`mode=embedded` / `BookingEmbed.astro` already exists), then move to the custom UI once
+   the three points above are settled.
 3. **Appointments are 30 or 60 minutes only — no 45** (phone call). If the custom funnel is
    kept, remap `duration.ts` (currently emits 30/45/60; the tests are the spec — update both).
    If booking moves to Splose, this is just a Splose config note.
@@ -79,23 +88,30 @@ Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 t
    - **Logos**: 5 variations; `logotype_icon_hp.pdf` = the **full/primary** logo; "HP" =
      Health and Performance. Convert PDF → SVG/web and use variations throughout; replace the
      hand-drawn **Z²** (`public/favicon.svg` + the inline SVGs in `index.astro`).
-   - **Bio**: Dr Mintae Kim's personal three-quote bio. **Before publishing it needs
-     em-dash removal, a `COMPLIANCE.md` pass** (a couple of pain/outcome phrases), and
-     **name/post-nominal alignment** (doc says "Dr. Min Tae Kim"; site uses "Dr Mintae Kim")
-     — details in `BRANDING-AND-BIO.md`.
-6. **Opening date ~20 July 2026 (tentative).** Today is 2026-07-16, so it's imminent. Decide
-   whether the coming-soon home should state the date or stay vague.
+   - **Bio**: Dr Mintae Kim's personal three-quote bio. **Client-directed (2026-07-16):
+     em dashes removed (done); change NOTHING else — do not soften or reword**, including
+     the pain/outcome phrases flagged under `COMPLIANCE.md`. Name confirmed
+     **"Dr Mintae Kim"**. **Post-nominals still OPEN** (docx `B.Chir.Sci., M.Chiro.` vs site
+     `B. Chiro. Sci., M. Chiro.`). **Ask the client before any further text change.**
+     Details in `BRANDING-AND-BIO.md`.
+6. **Opening ~20 July 2026 (tentative) — but do NOT put a date on the site** (client decided
+   2026-07-16). Keep the coming-soon messaging undated.
 
 ---
 
 ## Blocked / needed from the client (chase these)
 
-- **Booking strategy** decision (link vs embed vs custom-on-API).
-- **Splose URLs**: the real "Splose Security Centre" + "Splose Privacy Policy" links (the
-  data-security page references them), and whether the Splose booking page will be public
-  (currently password-gated) or embeddable.
+- **Splose API capability** — does it expose public availability + booking creation? This
+  gates the custom-UI plan (see pivot item 2). Unverified.
+- **Splose URLs** — the real "Splose Security Centre" + "Splose Privacy Policy" links. The
+  client's data-security copy lists them as bullets **with no URLs**, so they can't be made
+  into real links yet. Also: will the Splose booking page be public (it is password-gated
+  now) or embeddable?
 - **Cancellation Policy** text (the consent doc references it; not supplied).
-- Real **appointment types + fees** as configured in Splose (for any funding/price display).
+- **Post-nominals** for Dr Mintae Kim (`B.Chir.Sci.` vs `B. Chiro. Sci.`).
+- **Information architecture** — there is no About or legal page yet, so we need to agree
+  where the **bio** and the **Privacy Policy / FAQ / data-security** content live.
+- Real **appointment types + fees** as configured in Splose (30/60 only).
 
 ---
 
