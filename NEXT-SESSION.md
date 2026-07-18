@@ -2,7 +2,7 @@
 
 Read order for the next session: `CLAUDE.md` → `BOOKING.md` (note the **SUPERSEDED /
 Splose** block at the top of "Provider direction") → `PROGRESS.md` → `FAQ-AND-PRIVACY.md`
-→ this file. Then paste the **INTRO PROMPT** block near the bottom.
+→ `BRANDING-AND-BIO.md` → this file. Then paste the **INTRO PROMPT** block near the bottom.
 
 Git: all work is on branch **`claude/charming-jackson-fcd1c0`** and **`staging`** (same
 commit, currently `eb49d5f`), deployed to **`staging.zone2hp.com`** (Vercel). **`main`
@@ -72,14 +72,17 @@ Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 t
    Splose's online consent form must **link to the website's Privacy Policy** before the
    patient ticks the consent box. So build a public **Privacy Policy** page (+ optionally the
    Splose data-security page and the consent text). This was our "privacy-policy launch gate."
-5. **Real branding** (client attachments, in `~/Downloads/`, NOT in the repo — binaries):
-   - `icon.pdf` (icon only), `logotype.pdf` (wordmark), `logotype_icon.pdf` (wordmark+icon),
-     `logotype_icon_hp.pdf` = **the full logo** (wordmark + icon + "HP"). Client wants
-     **variations used throughout branding**. Convert PDF → SVG/web and place them; today the
-     site uses a hand-drawn **Z²** mark (`public/favicon.svg` + the `.a2-brand` inline SVG in
-     `index.astro`) — replace with the real marks.
-   - The client also referenced a **bio** and a **slogan** (email 1's "6 attachments"), but
-     those files were **NOT provided to us** — only the 4 logos + the FAQ docx. **Need them.**
+5. **Real branding — all supplied now** (see **`BRANDING-AND-BIO.md`**; logo source PDFs
+   committed in **`brand/`**):
+   - **Slogan**: long "slowly is the fastest way to get to where you want to be" / short
+     "slow is fast". Good hero / coming-soon candidate.
+   - **Logos**: 5 variations; `logotype_icon_hp.pdf` = the **full/primary** logo; "HP" =
+     Health and Performance. Convert PDF → SVG/web and use variations throughout; replace the
+     hand-drawn **Z²** (`public/favicon.svg` + the inline SVGs in `index.astro`).
+   - **Bio**: Dr Mintae Kim's personal three-quote bio. **Before publishing it needs
+     em-dash removal, a `COMPLIANCE.md` pass** (a couple of pain/outcome phrases), and
+     **name/post-nominal alignment** (doc says "Dr. Min Tae Kim"; site uses "Dr Mintae Kim")
+     — details in `BRANDING-AND-BIO.md`.
 6. **Opening date ~20 July 2026 (tentative).** Today is 2026-07-16, so it's imminent. Decide
    whether the coming-soon home should state the date or stay vague.
 
@@ -87,8 +90,6 @@ Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 t
 
 ## Blocked / needed from the client (chase these)
 
-- **Bio** text (for the site / practitioner card) — not received.
-- **Slogan / tagline** — not received.
 - **Booking strategy** decision (link vs embed vs custom-on-API).
 - **Splose URLs**: the real "Splose Security Centre" + "Splose Privacy Policy" links (the
   data-security page references them), and whether the Splose booking page will be public
@@ -117,9 +118,10 @@ Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 t
 > Splose / custom UI on Splose's API) — this decides whether the custom funnel, `funding.ts`
 > and `duration.ts` stay, adapt, or retire. Then the likely work, in order: (1) a public
 > **Privacy Policy / FAQ** page from `FAQ-AND-PRIVACY.md`, linkable from Splose's consent
-> form; (2) wire **"Book now"** to the chosen Splose approach; (3) drop in the **real logos**
-> (4 PDF variations in `~/Downloads/`, `logotype_icon_hp.pdf` = full logo) plus **bio +
-> slogan** once supplied; (4) **30/60-min only** (no 45); (5) opening-date messaging; (6)
+> form; (2) wire **"Book now"** to the chosen Splose approach; (3) drop in the **real
+> branding** (logos in `brand/`, bio + slogan in `BRANDING-AND-BIO.md` — the bio needs
+> em-dash + compliance + name fixes first); (4) **30/60-min only** (no 45); (5)
+> opening-date messaging; (6)
 > when approved, set `PUBLIC_BOOKING_LINKS_VISIBLE=false` on Vercel **Production** and merge
 > `staging` → `main`. Start in plan mode; ask me the open questions first.
 
