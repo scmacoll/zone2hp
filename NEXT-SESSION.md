@@ -1,250 +1,180 @@
-# Next session — handoff + intro prompt (updated 2026-07-16)
+# Next session — handoff (updated 2026-07-19)
 
-Read order for the next session: `CLAUDE.md` → `BOOKING.md` (note the **SUPERSEDED /
-Splose** block at the top of "Provider direction") → `PROGRESS.md` → `FAQ-AND-PRIVACY.md`
-→ `BRANDING-AND-BIO.md` → this file. Then paste the **INTRO PROMPT** block near the bottom.
-
-Git / deploy status (verified 2026-07-16):
-- **`main` = production IS merged and LIVE** (PR #1, `662f6fa`). **zone2hp.com** now serves
-  the new home page with the working keep-in-touch email capture, and the production gate
-  is confirmed active — **no Book now / Log in buttons** (checked live).
-- **`staging`** + **`claude/charming-jackson-fcd1c0`** are the working branches (currently
-  `e390642`), deployed to **`staging.zone2hp.com`**, and sit **4 commits ahead of main** —
-  those are handoff docs + branding files + one trivial `mock.ts` post-nominal fix, i.e.
-  nothing production is waiting on.
-- Workflow: build on `staging` → client reviews `staging.zone2hp.com` → merge to `main`
-  when approved.
-
-Local preview: this worktree runs
-**`dev-wt`** (port **4322**) — I added that launch config because `4321` was held by
-another worktree's dev server; `dev` (4321) is fine if nothing else holds it. A fresh
-worktree may need its own config.
+Read order: `CLAUDE.md` → this file → `ACCOUNTS.md` → `BOOKING.md` (note the
+SUPERSEDED/Splose block) → `FAQ-AND-PRIVACY.md` → `BRANDING-AND-BIO.md` →
+`PROGRESS.md`.
 
 ---
 
-## Where things stand (built + shipped to staging)
+## Where things stand
 
-**Home page (live design, chosen concept A2)** — the coming-soon landing page is done:
-video hero + translucent panel, map, expanded footer. Design passes applied: cool textured
-`--stone-cool` surface + `--glow-chrome`, brand-orange progress vs **steel-blue selection**
-tiles, nav CTA labels kept on one line on mobile. **Keep-in-touch email is LIVE** — footer
-form validates inline and POSTs to **Formspree** (`/f/xlgkvgjw` → **info@zone2hp.com**),
-shows an inline confirmation. (One-time: submit once on staging, then click Formspree's
-confirmation email to activate the form.)
+**`staging` branch → staging.zone2hp.com — LIVE and current.** Carries all of the
+work below. Booking is switched on there and the Splose embed works.
 
-**Booking funnel (mock, on staging for client review)** — routed `/book/*` steps
-Patient → Type → Visit → Time → Details → Confirm, TDD (Vitest, **68 tests green**, build
-**12 pages**), provider-agnostic behind a mock. Highlights added this run:
-- **Time step**: pick a time to select it (steel-blue), then a **Continue** button (needs
-  date + time). A **fully-booked day** renders disabled/"Full" (mock leaves the 2nd open
-  day booked as the example).
-- **Details = two phases on one page**: edit → **Review your booking** (consolidated
-  appointment + your details, with Edit/Back) → **Request booking**. Contact details are
-  NOT in the URL, so they ride to `/book/confirm` via a one-time `z2-confirm`
-  **sessionStorage** handoff (read once, deleted; a direct visit shows only the appointment).
-- **Summary**: shows the visit composition under duration; the **practitioner (Dr Mintae
-  Kim)** under the consultation type once a time is chosen; and, for an **existing patient**,
-  their **name + email/mobile** under "Existing patient".
-- **Existing-patient demo credential** (single, hardcoded): **Jane Doe / janedoe@gmail.com**,
-  pre-filled; strict name+email match; "email or mobile" is format-validated.
-- Design: Dr card is borderless cool stone; account pages picked up the cool stone.
+**`main` → zone2hp.com — deliberately BEHIND.** Still on `662f6fa`, the old
+coming-soon page: placeholder Z² mark, no Book or Log in buttons, no privacy
+pages. Nothing from this session has reached production. That is intentional.
 
-**Deploy / gating (done):**
-- `staging.zone2hp.com` = the full review build (Vercel branch domain on `staging`, CNAME
-  at Squarespace). **Vercel Deployment Protection (Vercel Authentication) is OFF** so the
-  client can view without a Vercel login.
-- **Production gate (build-time flag)**: every `/book/*` and `/account/*` page redirects
-  home when `bookingConfig.linksVisible` is false, the same flag that hides the nav's
-  Book/Log in buttons (`PUBLIC_BOOKING_LINKS_VISIBLE`). On by default (staging = full);
-  set it `false` in **Vercel → Production only** to ship "home + email, no booking".
-- **DONE (2026-07-16): production has shipped.** The Production env var is set and `staging`
-  was merged to `main` (PR #1). zone2hp.com serves the new home + email capture with booking
-  gated off — verified live. Future releases repeat the same path: merge `staging` → `main`
-  via a GitHub PR (`github.com/scmacoll/zone2hp/compare/main...staging`).
+**Local preview: run the `dev-wt` launch config (port 4322).** Port 4323
+(`preview-build`) serves static files only, so the server-rendered `/account`
+pages 404 there. Use 4322 unless you are specifically testing the Content
+Security Policy, which does not apply in dev.
+
+### Environment variables
+
+Set on Vercel **Preview only** (they drive staging). `PUBLIC_*` values are baked
+in at BUILD time, so changing one needs a redeploy.
+
+```
+PUBLIC_BOOKING_MODE=embedded
+PUBLIC_BOOKING_EMBED_URL=https://zone-two-health-and-performance.splose.com/online-booking/cf22e909-cf7f-4d21-9a13-27817248788b
+PUBLIC_BOOKING_LINKS_VISIBLE=true
+PUBLIC_ACCOUNTS_ENABLED=          # deliberately unset: accounts stay off
+```
+
+Booking and accounts are **separate switches**, so booking can be demonstrated
+while the login stays hidden. Both compare against the exact string `'true'`.
+
+> **Redeploy gotcha.** Vercel's "redeploy after env change" prompt acts on the
+> deployment you are *looking at*. The project overview shows PRODUCTION, so it
+> will rebuild main. To rebuild staging: Deployments tab → find the one whose
+> source is `staging` → ⋯ → Redeploy.
 
 ---
 
-## Client communications (the source of everything below)
+## What was built this session
 
-The client is **Dr Mintae Kim** (chiropractor, the practice owner). Two emails + a call:
+- **Real branding.** `brand/build-logos.py` converts the client's five logo PDFs
+  to web SVGs (viewBox cropped to the ink, fills set to `currentColor` so one
+  file serves dark and light, glyph ids namespaced). The placeholder Z² is gone
+  from the nav, favicon, page header and compact footer. Added the `og:image` and
+  apple-touch-icon the site never had.
+- **Privacy pages.** `/privacy` and `/privacy/data-security`, reproducing the
+  client's legal copy **verbatim** (verified word for word: 289 and 239 words).
+  `/privacy` is the URL Splose's consent form links to. Privacy link in both
+  footers.
+- **About section** on the home page with the bio **verbatim** (304 words), the
+  first part visible and the rest behind a one-way disclosure.
+- **Accounts.** Real auth on Supabase (Sydney), httpOnly cookie sessions, behind
+  the existing `AuthProvider` seam. Strictly non-clinical. Currently switched
+  OFF. See `ACCOUNTS.md` for the data boundary and why it is drawn there.
+- **Splose booking.** `/book` frames Splose's hosted page with their v2 embed and
+  postMessage resize. Our listener pins the frame's **origin** as well as its
+  source, which Splose's published snippet does not.
+- **Security and discovery.** CSP with hashed scripts and styles (no
+  `unsafe-inline`), HSTS, frame-ancestors, Referrer-Policy, Permissions-Policy;
+  `robots.txt`, sitemap, and `MedicalOrganization` JSON-LD chosen because it
+  *cannot* express opening hours or ratings, neither of which we may publish.
+- **Hero video** re-encoded from the client's master: full 30 seconds, silent,
+  WebM + H.264. The master is HEVC, which Firefox cannot decode. 23 MB → 2.7 MB.
+  Command recorded in `brand/encode-hero.sh`.
 
-**Email 1 (early July 2026, 6 attachments).** Paraphrased: he had been quiet while
-evaluating CRM platforms and has decided to switch to **Splose** — he believes it has more
-capability for automations, patient retention, data analytics and AI. Attached **a bio, the
-slogan, and the logo variations**, noting *"the Logotype+icon+HP is the full logo and I
-would like to use variations of the logo throughout the branding."* He was on the Splose
-trial awaiting full access, after which he would *"be setting up all the online booking
-parameters."* Opening date **20/07, tentative**.
-
-**Email 2 (10 Jul 2026, 17:56, FAQ docx attached).** Gave the Splose workspace link
-`zone-two-health-and-performance.splose.com` **plus a login password (deliberately NOT
-stored in this repo — get it from the client)**. Key line:
-
-> "Adding this into the FAQ section is going to be important as it will serve as link for
-> the details about the consent and privacy policy before they tick the box and sign
-> online."
-
-i.e. the privacy/consent copy goes on **our** website, and **Splose's online consult form
-links to it** before the patient ticks consent and signs. He was on standby over the
-weekend for questions.
-
-**Phone call.** Appointments are **30 or 60 minutes only — no more 45-minute appointments**
-for now.
-
-### Splose access — what that URL actually is, and where the embed code lives
-
-`zone-two-health-and-performance.splose.com` is the practice's **Splose workspace (the staff
-app)**, not the patient booking page — which is why it needs a login. A patient opening it
-would just get a Splose sign-in screen, so **do not link customers to it**.
-
-The **public booking link and embed code** are a different URL, found inside Splose:
-- Enable first: **Settings → Locations** (enable online bookings), **Settings → Services**
-  (enable per service), **Settings → Users → Details** (enable per practitioner, plus an
-  optional professional statement).
-- Then: **Settings → Online bookings** — this shows the copyable **online booking link**,
-  the **embed code** for a website, booking intervals/alerts, and a live preview. The page
-  is brandable (colours, logo, notices, cancellation policy, terms, confirmation message).
-- Sanity check: open the booking link in a **private/incognito window** (logged out) to see
-  exactly what a patient sees.
+131 Vitest tests pass. Home page payload ~2.8 MB including the video.
 
 ---
 
-## The pivot — client email (2026-07-10) + phone call. THIS drives the next session.
+## Do next, in order
 
-1. **PMS is now Splose** (not Cliniko/HALTH). `zone-two-health-and-performance.splose.com`
-   (password-protected during setup; client has the password). Splose does booking, intake,
-   records, payments and Medicare/health-fund claiming natively, so **HALTH is dropped**.
-   The client is setting up appointment types + booking parameters inside Splose.
-2. **Booking strategy — RESEARCHED 2026-07-16. Recommendation: EMBED Splose.**
-   Findings from Splose's own documentation:
-   - Splose **does** have a REST API (`docs.splose.com`) covering **availability**,
-     **appointments** (create/update), **patients**, **patient forms** and **payments** —
-     so a custom UI is technically possible.
-   - **But auth is a single secret, workspace-level API key** (Bearer token) whose
-     permissions equal the associated user account. It can never sit in the browser, so a
-     custom UI needs a serverless backend — and that backend would hold a credential able
-     to read/write **every patient record**. That is a serious security and privacy
-     liability, and it would make us a custodian of health data.
-   - Splose online bookings provide a **public shareable link AND official embed code** for
-     inserting the booking page directly into a website (explicitly mobile-optimised), and
-     the page is **brandable**: colours, logo, important notices, cancellation policy,
-     terms and confirmation messages.
-   - Splose also owns **intake, the online consent signature and payments/claiming**, so a
-     custom UI would cover slot selection only and then hand off anyway.
+### 1. Full logo in the home footer (client request, 2026-07-19)
 
-   **Recommendation: use the embed** — `mode=embedded` / `BookingEmbed.astro` already
-   exists for exactly this. The patient stays on zone2hp.com, Splose remains the data
-   custodian, and no credential touches our infrastructure. Link-out is the trivial
-   fallback. Revisit a custom UI after opening only if there is a concrete reason.
-   **The custom funnel therefore becomes a prototype, not production** — but it is not
-   wasted: it doubles as the spec for configuring Splose (appointment types, 30/60
-   durations, terms, confirmation copy). `funding.ts` (HALTH) is dead either way, because
-   Splose does claiming natively.
+Client asked: *"Could you incorporate the whole logo somewhere? The logotype icon
+and the health and performance at the bottom?"*
 
-   **"Could we just build the backend instead?"** Technically yes — a Vercel serverless
-   proxy over Splose's availability/appointment endpoints is roughly a day's work, and the
-   `client.ts` seam means the UI would not change. It is still **not** the right MVP: it
-   parks a full-permission patient-data credential on our infrastructure, makes us a
-   health-data custodian (new privacy/consent obligations that contradict the client's own
-   policy, which states records live in Splose), and *still* only covers slot picking
-   before handing off to Splose for intake, consent and payment — a split flow that is
-   worse for the patient than one branded Splose page. **Ship the embed for MVP; revisit
-   custom later only with a concrete reason.**
-3. **Appointments are 30 or 60 minutes only — no 45** (phone call). If the custom funnel is
-   kept, remap `duration.ts` (currently emits 30/45/60; the tests are the spec — update both).
-   If booking moves to Splose, this is just a Splose config note.
-4. **FAQ / Privacy Policy page(s)** — client supplied the copy (now in `FAQ-AND-PRIVACY.md`).
-   Splose's online consent form must **link to the website's Privacy Policy** before the
-   patient ticks the consent box. So build a public **Privacy Policy** page (+ optionally the
-   Splose data-security page and the consent text). This was our "privacy-policy launch gate."
-5. **Real branding — all supplied now** (see **`BRANDING-AND-BIO.md`**; logo source PDFs
-   committed in **`brand/`**):
-   - **Slogan**: long "slowly is the fastest way to get to where you want to be" / short
-     "slow is fast". Good hero / coming-soon candidate.
-   - **Logos**: 5 variations; `logotype_icon_hp.pdf` = the **full/primary** logo; "HP" =
-     Health and Performance. Convert PDF → SVG/web and use variations throughout; replace the
-     hand-drawn **Z²** (`public/favicon.svg` + the inline SVGs in `index.astro`).
-   - **Bio**: Dr Mintae Kim's personal three-quote bio. **Client-directed (2026-07-16):
-     em dashes removed (done); change NOTHING else — do not soften or reword**, including
-     the pain/outcome phrases flagged under `COMPLIANCE.md`. Name = **"Dr Mintae Kim"**,
-     post-nominals = **`B.Chir.Sci., M.Chiro.`** (both confirmed; `mock.ts` updated).
-     **Ask the client before any further text change.** Details in `BRANDING-AND-BIO.md`.
-6. **Opening ~20 July 2026 (tentative) — but do NOT put a date on the site** (client decided
-   2026-07-16). Keep the coming-soon messaging undated.
+The full lockup (`Logo variant="full"`, i.e. `logotype_icon_hp`) already appears
+in the hero nav on wide screens, the `/book` page header and the `/book` footer.
+The gap is the **home page footer**, which still renders a large text watermark
+reading "ZONE TWO" (`.ff__watermark`, `FooterExpanded.astro:148`).
 
----
+**Recommended: replace that watermark with the full logo.** It is the most
+prominent unused spot and matches "at the bottom". Watch the sizing comments at
+`FooterExpanded.astro:167` and `:350` — the `cqw` clamps assume the literal
+string "ZONE TWO" and will need retuning for an SVG. Confirm the look with the
+client before pushing to production.
 
-## Blocked / needed from the client (chase these)
+### 2. Cancellation policy into Splose
 
-- **The Splose booking embed code / shareable link** — ⏳ **the client is providing this at
-  the start of the next session** (he is finishing the Splose online-booking configuration).
-  **If it has not been pasted in, ask for it before starting any booking work.** It comes
-  from Splose → **Settings → Online bookings** (see the Splose access notes above). Needed
-  to wire "Book now".
-- **Cancellation Policy** text — still not supplied, and it is a commercial decision we
-  cannot invent (notice period + fee). The client can enter it directly in Splose (the
-  booking page supports cancellation policy + terms); ask for the wording if it should
-  also appear on the website, since the consent document references "our Cancellation
-  Policy".
-- Real **appointment types + fees** as configured in Splose (30/60 only).
+The client sent a **Patient Consent Agreement** (2026-07-19, recorded in
+`FAQ-AND-PRIVACY.md`). Its **Attendance** clause is the cancellation wording that
+was blocking the Splose Design tab:
 
-**Resolved 2026-07-16:** post-nominals = `B.Chir.Sci., M.Chiro.` (docx correct; `mock.ts`
-updated) · name = "Dr Mintae Kim" · bio goes in an **About section on the home page** (no
-`/about` page) · bio wording must NOT be softened · no opening date on the site · Splose
-Security Centre = `https://splose.com/resources/security` and Splose Privacy Policy =
-`https://splose.com/privacy-policy` · Formspree keep-in-touch is activated and live.
+> 24 hours notice for cancellations, at least 12 hours for rescheduling.
+> Non-attendance fee: $50.
+
+Paste that into **Splose → Design → Cancellation policy**. Nothing on our website
+references it, so nothing needs publishing.
+
+**Three problems to raise with the client first:**
+1. It says *"I have chosen to undergo **physiotherapy** and chiropractic
+   services."* Zone Two does not offer physiotherapy and Dr Kim is a
+   chiropractor. A registered chiropractor implying physiotherapy is an AHPRA
+   advertising problem, not a typo. Almost certainly template residue.
+2. **The late fee has no amount.** The text says "a late fee or non-attendance
+   fee will apply" but only names the $50 non-attendance fee.
+3. "non-attedance" is misspelt.
+
+> **Note for whoever reads §3 of `FAQ-AND-PRIVACY.md`:** that older "Informed
+> Consent" text is NOT what patients sign. The client confirmed the new Patient
+> Consent Agreement is the signed document. §3 is superseded; treat it as history.
+
+### 3. Splose configuration issues found in the live booking page
+
+- **A 45-minute service exists** ("CHIRO Extended Appointment, 45 mins, $150").
+  The client said on the phone: 30 or 60 minutes only. Confirm or retire it.
+- **Prices are already public** ($100–$200) although the fee list was described
+  as not final. Turn off "Show appointment prices" if provisional.
+- **The practitioner is listed as "Min Tae Kim".** Confirmed spelling is
+  **"Dr Mintae Kim"**, and `COMPLIANCE.md` requires the profession beside "Dr".
+  Fix in Splose → Settings → Users.
+- **A service is named "Other"** — patients see this. Rename.
+
+### 4. Before accounts can go live
+
+- **The privacy policy does not cover website accounts.** What is published
+  describes health information in the practice management system; it says nothing
+  about this site storing a name and email. Real gap. Client's legal copy, so do
+  not draft it. Needs: what is stored, that it is not a health record, where and
+  in which country, retention, deletion.
+- **Create the Supabase project** in the **Sydney (ap-southeast-2)** region and
+  set `SUPABASE_URL` / `SUPABASE_ANON_KEY`. Claude cannot create accounts.
+- **Configure real SMTP.** Supabase's built-in sender is rate limited and not for
+  production; confirmation email is on the critical path.
+- **Password reset** is not built yet.
+
+### 5. Before production
+
+- `staging.zone2hp.com` and `zone2hp.com` are **same-site** for cookie purposes,
+  so a compromise on staging could reach production. Add the `__Host-` cookie
+  prefix before launch.
+- The 2 MB `public/images/practitioners/mintae-kim.png` still ships for the
+  booking prototype and could be shrunk.
+- Decide whether the custom `/book/*` funnel is retired now that Splose owns
+  booking. It is a reviewed prototype; `funding.ts` (HALTH) is dead either way.
 
 ---
 
-## INTRO PROMPT (copy from here)
+## Traps this codebase has already sprung
 
-> Continue the Zone Two Health and Performance build (Astro + TypeScript + Tailwind, static
-> site on Vercel). Read in this order: `CLAUDE.md`, `NEXT-SESSION.md`, `FAQ-AND-PRIVACY.md`,
-> `BRANDING-AND-BIO.md`, then `BOOKING.md` (note the SUPERSEDED/Splose block) and
-> `PROGRESS.md`. **Start in plan mode** and ask me anything open before building.
->
-> **House rules:** Australian English; **no em dashes anywhere in copy**; no AI-tell or
-> outcome/compliance-banned words (`COMPLIANCE.md` is law); AA accessibility; responsive per
-> `DESIGN-SYSTEM.md` (screenshot the test widths before calling anything done); simple,
-> idiomatic, functional TypeScript; TDD with Vitest; remove redundant code when refactoring.
-> **Never edit the client's supplied copy** (bio, privacy, consent) beyond the already
-> approved em-dash removal. Ask me first.
->
-> **Where things are.** `zone2hp.com` (production, `main`) is **LIVE**: the new coming-soon
-> home page with a working Formspree keep-in-touch capture, and booking/accounts gated off
-> via `PUBLIC_BOOKING_LINKS_VISIBLE=false` on Vercel Production (verified: no Book/Log in
-> buttons, `/book` and `/account/*` redirect home). `staging.zone2hp.com` (`staging` branch)
-> is the review build and additionally carries a full **mock booking funnel** (68 Vitest
-> tests, 12 pages). Work on `staging`, then merge to `main` by GitHub PR when approved.
->
-> **The pivot.** The client's PMS is now **Splose** (Cliniko/HALTH dropped — Splose does
-> booking, intake, the online consent signature, payments and claiming natively). **Decision
-> made: use Splose's own booking page via their embed**, not a custom UI on their API —
-> `BookingEmbed.astro` / `mode=embedded` already exists for exactly this. The custom funnel
-> stays as a prototype and doubles as the spec for configuring Splose. Clinic opens ~20 July
-> 2026 (tentative) but **no opening date on the site**. Appointments are **30 or 60 minutes
-> only** (a Splose config detail now).
->
-> **The client is giving me the Splose booking link / embed code at the start of this
-> session.** If I have not pasted it in, ask me for it before starting the booking work
-> (it comes from Splose → Settings → Online bookings).
->
-> **Work, in order — the focus is the home page:**
-> 1. **Privacy pages** from `FAQ-AND-PRIVACY.md`: build `/privacy` (this is the URL Splose's
->    online consent form links to before the patient ticks consent) and
->    `/privacy/data-security`, linked from the foot of `/privacy`, plus a **Privacy link in
->    the footer**. Reproduce the client's legal copy faithfully. **No FAQ page** — the source
->    doc contains no actual questions.
-> 2. **Home page branding**: convert the logos in `brand/` (PDF → SVG; `logotype_icon_hp` is
->    the full/primary logo, "HP" = Health and Performance) and replace the placeholder **Z²**
->    mark (`public/favicon.svg` + the inline SVGs in `src/pages/index.astro`); work in the
->    **slogan** ("slow is fast" / "slowly is the fastest way to get to where you want to
->    be"); and add an **About section on the home page** using the bio in
->    `BRANDING-AND-BIO.md` **verbatim** (Dr Mintae Kim, B.Chir.Sci., M.Chiro.).
-> 3. **Wire "Book now"** to the Splose embed once the code arrives, and only un-gate booking
->    when the client says go.
->
-> Still outstanding from the client: the **cancellation policy** wording (a commercial
-> decision, do not invent it).
+Worth knowing before editing CSS or running string replacements.
 
-## (end intro prompt)
+1. **A base CSS rule placed AFTER a media/container query silently undoes it.**
+   Equal specificity, so source order wins. This broke the `/book` footer layout
+   and style 3's mobile alignment before being caught. **Order every stylesheet
+   base rules first, queries last.** A detector script pattern is in the session
+   history if it needs rebuilding.
+2. **Two components styling one element is unpredictable.** The map "Book now"
+   rendered as a `CtaButton` *and* carried `.map__book` styles; equal specificity
+   again, and the bundler orders dev and production differently, so it looked
+   different on localhost and staging. One element, one set of styles.
+3. **`text-transform` is inherited.** Not setting it is not enough; an uppercase
+   ancestor will win. Reset explicitly.
+4. **Tailwind's reset strips `list-style`** from every `ul`/`ol`. The privacy page
+   bullets were invisible until restored explicitly.
+5. **Astro drops the `style` attribute** on its SVG components, and the CSP
+   blocks inline `style` attributes anyway. Size logos with `--logo-height` on the
+   parent; never inline styles.
+6. **Always assert on string replacements.** A silently failed match is how the
+   map button bug survived several rounds of review.
+7. **Never filter build output so hard you cannot see a failure.** A build that
+   errored was reported as succeeding earlier in the session.
+8. **Verify against the real provider, not the mock.** A critical httpOnly bug
+   survived because the flow was tested on the dev mock path only.

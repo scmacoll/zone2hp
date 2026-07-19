@@ -119,8 +119,10 @@ no links; use the two URLs above. Splose also publishes Terms of Service
 
 ## 3. Informed Consent — *Initial Consultation: Informed Consent & Conditions of Treatment*
 
-*(Mostly handled inside Splose's online form. Kept here verbatim in case a web version is
-wanted or the Splose form needs the source text.)*
+> ### ⚠️ SUPERSEDED (2026-07-19). This is NOT what patients sign.
+> The client confirmed that the **Patient Consent Agreement in section 4 below** is
+> the document signed inside Splose. This section is kept for history only. Do not
+> publish it, and do not treat it as the source for the Splose consent form.
 
 **What am I signing?** Zone Two Health & Performance — Initial Consultation: Informed
 Consent & Conditions of Treatment.
@@ -203,3 +205,68 @@ applicable spinal manipulation, mobilisation, soft tissue therapy, dry needling,
 therapy, IASTM and exercise rehabilitation); you understand that you may refuse or withdraw
 consent at any time; you understand that no guarantee or warranty has been made regarding
 the outcome of your treatment.
+
+
+---
+
+## 4. Patient Consent Agreement for Health Services (client, 2026-07-19)
+
+**This is the document patients sign inside Splose.** It supersedes section 3.
+Verbatim as supplied; see the three problems flagged underneath.
+
+I hereby consent to undergo chiropractic services provided by the practitioner at Zone Two
+Health and Performance. I acknowledge that I have been informed about the nature of the
+proposed treatment and the potential risks and benefits associated with it.
+
+**Description of Treatment:** I understand that the chiropractic services may include, but
+are not limited to, assessment, diagnosis, manual therapy, therapeutic exercises, and other
+related interventions.
+
+**Risks and Benefits:** I have been informed of the potential risks and benefits of the
+proposed treatment, including but not limited to the possibility of injury, soreness, or
+discomfort. I understand that there are no guarantees regarding the outcome of the
+treatment.
+
+**Alternative Treatments:** I am aware that alternative treatments or procedures may be
+available, and I have been informed about these alternatives. I have chosen to undergo
+physiotherapy and chiropractic services based on my understanding of the information
+provided.
+
+**Confidentiality:** I understand that my personal and medical information will be kept
+confidential, except as required by law or with my explicit consent.
+
+**Right to Withdraw Consent:** I have the right to withdraw my consent at any time without
+affecting my right to future care. I understand that my decision to withdraw consent should
+be communicated to the healthcare provider.
+
+**Attendance:** We understand unavoidable circumstances come up, but we require 24 hour
+notice for cancellations or at least 12 hours for a rescheduling an appointment. A late fee
+or non-attendence fee will apply otherwise:
+
+- Non-attedance fee: $50
+
+**Financial Responsibility:** I understand that I am responsible for any fees associated
+with the chiropractic services, and I agree to fulfill any financial obligations according
+to the clinic's policies.
+
+**Emergency Situations:** In the event of a medical emergency, I authorise the healthcare
+provider to take appropriate action on my behalf.
+
+### Where this is used
+
+The **Attendance** clause above is the cancellation wording for
+**Splose → Design → Cancellation policy**. Nothing on the website references it, so
+nothing needs publishing.
+
+### Three problems to raise with the client before using it
+
+1. **"I have chosen to undergo *physiotherapy* and chiropractic services."** Zone Two does
+   not offer physiotherapy and Dr Kim is a chiropractor. A registered chiropractor implying
+   they provide physiotherapy is an AHPRA advertising problem under `COMPLIANCE.md`, not
+   just a wording slip. Almost certainly residue from another clinic's template.
+2. **The late fee has no amount.** The text says "a late fee or non-attendence fee will
+   apply" but only the $50 non-attendance fee is named. A patient cancelling at 20 hours is
+   told a fee applies without knowing what it is.
+3. **Typos:** "non-attendence" and "non-attedance" (both should be non-attendance).
+
+Do not correct any of this ourselves: it is the client's legal copy.

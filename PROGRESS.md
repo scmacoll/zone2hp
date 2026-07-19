@@ -228,6 +228,28 @@ Client-review round on the booking funnel. Build (12 pages) + 68 Vitest tests gr
      /`preview_inspect` (bounding boxes, `gridTemplateColumns`, `scrollWidth` overflow),
      which is race-free and good enough to prove a reflow when a capture won't cooperate.
 
+## Session 2026-07-19 — branding, privacy, accounts, Splose booking
+
+Shipped to `staging` (staging.zone2hp.com). `main` deliberately untouched at
+`662f6fa`. Full detail in `NEXT-SESSION.md`; the short version:
+
+- Real logo throughout, generated from the client's PDFs by `brand/build-logos.py`.
+- `/privacy` + `/privacy/data-security`, client copy verbatim (verified word for word).
+- About section with the bio verbatim behind a one-way disclosure.
+- Accounts on Supabase (Sydney), httpOnly sessions, non-clinical only, switched OFF.
+- Splose booking framed at `/book`, working, with an origin-checked resize listener.
+- CSP + security headers, robots.txt, sitemap, MedicalOrganization JSON-LD.
+- Hero video re-encoded: full 30s, silent, WebM + H.264, 23 MB -> 2.7 MB.
+
+131 Vitest tests. Booking and accounts now have SEPARATE env switches.
+
+### Traps that cost real time here (see NEXT-SESSION.md for the full list)
+
+- A base CSS rule after a media query silently undoes it. Base rules first, always.
+- Two components styling one element resolve differently in dev and production.
+- `text-transform` inherits; Tailwind's reset strips `list-style`.
+- Assert on every string replacement, and never filter build output past its errors.
+
 ## Next
 - Concept review is resolved: A2 is the chosen design and is live at `src/pages/index.astro`.
   A1 remains at `src/pages/concepts/a1.astro` for reference; B1/C1/C2 were not needed.
