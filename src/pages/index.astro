@@ -22,38 +22,22 @@ import { Image } from "astro:assets";
 import portrait from "../assets/practitioners/mintae-kim.jpg";
 import { bookingConfig } from "../lib/booking/config";
 // Hero loop, re-encoded from the client's master (see brand/encode-hero.sh).
-// The master is HEVC/H.265, which Firefox cannot decode at all and Chrome only
-// decodes with OS support, so most visitors were getting no video and falling
-// through to the gradient. It was also 23 MB, 30 seconds, and carried a 320 kbps
-// audio track on a muted element. WebM first, H.264 as the universal fallback.
+// FULL 30 second duration, silent. Only the codec and container changed: the
+// master is HEVC/H.265, which Firefox cannot decode and Chrome only decodes with
+// OS support, and it carried an audio track on a muted element. WebM first,
+// H.264 as the universal fallback.
 import videoWebm from "../asset/hero-loop.webm";
 import videoMp4 from "../asset/hero-loop.mp4";
 import videoPoster from "../asset/hero-poster.jpg";
 
 // Owner asked for a single account button + a Book now CTA in the nav. Gated by
 // the same flag that surfaces public booking/account links (now on by default).
-// TEMPORARY review tool: a floating switcher for the five slogan treatments.
-// Set PUBLIC_SLOGAN_VARIATIONS=false to hide it, and delete the switcher markup,
-// its styles and its script once a variation is chosen.
-const showVariations = import.meta.env.PUBLIC_SLOGAN_VARIATIONS !== 'false';
-
 const showBooking = bookingConfig.linksVisible;
 const showAccounts = bookingConfig.accountsEnabled;
 ---
 
 <Base>
-    {
-        showVariations && (
-            <div class="variations" role="group" aria-label="Layout style">
-                <span class="variations__label">Style</span>
-                <button type="button" data-variation="1" aria-pressed="true">1</button>
-                <button type="button" data-variation="2" aria-pressed="false">2</button>
-                <button type="button" data-variation="3" aria-pressed="false">3</button>
-            </div>
-        )
-    }
-
-    <div class="a2" data-slogan="1">
+    <div class="a2">
         <main id="main">
             <section class="a2-hero">
                 <div class="a2-hero__media" aria-hidden="true">
@@ -736,9 +720,11 @@ const showAccounts = bookingConfig.accountsEnabled;
         align-items: center;
         align-self: flex-start;
         gap: 0.55em;
-        /* --space-sm, matching the other styles, so the panel keeps one height
-           whichever is selected. */
         margin: auto 0 var(--space-sm);
+        /* A floor against the services rule: while the panel has slack the auto
+           margin absorbs this, and once it is content-driven this keeps the
+           slogan off the rule instead of letting it sit on the line. */
+        padding-top: var(--space-sm);
         font-family: var(--font-mono);
         font-size: var(--step-label);
         letter-spacing: var(--track-label);
@@ -804,117 +790,6 @@ const showAccounts = bookingConfig.accountsEnabled;
 
     /* ---- Find-us (map) section ---------------------------------------------- */
 
-    /* ---- TEMPORARY: slogan layout variations --------------------------------
-       A review tool. Variation 1 is what we had. Delete this block, the
-       .variations markup and its script once a variation is chosen. */
-    .variations {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 60;
-        display: flex;
-        align-items: center;
-        gap: 0.35rem;
-        padding: 0.4rem 0.7rem;
-        background: rgba(15, 16, 19, 0.92);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        border-top: 0;
-        border-radius: 0 0 var(--radius-md) var(--radius-md);
-        font-family: var(--font-mono);
-        font-size: var(--step-label);
-        color: var(--paper);
-    }
-    .variations__label {
-        letter-spacing: var(--track-label);
-        text-transform: uppercase;
-        opacity: 0.7;
-        margin-right: 0.2rem;
-    }
-    .variations button {
-        min-width: 30px;
-        min-height: 30px;
-        padding: 0;
-        background: transparent;
-        color: var(--paper);
-        border: 1px solid rgba(255, 255, 255, 0.28);
-        border-radius: var(--radius-sm);
-        font-family: inherit;
-        font-size: inherit;
-        cursor: pointer;
-    }
-    .variations button[aria-pressed="true"] {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: var(--ink);
-        font-weight: 700;
-    }
-
-    /* 2 (was 4): slogan pinned top-right of the panel body. Its distance below
-       the labels rule is exactly the distance the services sit above it, so the
-       rule is evenly framed. --space-sm is the labels' own padding-bottom. */
-    /* Slogan styles. All three reorder the same three blocks (services, slogan,
-       panel body), so the panel keeps one height as long as the gaps around the
-       rule match: --space-sm above it, the 1px rule, --space-sm below it, and
-       --space-sm again before the panel body. Every gap below is a REAL length,
-       never an auto margin, because an auto margin collapses to nothing once the
-       panel runs out of slack and the heights then diverge.
-
-       Base rules first, media queries last: a base rule placed after a query
-       wins on source order and silently undoes it. */
-
-    /* 2: slogan at the rule, right aligned; the body takes the auto margin. */
-    .a2[data-slogan="2"] .a2-slogan {
-        align-self: flex-end;
-        margin: var(--space-sm) 0;
-    }
-    .a2[data-slogan="2"] .a2-panel__main {
-        margin-top: auto;
-    }
-
-    /* 1: the slogan hugs the headline. padding-top is its floor against the
-       rule: while there is slack the auto margin absorbs it and nothing moves;
-       once the panel is content-driven it holds the same gap as the others. */
-    .a2[data-slogan="1"] .a2-slogan {
-        padding-top: var(--space-sm);
-    }
-
-    /* 3: slogan and services swap across the rule. The slogan carries the rule
-       with it, so the gaps either side stay identical to the other styles. */
-    .a2[data-slogan="3"] .a2-slogan {
-        order: 1;
-        align-self: stretch;
-        justify-content: flex-end;
-        margin: 0 0 var(--space-sm);
-        padding-bottom: var(--space-sm);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-    }
-    .a2[data-slogan="3"] .a2-panel__labels {
-        order: 2;
-        padding-bottom: 0;
-        border-bottom: 0;
-        /* The gap the slogan's own margin provides in the other styles. Without
-           it style 3 is one gap short and the panel sits lower. */
-        margin-bottom: var(--space-sm);
-    }
-    .a2[data-slogan="3"] .a2-panel__main {
-        order: 3;
-        margin-top: auto;
-    }
-
-    /* Both alternates hold their right alignment until the panel is genuinely
-       cramped, and only then fall back to the left edge the headline uses.
-       21.25rem is ~340px. */
-    @media (max-width: 21.25rem) {
-        .a2[data-slogan="2"] .a2-slogan {
-            align-self: flex-start;
-            justify-content: flex-start;
-        }
-        .a2[data-slogan="3"] .a2-slogan {
-            justify-content: flex-start;
-        }
-    }
-
     /* ---- About --------------------------------------------------------------
        Container query, not a media query: the section reflows on its own width
        so it behaves in a half-width window (see DESIGN-SYSTEM.md). */
@@ -978,6 +853,24 @@ const showAccounts = bookingConfig.accountsEnabled;
         border-bottom: var(--border-hairline);
     }
 
+    /* The photo keeps its own aspect ratio: no aspect-ratio and no object-fit,
+       so nothing is cropped. A 4:5 alternative crop is kept alongside it in
+       src/assets/practitioners/ for comparison, but is not used. */
+    .a2-about__portrait {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-md);
+        background: var(--stone);
+    }
+    @container (min-width: 30rem) {
+        .a2-about__portrait {
+            max-width: 20rem;
+        }
+    }
+    .a2-about__head {
+        display: grid;
+        gap: var(--space-2xs);
+    }
     @container (min-width: 30rem) {
         .a2-about__grid {
             grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
@@ -1011,24 +904,6 @@ const showAccounts = bookingConfig.accountsEnabled;
         }
     }
 
-    /* The photo keeps its own aspect ratio: no aspect-ratio and no object-fit,
-       so nothing is cropped. A 4:5 alternative crop is kept alongside it in
-       src/assets/practitioners/ for comparison, but is not used. */
-    .a2-about__portrait {
-        width: 100%;
-        height: auto;
-        border-radius: var(--radius-md);
-        background: var(--stone);
-    }
-    @container (min-width: 30rem) {
-        .a2-about__portrait {
-            max-width: 20rem;
-        }
-    }
-    .a2-about__head {
-        display: grid;
-        gap: var(--space-2xs);
-    }
     .a2-about__name {
         margin: 0;
         font-family: var(--font-display);
@@ -1277,22 +1152,6 @@ const showAccounts = bookingConfig.accountsEnabled;
         }
     }
 </style>
-
-<script>
-    // TEMPORARY: slogan variation switcher. Remove with the .variations markup
-    // and styles once a variation is chosen. No storage, so it resets on reload.
-    const variationBar = document.querySelector<HTMLElement>('.variations');
-    const a2Root = document.querySelector<HTMLElement>('.a2');
-
-    variationBar?.addEventListener('click', (event) => {
-        const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-variation]');
-        if (!button || !a2Root) return;
-        a2Root.dataset.slogan = button.dataset.variation ?? '1';
-        for (const other of variationBar.querySelectorAll<HTMLButtonElement>('[data-variation]')) {
-            other.setAttribute('aria-pressed', String(other === button));
-        }
-    });
-</script>
 
 <script>
     // The "read more" control is removed once the bio is open (one-way, by

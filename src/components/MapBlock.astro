@@ -1,5 +1,4 @@
 ---
-import CtaButton from './CtaButton.astro';
 import { bookingConfig } from '../lib/booking/config';
 // Embedded map of the Eastwood address with the written address beside it.
 // Keyless Google Maps embed (output=embed needs no API key). The block reflows
@@ -41,11 +40,11 @@ const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
       </a>
       {
         bookingConfig.linksVisible ? (
-          <CtaButton href="/book" variant="solid" class="map__book">
+          <a class="map__book" href="/book">
             Book now
-          </CtaButton>
+          </a>
         ) : (
-          <button class="map__book map__book--off" type="button" disabled aria-disabled="true">
+          <button class="map__book" type="button" disabled aria-disabled="true">
             Book now
           </button>
         )
