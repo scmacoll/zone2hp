@@ -853,44 +853,34 @@ const showAccounts = bookingConfig.accountsEnabled;
     /* 2 (was 4): slogan pinned top-right of the panel body. Its distance below
        the labels rule is exactly the distance the services sit above it, so the
        rule is evenly framed. --space-sm is the labels' own padding-bottom. */
-    /* 2: the slogan sits at the rule, right aligned, and the panel body takes
-       the auto margin instead. Nothing leaves the flow, so the panel keeps its
-       height and the headline keeps its position: the free space simply moves
-       from above the slogan to between the slogan and the headline. --space-sm
-       below the rule mirrors the services' padding above it. */
+    /* Slogan styles. All three reorder the same three blocks (services, slogan,
+       panel body), so the panel keeps one height as long as the gaps around the
+       rule match: --space-sm above it, the 1px rule, --space-sm below it, and
+       --space-sm again before the panel body. Every gap below is a REAL length,
+       never an auto margin, because an auto margin collapses to nothing once the
+       panel runs out of slack and the heights then diverge.
+
+       Base rules first, media queries last: a base rule placed after a query
+       wins on source order and silently undoes it. */
+
+    /* 2: slogan at the rule, right aligned; the body takes the auto margin. */
     .a2[data-slogan="2"] .a2-slogan {
         align-self: flex-end;
-        margin: var(--space-sm) 0 0;
+        margin: var(--space-sm) 0;
     }
     .a2[data-slogan="2"] .a2-panel__main {
         margin-top: auto;
     }
 
-    /* Style 1's gap to the rule is the auto margin, which collapses to nothing
-       once the panel runs out of slack, letting the slogan sit on the border.
-       This is its floor, matching the fixed gap the other styles use. */
+    /* 1: the slogan hugs the headline. padding-top is its floor against the
+       rule: while there is slack the auto margin absorbs it and nothing moves;
+       once the panel is content-driven it holds the same gap as the others. */
     .a2[data-slogan="1"] .a2-slogan {
         padding-top: var(--space-sm);
     }
 
-    /* Mobile alignment for the two alternates. Style 2 shares its column with
-       the headline directly below, so it aligns LEFT to keep one clean edge.
-       Style 3 has its own bordered band above the rule, so it CENTRES and reads
-       as a masthead rather than a stray line. */
-    @media (max-width: 30rem) {
-        .a2[data-slogan="2"] .a2-slogan {
-            align-self: flex-start;
-            justify-content: flex-start;
-        }
-        .a2[data-slogan="3"] .a2-slogan {
-            justify-content: center;
-        }
-    }
-
-    /* 3: style 2 with the two blocks swapped across the rule. The slogan moves
-       ABOVE it and carries the border with it; the services drop below. Each
-       block takes its own height along, so the panel total is unchanged: the
-       top band gets shorter and the bottom band taller by the same amount. */
+    /* 3: slogan and services swap across the rule. The slogan carries the rule
+       with it, so the gaps either side stay identical to the other styles. */
     .a2[data-slogan="3"] .a2-slogan {
         order: 1;
         align-self: stretch;
@@ -903,10 +893,28 @@ const showAccounts = bookingConfig.accountsEnabled;
         order: 2;
         padding-bottom: 0;
         border-bottom: 0;
+        /* The gap the slogan's own margin provides in the other styles. Without
+           it style 3 is one gap short and the panel sits lower. */
+        margin-bottom: var(--space-sm);
     }
     .a2[data-slogan="3"] .a2-panel__main {
         order: 3;
         margin-top: auto;
+    }
+
+    /* Narrow widths. Style 2 shares a column with the headline directly beneath
+       it, so it aligns LEFT to keep one clean edge, but only once it is genuinely
+       cramped. Style 3 sits in its own banded row, so it CENTRES there. */
+    @media (max-width: 26rem) {
+        .a2[data-slogan="2"] .a2-slogan {
+            align-self: flex-start;
+            justify-content: flex-start;
+        }
+    }
+    @media (max-width: 30rem) {
+        .a2[data-slogan="3"] .a2-slogan {
+            justify-content: center;
+        }
     }
 
     /* ---- About --------------------------------------------------------------
@@ -916,13 +924,13 @@ const showAccounts = bookingConfig.accountsEnabled;
         container-type: inline-size;
         max-width: var(--container-max);
         margin-inline: auto;
-        padding-block: var(--section-pad-block) 0;
+        padding-block: var(--space-lg) 0;
         padding-inline: var(--section-pad-inline);
     }
     .a2-about__slogan {
-        /* Matches .a2-about's top padding, so the slogan sits with exactly the
-           same air above it (from the hero) as below it (to the About label). */
-        margin: 0 0 var(--section-pad-block);
+        /* Equal air above and below, and tighter than the section's own padding:
+           the slogan belongs to the About block, not floating between sections. */
+        margin: 0 0 var(--space-lg);
         /* Full section width. It was capped at 22ch, which folded it onto two
            short lines well before the section ran out of room. */
         font-style: italic;
