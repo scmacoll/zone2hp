@@ -12,7 +12,7 @@ const { class: className = "" } = Astro.props;
 
 const email = "info@zone2hp.com";
 const phoneDisplay = "0450 222 122";
-const phoneHref = "tel:0000000000"; // placeholder until the real number is live
+const phoneHref = "tel:0450222122";
 const mapsQuery = "Suite 104/2 Rowe St, Eastwood NSW 2122";
 const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
 const services = [
@@ -87,13 +87,16 @@ const year = 2026;
                         required
                         pattern="[^@\\s]+@[^@\\s]+\\.[^@\\s]+"
                     />
-                    <!-- Honeypot anti-spam: real users won't fill this; bots will. Formspree drops the submission. -->
+                    <!-- Honeypot anti-spam: real users won't fill this; bots will. Formspree drops the submission.
+                         Hidden via the stylesheet, not an inline style: an inline style attribute is blocked
+                         under our Content Security Policy, which made this field visible and pushed the send
+                         button out of the form. -->
                     <input
+                        class="ff__honeypot"
                         type="text"
                         name="_gotcha"
                         tabindex="-1"
                         autocomplete="off"
-                        style="position:absolute; left:-9999px;"
                         aria-hidden="true"
                     />
                     <input
@@ -146,10 +149,13 @@ const year = 2026;
         </div>
 
         <div class="ff__legal">
-            <p class="ff__copy">
-                &copy; {year} Zone Two Health and Performance
-            </p>
-            <p class="ff__place">Eastwood, NSW &middot; Australia</p>
+            <div class="ff__legal-text">
+                <p class="ff__copy">
+                    &copy; {year} Zone Two Health and Performance
+                </p>
+                <p class="ff__place">Eastwood, NSW &middot; Australia</p>
+            </div>
+            <a class="ff__legal-link" href="/privacy">Privacy</a>
         </div>
     </div>
 </footer>
@@ -189,6 +195,14 @@ const year = 2026;
            wide and the other column collapses. */
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: var(--space-lg) var(--space-md);
+    }
+    /* Below 26rem the two columns are too narrow for the email field, so the
+       whole footer goes to one column. Keeping all four the same width matters
+       more than squeezing them side by side. */
+    @media (max-width: 26rem) {
+        .ff__cols {
+            grid-template-columns: minmax(0, 1fr);
+        }
     }
     @media (min-width: 47rem) {
         .ff__cols {
@@ -280,6 +294,15 @@ const year = 2026;
     .ff__subscribe:focus-within {
         border-color: var(--ff-volt);
     }
+    /* Off-screen rather than display:none, because bots skip hidden fields. */
+    .ff__honeypot {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+    }
     .ff__input {
         flex: 1;
         min-width: 0;
@@ -357,14 +380,19 @@ const year = 2026;
         user-select: none;
     }
 
+    /* Two groups, not three loose children: the copyright and place belong
+       together, and Privacy sits opposite them. As three flex items,
+       space-between stranded the place line awkwardly in the middle. */
     .ff__legal {
         position: relative;
         z-index: 2;
         margin-top: clamp(0.5rem, 0.2rem + 1vw, 1.25rem);
+        padding-top: var(--space-sm);
+        border-top: 1px solid var(--chrome-line);
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 0.5rem var(--space-md);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
         font-family: var(--font-mono);
         font-size: var(--step-label);
         letter-spacing: var(--track-label);
@@ -373,6 +401,32 @@ const year = 2026;
     }
     .ff__legal p {
         margin: 0;
+    }
+    /* Copyright and place share a line and wrap naturally: the place drops
+       UNDER the copyright only when the two no longer fit, not at a fixed width. */
+    .ff__legal-text {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.2rem var(--space-md);
+    }
+    /* The legal bar is dense, so this link keeps the bar's own type rather than
+       reusing .ff__link (whose 44px min-height is for the tall link columns).
+       The tap target is widened with padding instead. */
+    .ff__legal-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        /* Inherited from .ff__legal, so it has to be turned off explicitly. */
+        text-transform: none;
+        color: var(--ink-2);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+    }
+    .ff__legal-link:hover {
+        color: var(--ink);
+        border-bottom-color: var(--ff-volt);
     }
 </style>
 

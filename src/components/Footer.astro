@@ -1,7 +1,7 @@
 ---
 // Light footer: wordmark, address, contact, copyright. Reflows from a row to a
 // stack on its own container width.
-import Wordmark from "./Wordmark.astro";
+import Logo from "./Logo.astro";
 
 interface Props {
     class?: string;
@@ -11,32 +11,35 @@ const { class: className = "" } = Astro.props;
 
 const email = "info@zone2hp.com";
 const phoneDisplay = "0450 222 122";
-const phoneHref = "tel:0000000000";
+const phoneHref = "tel:0450222122";
 const year = 2026;
 ---
 
 <footer class:list={["footer", className]}>
     <div class="footer__inner">
-        <div class="footer__primary">
-            <Wordmark as="div" size="sm" mark />
+        <Logo variant="full" class="footer__logo" />
+
+        <div class="footer__meta">
             <address class="footer__address">
                 Suite 104 / 2 Rowe St,<br />Eastwood, NSW 2122
             </address>
+            <div class="footer__contact">
+                <a href={`mailto:${email}`}>{email}</a>
+                <a href={phoneHref}>{phoneDisplay}</a>
+            </div>
         </div>
 
-        <div class="footer__contact">
-            <a href={`mailto:${email}`}>{email}</a>
-            <a href={phoneHref}>{phoneDisplay}</a>
+        <div class="footer__legal">
+            <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
+            <a class="footer__privacy" href="/privacy">Privacy</a>
         </div>
-
-        <p class="footer__legal">
-            &copy; {year} Zone Two Health and Performance
-        </p>
     </div>
 </footer>
 
 <style>
-    /* .footer is the query container; .footer__inner (its child) reflows. */
+    /* .footer is the query container; the blocks inside reflow on its width.
+       All base rules come first, then the container queries at the end: a base
+       rule placed after a query would win on source order and silently undo it. */
     .footer {
         container-type: inline-size;
         background: var(--stone);
@@ -49,40 +52,51 @@ const year = 2026;
         padding-inline: var(--section-pad-inline);
         display: grid;
         gap: var(--space-md);
+        /* Stacked only when genuinely squeezed. Centred then, so a narrow footer
+           reads as a deliberate block rather than a left-hugging column. */
+        justify-items: center;
+        text-align: center;
     }
-    .footer__primary {
-        display: grid;
+    .footer__logo {
+        --logo-height: clamp(24px, 1vw + 20px, 30px);
+        color: var(--ink);
+    }
+
+    /* Address and contact share one row so their lines pair up: street with
+       email, suburb with phone. */
+    .footer__meta {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         gap: var(--space-sm);
     }
 
-    @container (min-width: 44rem) {
-        .footer__inner {
-            grid-template-columns: 1fr auto;
-            align-items: start;
-            column-gap: var(--space-xl);
-        }
-        .footer__legal {
-            grid-column: 1 / -1;
-        }
-    }
-
+    /* Same absolute line-height AND the same font size on both sides, so the two
+       columns share a rhythm. A matching line-height alone is not enough: at
+       different font sizes the text sits differently inside the line box. */
     .footer__address {
         font-style: normal;
         color: var(--ink-2);
-        line-height: 1.45;
+        font-size: var(--step-small);
+        line-height: 1.45rem;
     }
 
     .footer__contact {
         display: flex;
         flex-direction: column;
-        gap: 0.35rem;
-    }
-    .footer__contact a {
-        min-height: 2.5rem;
-        display: inline-flex;
         align-items: center;
+        /* No gap: the two links run on the same rhythm as the address lines. */
+        gap: 0;
+    }
+    /* Padding gives a 44px hit area, negative margin cancels the visual height,
+       so the tap target survives without opening a gap between the lines. */
+    .footer__contact a {
+        display: block;
+        padding-block: 0.6rem;
+        margin-block: -0.6rem;
         font-family: var(--font-mono);
         font-size: var(--step-small);
+        line-height: 1.45rem;
         color: var(--ink);
         text-decoration: none;
     }
@@ -91,8 +105,57 @@ const year = 2026;
     }
 
     .footer__legal {
-        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
         font-size: var(--step-small);
         color: var(--ink-2);
+    }
+    .footer__copy {
+        margin: 0;
+    }
+    .footer__privacy {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.75rem;
+        margin-block: -0.6rem;
+        color: var(--ink);
+        text-decoration: none;
+    }
+    .footer__privacy:hover {
+        color: var(--accent-deep);
+    }
+
+    /* 34rem, not 44rem: the two columns fit well below the old threshold, so the
+       footer was stacking while there was still room for them side by side. */
+    @container (min-width: 34rem) {
+        .footer__inner {
+            /* start, not stretch: the logo is an SVG sized by height, so
+               stretching it would blow it across the footer. The two blocks that
+               DO need full width opt in below. */
+            justify-items: start;
+            text-align: left;
+        }
+        /* Both need the full width so their space-between has something to
+           spread across. */
+        .footer__meta,
+        .footer__legal {
+            justify-self: stretch;
+        }
+        .footer__meta {
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: var(--space-xl);
+        }
+        .footer__contact {
+            align-items: flex-end;
+        }
+        .footer__legal {
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: space-between;
+        }
     }
 </style>

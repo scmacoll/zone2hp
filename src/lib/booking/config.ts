@@ -24,12 +24,15 @@ export const bookingConfig = {
   provider: env.PUBLIC_BOOKING_PROVIDER ?? 'mock',
   /** Hosted booking page URL, used by BookingEmbed in 'embedded' mode. */
   embedUrl: (env.PUBLIC_BOOKING_EMBED_URL as string | undefined) ?? null,
-  /** Whether the booking/account surface is publicly enabled. On by default. Set
-      PUBLIC_BOOKING_LINKS_VISIBLE=false (e.g. in the production environment) to
-      hide the nav's Log in + Book now links AND redirect /book and /account/* to
-      home — leaving the coming-soon home page + keep-in-touch email only. The
-      page-level guards live in each /book/* and /account/* frontmatter. */
-  linksVisible: env.PUBLIC_BOOKING_LINKS_VISIBLE !== 'false',
+  /** Whether the BOOKING surface is publicly reachable: the Book now buttons and
+      /book/*. Off unless PUBLIC_BOOKING_LINKS_VISIBLE=true. */
+  linksVisible: env.PUBLIC_BOOKING_LINKS_VISIBLE === 'true',
+
+  /** Whether the ACCOUNTS surface is reachable: the Log in button, /account/*
+      and /api/account/*. Deliberately SEPARATE from booking, so the Splose
+      booking embed can be demonstrated while accounts stay switched off. Off
+      unless PUBLIC_ACCOUNTS_ENABLED=true. */
+  accountsEnabled: env.PUBLIC_ACCOUNTS_ENABLED === 'true',
   /** Show the private-health-funding (HALTH-style) step. On by default; set
       PUBLIC_BOOKING_FUNDING=false to remove it from the funnel. */
   fundingEnabled: env.PUBLIC_BOOKING_FUNDING !== 'false',

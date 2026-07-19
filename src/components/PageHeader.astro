@@ -1,7 +1,7 @@
 ---
-// Light functional-page chrome (booking, account). NOT the dark hero chrome —
-// these pages use the paper design language. Reuses the Wordmark as a home link.
-import Wordmark from './Wordmark.astro';
+// Light functional-page chrome (booking, account, privacy). NOT the dark hero
+// chrome: these pages use the paper design language.
+import Logo from './Logo.astro';
 
 interface Props {
   class?: string;
@@ -11,14 +11,9 @@ const { class: className = '' } = Astro.props;
 ---
 
 <header class:list={['page-header', className]}>
-  <Wordmark
-    as="a"
-    href="/"
-    size="sm"
-    mark
-    aria-label="Zone Two Health and Performance, home"
-    class="page-header__brand"
-  />
+  <a class="page-header__brand" href="/" aria-label="Zone Two Health and Performance, home">
+    <Logo variant="full" />
+  </a>
   <a class="page-header__back" href="/">Back to site</a>
 </header>
 
@@ -36,11 +31,12 @@ const { class: className = '' } = Astro.props;
     background: var(--grad-chrome);
     box-shadow: var(--glow-chrome);
   }
-  /* Wordmark renders its own element; target the passed class globally. */
-  .page-header :global(.page-header__brand) {
+  .page-header__brand {
+    --logo-height: clamp(22px, 1vw + 18px, 28px);
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+    color: var(--ink);
     text-decoration: none;
   }
   .page-header__back {

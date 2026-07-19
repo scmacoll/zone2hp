@@ -4,10 +4,15 @@ import PageHeader from '../../components/PageHeader.astro';
 import Footer from '../../components/Footer.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import AccountForm from '../../components/account/AccountForm.astro';
-import { bookingConfig } from '../../lib/booking/config';
+import { authConfig } from '../../lib/auth/index';
+import { formMessage } from '../../lib/auth/errors';
 
-// Production gate: when booking is not publicly enabled, accounts are off too.
-if (!bookingConfig.linksVisible) return Astro.redirect('/');
+export const prerender = false;
+
+// The middleware handles the gate, the session and the signed-in redirect.
+// Resolved through a fixed table: never render the query value itself.
+const error = formMessage(Astro.url.searchParams.get('error'));
+const isLive = authConfig.isLive;
 ---
 
 <Base
@@ -24,10 +29,17 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
         For clinic updates, early access and member notes. This is a general account, not a patient or
         medical record. We do not collect any health information here.
       </p>
-      <p class="account__preview">Preview: accounts are not connected to a live system yet.</p>
+      {
+        !isLive && (
+          <p class="account__preview">
+            Development mode: this form is not connected to the live account system, so any
+            details you enter here are not stored.
+          </p>
+        )
+      }
     </header>
 
-    <AccountForm mode="signup" />
+    <AccountForm mode="signup" error={error} />
 
     <p class="account__alt">Already have an account? <a href="/account/login">Sign in</a>.</p>
   </main>

@@ -1,4 +1,6 @@
 ---
+import CtaButton from './CtaButton.astro';
+import { bookingConfig } from '../lib/booking/config';
 // Embedded map of the Eastwood address with the written address beside it.
 // Keyless Google Maps embed (output=embed needs no API key). The block reflows
 // from side-by-side to stacked on its own container width via a container query,
@@ -37,6 +39,17 @@ const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
       <a class="map__link" href={mapsLink} target="_blank" rel="noopener noreferrer">
         Open in Google Maps
       </a>
+      {
+        bookingConfig.linksVisible ? (
+          <CtaButton href="/book" variant="solid" class="map__book">
+            Book now
+          </CtaButton>
+        ) : (
+          <button class="map__book map__book--off" type="button" disabled aria-disabled="true">
+            Book now
+          </button>
+        )
+      }
     </div>
   </div>
 </section>
@@ -76,8 +89,8 @@ const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
   .map__details {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-xs);
-    align-content: start;
   }
   .map__title {
     font-size: var(--step-h3);
@@ -86,6 +99,38 @@ const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
     font-style: normal;
     color: var(--ink-2);
     line-height: 1.45;
+  }
+  /* Deliberately the same object as the header's Book now: same fill, label
+     colour, radius, weight and height, so the two read as one control. */
+  .map__book {
+    align-self: start;
+    margin-top: var(--space-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-height: 44px;
+    padding: 0 1.15rem;
+    background: var(--concept-volt, var(--accent-deep));
+    color: var(--ink);
+    border: 0;
+    border-radius: var(--r-soft, var(--radius-sm));
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    /* text-transform inherits, and an ancestor sets uppercase. */
+    text-transform: none;
+    cursor: pointer;
+    transition: background-color 150ms var(--ease-out);
+  }
+  .map__book:hover {
+    background: var(--concept-volt-press, var(--accent-press));
+  }
+  .map__book[disabled] {
+    opacity: 0.55;
+    cursor: default;
   }
   .map__link {
     align-self: start;

@@ -24,6 +24,90 @@ const {
 } = Astro.props;
 
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
+
+// Social card: the primary logo on paper, generated from brand/logotype_icon_hp.pdf
+// by brand/build-logos.py's sibling command (see brand/README notes).
+const ogImage = Astro.site
+  ? new URL('/images/og-zone2hp.png', Astro.site).href
+  : '/images/og-zone2hp.png';
+
+/**
+ * Structured data. MedicalOrganization deliberately, not MedicalClinic or
+ * LocalBusiness: it descends from Organization only, NOT from Place, so it
+ * cannot express openingHours, geo or priceRange. Those are exactly the
+ * properties we must not assert for a clinic that has not opened, and the type
+ * makes it impossible to add them back by accident.
+ *
+ * Omitted on purpose: telephone (no real number yet), openingHours and
+ * foundingDate (would publish the opening date, which the client wants private),
+ * and aggregateRating/review (prohibited outright under s133 of the National
+ * Law, see COMPLIANCE.md). knowsAbout carries the services instead of
+ * medicalSpecialty, since schema.org defines it as suggesting expertise without
+ * implying it, which is the register AHPRA advertising rules require.
+ */
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalOrganization',
+      '@id': 'https://zone2hp.com/#organization',
+      name: 'Zone Two Health and Performance',
+      url: 'https://zone2hp.com',
+      email: 'info@zone2hp.com',
+      description:
+        'Chiropractic, post-operative rehabilitation, exercise physiology and dry needling in Eastwood, New South Wales. Opening soon.',
+      logo: {
+        '@type': 'ImageObject',
+        '@id': 'https://zone2hp.com/#logo',
+        url: 'https://zone2hp.com/images/logo-square.png',
+        width: 512,
+        height: 512,
+      },
+      image: { '@id': 'https://zone2hp.com/#logo' },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Suite 104, 2 Rowe Street',
+        addressLocality: 'Eastwood',
+        addressRegion: 'NSW',
+        postalCode: '2122',
+        addressCountry: 'AU',
+      },
+      areaServed: { '@type': 'AdministrativeArea', name: 'Sydney, New South Wales' },
+      knowsAbout: [
+        'Chiropractic care',
+        'Post-operative rehabilitation',
+        'Exercise physiology',
+        'Dry needling',
+      ],
+    },
+    {
+      '@type': 'Person',
+      '@id': 'https://zone2hp.com/#practitioner',
+      name: 'Mintae Kim',
+      jobTitle: 'Chiropractor',
+      worksFor: { '@id': 'https://zone2hp.com/#organization' },
+      hasCredential: {
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'Registration',
+        name: 'Registered Chiropractor',
+        recognizedBy: {
+          '@type': 'Organization',
+          name: 'Chiropractic Board of Australia',
+          url: 'https://www.chiropracticboard.gov.au/',
+        },
+        validIn: { '@type': 'AdministrativeArea', name: 'Australia' },
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://zone2hp.com/#website',
+      url: 'https://zone2hp.com',
+      name: 'Zone Two Health and Performance',
+      publisher: { '@id': 'https://zone2hp.com/#organization' },
+      inLanguage: 'en-AU',
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -44,7 +128,17 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : As
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en_AU" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:site_name" content="Zone Two Health and Performance" />
+    <meta property="og:image:alt" content="Zone Two Health and Performance" />
+    <meta name="twitter:image:alt" content="Zone Two Health and Performance" />
     <meta name="theme-color" content="#FBFAF8" />
+    <link rel="apple-touch-icon" href="/images/logo-square.png" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

@@ -1,11 +1,26 @@
-import type { AuthProvider } from './types';
-import { mockAuthProvider } from './mock';
+import { authConfig } from './config';
+import { createMockAuthProvider } from './mock';
+import { createSupabaseAuthProvider } from './supabase';
+import type { AuthContext, AuthProvider } from './types';
 
 /**
- * Select the active auth provider. Mock only in this static, no-backend phase.
- * Real auth (a server with httpOnly session cookies) replaces the mock here. See
- * BOOKING.md.
+ * Selects the auth implementation for a request.
+ *
+ * Returns null when accounts are disabled, which is what an unconfigured
+ * PRODUCTION build gets. Callers must treat null as "accounts are unavailable"
+ * rather than "nobody is signed in": the mock would otherwise let anyone in.
+ * See ACCOUNTS.md and config.ts.
  */
-export function getAuthProvider(): AuthProvider {
-  return mockAuthProvider;
+export function getAuthProvider(context: AuthContext): AuthProvider | null {
+  switch (authConfig.mode) {
+    case 'supabase':
+      return createSupabaseAuthProvider(context);
+    case 'mock':
+      return createMockAuthProvider(context.cookies);
+    case 'disabled':
+      return null;
+  }
 }
+
+export { authConfig } from './config';
+export type { Account, AuthContext, AuthProvider, AuthResult, Credentials, SignUpInput } from './types';

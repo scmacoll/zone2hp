@@ -12,6 +12,18 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--", "--port", "4322"],
       "port": 4322
+    },
+    {
+      "name": "preview-build",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4323",
+        "--directory",
+        ".vercel/output/static"
+      ],
+      "port": 4323
     }
   ]
 }
