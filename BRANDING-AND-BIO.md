@@ -3,10 +3,16 @@
 Source: `Zone Two Website (branding + bio).docx` + the logo PDFs. Preserved here so it is
 in the repo, not just in the client's email.
 
-> **Editing rule for the bio (client-directed, 2026-07-16):** the ONLY change permitted is
-> removing em dashes (already done below, replaced with commas). **Do not reword, soften,
-> shorten, or re-paragraph the client's text.** If any further text change looks necessary,
+> **Editing rule for the bio (client-directed, 2026-07-16, revised 2026-07-19):** the bio is
+> published **exactly as the client wrote it, em dashes included**. **Do not reword, soften,
+> shorten, or re-paragraph the client's text.** If any text change looks necessary,
 > **ask the client first**.
+>
+> **Em dash reversal (client, 2026-07-19).** The two em dashes were originally replaced with
+> commas under hard rule 2 in `CLAUDE.md`. The client has since asked for them back, so they
+> are restored below and in the About section of `src/pages/index.astro`. They are the client's
+> own unspaced style (`given—it`, not `given — it`). **Do not "fix" these back to commas.**
+> The no-em-dash rule still governs every line of copy we write ourselves.
 
 ## Slogan / tagline
 - **Long:** "slowly is the fastest way to get to where you want to be"
@@ -45,7 +51,7 @@ after "Dr"), always rendered with the profession per `COMPLIANCE.md`.
 > stays exactly as written — do not soften it.** Recorded here so the decision is visible
 > and is not "fixed" later by mistake.
 
-Client's text (verbatim; only the two em dashes replaced with commas):
+Client's text (fully verbatim, em dashes restored 2026-07-19):
 
 **"Change is meant to be hard, and it takes time."**
 
@@ -53,7 +59,7 @@ It isn't easy being trusted as a chiropractor in Australia's health care system,
 
 As a fresh graduate in 2019, I entered the workforce ready to spread my wings and embark on my journey as a health care professional. I didn't fly far because I was focused on understanding the "why" and wanting to change the world around me.
 
-After my fair share of burnout and falling into the pits, I learned that I first had to focus on changing myself before I could truly be of service to others. Along the way, I realised that trust isn't given, it is earned.
+After my fair share of burnout and falling into the pits, I learned that I first had to focus on changing myself before I could truly be of service to others. Along the way, I realised that trust isn't given—it is earned.
 
 **"We do better in circles than in rows."**
 
@@ -67,7 +73,7 @@ This naturally sparks conversation and helps everyone learn faster because there
 
 I find great joy in helping the people around me succeed. The journey to becoming the best version of ourselves was never meant to be lonely. There are people who care about your success just as much as you do.
 
-Helping someone get out of pain is a small win. The real reward is being part of their journey, watching them overcome injury, regain confidence, and become the best version of themselves. That is the BIG win.
+Helping someone get out of pain is a small win. The real reward is being part of their journey—watching them overcome injury, regain confidence, and become the best version of themselves. That is the BIG win.
 
 ## Where does the bio go? (decided 2026-07-16)
 **An "About" section on the home page** — no separate `/about` page for now. The client

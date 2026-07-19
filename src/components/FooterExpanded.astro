@@ -1,9 +1,11 @@
 ---
-// Expanded site footer (Myodetox-style): bullet-headed columns, a giant
-// wordmark watermark, a KEEP IN TOUCH mailto field, and a legal bar. Light
+// Expanded site footer (Myodetox-style): bullet-headed columns, the full logo
+// lockup at display size, a KEEP IN TOUCH mailto field, and a legal bar. Light
 // surface, dark text. Built for the A1 "Film" concept but reusable: the bright
 // accent reads --a1-volt when present, else falls back to the brand --accent.
 // Columns carry only what exists now for a coming-soon clinic (no dead links).
+import Logo from "./Logo.astro";
+
 interface Props {
     class?: string;
 }
@@ -66,7 +68,7 @@ const year = 2026;
                     touch
                 </h2>
                 <p class="ff__blurb">
-                    Be first to know when we open in Eastwood.
+                    Sign up for occasional news and updates from the clinic.
                 </p>
                 <form
                     class="ff__subscribe"
@@ -145,7 +147,7 @@ const year = 2026;
         </div>
 
         <div class="ff__brandrow" aria-hidden="true">
-            <span class="ff__watermark">ZONE TWO</span>
+            <Logo variant="full" />
         </div>
 
         <div class="ff__legal">
@@ -358,26 +360,21 @@ const year = 2026;
         outline-offset: 3px;
     }
 
-    /* Giant clipped wordmark watermark, the Myo move. Decorative. */
+    /* The full logo lockup at display size, the Myo watermark slot. Decorative:
+       the clinic name is real text in the legal bar below. Sized by height on
+       the PARENT, per the contract in Logo.astro (Astro drops `style` on its SVG
+       components, and the custom property inherits anyway). */
     .ff__brandrow {
         position: relative;
         z-index: 1;
         margin-top: clamp(1.5rem, 1rem + 4vw, 4rem);
-        line-height: 0.74;
-    }
-    .ff__watermark {
-        display: block;
-        font-family: var(--font-display);
-        font-weight: 800;
         /* cqw is 1% of the container's CONTENT-box inline size (not border-box).
-       At 18cqw, "ZONE TWO" with -0.04em tracking renders at ~90% of the
-       content area at every width, so it sits inside the column gutters at
-       half-laptop and never overflows on mobile. */
-        font-size: clamp(3.5rem, 18cqw, 16rem);
-        letter-spacing: -0.04em;
-        color: var(--chrome-cool);
-        white-space: nowrap;
-        user-select: none;
+       The lockup is 6.32:1, so width = height x 6.32, and 15.5cqw holds it at
+       ~98% of the content area at every width: the Z lines up with the left
+       column rule and the icon with the right one, with 2% of slack so it can
+       never clip. The max is a safety cap only; .ff__inner stops at 80rem. */
+        --logo-height: clamp(2rem, 15.5cqw, 11.25rem);
+        color: var(--ink);
     }
 
     /* Two groups, not three loose children: the copyright and place belong
@@ -482,7 +479,7 @@ const year = 2026;
                 }
                 form.hidden = true;
                 if (okEl) {
-                    okEl.textContent = `Thanks, you're on the list. We'll email you at ${value} when we open in Eastwood.`;
+                    okEl.textContent = `Thanks, you're on the list. We'll email news and updates to ${value}.`;
                     okEl.hidden = false;
                     okEl.focus();
                 }
