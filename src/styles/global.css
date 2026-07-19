@@ -76,9 +76,12 @@
 
   /* Visible focus for keyboard users (AA). */
   :focus-visible {
-    outline: 2px solid var(--accent);
+    /* Two-tone so the ring survives any backing. A single accent-coloured ring
+       measured 1.46:1 on --accent-deep buttons and 1.64:1 on volt, i.e. invisible
+       exactly where the primary calls to action are. */
+    outline: 2px solid var(--ink);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+    box-shadow: 0 0 0 4px var(--paper);
   }
 }
 
@@ -106,6 +109,34 @@
     animation: z2-reveal var(--reveal-duration) var(--ease-out) both;
     animation-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
+  }
+
+  /* Stagger steps as classes rather than per-element style attributes: inline
+     styles are blocked by our Content Security Policy, which silently flattened
+     the whole entrance sequence to zero delay. */
+  .reveal--d1 {
+    --reveal-delay: 1500ms;
+  }
+  .reveal--d2 {
+    --reveal-delay: 1620ms;
+  }
+  .reveal--d3 {
+    --reveal-delay: 1700ms;
+  }
+  .reveal--d4 {
+    --reveal-delay: 1780ms;
+  }
+  .reveal--d5 {
+    --reveal-delay: 1820ms;
+  }
+  .reveal--d6 {
+    --reveal-delay: 2050ms;
+  }
+  .reveal--d7 {
+    --reveal-delay: 2200ms;
+  }
+  .reveal--d8 {
+    --reveal-delay: 2400ms;
   }
 
   /* Fine grain overlay (feTurbulence), the move that keeps white from feeling

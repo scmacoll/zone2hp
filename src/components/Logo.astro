@@ -1,0 +1,55 @@
+---
+// The real Zone Two logo, converted from the client's source PDFs in `brand/`.
+// Every variant inherits its colour from `currentColor`, so the same file serves
+// the dark hero chrome and the light pages. `full` is the client's primary logo
+// (logotype + icon + HP); "HP" is Health and Performance.
+//
+// Sized by height: the SVGs are cropped to the artwork, so height is the only
+// dimension worth setting and the width follows the aspect ratio. Set the height
+// with `--logo-height` ON THE PARENT, not with a style prop here: Astro's SVG
+// component drops `style`, and the custom property inherits anyway.
+import Full from '../assets/brand/logotype_icon_hp.svg';
+import Icon from '../assets/brand/icon.svg';
+import Logotype from '../assets/brand/logotype.svg';
+import LogotypeHp from '../assets/brand/logotype_hp.svg';
+import LogotypeIcon from '../assets/brand/logotype_icon.svg';
+
+const variants = {
+  full: Full,
+  icon: Icon,
+  logotype: Logotype,
+  'logotype-hp': LogotypeHp,
+  'logotype-icon': LogotypeIcon,
+};
+
+export type LogoVariant = keyof typeof variants;
+
+interface Props {
+  variant?: LogoVariant;
+  class?: string;
+  /** Decorative by default: the containing link or heading carries the label. */
+  title?: string;
+}
+
+const { variant = 'full', class: className = '', title } = Astro.props;
+const Mark = variants[variant];
+---
+
+<Mark
+  class:list={['logo', `logo--${variant}`, className]}
+  role={title ? 'img' : undefined}
+  aria-label={title}
+  aria-hidden={title ? undefined : 'true'}
+  focusable="false"
+/>
+
+<style>
+  .logo {
+    display: block;
+    width: auto;
+    height: var(--logo-height, 1.75rem);
+    color: inherit;
+    /* The artwork is cropped tight, so it can sit hard against neighbours. */
+    overflow: visible;
+  }
+</style>

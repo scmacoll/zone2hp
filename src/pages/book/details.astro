@@ -49,10 +49,6 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
     </div>
 
     <div class="details-consent">
-      <label class="check" data-account-option>
-        <input type="checkbox" name="createAccount" />
-        <span>Create an account to book faster next time.</span>
-      </label>
       <label class="check">
         <input type="checkbox" name="marketing" />
         <span>Email me occasional updates and early access news from Zone Two. You can unsubscribe at any time.</span>
@@ -93,7 +89,6 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
 
 <script>
   import { submitBookingRequest, getPatient, fetchPractitioners } from '../../lib/booking/client';
-  import { getAuthProvider } from '../../lib/auth/index';
   import { parseBookingParams, buildStepUrl } from '../../lib/booking/funnel-state';
   import { bookingTypeInfo } from '../../lib/booking/funnel';
   import { parseDurationToken, formatDuration, visitWantsLabel } from '../../lib/booking/duration';
@@ -140,19 +135,13 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
           if (record.email) setVal('email', record.email, true);
           if (record.phone) setVal('phone', record.phone, true);
           form!.querySelector<HTMLElement>('[data-locked-note]')?.removeAttribute('hidden');
-          form!.querySelector<HTMLElement>('[data-account-option]')?.setAttribute('hidden', '');
           return;
         }
       }
-      // Otherwise, pre-fill from a signed-in account (no-op in the static mock; ready for real auth).
-      const account = getAuthProvider().getCurrentAccount();
-      if (account) {
-        const [first, ...rest] = account.name.split(' ');
-        setVal('firstName', first ?? '', false);
-        setVal('lastName', rest.join(' '), false);
-        setVal('email', account.email, false);
-        form!.querySelector<HTMLElement>('[data-account-option]')?.setAttribute('hidden', '');
-      }
+      // No prefill from a signed-in account: these /book pages are prerendered, so
+      // there is no session to read here. Prefill would need the page rendered on
+      // demand, and this funnel is a prototype being replaced by the Splose embed
+      // (see ACCOUNTS.md and BOOKING.md).
     }
 
     // ---- Phases: edit (the form) <-> review (the consolidated summary) ----
@@ -257,9 +246,6 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
       setBusy(true);
       hideFormError();
       try {
-        if (data.get('createAccount') === 'on') {
-          void getAuthProvider().signUp({ name, email, password: '', marketingOptIn: data.get('marketing') === 'on' });
-        }
         const result = await submitBookingRequest({
           bookingType: params.type,
           customerKind: params.customer,

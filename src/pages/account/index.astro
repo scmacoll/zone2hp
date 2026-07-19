@@ -1,18 +1,23 @@
 ---
-// Member area DESIGN preview. Reachable by URL for review. Sign-in is not wired
-// up (no real session on a static site), so this renders the design directly
-// with a visible preview note. It holds no health data, so the lack of a real
-// access boundary is acceptable here (see BOOKING.md). Real protection needs
-// server middleware later.
+// The member area. Protected by src/middleware.ts, which redirects a signed-out
+// visitor to the sign-in page and closes the surface entirely when accounts are
+// gated off or unconfigured.
+//
+// NON-CLINICAL: nothing here comes from Splose and nothing here is a health
+// record. See ACCOUNTS.md.
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Footer from '../../components/Footer.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
-import { bookingConfig } from '../../lib/booking/config';
+import { authConfig } from '../../lib/auth/index';
 
-// Production gate: when booking is not publicly enabled, accounts are off too.
-if (!bookingConfig.linksVisible) return Astro.redirect('/');
+export const prerender = false;
+
+const account = Astro.locals.account;
+const isLive = authConfig.isLive;
+const prefs = Astro.url.searchParams.get('prefs');
 ---
+
 
 <Base
   title="Your account | Zone Two Health and Performance"
@@ -24,10 +29,15 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
     <header class="account__intro">
       <Eyebrow tone="accent">Account</Eyebrow>
       <h1 class="account__title">Your account</h1>
-      <p class="account__preview">
-        Preview: this is the member area design. Sign-in is not wired up yet, so the page is shown here
-        for review.
-      </p>
+      <p class="account__lede">Signed in as {account?.email}.</p>
+      {
+        !isLive && (
+          <p class="account__preview">
+            Development mode: this session is local only and is not connected to the live
+            account system.
+          </p>
+        )
+      }
     </header>
 
     <div class="member">
@@ -49,39 +59,28 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
 
       <section class="card">
         <h2 class="card__title">Email preferences</h2>
-        <form class="prefs" data-prefs>
+        <form class="prefs" method="POST" action="/api/account/preferences">
           <label class="check">
-            <input type="checkbox" name="marketing" checked />
+            <input type="checkbox" name="marketing" checked={account?.marketingOptIn ?? false} />
             <span>Email me updates and early access news.</span>
           </label>
           <div class="prefs__actions">
-            <button type="submit" class="btn btn--solid" data-save>Save preferences</button>
-            <p class="prefs__saved" data-saved role="status" hidden>Saved (preview).</p>
+            <button type="submit" class="btn btn--solid">Save preferences</button>
+            {prefs === 'saved' && <p class="prefs__saved" role="status">Preferences saved.</p>}
+            {prefs === 'error' && <p class="prefs__error" role="alert">Could not save that. Please try again.</p>}
           </div>
         </form>
       </section>
 
       <div class="member__actions">
-        <a class="btn btn--ghost" href="/account/login">Sign out</a>
+        <form method="POST" action="/api/account/signout">
+          <button type="submit" class="btn btn--ghost">Sign out</button>
+        </form>
       </div>
     </div>
   </main>
   <Footer />
 </Base>
-
-<script>
-  // Cosmetic save confirmation for the preview. No real persistence (no storage).
-  const form = document.querySelector<HTMLFormElement>('[data-prefs]');
-  const saved = document.querySelector<HTMLElement>('[data-saved]');
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (saved) saved.hidden = false;
-  });
-  form?.addEventListener('change', () => {
-    if (saved) saved.hidden = true;
-  });
-</script>
-
 <style>
   .account__intro {
     max-width: var(--container-max);
@@ -150,6 +149,11 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
     align-items: center;
     gap: var(--space-sm);
     flex-wrap: wrap;
+  }
+  .prefs__error {
+    margin: 0;
+    font-size: var(--step-small);
+    color: var(--accent-deep);
   }
   .prefs__saved {
     margin: 0;

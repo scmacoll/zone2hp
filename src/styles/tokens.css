@@ -14,7 +14,9 @@
   /* ---- Colour: ink (charcoal, never pure black) ---- */
   --ink:          #1C1D1F; /* primary text */
   --ink-2:        #54565A; /* secondary text */
-  --ink-3:        #8A8C90; /* muted / captions */
+  /* Darkened from #8A8C90, which measured 3.23:1 on paper and failed AA
+     everywhere it was used as text. Prefer --ink-2 for body copy regardless. */
+  --ink-3:        #6B6D71; /* muted / captions */
 
   /* ---- Colour: accent (alpine / trail orange, used sparingly) ----
      AA note: vivid --accent on paper is ~3.9:1, so it is for fills, marks and

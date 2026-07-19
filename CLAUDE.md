@@ -41,7 +41,7 @@ Every concept page must be a complete coming-soon page: wordmark, opening-soon s
 ## Hard rules (non-negotiable)
 
 1. **Australian English everywhere.** colour, centre, optimise, specialise, programme where appropriate.
-2. **No em dashes anywhere in copy.** Not in headings, body, alt text or meta. Use full stops, commas, colons or parentheses. Firm client preference.
+2. **No em dashes in copy we write.** Not in headings, body, alt text or meta. Use full stops, commas, colons or parentheses. Firm client preference. **Exception, client-directed 2026-07-19: the bio.** The client asked for his own two em dashes back, so the About section on the home page and the bio in `BRANDING-AND-BIO.md` keep them, unspaced (`given—it is earned`, `journey—watching them`). Do not strip them out. Client-supplied copy generally (bio, privacy, consent) is reproduced verbatim and is never edited to fit our house style without asking.
 3. **No AI-tell phrasing.** Banned: "elevate", "unlock", "in today's fast-paced world", "nestled", "boasts", "dive in", "whether you're X or Y", "look no further", "game-changer", "seamless", "robust" (as filler), "leverage", "delve", "tapestry", "testament to", and the "it's not just X, it's Y" construction. Write plainly and physically.
 4. **Compliance is law, literally.** Follow `COMPLIANCE.md` exactly, including on the coming-soon page. Never write or invent testimonials, patient stories, or outcome claims. Never use "pain-free", "cured", "fix", "guaranteed", "instant", "best", or comparative claims. Run the checklist in `COMPLIANCE.md` against every copy block.
 5. **No `localStorage` / `sessionStorage`** or other browser storage unless explicitly required and the deploy target supports it.

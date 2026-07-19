@@ -66,7 +66,7 @@ const PRACTITIONERS: Practitioner[] = [
     honorific: 'Dr',
     name: 'Mintae Kim',
     title: 'Chiropractor',
-    qualifications: 'B. Chiro. Sci., M. Chiro.',
+    qualifications: 'B.Chir.Sci., M.Chiro.',
     bio: 'Mintae holds a Bachelor and Master of Chiropractic from Macquarie University, with nearly a decade of experience. He works in sports chiropractic and rehabilitation with a movement-based approach, using techniques including dry needling, soft tissue release and neuro-functional rehab. He is an avid multi-sport athlete.',
     photo: '/images/practitioners/mintae-kim.png',
   },

@@ -16,13 +16,24 @@ import Base from "../layouts/Base.astro";
 import ServicesLine from "../components/ServicesLine.astro";
 import MapBlock from "../components/MapBlock.astro";
 import FooterExpanded from "../components/FooterExpanded.astro";
+import Logo from "../components/Logo.astro";
+import Eyebrow from "../components/Eyebrow.astro";
+import { Image } from "astro:assets";
+import portrait from "../assets/practitioners/mintae-kim.jpg";
 import { bookingConfig } from "../lib/booking/config";
-// import videoSrc from "../asset/video-loop.mp4";
-import videoSrc from "../asset/zone2hp-video-loop-final.mp4";
+// Hero loop, re-encoded from the client's master (see brand/encode-hero.sh).
+// FULL 30 second duration, silent. Only the codec and container changed: the
+// master is HEVC/H.265, which Firefox cannot decode and Chrome only decodes with
+// OS support, and it carried an audio track on a muted element. WebM first,
+// H.264 as the universal fallback.
+import videoWebm from "../asset/hero-loop.webm";
+import videoMp4 from "../asset/hero-loop.mp4";
+import videoPoster from "../asset/hero-poster.jpg";
 
 // Owner asked for a single account button + a Book now CTA in the nav. Gated by
 // the same flag that surfaces public booking/account links (now on by default).
-const showLinks = bookingConfig.linksVisible;
+const showBooking = bookingConfig.linksVisible;
+const showAccounts = bookingConfig.accountsEnabled;
 ---
 
 <Base>
@@ -36,67 +47,40 @@ const showLinks = bookingConfig.linksVisible;
                         muted
                         loop
                         playsinline
+                        preload="metadata"
+                        poster={videoPoster.src ?? videoPoster}
                     >
-                        <source src={videoSrc} type="video/mp4" />
+                        <source src={videoWebm} type="video/webm" />
+                        <source src={videoMp4} type="video/mp4" />
                     </video>
                 </div>
 
                 <div class="a2-hero__chrome">
                     <header class="a2-nav">
                         <a
-                            class="a2-brand reveal"
-                            style="--reveal-delay: 1500ms"
+                            class="a2-brand reveal reveal--d1"
                             href="#main"
                             aria-label="Zone Two Health and Performance, top of page"
                         >
-                            <span class="a2-brand__mark" aria-hidden="true">
-                                <svg
-                                    viewBox="0 0 32 32"
-                                    width="40"
-                                    height="40"
-                                    role="img"
-                                    aria-label=""
-                                >
-                                    <rect
-                                        width="32"
-                                        height="32"
-                                        rx="2"
-                                        fill="#0F1013"></rect>
-                                    <text
-                                        x="14.5"
-                                        y="22.5"
-                                        text-anchor="middle"
-                                        font-family="Geist Variable, Geist, system-ui, sans-serif"
-                                        font-size="20"
-                                        font-weight="700"
-                                        letter-spacing="-0.5"
-                                        fill="#FBFAF8">Z</text
-                                    >
-                                    <text
-                                        x="25"
-                                        y="13"
-                                        text-anchor="middle"
-                                        font-family="Geist Variable, Geist, system-ui, sans-serif"
-                                        font-size="9.5"
-                                        font-weight="700"
-                                        fill="#FF8419">2</text
-                                    >
-                                </svg>
+                            <span class="a2-brand__full" aria-hidden="true">
+                                <Logo variant="full" />
                             </span>
-                            <span class="a2-brand__type">ZONE TWO</span>
+                            <span class="a2-brand__icon" aria-hidden="true">
+                                <Logo variant="logotype" />
+                            </span>
                         </a>
 
                         <div class="a2-actions">
                             <div
-                            class="a2-lang-wrap reveal"
-                            style="--reveal-delay: 1620ms"
+                            class="a2-lang-wrap reveal reveal--d2"
                             data-lang-current="en"
                         >
-                            <button
-                                type="button"
-                                class="a2-lang"
-                                aria-label="Language: English"
-                            >
+                            {/* Inert until Korean copy exists. It was a
+                            <button> that responded to neither pointer nor
+                            keyboard, which wastes a tab stop and fails WCAG
+                            4.1.2, and it wrapped an invalid
+                            listbox > option > button nesting. */}
+                            <span class="a2-lang" lang="en">
                                 <span
                                     class="a2-lang__label a2-lang__label--full"
                                     >English</span
@@ -123,34 +107,14 @@ const showLinks = bookingConfig.linksVisible;
                                             fill="currentColor"></circle>
                                     </svg>
                                 </span>
-                            </button>
-
-                            {
-                                /* Korean dropdown paused for now — markup kept so
-                            we can re-enable when translation copy is ready. */
-                            }
-                            <ul
-                                class="a2-lang__menu"
-                                role="listbox"
-                                aria-label="Language"
-                                hidden
-                            >
-                                <li role="option" aria-selected="false">
-                                    <button
-                                        type="button"
-                                        class="a2-lang__option"
-                                        data-lang="ko">Korean</button
-                                    >
-                                </li>
-                            </ul>
+                            </span>
                             </div>
 
+                            <div class="a2-cta-group">
                             {
-                                showLinks && (
-                                    <div class="a2-cta-group">
+                                showAccounts && (
                                         <a
-                                            class="a2-login reveal"
-                                            style="--reveal-delay: 1700ms"
+                                            class="a2-login reveal reveal--d3"
                                             href="/account/login"
                                             aria-label="Log in or create an account"
                                         >
@@ -176,75 +140,59 @@ const showLinks = bookingConfig.linksVisible;
                                             </svg>
                                             <span class="a2-login__label">Log in</span>
                                         </a>
-                                        <a
-                                            class="a2-book reveal"
-                                            style="--reveal-delay: 1780ms"
-                                            href="/book"
-                                        >
+                                )
+                            }
+                                {
+                                    showBooking ? (
+                                        <a class="a2-book reveal reveal--d4" href="/book">
                                             <span class="a2-book__full">Book now</span>
                                             <span class="a2-book__short">Book</span>
                                         </a>
-                                    </div>
-                                )
-                            }
+                                    ) : (
+                                        <button
+                                            class="a2-book reveal reveal--d4"
+                                            type="button"
+                                            disabled
+                                            aria-disabled="true"
+                                        >
+                                            <span class="a2-book__full">Book now</span>
+                                            <span class="a2-book__short">Book</span>
+                                        </button>
+                                    )
+                                }
+                            </div>
                         </div>
                     </header>
 
-                    <div class="a2-panel reveal" style="--reveal-delay: 1820ms">
+                    <div class="a2-panel reveal reveal--d5">
                         <div class="a2-panel__labels">
                             <ServicesLine class="a2-services" />
                         </div>
 
-                        <div class="a2-panel__main">
-                            <h1
-                                class="a2-headline reveal"
-                                style="--reveal-delay: 2200ms"
+                        <p class="a2-slogan reveal reveal--d6">
+                            <span class="a2-slogan__mark" aria-hidden="true">
+                                <Logo variant="icon" />
+                            </span>
+                            <span class="a2-slogan__text"
+                                >slow is <em>fast</em></span
                             >
-                                Modern
-                                <span
-                                    class="a2-headline__mark"
-                                    aria-hidden="true"
-                                >
-                                    <svg
-                                        viewBox="0 0 32 32"
-                                        width="32"
-                                        height="32"
-                                    >
-                                        <rect
-                                            width="32"
-                                            height="32"
-                                            rx="2"
-                                            fill="#0F1013"></rect>
-                                        <text
-                                            x="14.5"
-                                            y="22.5"
-                                            text-anchor="middle"
-                                            font-family="Geist Variable, Geist, system-ui, sans-serif"
-                                            font-size="20"
-                                            font-weight="700"
-                                            letter-spacing="-0.5"
-                                            fill="#FBFAF8">Z</text
-                                        >
-                                        <text
-                                            x="25"
-                                            y="13"
-                                            text-anchor="middle"
-                                            font-family="Geist Variable, Geist, system-ui, sans-serif"
-                                            font-size="9.5"
-                                            font-weight="700"
-                                            fill="#FF8419">2</text
-                                        >
-                                    </svg>
-                                </span><br />Chiropractic Therapy.
+                        </p>
+
+                        <div class="a2-panel__main">
+                            <div class="a2-panel__lead">
+                            <h1
+                                class="a2-headline reveal reveal--d7"
+                            >
+                                Modern<br />Chiropractic Therapy.
                             </h1>
+                            </div>
 
                             <a
-                                class="a2-discover reveal"
-                                style="--reveal-delay: 2400ms"
-                                href="#find-us"
+                                class="a2-discover reveal reveal--d8"
+                                href="#about"
                             >
                                 <span class="a2-discover__text uppercase"
-                                    >Coming<br />Soon</span
+                                    >See<br />more</span
                                 >
                                 <span
                                     class="a2-discover__arrow"
@@ -265,6 +213,96 @@ const showLinks = bookingConfig.linksVisible;
                                     </svg>
                                 </span>
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="a2-about" aria-labelledby="about-name">
+                <p class="a2-about__slogan">
+                    slowly is the fastest way to get to where you want to be
+                </p>
+
+                <div class="a2-about__grid">
+                    <Image
+                        class="a2-about__portrait"
+                        src={portrait}
+                        alt="Dr Mintae Kim, chiropractor at Zone Two Health and Performance"
+                        widths={[320, 480, 640]}
+                        sizes="(min-width: 46rem) 20rem, 100vw"
+                        loading="lazy"
+                    />
+
+                    <Eyebrow tone="accent" class="a2-about__eyebrow">About</Eyebrow>
+
+                    <div class="a2-about__body">
+                        <header class="a2-about__head">
+                            <h2 class="a2-about__name" id="about-name">Dr Mintae Kim</h2>
+                            <p class="a2-about__creds">
+                                Chiropractor &middot; B.Chir.Sci., M.Chiro.
+                            </p>
+                        </header>
+
+                        <div class="a2-about__prose">
+                        <h3 class="a2-about__quote">
+                            "Change is meant to be hard, and it takes time."
+                        </h3>
+                        <p>
+                            It isn't easy being trusted as a chiropractor in Australia's health
+                            care system, but I am here, determined to make a difference.
+                        </p>
+                        <p>
+                            As a fresh graduate in 2019, I entered the workforce ready to
+                            spread my wings and embark on my journey as a health care
+                            professional. I didn't fly far because I was focused on
+                            understanding the "why" and wanting to change the world around me.
+                        </p>
+                        <p>
+                            After my fair share of burnout and falling into the pits, I learned
+                            that I first had to focus on changing myself before I could truly
+                            be of service to others. Along the way, I realised that trust isn't
+                            given—it is earned.
+                        </p>
+
+                        <details class="a2-about__more">
+                            <summary aria-label="Read more about Dr Mintae Kim">
+                                <span class="a2-about__summary-label">Read more</span>
+                            </summary>
+
+                            <h3 class="a2-about__quote">
+                                "We do better in circles than in rows."
+                            </h3>
+                            <p>
+                                I am stubborn and used to believe that I had all the answers. I
+                                also believed I could do things better alone and build
+                                something for myself, by myself.
+                            </p>
+                            <p>
+                                Being a lone wolf may get you there faster, but community takes
+                                you further because faces matter. Rows force you to stare at
+                                the back of someone's head. Circles let you make eye contact,
+                                share ideas, and build deep trust.
+                            </p>
+                            <p>
+                                This naturally sparks conversation and helps everyone learn
+                                faster because there is always someone who knows more or has
+                                experienced more. Circles will win every time.
+                            </p>
+
+                            <h3 class="a2-about__quote">"Celebrate the small wins."</h3>
+                            <p>
+                                I find great joy in helping the people around me succeed. The
+                                journey to becoming the best version of ourselves was never
+                                meant to be lonely. There are people who care about your
+                                success just as much as you do.
+                            </p>
+                            <p>
+                                Helping someone get out of pain is a small win. The real reward
+                                is being part of their journey—watching them overcome injury,
+                                regain confidence, and become the best version of themselves.
+                                That is the BIG win.
+                            </p>
+                        </details>
                         </div>
                     </div>
                 </div>
@@ -413,27 +451,21 @@ const showLinks = bookingConfig.linksVisible;
     .a2-brand {
         display: inline-flex;
         align-items: center;
-        gap: 0.65rem;
         text-decoration: none;
-        color: var(--ink);
-    }
-    .a2-brand__mark {
-        display: inline-flex;
-        width: clamp(36px, 3vw + 28px, 44px);
-        height: clamp(36px, 3vw + 28px, 44px);
-    }
-    .a2-brand__mark svg {
-        width: 100%;
-        height: 100%;
-        border-radius: var(--r-sharp);
-    }
-    .a2-brand__type {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: clamp(0.95rem, 0.85rem + 0.3vw, 1.05rem);
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
+        /* The logo inherits this through currentColor. */
         color: var(--paper);
+    }
+    /* The full lockup carries the "Health and Performance" descriptor, which
+       needs width to stay legible. Below the breakpoint further down we drop to
+       the wordmark alone: the NAME must always be present, and the icon is
+       already shown beside the headline just underneath. */
+    .a2-brand__full {
+        --logo-height: clamp(24px, 1.1vw + 20px, 32px);
+        display: inline-flex;
+    }
+    .a2-brand__icon {
+        --logo-height: clamp(14px, 1.6vw + 9px, 20px);
+        display: none;
     }
 
     /* Language: a small, light TEXT toggle (no fill) so it reads as a quiet
@@ -655,9 +687,15 @@ const showLinks = bookingConfig.linksVisible;
     .a2-panel__main {
         display: flex;
         flex-direction: column;
-        gap: var(--space-md);
+        gap: var(--space-sm);
         padding-top: var(--space-md);
-        margin-top: auto; /* ADD */
+        /* No auto margin: the SLOGAN carries it, so the two travel together. */
+        margin-top: 0;
+    }
+    /* Keeps the slogan tied to the headline so the row layout further down stays
+       a two-item flex (lead block, then the discover CTA). */
+    .a2-panel__lead {
+        min-width: 0;
     }
     @container (min-width: 34rem) {
         .a2-panel__main {
@@ -666,6 +704,40 @@ const showLinks = bookingConfig.linksVisible;
             justify-content: space-between;
             gap: var(--space-lg);
         }
+    }
+
+    /* The client's short slogan, kept lower case exactly as they wrote it. Sits
+       above the headline as a quiet brand line rather than another uppercase
+       label competing with the services row.
+
+       Paper, not volt: the panel is 55% opaque over the video, so a bright frame
+       lifts the effective background to roughly rgb(98,99,100), where volt falls
+       to 2.5:1 against this 12.5px text. Paper stays at or above 4.5:1 across
+       the whole range. It also sits brighter than the services row above, which
+       is white at 0.7, so the slogan still reads as the emphasised line. */
+    .a2-slogan {
+        display: flex;
+        align-items: center;
+        align-self: flex-start;
+        gap: 0.55em;
+        margin: auto 0 var(--space-sm);
+        /* A floor against the services rule: while the panel has slack the auto
+           margin absorbs this, and once it is content-driven this keeps the
+           slogan off the rule instead of letting it sit on the line. */
+        padding-top: var(--space-sm);
+        font-family: var(--font-mono);
+        font-size: var(--step-label);
+        letter-spacing: var(--track-label);
+        color: var(--paper);
+    }
+    .a2-slogan__mark {
+        --logo-height: 1.5em;
+        display: inline-flex;
+        flex: none;
+    }
+    .a2-slogan em {
+        font-style: italic;
+        color: var(--concept-volt);
     }
 
     /* Geist tuned for the headline: medium-bold, tight tracking, near-1 leading.
@@ -680,37 +752,6 @@ const showLinks = bookingConfig.linksVisible;
         line-height: 0.96;
         letter-spacing: -0.025em;
         color: var(--paper);
-    }
-    /* Z² mark inline, no orange backdrop. Just the volt on the 2 to keep the
-     accent without the cartoony chip. */
-    /*.a2-headline__mark {
-        display: inline-block;
-        margin-left: 0.18em;
-        font-size: 0.32em;
-        font-weight: 700;
-        line-height: 1;
-        letter-spacing: 0;
-        vertical-align: 0.95em;
-        color: var(--paper);
-    }*/
-    .a2-headline__mark {
-        display: inline-block;
-        width: 0.65em;
-        height: 0.65em;
-        margin: 0 -0.12em;
-        vertical-align: 0.4em;
-    }
-    .a2-headline__mark svg {
-        width: 100%;
-        height: 100%;
-        border-radius: 2px;
-    }
-    .a2-headline__mark sup {
-        color: var(--concept-volt);
-        font-size: 0.8em;
-        vertical-align: super;
-        line-height: 0;
-        margin-left: 0.04em;
     }
 
     /* ---- Discover CTA -------------------------------------------------------- */
@@ -748,6 +789,219 @@ const showLinks = bookingConfig.linksVisible;
     }
 
     /* ---- Find-us (map) section ---------------------------------------------- */
+
+    /* ---- About --------------------------------------------------------------
+       Container query, not a media query: the section reflows on its own width
+       so it behaves in a half-width window (see DESIGN-SYSTEM.md). */
+    .a2-about {
+        container-type: inline-size;
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding-block: var(--space-lg) 0;
+        padding-inline: var(--section-pad-inline);
+    }
+    .a2-about__slogan {
+        /* Equal air above and below, and tighter than the section's own padding:
+           the slogan belongs to the About block, not floating between sections. */
+        margin: 0 0 var(--space-lg);
+        /* Full section width. It was capped at 22ch, which folded it onto two
+           short lines well before the section ran out of room. */
+        font-style: italic;
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(1.5rem, 0.9rem + 2.4vw, 2.75rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        /* Not `balance`: balancing evens the line lengths, which is the other
+           reason this was breaking early instead of running the full width. */
+        text-wrap: pretty;
+    }
+    /* Three arrangements, driven by the section's own width so it behaves in a
+       half-window as well as a full one.
+
+       The middle one is the fix for a real gap: between roughly 480px and 736px
+       the section was still fully stacked, which left the capped portrait sitting
+       alone beside a column of dead space. Now the portrait pairs with the name
+       block and the bio runs full width beneath it. */
+    .a2-about__grid {
+        display: grid;
+        gap: var(--space-sm);
+        align-items: start;
+        grid-template-areas:
+            "eyebrow"
+            "head"
+            "portrait"
+            "prose";
+    }
+    /* Lets head and prose take part in the grid above rather than nesting. */
+    .a2-about__body {
+        display: contents;
+    }
+    .a2-about__portrait {
+        grid-area: portrait;
+    }
+    .a2-about__head {
+        grid-area: head;
+    }
+    .a2-about__prose {
+        grid-area: prose;
+    }
+    .a2-about__eyebrow {
+        grid-area: eyebrow;
+        padding-bottom: var(--space-xs);
+        border-bottom: var(--border-hairline);
+    }
+
+    /* The photo keeps its own aspect ratio: no aspect-ratio and no object-fit,
+       so nothing is cropped. A 4:5 alternative crop is kept alongside it in
+       src/assets/practitioners/ for comparison, but is not used. */
+    .a2-about__portrait {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-md);
+        background: var(--stone);
+    }
+    @container (min-width: 30rem) {
+        .a2-about__portrait {
+            max-width: 20rem;
+        }
+    }
+    .a2-about__head {
+        display: grid;
+        gap: var(--space-2xs);
+    }
+    @container (min-width: 30rem) {
+        .a2-about__grid {
+            grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+            grid-template-areas:
+                "eyebrow eyebrow"
+                "portrait head"
+                "prose prose";
+            column-gap: var(--space-md);
+            row-gap: var(--space-md);
+        }
+        .a2-about__head {
+            align-self: center;
+        }
+    }
+
+    @container (min-width: 46rem) {
+        .a2-about__grid {
+            grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+            grid-template-areas:
+                "eyebrow eyebrow"
+                "portrait head"
+                "portrait prose";
+            column-gap: var(--space-lg);
+        }
+        .a2-about__head {
+            align-self: start;
+        }
+        .a2-about__portrait {
+            position: sticky;
+            top: var(--space-md);
+        }
+    }
+
+    .a2-about__name {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: var(--step-h3);
+        letter-spacing: var(--track-tight);
+        color: var(--ink);
+    }
+    .a2-about__creds {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: var(--step-label);
+        letter-spacing: var(--track-label);
+        text-transform: uppercase;
+        color: var(--ink-2);
+    }
+    .a2-about__quote {
+        margin: var(--space-md) 0 var(--space-sm);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: var(--step-h3);
+        line-height: 1.2;
+        letter-spacing: var(--track-tight);
+        color: var(--ink);
+        /* Not balance: balancing evens the line lengths instead of filling the
+           measure, which broke the quote early and left a gap down the right. */
+        text-wrap: pretty;
+    }
+    /* The first quote sits directly under the credentials, where the grid gap
+       already provides the separation, so its own top margin doubled it up. */
+    .a2-about__prose > .a2-about__quote:first-child {
+        margin-top: 0;
+    }
+    /* Scoped to .a2-about__prose so it reaches only the client's bio copy: a
+       looser `.a2-about__body p` also caught the eyebrow and the credentials
+       line and outranked their own styles. */
+    .a2-about__prose p {
+        margin: 0 0 var(--space-sm);
+        font-size: var(--step-body);
+        line-height: 1.65;
+        color: var(--ink-2);
+    }
+
+    /* Disclosure for the rest of the bio: native <details>, so it needs no JS and
+       stays keyboard accessible. The client's text is complete either way. */
+    .a2-about__more {
+        margin-top: var(--space-md);
+    }
+    /* The summary keeps a block display on purpose: giving <summary> a flex
+       display breaks the native toggle in some WebKit versions, so the flex row
+       lives on the inner label span instead. */
+    .a2-about__more summary {
+        display: block;
+        cursor: pointer;
+        list-style: none;
+        color: var(--accent-deep);
+    }
+    .a2-about__more summary::-webkit-details-marker {
+        display: none;
+    }
+    .a2-about__summary-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 44px;
+        font-family: var(--font-mono);
+        font-size: var(--step-label);
+        letter-spacing: var(--track-label);
+        text-transform: uppercase;
+    }
+    /* Chevron drawn in CSS so the marker matches the label colour and rotates. */
+    .a2-about__summary-label::after {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        border-right: 1.5px solid currentColor;
+        border-bottom: 1.5px solid currentColor;
+        transform: translateY(-25%) rotate(45deg);
+        transition: transform 200ms var(--ease-out);
+    }
+    .a2-about__more[open] .a2-about__summary-label::after {
+        transform: translateY(10%) rotate(-135deg);
+    }
+    .a2-about__more summary:focus-visible {
+        outline: 2px solid var(--accent-deep);
+        outline-offset: 3px;
+    }
+    /* One-way. Once the rest of the bio is open there is no way to fold it
+       again: the control is removed rather than toggled. */
+    .a2-about__more[open] summary {
+        display: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .a2-about__summary-label::after {
+            transition: none;
+        }
+    }
+
     .a2-find {
         max-width: var(--container-max);
         margin-inline: auto;
@@ -774,7 +1028,8 @@ const showLinks = bookingConfig.linksVisible;
             align-items: center;
             text-align: center;
         }
-        .a2-find :global(.map__link) {
+        .a2-find :global(.map__link),
+        .a2-find :global(.map__book) {
             align-self: center;
         }
     }
@@ -874,11 +1129,15 @@ const showLinks = bookingConfig.linksVisible;
     /* Video now plays at every viewport (the small-screen hide rule was
        removed). Reduced-motion still skips the cinema reveal and the
        navbar fade-in. */
-    /* At the very smallest widths, drop the wordmark text to just the Z² mark so
-       the nav actions (language, account, book) keep breathing room. */
-    @media (max-width: 22.5rem) {
-        .a2-brand__type {
+    /* Below this the full lockup would crowd the nav actions, so the brand drops
+       to the wordmark on its own. Never to the icon alone: the company name has
+       to stay readable at every width. */
+    @media (max-width: 37.5rem) {
+        .a2-brand__full {
             display: none;
+        }
+        .a2-brand__icon {
+            display: inline-flex;
         }
     }
 
@@ -893,6 +1152,20 @@ const showLinks = bookingConfig.linksVisible;
         }
     }
 </style>
+
+<script>
+    // The "read more" control is removed once the bio is open (one-way, by
+    // design). That would otherwise strand a keyboard user, because focus dies
+    // with the element it was on, so move focus onto the revealed copy.
+    const bioDisclosure = document.querySelector<HTMLDetailsElement>('.a2-about__more');
+    bioDisclosure?.addEventListener('toggle', () => {
+        if (!bioDisclosure.open) return;
+        const firstRevealed = bioDisclosure.querySelector<HTMLElement>('.a2-about__quote');
+        if (!firstRevealed) return;
+        firstRevealed.setAttribute('tabindex', '-1');
+        firstRevealed.focus({ preventScroll: true });
+    });
+</script>
 
 <script>
     // After the initial reveal sequence completes (~2.5s buffer), flag the

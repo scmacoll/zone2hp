@@ -1,24 +1,41 @@
 ---
-// Embedded booking mode (the optional fast-launch fallback). Frames the practice
-// booking system's own hosted page. Until PUBLIC_BOOKING_EMBED_URL is set, shows
-// a factual placeholder and loads no third-party content.
+// Frames Splose's own hosted booking page. Splose is the system of record for
+// bookings, intake, consent and payment; nothing here touches patient data (see
+// ACCOUNTS.md). Until PUBLIC_BOOKING_EMBED_URL is set this shows a factual
+// placeholder and loads no third-party content.
 import { bookingConfig } from '../lib/booking/config';
 import CtaButton from './CtaButton.astro';
 
 const url = bookingConfig.embedUrl;
+
+// Splose's v2 embed reports its own height by postMessage so the frame can grow
+// instead of scrolling internally.
+const embedSrc = url
+  ? `${url}${url.includes('?') ? '&' : '?'}embedVersion=v2`
+  : null;
+const embedOrigin = url ? new URL(url).origin : null;
 ---
 
 <section class="embed" aria-label="Online booking">
   {
     url ? (
       <Fragment>
-        <iframe class="embed__frame" src={url} title="Online booking" loading="lazy" />
-        <p class="embed__fallback">
-          If the booking page does not load,{' '}
+        <iframe
+          id="splose-booking"
+          class="embed__frame"
+          src={embedSrc}
+          title="Online booking"
+          name="onlineBookingEmbeded"
+          loading="lazy"
+          scrolling="auto"
+          data-embed-origin={embedOrigin}
+        />
+        <div class="embed__fallback">
+          <p class="embed__fallback-text">If the booking page does not load</p>
           <CtaButton href={url} variant="outline" target="_blank" rel="noopener noreferrer">
-            open it in a new tab
+            Open in new tab
           </CtaButton>
-        </p>
+        </div>
       </Fragment>
     ) : (
       <div class="embed__placeholder">
@@ -31,6 +48,33 @@ const url = bookingConfig.embedUrl;
     )
   }
 </section>
+
+<script>
+  const frame = document.getElementById('splose-booking') as HTMLIFrameElement | null;
+
+  if (frame) {
+    const allowedOrigin = frame.dataset.embedOrigin;
+
+    window.addEventListener('message', (event) => {
+      // Three checks, not one: the right frame, the right origin, and a shape we
+      // recognise. Splose's published snippet only does the first.
+      if (event.source !== frame.contentWindow) return;
+      if (!allowedOrigin || event.origin !== allowedOrigin) return;
+
+      const data = event.data;
+      if (!data || typeof data.type !== 'string') return;
+
+      if (data.type === 'sploseIframeResize') {
+        const height = data.height;
+        if (typeof height === 'number' && Number.isFinite(height) && height >= 0) {
+          frame.style.height = `${height}px`;
+        }
+      } else if (data.type === 'sploseIframeScrollToTop') {
+        frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+</script>
 
 <style>
   .embed {
@@ -46,9 +90,18 @@ const url = bookingConfig.embedUrl;
     border-radius: var(--radius-md);
     background: var(--stone);
   }
+  /* Stacked and centred, with the button sized to sit with the line above it
+     rather than reading as a stray inline link. */
   .embed__fallback {
-    margin-top: var(--space-sm);
-    font-size: var(--step-small);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+  .embed__fallback-text {
+    margin: 0;
+    font-size: var(--step-body);
     color: var(--ink-2);
   }
   .embed__placeholder {

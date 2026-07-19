@@ -1,21 +1,35 @@
 ---
 // Shared login / signup form. mode="login" | "signup". Non-clinical accounts:
 // signup collects name, email, password and an unticked marketing opt-in only;
-// no health fields. Client-validates and calls the mock auth provider, then
-// shows an in-place success panel (Option A: a designed, working demo without a
-// cross-page session — see BOOKING.md). The page owns the single <h1>.
-import CtaButton from '../CtaButton.astro';
+// no health fields (see ACCOUNTS.md).
+//
+// A real form POST to a server endpoint, which sets the httpOnly session cookie.
+// It works with JavaScript disabled; the script below only adds inline
+// validation so people are not round-tripped for a typo. The page owns the <h1>.
+import { safeRedirect } from '../../lib/auth/redirect';
 
 interface Props {
   mode: 'login' | 'signup';
+  /** Server-rendered error from a failed attempt, passed back via the URL. */
+  error?: string | null;
 }
 
-const { mode } = Astro.props;
+const { mode, error = null } = Astro.props;
 const isSignup = mode === 'signup';
+const action = isSignup ? '/api/account/signup' : '/api/account/signin';
+const next = safeRedirect(Astro.url.searchParams.get('next'));
 ---
 
 <div class="auth" data-auth-form data-mode={mode}>
-  <form class="auth__form" novalidate>
+  <form class="auth__form" method="POST" action={action} novalidate>
+    <input type="hidden" name="next" value={next} />
+    {
+      error && (
+        <p class="form-error" role="alert">
+          {error}
+        </p>
+      )
+    }
     {
       isSignup && (
         <div class="field">
@@ -56,126 +70,67 @@ const isSignup = mode === 'signup';
     {
       isSignup && (
         <p class="privacy">
-          We collect your name and email only. No health information is collected here. A full privacy
-          policy will be published before launch.
+          We collect your name and email only. No health information is collected here. See our{' '}
+          <a href="/privacy">Privacy Policy</a>.
         </p>
       )
     }
-    <p class="form-error" data-form-error role="alert" hidden></p>
     <button type="submit" class="btn btn--solid" data-submit>{isSignup ? 'Create account' : 'Sign in'}</button>
   </form>
-
-  <div class="auth__success" data-success role="status" hidden>
-    <p class="auth__success-title" tabindex="-1">{isSignup ? 'Account created' : 'You are signed in'}</p>
-    <p class="auth__success-note" data-success-note></p>
-    <CtaButton href="/account" variant="outline">Go to your account</CtaButton>
-  </div>
 </div>
 
 <script>
-  import { getAuthProvider } from '../../lib/auth/index';
+  // Progressive enhancement only. The form posts to the server either way; this
+  // just catches obvious mistakes inline so a typo does not cost a round trip.
+  // The server revalidates everything (see src/lib/auth/validate.ts).
+  import { validateCredentials, validateSignUp } from '../../lib/auth/validate';
 
   const root = document.querySelector<HTMLElement>('[data-auth-form]');
-  if (root) {
+  const form = root?.querySelector<HTMLFormElement>('form');
+
+  if (root && form) {
     const mode = root.dataset.mode === 'signup' ? 'signup' : 'login';
-    const form = root.querySelector<HTMLFormElement>('form');
-    const success = root.querySelector<HTMLElement>('[data-success]');
-    const note = root.querySelector<HTMLElement>('[data-success-note]');
-    const auth = getAuthProvider();
 
-    form?.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void handleSubmit();
-    });
+    form.addEventListener('submit', (event) => {
+      const data = new FormData(form);
+      const errors =
+        mode === 'signup'
+          ? validateSignUp({
+              name: String(data.get('name') ?? ''),
+              email: String(data.get('email') ?? ''),
+              password: String(data.get('password') ?? ''),
+              marketingOptIn: data.get('marketing') === 'on',
+            })
+          : validateCredentials({
+              email: String(data.get('email') ?? ''),
+              password: String(data.get('password') ?? ''),
+            });
 
-    async function handleSubmit(): Promise<void> {
-      if (!form) return;
-      if (!validate()) {
+      for (const field of ['name', 'email', 'password'] as const) {
+        show(field, errors[field]);
+      }
+
+      if (Object.keys(errors).length > 0) {
+        event.preventDefault();
         form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
         return;
       }
-      const data = new FormData(form);
-      setBusy(true);
-      hideFormError();
-      try {
-        if (mode === 'signup') {
-          const account = await auth.signUp({
-            name: String(data.get('name') ?? '').trim(),
-            email: String(data.get('email') ?? '').trim(),
-            password: String(data.get('password') ?? ''),
-            marketingOptIn: data.get('marketing') === 'on',
-          });
-          if (note) {
-            note.textContent = account.marketingOptIn
-              ? `Thanks ${account.name}. Your account is set up and you are on the list for early access and updates.`
-              : `Thanks ${account.name}. Your account is set up.`;
-          }
-        } else {
-          const account = await auth.signIn({
-            email: String(data.get('email') ?? '').trim(),
-            password: String(data.get('password') ?? ''),
-          });
-          if (note) note.textContent = `You are signed in as ${account.email}.`;
-        }
-        form.hidden = true;
-        if (success) {
-          success.hidden = false;
-          success.querySelector<HTMLElement>('.auth__success-title')?.focus();
-        }
-      } catch {
-        showFormError('Something went wrong. Please try again.');
-      } finally {
-        setBusy(false);
-      }
-    }
 
-    function validate(): boolean {
-      if (!form) return false;
-      let ok = true;
-      if (mode === 'signup') {
-        ok = checkField('name', (v) => v.trim().length > 0, 'Please enter your name.') && ok;
-      }
-      ok =
-        checkField('email', (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), 'Please enter a valid email address.') &&
-        ok;
-      const passwordRule =
-        mode === 'signup'
-          ? { test: (v: string) => v.length >= 8, message: 'Use at least 8 characters.' }
-          : { test: (v: string) => v.length > 0, message: 'Please enter your password.' };
-      ok = checkField('password', passwordRule.test, passwordRule.message) && ok;
-      return ok;
-    }
-
-    function checkField(name: string, test: (value: string) => boolean, message: string): boolean {
-      if (!form) return true;
-      const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
-      const error = form.querySelector<HTMLElement>(`[data-error="${name}"]`);
-      if (!input) return true;
-      const valid = test(input.value);
-      input.setAttribute('aria-invalid', valid ? 'false' : 'true');
-      if (error) {
-        error.hidden = valid;
-        error.textContent = valid ? '' : message;
-      }
-      return valid;
-    }
-
-    function setBusy(busy: boolean): void {
-      if (!form) return;
-      form.setAttribute('aria-busy', busy ? 'true' : 'false');
+      // Let the POST proceed, but stop a second submit while it is in flight.
       const submit = form.querySelector<HTMLButtonElement>('[data-submit]');
-      if (submit) submit.disabled = busy;
-    }
-    function showFormError(message: string): void {
-      const el = form?.querySelector<HTMLElement>('[data-form-error]');
-      if (el) {
-        el.textContent = message;
-        el.hidden = false;
+      if (submit) submit.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+    });
+
+    function show(field: string, message: string | undefined): void {
+      const input = form!.querySelector<HTMLInputElement>(`[name="${field}"]`);
+      const error = form!.querySelector<HTMLElement>(`[data-error="${field}"]`);
+      if (!input) return;
+      input.setAttribute('aria-invalid', message ? 'true' : 'false');
+      if (error) {
+        error.hidden = !message;
+        error.textContent = message ?? '';
       }
-    }
-    function hideFormError(): void {
-      const el = form?.querySelector<HTMLElement>('[data-form-error]');
-      if (el) el.hidden = true;
     }
   }
 </script>
@@ -234,9 +189,10 @@ const isSignup = mode === 'signup';
     flex: none;
     accent-color: var(--accent-deep);
   }
+  /* --ink-2, not --ink-3: ink-3 fails AA on paper (see PROGRESS.md). */
   .privacy {
     margin: 0;
-    color: var(--ink-3);
+    color: var(--ink-2);
     font-size: var(--step-small);
   }
   .form-error {
@@ -275,23 +231,4 @@ const isSignup = mode === 'signup';
     cursor: default;
   }
 
-  .auth__success {
-    display: grid;
-    gap: var(--space-sm);
-    justify-items: start;
-    padding: var(--space-md);
-    border: var(--border-hairline);
-    border-radius: var(--radius-md);
-    background: var(--grad-stone-cool);
-  }
-  .auth__success-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--step-h3);
-    color: var(--ink);
-  }
-  .auth__success-note {
-    margin: 0;
-    color: var(--ink-2);
-  }
 </style>

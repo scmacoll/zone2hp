@@ -1,0 +1,127 @@
+---
+// Shell for the long-form legal pages (/privacy and /privacy/data-security).
+// The page supplies the client's copy as plain HTML into the default slot; the
+// prose styles live here so both pages stay identical. Slotted content carries
+// the PAGE's style scope, not this layout's, so the body rules use :global()
+// under a wrapper class (the same pattern as PageHeader.astro).
+import Base from './Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+
+interface Props {
+  /** Document <title>. */
+  title: string;
+  /** Visible page heading. */
+  heading: string;
+  description: string;
+  eyebrow: string;
+}
+
+const { title, heading, description, eyebrow } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <PageHeader />
+
+  <main id="main" class="legal">
+    <header class="legal__intro">
+      <Eyebrow tone="accent">{eyebrow}</Eyebrow>
+      <h1 class="legal__title">{heading}</h1>
+    </header>
+
+    <div class="legal__body">
+      <slot />
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-block: var(--section-pad-block);
+  }
+
+  .legal__intro {
+    display: grid;
+    gap: var(--space-xs);
+    padding-bottom: var(--space-md);
+    margin-bottom: var(--space-md);
+    border-bottom: var(--border-hairline);
+  }
+  .legal__title {
+    margin: 0;
+    font-size: var(--step-h2);
+    letter-spacing: var(--track-tight);
+    text-wrap: balance;
+  }
+
+  .legal__body :global(h2) {
+    margin: var(--space-lg) 0 var(--space-sm);
+    font-size: var(--step-h3);
+    letter-spacing: var(--track-tight);
+    color: var(--ink);
+  }
+  .legal__body :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  /* Slotted copy: styled globally, but confined to the body wrapper. */
+  .legal__body :global(p),
+  .legal__body :global(li) {
+    font-size: var(--step-body);
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .legal__body :global(p) {
+    margin: 0 0 var(--space-sm);
+  }
+  .legal__body :global(ul) {
+    margin: 0 0 var(--space-sm);
+    padding-left: 1.5em;
+    /* Tailwind's reset removes markers from every list, which left these as
+       unmarked indented lines. Put the bullets back. */
+    list-style: disc;
+  }
+  .legal__body :global(li) {
+    margin-bottom: 0.4em;
+  }
+  .legal__body :global(li::marker) {
+    color: var(--ink-2);
+  }
+  .legal__body :global(a) {
+    color: var(--accent-deep);
+    text-underline-offset: 0.2em;
+  }
+
+  /* Closing block: the cross-link between the two legal pages. */
+  .legal__body :global(.legal__next) {
+    display: block;
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: var(--border-hairline);
+  }
+  .legal__body :global(.legal__next a) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .legal__body :global(.legal__next a:hover) {
+    text-decoration: underline;
+  }
+  /* --ink-2, not --ink-3: ink-3 fails AA for text on paper (see PROGRESS.md). */
+  .legal__body :global(.legal__next p) {
+    margin: 0.35rem 0 0;
+    font-size: var(--step-small);
+    color: var(--ink-2);
+  }
+</style>

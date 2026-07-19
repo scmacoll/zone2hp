@@ -1,0 +1,21 @@
+# Zone Two Health and Performance
+
+# Retrieval and search crawlers are deliberately ALLOWED. Blocking these removes
+# the clinic from AI answers and search results, which is the opposite of what a
+# business opening soon wants. Training-only crawlers (GPTBot, ClaudeBot,
+# Google-Extended, Applebot-Extended) are also allowed by default; blocking them
+# would not affect discoverability either way.
+User-agent: *
+Allow: /
+
+# No indexable content, and no reason to crawl.
+Disallow: /api/
+
+# Mock booking funnel and archived design explorations.
+Disallow: /book/
+Disallow: /concepts/
+
+# /account/ is intentionally NOT disallowed: those pages carry a noindex meta,
+# and a blocked URL is never fetched, so the crawler would never see it.
+
+Sitemap: https://zone2hp.com/sitemap-index.xml
