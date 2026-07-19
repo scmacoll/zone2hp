@@ -902,18 +902,16 @@ const showAccounts = bookingConfig.accountsEnabled;
         margin-top: auto;
     }
 
-    /* Narrow widths. Style 2 shares a column with the headline directly beneath
-       it, so it aligns LEFT to keep one clean edge, but only once it is genuinely
-       cramped. Style 3 sits in its own banded row, so it CENTRES there. */
-    @media (max-width: 26rem) {
+    /* Both alternates hold their right alignment until the panel is genuinely
+       cramped, and only then fall back to the left edge the headline uses.
+       21.25rem is ~340px. */
+    @media (max-width: 21.25rem) {
         .a2[data-slogan="2"] .a2-slogan {
             align-self: flex-start;
             justify-content: flex-start;
         }
-    }
-    @media (max-width: 30rem) {
         .a2[data-slogan="3"] .a2-slogan {
-            justify-content: center;
+            justify-content: flex-start;
         }
     }
 
