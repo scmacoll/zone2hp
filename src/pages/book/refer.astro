@@ -28,14 +28,14 @@ const heading = fundingType ? `${fundingType.label} bookings` : 'Contact us to b
         Appointments under this funding type need to be arranged directly with the clinic. Please call or email us and we will get you booked in.
       </p>
       <div class="refer__contacts">
-        <a class="refer__contact" href="tel:0450222122">
+        <div class="refer__contact">
           <span class="refer__label">Phone</span>
-          <span class="refer__value">0450 222 122</span>
-        </a>
-        <a class="refer__contact" href="mailto:info@zone2hp.com">
+          <span class="refer__value"><a href="tel:0450222122">0450 222 122</a></span>
+        </div>
+        <div class="refer__contact">
           <span class="refer__label">Email</span>
-          <span class="refer__value">info@zone2hp.com</span>
-        </a>
+          <span class="refer__value"><a href="mailto:info@zone2hp.com">info@zone2hp.com</a></span>
+        </div>
       </div>
       <p class="refer__back"><a href="/book">Back to booking options</a></p>
     </div>
@@ -68,15 +68,13 @@ const heading = fundingType ? `${fundingType.label} bookings` : 'Contact us to b
     display: flex;
     flex-direction: column;
     gap: var(--space-3xs);
-    padding: var(--space-sm) var(--space-md);
-    border: 1px solid var(--chrome-cool);
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    color: var(--ink);
-    transition: border-color 0.15s;
   }
-  .refer__contact:hover {
-    border-color: var(--accent);
+  .refer__value a {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+  .refer__value a:hover {
+    color: var(--accent);
   }
   .refer__label {
     font-size: var(--step-small);
