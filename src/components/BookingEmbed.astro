@@ -22,7 +22,7 @@ const embedSrc = url
           src={embedSrc}
           title="Online booking"
           loading="lazy"
-          scrolling="no"
+          scrolling="auto"
           allow="payment"
         />
         <p class="embed__fallback">
@@ -70,8 +70,8 @@ const embedSrc = url
   }
   .embed__frame {
     width: 100%;
+    min-height: 80svh;
     border: none;
-    overflow: hidden;
   }
   .embed__fallback {
     margin: 0;
