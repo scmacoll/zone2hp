@@ -1,0 +1,58 @@
+---
+// Gate page: new or existing patient, before the Cliniko booking embed.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import { bookingConfig } from '../../lib/booking/config';
+import '../../styles/booking.css';
+
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
+---
+
+<Base
+  title="New or existing patient | Zone Two Health and Performance"
+  description="Choose whether you are a new or existing patient to book an appointment."
+  noindex
+>
+  <PageHeader />
+  <main id="main" class="book">
+    <div class="gate">
+      <h1 class="gate__title">Are you a new or existing patient?</h1>
+      <p class="gate__lede">This helps us show you the right appointment options.</p>
+      <div class="choices">
+        <a class="choice" href="/book/new">
+          <span class="choice__title">New patient</span>
+          <span class="choice__blurb">First visit, or have not visited the clinic in over 3 months.</span>
+        </a>
+        <a class="choice" href="/book/returning">
+          <span class="choice__title">Existing patient</span>
+          <span class="choice__blurb">You have visited the clinic in the last 3 months.</span>
+        </a>
+      </div>
+      <p class="gate__back"><a href="/book">Back</a></p>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .gate {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-block: var(--space-lg);
+  }
+  .gate__title {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  }
+  .gate__lede {
+    margin-top: var(--space-2xs);
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+  .gate__back {
+    margin-top: var(--space-md);
+    font-size: var(--step-small);
+    color: var(--ink-2);
+  }
+</style>

@@ -1,19 +1,25 @@
 ---
-// Frames Splose's own hosted booking page. Splose is the system of record for
-// bookings, intake, consent and payment; nothing here touches patient data (see
+// Frames Cliniko's online booking page. Cliniko is the system of record for
+// bookings, scheduling and patient data; nothing here touches patient data (see
 // ACCOUNTS.md). Until PUBLIC_BOOKING_EMBED_URL is set this shows a factual
 // placeholder and loads no third-party content.
 import { bookingConfig } from '../lib/booking/config';
-import CtaButton from './CtaButton.astro';
 
+interface Props {
+  typeIds?: string;
+}
+
+const { typeIds } = Astro.props;
 const url = bookingConfig.embedUrl;
 
-// Splose's v2 embed reports its own height by postMessage so the frame can grow
-// instead of scrolling internally.
-const embedSrc = url
-  ? `${url}${url.includes('?') ? '&' : '?'}embedVersion=v2`
-  : null;
-const embedOrigin = url ? new URL(url).origin : null;
+let embedSrc: string | null = null;
+if (url) {
+  const sep = url.includes('?') ? '&' : '?';
+  embedSrc = `${url}${sep}embedded=true`;
+  if (typeIds) {
+    embedSrc += `&appointment_type_id=${typeIds}`;
+  }
+}
 ---
 
 <section class="embed" aria-label="Online booking">
@@ -21,21 +27,17 @@ const embedOrigin = url ? new URL(url).origin : null;
     url ? (
       <Fragment>
         <iframe
-          id="splose-booking"
+          id="cliniko-booking"
           class="embed__frame"
           src={embedSrc}
           title="Online booking"
-          name="onlineBookingEmbeded"
           loading="lazy"
-          scrolling="auto"
-          data-embed-origin={embedOrigin}
+          scrolling="no"
+          allow="payment"
         />
-        <div class="embed__fallback">
-          <p class="embed__fallback-text">If the booking page does not load</p>
-          <CtaButton href={url} variant="outline" target="_blank" rel="noopener noreferrer">
-            Open in new tab
-          </CtaButton>
-        </div>
+        <p class="embed__fallback">
+          If the booking page does not load, <a class="embed__link" href={url} target="_blank" rel="noopener noreferrer">open it in a new tab</a>.
+        </p>
       </Fragment>
     ) : (
       <div class="embed__placeholder">
@@ -50,26 +52,21 @@ const embedOrigin = url ? new URL(url).origin : null;
 </section>
 
 <script>
-  const frame = document.getElementById('splose-booking') as HTMLIFrameElement | null;
+  const frame = document.getElementById('cliniko-booking') as HTMLIFrameElement | null;
 
   if (frame) {
-    const allowedOrigin = frame.dataset.embedOrigin;
-
     window.addEventListener('message', (event) => {
-      // Three checks, not one: the right frame, the right origin, and a shape we
-      // recognise. Splose's published snippet only does the first.
-      if (event.source !== frame.contentWindow) return;
-      if (!allowedOrigin || event.origin !== allowedOrigin) return;
+      if (typeof event.data !== 'string') return;
 
-      const data = event.data;
-      if (!data || typeof data.type !== 'string') return;
-
-      if (data.type === 'sploseIframeResize') {
-        const height = data.height;
-        if (typeof height === 'number' && Number.isFinite(height) && height >= 0) {
+      if (event.data.includes('cliniko-bookings-resize')) {
+        const height = Number(event.data.split(':')[1]);
+        if (Number.isFinite(height) && height >= 0) {
           frame.style.height = `${height}px`;
+          frame.style.minHeight = '0';
         }
-      } else if (data.type === 'sploseIframeScrollToTop') {
+      }
+
+      if (event.data.includes('cliniko-bookings-page')) {
         frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
@@ -81,28 +78,25 @@ const embedOrigin = url ? new URL(url).origin : null;
     max-width: var(--container-max);
     margin-inline: auto;
     padding-inline: var(--section-pad-inline);
-    padding-block: var(--space-lg);
   }
   .embed__frame {
     width: 100%;
-    min-height: 70svh;
-    border: var(--border-hairline);
-    border-radius: var(--radius-md);
-    background: var(--stone);
+    min-height: calc(100svh - 4rem);
+    border: none;
   }
-  /* Stacked and centred, with the button sized to sit with the line above it
-     rather than reading as a stray inline link. */
   .embed__fallback {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-  }
-  .embed__fallback-text {
     margin: 0;
-    font-size: var(--step-body);
+    padding-block: var(--space-md);
+    text-align: center;
+    font-size: var(--step-small);
     color: var(--ink-2);
+  }
+  .embed__link {
+    text-decoration: underline;
+    color: var(--ink-2);
+  }
+  .embed__link:hover {
+    color: var(--ink);
   }
   .embed__placeholder {
     display: grid;

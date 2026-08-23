@@ -1,21 +1,25 @@
 ---
-// Step 1: new or existing customer (the funnel entry). In embedded mode this
-// instead frames the provider's hosted booking page. New patients advance straight
-// to the type step; existing patients identify themselves here (name + email or
-// mobile), are matched against the patient record, and carry an opaque `pid`
-// forward so the Details step can pre-fill and lock their details.
+// Booking entry. In embedded mode (Cliniko), shows a funding type selector
+// before the embed: Standard goes through a patient type gate, non-standard
+// funding types show a "call or email" page. In custom-funnel mode, shows
+// the new/existing customer step as before.
 import BookingShell from "../../components/booking/BookingShell.astro";
 import Base from "../../layouts/Base.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import Footer from "../../components/Footer.astro";
-import BookingEmbed from "../../components/BookingEmbed.astro";
 import { bookingConfig } from "../../lib/booking/config";
+import { BOOKING_TYPES } from "../../lib/booking/funnel";
 import { buildStepUrl } from "../../lib/booking/funnel-state";
+import '../../styles/booking.css';
 
 // Production gate: when booking is not publicly enabled, this page redirects home.
 if (!bookingConfig.linksVisible) return Astro.redirect("/");
 
 const useEmbed = bookingConfig.mode === "embedded";
+
+function tileHref(id: string): string {
+    return id === 'standard' ? '/book/patient' : `/book/refer?type=${id}`;
+}
 ---
 
 {
@@ -26,8 +30,19 @@ const useEmbed = bookingConfig.mode === "embedded";
             noindex
         >
             <PageHeader />
-            <main id="main">
-                <BookingEmbed />
+            <main id="main" class="book">
+                <div class="gate">
+                    <h1 class="gate__title">Book an appointment</h1>
+                    <p class="gate__lede">What kind of appointment do you need?</p>
+                    <div class="choices">
+                        {BOOKING_TYPES.map((t) => (
+                            <a class="choice" href={tileHref(t.id)}>
+                                <span class="choice__title">{t.label}</span>
+                                <span class="choice__blurb">{t.blurb}</span>
+                            </a>
+                        ))}
+                    </div>
+                </div>
             </main>
             <Footer />
         </Base>
@@ -225,3 +240,20 @@ const useEmbed = bookingConfig.mode === "embedded";
         }
     }
 </script>
+
+<style>
+  .gate {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-block: var(--space-lg);
+  }
+  .gate__title {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  }
+  .gate__lede {
+    margin-top: var(--space-2xs);
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+</style>

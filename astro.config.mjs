@@ -53,11 +53,10 @@ export default defineConfig({
         "base-uri 'self'",
         "object-src 'none'",
         "img-src 'self' data:",
-        "font-src 'self'",
+        "font-src 'self' data:",
         "media-src 'self'",
-        // The keyless Google Maps embed, plus the Splose booking page once its
-        // embed URL arrives (mode=embedded).
-        'frame-src https://www.google.com https://*.splose.com',
+        // The keyless Google Maps embed and the Cliniko booking page.
+        'frame-src https://www.google.com https://*.cliniko.com',
         // Own endpoints, plus the keep-in-touch form which posts to Formspree.
         "form-action 'self' https://formspree.io",
         // The same form submits by fetch without leaving the page.

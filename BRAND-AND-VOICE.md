@@ -60,7 +60,7 @@ Propose **"The Zone Two Method"** as the named, numbered approach (the structura
 - Headline: `Opening soon in Eastwood.`
 - Sub: `Chiropractic, post-operative rehabilitation, exercise physiology and dry needling.`
 - Address line: `Suite 104 / 2 Rowe St, Eastwood, NSW 2122`
-- Contact: `info@zone2hp.com` and the phone placeholder.
+- Contact: `info@zone2hp.com` and Dr Kim's number `0450 222 122` (confirmed 2026-07-20).
 - Map: embedded, see `CONCEPTS.md` Page 0.
 
 ### Hero headline options (mix across the five concepts)

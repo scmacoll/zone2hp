@@ -1,0 +1,94 @@
+---
+export const prerender = false;
+
+// "Call or email to book" page for EPC, TPC and NDIS funding types.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import { bookingConfig } from '../../lib/booking/config';
+import { BOOKING_TYPES } from '../../lib/booking/funnel';
+
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
+
+const typeParam = Astro.url.searchParams.get('type') ?? '';
+const fundingType = BOOKING_TYPES.find((t) => t.id === typeParam);
+const heading = fundingType ? `${fundingType.label} bookings` : 'Contact us to book';
+---
+
+<Base
+  title={`${fundingType?.label ?? 'Contact us'} | Zone Two Health and Performance`}
+  description="Contact Zone Two Health and Performance to book an appointment under this funding type."
+  noindex
+>
+  <PageHeader />
+  <main id="main">
+    <div class="refer">
+      <h1 class="refer__title">{heading}</h1>
+      <p class="refer__lede">
+        Appointments under this funding type need to be arranged directly with the clinic. Please call or email us and we will get you booked in.
+      </p>
+      <div class="refer__contacts">
+        <div class="refer__contact">
+          <span class="refer__label">Phone</span>
+          <span class="refer__value"><a href="tel:0450222122">0450 222 122</a></span>
+        </div>
+        <div class="refer__contact">
+          <span class="refer__label">Email</span>
+          <span class="refer__value"><a href="mailto:info@zone2hp.com">info@zone2hp.com</a></span>
+        </div>
+      </div>
+      <p class="refer__back"><a href="/book">Back to booking options</a></p>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .refer {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-block: var(--space-lg);
+  }
+  .refer__title {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  }
+  .refer__lede {
+    margin-top: var(--space-2xs);
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+  .refer__contacts {
+    display: grid;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    max-width: 28rem;
+  }
+  .refer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+  .refer__value a {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+  .refer__value a:hover {
+    color: var(--accent);
+  }
+  .refer__label {
+    font-size: var(--step-small);
+    color: var(--ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .refer__value {
+    font-size: var(--step-h4);
+    font-family: var(--font-display);
+  }
+  .refer__back {
+    margin-top: var(--space-md);
+    font-size: var(--step-small);
+    color: var(--ink-2);
+  }
+</style>
