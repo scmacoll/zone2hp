@@ -1,0 +1,40 @@
+---
+// Cliniko embed filtered to new patient appointment types.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import BookingEmbed from '../../components/BookingEmbed.astro';
+import Footer from '../../components/Footer.astro';
+import { bookingConfig } from '../../lib/booking/config';
+
+if (!bookingConfig.linksVisible) return Astro.redirect('/');
+
+const typeIds = bookingConfig.clinikoNewPatientTypes ?? undefined;
+---
+
+<Base
+  title="Book as a new patient | Zone Two Health and Performance"
+  description="Book your first appointment with Zone Two Health and Performance."
+  noindex
+>
+  <PageHeader />
+  <main id="main">
+    <div class="embed-page">
+      <p class="embed-page__back"><a href="/book/patient">Back</a></p>
+    </div>
+    <BookingEmbed typeIds={typeIds} />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .embed-page {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-top: var(--space-sm);
+  }
+  .embed-page__back {
+    font-size: var(--step-small);
+    color: var(--ink-2);
+  }
+</style>

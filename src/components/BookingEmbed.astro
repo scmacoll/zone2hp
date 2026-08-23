@@ -5,11 +5,21 @@
 // placeholder and loads no third-party content.
 import { bookingConfig } from '../lib/booking/config';
 
+interface Props {
+  typeIds?: string;
+}
+
+const { typeIds } = Astro.props;
 const url = bookingConfig.embedUrl;
 
-const embedSrc = url
-  ? `${url}${url.includes('?') ? '&' : '?'}embedded=true`
-  : null;
+let embedSrc: string | null = null;
+if (url) {
+  const sep = url.includes('?') ? '&' : '?';
+  embedSrc = `${url}${sep}embedded=true`;
+  if (typeIds) {
+    embedSrc += `&appointment_type_id=${typeIds}`;
+  }
+}
 ---
 
 <section class="embed" aria-label="Online booking">

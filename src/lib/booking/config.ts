@@ -36,4 +36,8 @@ export const bookingConfig = {
   /** Show the private-health-funding (HALTH-style) step. On by default; set
       PUBLIC_BOOKING_FUNDING=false to remove it from the funnel. */
   fundingEnabled: env.PUBLIC_BOOKING_FUNDING !== 'false',
+
+  /** Cliniko appointment type IDs for filtered embeds. Comma-separated. */
+  clinikoNewPatientTypes: (env.PUBLIC_CLINIKO_NEW_PATIENT_TYPES as string | undefined) ?? null,
+  clinikoExistingPatientTypes: (env.PUBLIC_CLINIKO_EXISTING_PATIENT_TYPES as string | undefined) ?? null,
 } as const;
