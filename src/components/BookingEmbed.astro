@@ -52,6 +52,7 @@ const embedSrc = url
         const height = Number(event.data.split(':')[1]);
         if (Number.isFinite(height) && height >= 0) {
           frame.style.height = `${height}px`;
+          frame.style.minHeight = '0';
         }
       }
 
@@ -75,7 +76,7 @@ const embedSrc = url
   }
   .embed__fallback {
     margin: 0;
-    margin-top: var(--space-sm);
+    padding-block: var(--space-md);
     text-align: center;
     font-size: var(--step-small);
     color: var(--ink-2);
