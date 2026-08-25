@@ -37,7 +37,8 @@ export const bookingConfig = {
       PUBLIC_BOOKING_FUNDING=false to remove it from the funnel. */
   fundingEnabled: env.PUBLIC_BOOKING_FUNDING !== 'false',
 
-  /** Cliniko appointment type IDs for filtered embeds. Comma-separated. */
-  clinikoNewPatientTypes: (env.PUBLIC_CLINIKO_NEW_PATIENT_TYPES as string | undefined) ?? null,
-  clinikoExistingPatientTypes: (env.PUBLIC_CLINIKO_EXISTING_PATIENT_TYPES as string | undefined) ?? null,
+  /** Cliniko appointment type IDs for filtered embeds. Comma-separated.
+      Found in Cliniko: Settings > Appointment Types > click a type > ID in the URL. */
+  clinikoNewPatientTypes: '1983132332059536486,2023024971801963705',
+  clinikoExistingPatientTypes: '1983132331673660517,2023025944326843578,2023031324301864123',
 } as const;
