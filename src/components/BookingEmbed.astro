@@ -13,11 +13,14 @@ const { typeIds } = Astro.props;
 const url = bookingConfig.embedUrl;
 
 let embedSrc: string | null = null;
+let fallbackHref: string | null = null;
 if (url) {
   const sep = url.includes('?') ? '&' : '?';
   embedSrc = `${url}${sep}embedded=true`;
+  fallbackHref = url;
   if (typeIds) {
     embedSrc += `&appointment_type_id=${typeIds}`;
+    fallbackHref += `${sep}appointment_type_id=${typeIds}`;
   }
 }
 ---
@@ -36,7 +39,7 @@ if (url) {
           allow="payment"
         />
         <p class="embed__fallback">
-          If the booking page does not load, <a class="embed__link" href={url} target="_blank" rel="noopener noreferrer">open it in a new tab</a>.
+          If the booking page does not load, <a class="embed__link" href={fallbackHref} target="_blank" rel="noopener noreferrer">open it in a new tab</a>.
         </p>
       </Fragment>
     ) : (
