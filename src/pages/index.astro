@@ -36,7 +36,10 @@ const showBooking = bookingConfig.linksVisible;
 const showAccounts = bookingConfig.accountsEnabled;
 ---
 
-<Base>
+<Base
+    title="About Dr Mintae Kim | Chiropractor Eastwood | Zone Two"
+    description="Meet Dr Mintae Kim, chiropractor at Zone Two Health and Performance in Eastwood. Chiropractic care, rehabilitation and exercise focused on helping you move with confidence."
+>
     <div class="a2">
         <main id="main">
             <section class="a2-hero">
@@ -244,24 +247,31 @@ const showAccounts = bookingConfig.accountsEnabled;
                         </header>
 
                         <div class="a2-about__prose">
+                        <h3 class="a2-about__quote">A different approach to chiropractic care</h3>
+                        <p>
+                            At Zone Two Health and Performance in Eastwood, I believe good healthcare starts with trust.
+                        </p>
+                        <p>
+                            My approach goes beyond simply helping you feel better today. It's about understanding what's holding you back, helping you move forward, and giving you the confidence to keep doing the things that matter to you.
+                        </p>
+                        <p>
+                            Whether you're dealing with pain, recovering from an injury, or working towards better movement and performance, the goal is the same: meaningful progress that lasts.
+                        </p>
+
                         <h3 class="a2-about__quote">
                             "Change is meant to be hard, and it takes time."
                         </h3>
                         <p>
-                            It isn't easy being trusted as a chiropractor in Australia's health
-                            care system, but I am here, determined to make a difference.
+                            Since graduating in 2019, my approach to chiropractic care has continued to evolve.
                         </p>
                         <p>
-                            As a fresh graduate in 2019, I entered the workforce ready to
-                            spread my wings and embark on my journey as a health care
-                            professional. I didn't fly far because I was focused on
-                            understanding the "why" and wanting to change the world around me.
+                            Early in my career, I was focused on understanding the "why", why people experience pain, why some problems keep returning, and why the same approach doesn't work for everyone.
                         </p>
                         <p>
-                            After my fair share of burnout and falling into the pits, I learned
-                            that I first had to focus on changing myself before I could truly
-                            be of service to others. Along the way, I realised that trust isn't
-                            given—it is earned.
+                            Over time, I learned that meaningful change rarely comes from a quick fix. It comes from understanding the person in front of you, building trust, and working together towards something meaningful.
+                        </p>
+                        <p>
+                            Trust isn't given. It's earned. That's the standard I want every person who walks through our doors to experience.
                         </p>
 
                         <details class="a2-about__more">
@@ -273,34 +283,44 @@ const showAccounts = bookingConfig.accountsEnabled;
                                 "We do better in circles than in rows."
                             </h3>
                             <p>
-                                I am stubborn and used to believe that I had all the answers. I
-                                also believed I could do things better alone and build
-                                something for myself, by myself.
+                                I used to believe I needed to have all the answers and that doing things alone was the best way forward.
                             </p>
                             <p>
-                                Being a lone wolf may get you there faster, but community takes
-                                you further because faces matter. Rows force you to stare at
-                                the back of someone's head. Circles let you make eye contact,
-                                share ideas, and build deep trust.
+                                Experience taught me otherwise.
                             </p>
                             <p>
-                                This naturally sparks conversation and helps everyone learn
-                                faster because there is always someone who knows more or has
-                                experienced more. Circles will win every time.
+                                Great healthcare is collaborative. It means listening, asking better questions, sharing ideas, and recognising when someone else can add value to your care.
+                            </p>
+                            <p>
+                                That philosophy shapes what we're building at Zone Two. Chiropractic, rehabilitation and exercise don't need to exist in isolation. When we work together and put the person at the centre of the conversation, we can make better decisions and create better outcomes.
+                            </p>
+                            <p>
+                                Because being a lone wolf might get you there faster, but community takes you further.
                             </p>
 
                             <h3 class="a2-about__quote">"Celebrate the small wins."</h3>
                             <p>
-                                I find great joy in helping the people around me succeed. The
-                                journey to becoming the best version of ourselves was never
-                                meant to be lonely. There are people who care about your
-                                success just as much as you do.
+                                Progress isn't always a straight line, and the biggest changes often start with small wins.
                             </p>
                             <p>
-                                Helping someone get out of pain is a small win. The real reward
-                                is being part of their journey—watching them overcome injury,
-                                regain confidence, and become the best version of themselves.
-                                That is the BIG win.
+                                Getting out of pain can be one of those wins. Moving with more confidence can be another. Returning to the gym, getting back on the field, picking up your kids, or doing something you had started avoiding can mean even more.
+                            </p>
+                            <p>
+                                For me, the real reward is being part of that journey.
+                            </p>
+                            <p>
+                                It's not just about where you are today. It's about helping you overcome setbacks, build confidence in your body, and get back to doing more of what matters to you. That's the BIG win.
+                            </p>
+
+                            <h3 class="a2-about__quote">Chiropractic and rehabilitation in Eastwood</h3>
+                            <p>
+                                Zone Two Health and Performance provides chiropractic care, rehabilitation, exercise physiology and dry needling from our clinic in Eastwood, NSW.
+                            </p>
+                            <p>
+                                Our approach is built around understanding you, your goals and how you move, then developing a plan to help you make meaningful progress.
+                            </p>
+                            <p>
+                                If that sounds like the kind of healthcare you're looking for, we'd love to meet you.
                             </p>
                         </details>
                         </div>
@@ -308,7 +328,8 @@ const showAccounts = bookingConfig.accountsEnabled;
                 </div>
             </section>
 
-            <section id="find-us" class="a2-find" aria-label="Where to find us">
+            <section id="find-us" class="a2-find" aria-labelledby="find-us-heading">
+                <h2 id="find-us-heading" class="a2-find__heading">Book an appointment</h2>
                 <MapBlock />
             </section>
         </main>
@@ -1007,6 +1028,14 @@ const showAccounts = bookingConfig.accountsEnabled;
         margin-inline: auto;
         padding-block: var(--section-pad-block);
         padding-inline: var(--section-pad-inline);
+    }
+    .a2-find__heading {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: var(--step-h2);
+        letter-spacing: var(--track-tight);
+        color: var(--ink);
+        margin-bottom: var(--space-md);
     }
 
     /* Subtle chrome glow on the map card: the map frame is already a --chrome
