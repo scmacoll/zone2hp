@@ -16,7 +16,7 @@
   --cn-orange-press: #e66a0f;
   --cn-wash: #ffe8da;
   --cn-surface: #ffffff;
-  --cn-contour: rgba(28, 29, 31, 0.08);
+  --cn-contour: rgba(28, 29, 31, 0.04);
   --cn-skin: #e6d9cd;
   --cn-skin-line: #c9b6a6;
   --cn-measure: 66ch;
@@ -449,11 +449,11 @@
 }
 
 /* ---- Book online and the address line ----------------------------------- */
+/* Book online with its caption underneath, left-aligned with the article. */
 .cn-cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.25rem;
-  align-items: center;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-xs);
 }
 .cn .cn-btn {
   display: inline-flex;
@@ -475,24 +475,13 @@
 .cn .cn-btn:hover {
   background: var(--cn-orange-press);
 }
-/* Address, phone and languages on their own lines, no separator dots to
-   strand at a line end. Address phrases are kept whole, so a narrow window
-   wraps between them, never inside one. */
-.cn-cta__info {
-  display: grid;
-  gap: 0.15rem;
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  color: var(--ink-2);
-}
+/* Phrases kept whole, so wrapping happens between them, never inside. */
 .cn-keep {
   white-space: nowrap;
 }
-/* 44px hit area without opening up the line. */
-.cn-cta__info a {
-  display: inline-block;
-  padding-block: 0.6rem;
-  margin-block: -0.6rem;
+.cn-cta__lang {
+  font-size: var(--step-small);
+  color: var(--ink-2);
 }
 
 .cn-disclaimer {

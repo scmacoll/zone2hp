@@ -1,6 +1,7 @@
 ---
-// Closing block for the Clinic Notes pages: the client's Book online button,
-// the address/phone line and the general-information disclaimer. Styled by
+// Closing block for the Clinic Notes pages: the client's Book online button
+// with the consultations caption (address and phone are in the footer), and
+// the general-information disclaimer. Styled by
 // src/styles/clinic-notes.css (the .cn scope), so it only belongs on those pages.
 //
 // The Book button follows the same switch as every other booking link on the
@@ -11,11 +12,7 @@ import { bookingConfig } from '../lib/booking/config';
 
 <div class="cn-cta">
   {bookingConfig.linksVisible && <a class="cn-btn" href="/book">Book online</a>}
-  <div class="cn-cta__info">
-    <p><span class="cn-keep">Suite 104, Level 1,</span> <span class="cn-keep">2 Rowe Street,</span> <span class="cn-keep">Eastwood, NSW 2122</span></p>
-    <p><a href="tel:0450222122">0450 222 122</a></p>
-    <p>Consultations in English and <span lang="ko">한국어</span></p>
-  </div>
+  <p class="cn-cta__lang">Consultations in English and <span lang="ko">한국어</span></p>
 </div>
 
 <div class="cn-disclaimer">

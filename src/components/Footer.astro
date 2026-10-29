@@ -2,11 +2,9 @@
 // Light footer: wordmark, address, contact, opening hours, copyright and links.
 // Used by every white page (privacy, account, booking, Clinic Notes); the home
 // page has its own FooterExpanded.
-//   Two columns at every width: address, copyright and links on the left;
-//   contact and hours on the right. The left column drops one line so the
-//   street sits level with the phone, except while the copyright has to wrap
-//   onto two lines (the script below checks), when it starts level with the
-//   email instead.
+//   Contact details together on the left (address, email, phone), opening
+//   hours on the right, and the legal line along the bottom (copyright left,
+//   links right), the usual footer grouping and the same as the home footer.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
@@ -31,20 +29,13 @@ const year = 2026;
                 <address class="footer__address">
                     <span class="footer__keep">Suite 104, Level 1,</span> <span class="footer__keep">2 Rowe Street,</span> <br /><span class="footer__keep">Eastwood,</span> <span class="footer__keep">NSW 2122</span>
                 </address>
-                <div class="footer__legal">
-                    <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
-                    <div class="footer__links">
-                        <a class="footer__legal-link" href="/clinic-notes">Clinic notes</a>
-                        <a class="footer__legal-link" href="/privacy">Privacy</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer__col footer__col--right">
                 <div class="footer__contact">
                     <a href={`mailto:${email}`}>{email}</a>
                     <a href={phoneHref}>{phoneDisplay}</a>
                 </div>
+            </div>
+
+            <div class="footer__col footer__col--right">
                 <dl class="footer__hours" aria-label="Opening hours">
                     {
                         openingHours.map(([days, times]) => (
@@ -57,6 +48,14 @@ const year = 2026;
                         ))
                     }
                 </dl>
+            </div>
+        </div>
+
+        <div class="footer__legal">
+            <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
+            <div class="footer__links">
+                <a class="footer__legal-link" href="/clinic-notes">Clinic notes</a>
+                <a class="footer__legal-link" href="/privacy">Privacy</a>
             </div>
         </div>
     </div>
@@ -105,10 +104,6 @@ const year = 2026;
     .footer__col--left {
         min-width: 0;
         justify-items: start;
-        padding-top: 1.45rem;
-    }
-    .footer__col--left.is-wrapped {
-        padding-top: 0;
     }
     .footer__col--right {
         flex: none;
@@ -154,7 +149,7 @@ const year = 2026;
     .footer__contact {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
+        align-items: flex-start;
     }
     .footer__contact a {
         display: block;
@@ -170,10 +165,18 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
+    /* Copyright left, links right; the gap between them never drops below
+       the gap between the links, and the links wrap under it when needed. */
     .footer__legal {
-        display: grid;
-        gap: 0.35rem;
-        justify-items: start;
+        justify-self: stretch;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.35rem var(--space-md);
+        font-size: var(--step-small);
+        line-height: 1.45rem;
+        color: var(--ink-2);
     }
     .footer__copy {
         margin: 0;
@@ -210,19 +213,3 @@ const year = 2026;
     }
 </style>
 
-<script>
-    // Drop the left column one line unless the copyright wraps onto a second
-    // line. Its width doesn't depend on the drop, so one measure is enough.
-    document.querySelectorAll<HTMLElement>(".footer__col--left").forEach((col) => {
-        const copy = col.querySelector<HTMLElement>(".footer__copy");
-        if (!copy) return;
-        const fit = () => {
-            const range = document.createRange();
-            range.selectNodeContents(copy);
-            const lines = new Set(Array.from(range.getClientRects(), (r) => Math.round(r.top)));
-            col.classList.toggle("is-wrapped", lines.size > 1);
-        };
-        new ResizeObserver(fit).observe(col);
-        document.fonts.ready.then(fit);
-    });
-</script>
