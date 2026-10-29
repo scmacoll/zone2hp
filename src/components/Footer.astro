@@ -2,11 +2,10 @@
 // Light footer: wordmark, address, contact, opening hours, copyright and links.
 // Used by every white page (privacy, account, booking, Clinic Notes); the home
 // page has its own FooterExpanded.
-//   Narrow: one full-width, left-aligned column. Each group (address, hours,
-//   contact, copyright and links) runs as a single line while it fits and wraps
-//   only when it can't.
-//   Wide: address, copyright and links on the left, dropped one line so the
-//   street lines up with the phone; contact and hours on the right.
+//   Two columns at every width: address, copyright and links on the left;
+//   contact and hours on the right. Wide, the left column drops one line so
+//   the street sits level with the phone; narrow, it starts level with the
+//   email and its lines wrap within the narrower column.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
@@ -29,7 +28,7 @@ const year = 2026;
         <div class="footer__meta">
             <div class="footer__col footer__col--left">
                 <address class="footer__address">
-                    <span class="footer__keep">Suite 104, Level 1,</span> <span class="footer__keep">2 Rowe Street,</span> <br class="footer__br" /><span class="footer__keep">Eastwood, NSW 2122</span>
+                    <span class="footer__keep">Suite 104, Level 1,</span> <span class="footer__keep">2 Rowe Street,</span> <br /><span class="footer__keep">Eastwood,</span> <span class="footer__keep">NSW 2122</span>
                 </address>
                 <div class="footer__legal">
                     <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
@@ -64,7 +63,7 @@ const year = 2026;
 
 <style>
     /* .footer is the query container; the blocks inside reflow on its width.
-       All base rules come first, then the container queries at the end: a base
+       All base rules come first, then the container query at the end: a base
        rule placed after a query would win on source order and silently undo it. */
     .footer {
         container-type: inline-size;
@@ -78,9 +77,7 @@ const year = 2026;
         padding-inline: var(--section-pad-inline);
         display: grid;
         gap: var(--space-md);
-        /* Left-aligned at every width: stacked lists and the hours table scan
-           best from a shared left edge, and it matches the home footer. start,
-           not stretch, because the logo is an SVG sized by height. */
+        /* start, not stretch: the logo is an SVG sized by height. */
         justify-items: start;
         text-align: left;
     }
@@ -89,50 +86,44 @@ const year = 2026;
         color: var(--ink);
     }
 
-    /* Narrow: the two column wrappers dissolve so their groups can stack in
-       reading order: address, hours, contact, then copyright and links. */
+    /* Two columns, everything at one line rhythm and one tight step. */
     .footer__meta {
         justify-self: stretch;
-        display: grid;
-        gap: var(--space-sm);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--space-md);
         font-size: var(--step-small);
         line-height: 1.45rem;
         color: var(--ink-2);
     }
     .footer__col {
-        display: contents;
+        display: grid;
+        gap: 0.35rem;
     }
+    .footer__col--left {
+        min-width: 0;
+        justify-items: start;
+    }
+    .footer__col--right {
+        flex: none;
+        justify-items: end;
+    }
+
     .footer__address {
-        order: 1;
         font-style: normal;
     }
-    .footer__br {
-        display: none;
-    }
-    /* Address phrases stay whole, so a narrow footer wraps between them. */
+    /* Address phrases stay whole, so a narrow column wraps between them. */
     .footer__keep {
         white-space: nowrap;
     }
-    .footer__hours {
-        order: 2;
-    }
-    .footer__contact {
-        order: 3;
-    }
-    .footer__legal {
-        order: 4;
-    }
 
-    /* Days and sessions as a two-column table. Narrow: each day is one line
-       ("9am–12pm, 2pm–6pm"). Wide: each session gets its own right-aligned
-       line, so the times share one clean right edge. */
-    /* Narrow: rows run edge to edge, labels on the left and values flush
-       right, so the times, phone and links share one right edge. */
+    /* Days and sessions as a two-column table; each session on its own line,
+       right-aligned, so the times share one clean right edge. */
     .footer__hours {
-        justify-self: stretch;
         margin: 0;
         display: grid;
-        grid-template-columns: max-content 1fr;
+        grid-template-columns: max-content max-content;
         column-gap: 0.75rem;
         text-align: left;
     }
@@ -146,20 +137,19 @@ const year = 2026;
         margin: 0;
         text-align: right;
     }
-    /* Narrow: sessions run on one line, separated by ", ". */
-    .footer__session + .footer__session::before {
-        content: " ";
+    .footer__session {
+        display: block;
+    }
+    .footer__sep {
+        display: none;
     }
 
-    /* Email and phone side by side, wrapping only when they can't share a
-       line. Padding gives each a 44px hit area, negative margin cancels its
+    /* Padding gives each link a 44px hit area, negative margin cancels its
        height, so the links keep the address's line rhythm. */
     .footer__contact {
-        justify-self: stretch;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 0 var(--space-md);
+        flex-direction: column;
+        align-items: flex-end;
     }
     .footer__contact a {
         display: block;
@@ -175,27 +165,19 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* Copyright and links on one line, wrapping only when they can't share
-       it. The gap between them is never narrower than the gap between the
-       two links. */
     .footer__legal {
-        justify-self: stretch;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 0.35rem var(--space-md);
+        display: grid;
+        gap: 0.35rem;
+        justify-items: start;
     }
     .footer__copy {
         margin: 0;
     }
-    /* Pushed to the right edge, even when it wraps under the copyright. */
     .footer__links {
-        margin-left: auto;
         display: flex;
         flex-wrap: wrap;
         gap: 0 var(--space-md);
     }
-    /* Same 44px hit area trick as the contact links. */
     .footer__legal-link {
         display: inline-block;
         padding-block: 0.6rem;
@@ -208,58 +190,14 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* Wide: two columns. The left one drops a line so the street sits level
-       with the phone number; everything runs at one tight step. */
+    /* Wide: the left column drops one line so the street sits level with the
+       phone number, and the columns move further apart. */
     @container (min-width: 34rem) {
         .footer__meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
             gap: var(--space-xl);
         }
-        .footer__col {
-            display: grid;
-            gap: 0.35rem;
-        }
-        .footer__col > * {
-            order: 0;
-        }
         .footer__col--left {
-            justify-items: start;
             padding-top: 1.45rem;
-        }
-        .footer__col--right {
-            justify-items: end;
-        }
-        .footer__br {
-            display: inline;
-        }
-        .footer__contact {
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        .footer__legal {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.35rem;
-        }
-        .footer__links {
-            margin-left: 0;
-        }
-        .footer__hours {
-            grid-template-columns: max-content max-content;
-        }
-        .footer__hours dd {
-            text-align: right;
-        }
-        .footer__session {
-            display: block;
-        }
-        .footer__session + .footer__session::before {
-            content: none;
-        }
-        .footer__sep {
-            display: none;
         }
     }
 
