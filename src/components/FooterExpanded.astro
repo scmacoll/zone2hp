@@ -156,7 +156,10 @@ const year = 2026;
                 </p>
                 <p class="ff__place">Eastwood, NSW &middot; Australia</p>
             </div>
-            <a class="ff__legal-link" href="/privacy">Privacy</a>
+            <div class="ff__links">
+                <a class="ff__legal-link" href="/clinic-notes">Clinic notes</a>
+                <a class="ff__legal-link" href="/privacy">Privacy</a>
+            </div>
         </div>
     </div>
 </footer>
@@ -402,6 +405,12 @@ const year = 2026;
         justify-content: center;
         align-items: baseline;
         gap: 0.2rem var(--space-md);
+    }
+    .ff__links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0 var(--space-md);
     }
     /* 44px tap target; the negative margin keeps it from adding height. */
     .ff__legal-link {

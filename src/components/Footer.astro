@@ -31,7 +31,10 @@ const year = 2026;
 
         <div class="footer__legal">
             <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
-            <a class="footer__privacy" href="/privacy">Privacy</a>
+            <div class="footer__links">
+                <a class="footer__legal-link" href="/clinic-notes">Clinic notes</a>
+                <a class="footer__legal-link" href="/privacy">Privacy</a>
+            </div>
         </div>
     </div>
 </footer>
@@ -115,7 +118,13 @@ const year = 2026;
     .footer__copy {
         margin: 0;
     }
-    .footer__privacy {
+    .footer__links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0 var(--space-md);
+    }
+    .footer__legal-link {
         display: inline-flex;
         align-items: center;
         min-height: 2.75rem;
@@ -123,7 +132,7 @@ const year = 2026;
         color: var(--ink);
         text-decoration: none;
     }
-    .footer__privacy:hover {
+    .footer__legal-link:hover {
         color: var(--accent-deep);
     }
 
