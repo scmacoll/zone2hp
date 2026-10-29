@@ -5,6 +5,7 @@ import { bookingConfig } from '../lib/booking/config';
 // from side-by-side to stacked on its own container width via a container query,
 // which is the fix for the split-window case.
 import Eyebrow from './Eyebrow.astro';
+import { openingHours } from '../lib/clinic';
 
 interface Props {
   class?: string;
@@ -44,6 +45,17 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
       <address class="map__address">
         {address1}<br />{address2}
       </address>
+      <dl class="map__hours" aria-label="Opening hours">
+        {
+          openingHours.map(([days, times]) => (
+            <div class="map__hours-row">
+              <dt>{days}</dt>
+              <dd>{times}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="map__lang">Consultations in English and <span lang="ko">한국어</span></p>
       {
         bookingConfig.linksVisible ? (
           <a class="map__book" href="/book">
@@ -144,6 +156,32 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     font-style: normal;
     color: var(--ink-2);
     line-height: 1.45;
+  }
+  .map__hours {
+    margin: 0;
+    display: grid;
+    gap: 0.15rem;
+    font-size: var(--step-small);
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .map__hours-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: inherit;
+    gap: 0 0.6rem;
+  }
+  .map__hours dt {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .map__hours dd {
+    margin: 0;
+  }
+  .map__lang {
+    margin: 0;
+    font-size: var(--step-small);
+    color: var(--ink-2);
   }
   /* Deliberately the same object as the header's Book now: same fill, label
      colour, radius, weight and height, so the two read as one control. */
