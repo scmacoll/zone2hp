@@ -159,17 +159,13 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     color: var(--ink-2);
     line-height: 1.45;
   }
-  /* Hours and languages as one block under a hairline: the address, times and
-     language line share the address's size and colour, and the days use the
-     eyebrow's mono label style, so the block adds no new text styles. */
+  /* Hours under a hairline, in the same font, size and colour as the caption
+     under Book now; the days are only a shade darker. */
   .map__info {
     display: grid;
-    gap: var(--space-xs);
     justify-items: inherit;
     padding-top: var(--space-xs);
     border-top: var(--border-hairline);
-    color: var(--ink-2);
-    line-height: 1.45;
   }
   /* One table, so the days and times line up in two columns instead of each
      row centring on its own. */
@@ -177,19 +173,17 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     margin: 0;
     display: grid;
     grid-template-columns: max-content max-content;
-    gap: 0.2rem 1rem;
-    align-items: baseline;
+    gap: 0.15rem 0.75rem;
     text-align: left;
+    font-size: var(--step-small);
+    line-height: 1.45;
+    color: var(--ink-2);
   }
   .map__hours-row {
     display: contents;
   }
   .map__hours dt {
-    font-family: var(--font-mono);
-    font-size: var(--step-label);
-    font-weight: 500;
-    letter-spacing: var(--track-label);
-    text-transform: uppercase;
+    color: var(--ink);
   }
   .map__hours dd {
     margin: 0;

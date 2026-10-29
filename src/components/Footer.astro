@@ -1,7 +1,7 @@
 ---
 // Light footer: wordmark, address, contact, copyright. Reflows from a row to a
-// stack on its own container width. `hours` adds the opening hours as a third
-// group between the address and contact.
+// stack on its own container width. `hours` adds the opening hours under the
+// address, as part of the same block.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
@@ -22,7 +22,8 @@ const year = 2026;
     <div class="footer__inner">
         <Logo variant="full" class="footer__logo" />
 
-        <div class:list={["footer__meta", { "footer__meta--hours": hours }]}>
+        <div class="footer__meta">
+            <div class="footer__visit">
             <address class="footer__address">
                 Suite 104, Level 1, 2 Rowe Street,<br />Eastwood, NSW 2122
             </address>
@@ -38,6 +39,7 @@ const year = 2026;
                     </dl>
                 )
             }
+            </div>
             <div class="footer__contact">
                 <a href={`mailto:${email}`}>{email}</a>
                 <a href={phoneHref}>{phoneDisplay}</a>
@@ -122,14 +124,18 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* Same table as the home page's booking block: mono days, times beside
-       them, on the address's line rhythm. */
+    /* Hours continue the address block: same font, size, colour and line
+       rhythm, with the days a shade darker so the two columns read. */
+    .footer__visit {
+        display: grid;
+        justify-items: center;
+        gap: 0.35rem;
+    }
     .footer__hours {
         margin: 0;
         display: grid;
         grid-template-columns: max-content max-content;
-        column-gap: 1rem;
-        align-items: baseline;
+        column-gap: 0.75rem;
         text-align: left;
         font-size: var(--step-small);
         line-height: 1.45rem;
@@ -139,11 +145,7 @@ const year = 2026;
         display: contents;
     }
     .footer__hours dt {
-        font-family: var(--font-mono);
-        font-size: var(--step-label);
-        font-weight: 500;
-        letter-spacing: var(--track-label);
-        text-transform: uppercase;
+        color: var(--ink);
     }
     .footer__hours dd {
         margin: 0;
@@ -203,41 +205,13 @@ const year = 2026;
         .footer__contact {
             align-items: flex-end;
         }
+        .footer__visit {
+            justify-items: start;
+        }
         .footer__legal {
             flex-direction: row;
             align-items: baseline;
             justify-content: space-between;
-        }
-        /* With hours: address and contact keep their row, hours sit under the
-           address until there is room for all three side by side. */
-        .footer__meta--hours {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            grid-template-areas:
-                "address contact"
-                "hours   .";
-            gap: var(--space-sm) var(--space-xl);
-        }
-        .footer__meta--hours .footer__address {
-            grid-area: address;
-        }
-        .footer__meta--hours .footer__hours {
-            grid-area: hours;
-        }
-        .footer__meta--hours .footer__contact {
-            grid-area: contact;
-        }
-    }
-    @container (min-width: 50rem) {
-        .footer__meta--hours {
-            grid-template-columns: 1fr auto 1fr;
-            grid-template-areas: "address hours contact";
-        }
-        .footer__meta--hours .footer__hours {
-            justify-self: center;
-        }
-        .footer__meta--hours .footer__contact {
-            justify-self: end;
         }
     }
 

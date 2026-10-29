@@ -3,5 +3,4 @@
 export const openingHours: readonly [days: string, times: string][] = [
   ['Mon–Thu', '9am–12pm, 2pm–6pm'],
   ['Sat', '9am–1pm'],
-  ['Fri, Sun', 'Closed'],
 ];
