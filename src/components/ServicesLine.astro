@@ -1,6 +1,6 @@
 ---
 // One-line services summary in mono. Separators are decorative (aria-hidden) so
-// screen readers read the four services cleanly. Wraps gracefully on narrow
+// screen readers read the services cleanly. Wraps gracefully on narrow
 // containers rather than overflowing.
 interface Props {
   class?: string;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { class: className = '', ...rest } = Astro.props;
-const services = ['Chiropractic', 'Rehab', 'Exercise Physiology', 'Dry Needling'];
+const services = ['Chiropractic', 'Rehab', 'Dry Needling'];
 ---
 
 <p class:list={['services', className]} {...rest}>

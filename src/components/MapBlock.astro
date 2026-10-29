@@ -13,7 +13,7 @@ interface Props {
 
 const { class: className = '', title = 'Eastwood, NSW' } = Astro.props;
 
-const address1 = 'Suite 104 / 2 Rowe St,';
+const address1 = 'Suite 104, Level 1, 2 Rowe Street,';
 const address2 = 'Eastwood, NSW 2122';
 const query = 'Suite 104/2 Rowe St, Eastwood NSW 2122';
 const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
@@ -25,7 +25,7 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     <div class="map__card">
       <div class="map__frame">
         <iframe
-          title="Map showing Zone Two Health and Performance at Suite 104 / 2 Rowe St, Eastwood NSW 2122"
+          title="Map showing Zone Two Health and Performance at Suite 104, Level 1, 2 Rowe Street, Eastwood, NSW 2122"
           src={mapSrc}
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>

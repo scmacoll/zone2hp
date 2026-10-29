@@ -29,8 +29,8 @@ export const BOOKING_TYPES: readonly BookingTypeInfo[] = [
   },
   {
     id: 'epc',
-    label: 'CDM (Chronic Disease Management plan)',
-    blurb: 'Care under a Medicare Chronic Disease Management plan, referred by a GP.',
+    label: 'GPCCMP (GP Chronic Condition Management Plan)',
+    blurb: 'Care under a Medicare GP Chronic Condition Management Plan, referred by your GP.',
     funding: 'medicare',
   },
   {
@@ -57,7 +57,7 @@ export type CustomerKind = 'new' | 'existing';
 /**
  * Ordered funnel steps.
  *  - customer: new or existing patient (skipped when signed in)
- *  - type:     standard / CDM / TPC / NDIS
+ *  - type:     standard / GPCCMP / TPC / NDIS
  *  - scope:    "Visit" — areas + treatment/rehab -> appointment length (duration.ts),
  *              with the optional private-health-cover section folded in as an
  *              accordion (shown when bookingConfig.fundingEnabled)

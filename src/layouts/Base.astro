@@ -20,7 +20,7 @@ interface Props {
 
 const {
   title = 'Zone Two Health and Performance | Chiropractic & Rehab, Eastwood NSW',
-  description = 'Chiropractic, post-operative rehabilitation, exercise physiology and dry needling in Eastwood, NSW. Book a first visit at Zone Two Health and Performance.',
+  description = 'Chiropractic, post-operative rehabilitation and dry needling in Eastwood, NSW. Book a first visit at Zone Two Health and Performance.',
   noindex = false,
 } = Astro.props;
 
@@ -59,7 +59,7 @@ const structuredData = {
       url: 'https://zone2hp.com',
       email: 'info@zone2hp.com',
       description:
-        'Chiropractic, post-operative rehabilitation, exercise physiology and dry needling in Eastwood, New South Wales. Opening soon.',
+        'Chiropractic, post-operative rehabilitation and dry needling in Eastwood, New South Wales. Opening soon.',
       logo: {
         '@type': 'ImageObject',
         '@id': 'https://zone2hp.com/#logo',
@@ -70,7 +70,7 @@ const structuredData = {
       image: { '@id': 'https://zone2hp.com/#logo' },
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Suite 104, 2 Rowe Street',
+        streetAddress: 'Suite 104, Level 1, 2 Rowe Street',
         addressLocality: 'Eastwood',
         addressRegion: 'NSW',
         postalCode: '2122',
@@ -80,7 +80,6 @@ const structuredData = {
       knowsAbout: [
         'Chiropractic care',
         'Post-operative rehabilitation',
-        'Exercise physiology',
         'Dry needling',
       ],
     },

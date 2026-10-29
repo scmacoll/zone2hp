@@ -191,7 +191,7 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
     function populateReview(): void {
       const dur = parseDurationToken(params.dur);
       const appointment: [string, string][] = [
-        ['Clinic', 'Zone Two Health and Performance, Suite 104 / 2 Rowe St, Eastwood NSW 2122'],
+        ['Clinic', 'Zone Two Health and Performance, Suite 104, Level 1, 2 Rowe Street, Eastwood, NSW 2122'],
         ['Patient', params.customer === 'new' ? 'New patient' : params.customer === 'existing' ? 'Existing patient' : ''],
         ['Type', params.type ? (bookingTypeInfo(params.type)?.label ?? '') : ''],
         ['Practitioner', practitionerName],
