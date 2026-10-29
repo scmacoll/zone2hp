@@ -1,13 +1,8 @@
 /* Clinic Notes (/clinic-notes and its four posts).
    A port of the client's "trail-map journal" page (zone-two-clinic-notes.html)
-   into the site's own system: site tokens for paper, stone, ink and lines, the
-   self-hosted Archivo with its width axis for the condensed display headlines,
-   Hanken Grotesk for body and Geist Mono for labels. Light theme only.
-
-   Everything is scoped under .cn (the <main> of these pages). Imported only by
-   the Clinic Notes layout and index, together with
-   @fontsource-variable/archivo/standard.css, which carries the wdth axis
-   (font-stretch 62% to 125%) that the default Archivo import lacks.
+   into the site's own system: site tokens, the site's heading and button
+   styles (Archivo, sentence case), Hanken Grotesk for body and Geist Mono for
+   labels. Light theme only. Everything is scoped under .cn.
 
    No inline style="" anywhere: the CSP has no 'unsafe-inline', so the SVG
    transform-origins the client set inline live here as classes instead. */
@@ -24,10 +19,12 @@
   --cn-contour: rgba(28, 29, 31, 0.08);
   --cn-skin: #e6d9cd;
   --cn-skin-line: #c9b6a6;
-  --cn-condensed: 'Archivo Variable', 'Arial Narrow', Arial, sans-serif;
   --cn-measure: 66ch;
-  --cn-radius: 10px;
-  --cn-radius-lg: 14px;
+  /* Same corners as the rest of the site: cards at --radius-md, and buttons
+     and tags at the 6px of the home page's Book buttons. */
+  --cn-radius: var(--radius-md);
+  --cn-radius-lg: var(--radius-md);
+  --cn-radius-btn: 6px;
 
   display: block;
   line-height: 1.65;
@@ -64,12 +61,12 @@
   display: flex;
   gap: 0.625rem;
   align-items: center;
-  font-family: var(--cn-condensed);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: 0.875rem;
-  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
   text-transform: uppercase;
+  color: var(--ink-2);
 }
 .cn-brand i {
   flex: none;
@@ -80,13 +77,11 @@
 }
 .cn-hero__title {
   margin: 0;
-  font-family: var(--cn-condensed);
-  font-stretch: 62%;
-  font-weight: 900;
-  font-size: clamp(3.5rem, 1rem + 11vw, 8rem);
-  line-height: 0.86;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--track-tight);
+  font-size: clamp(2.75rem, 1.6rem + 5vw, 5rem);
+  line-height: 1;
   text-wrap: balance;
 }
 .cn-hero__title span {
@@ -143,12 +138,10 @@
   color: var(--accent-deep);
 }
 .cn-card__title {
-  font-family: var(--cn-condensed);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: 1.25rem;
-  line-height: 1.1;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.2;
 }
 
 /* ---- Index: one teaser per post ----------------------------------------- */
@@ -164,13 +157,11 @@
 .cn-teaser__title {
   margin: 0;
   max-width: 18ch;
-  font-family: var(--cn-condensed);
-  font-stretch: 68%;
-  font-weight: 900;
-  font-size: clamp(2rem, 1.2rem + 3.6vw, 3.25rem);
-  line-height: 0.92;
-  letter-spacing: -0.005em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--track-tight);
+  font-size: var(--step-h2);
+  line-height: 1.1;
   text-wrap: balance;
 }
 .cn .cn-teaser__title a {
@@ -221,7 +212,7 @@
 }
 .cn-tag {
   padding: 3px 9px;
-  border-radius: 999px;
+  border-radius: var(--cn-radius-btn);
   background: var(--cn-orange);
   color: var(--ink);
   font-weight: 500;
@@ -229,13 +220,11 @@
 .cn-title {
   margin: 0;
   max-width: 18ch;
-  font-family: var(--cn-condensed);
-  font-stretch: 68%;
-  font-weight: 900;
-  font-size: clamp(2.375rem, 1.2rem + 5.2vw, 4.25rem);
-  line-height: 0.92;
-  letter-spacing: -0.005em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--track-tight);
+  font-size: clamp(2rem, 1.3rem + 3vw, 3.5rem);
+  line-height: 1.05;
   text-wrap: balance;
 }
 .cn-stand {
@@ -268,13 +257,10 @@
 /* The client's H3 subheads: H2 here, since the post title is now the H1. */
 .cn-prose h2 {
   margin: 0.625rem 0 0;
-  font-family: var(--cn-condensed);
-  font-stretch: 80%;
-  font-weight: 800;
-  font-size: 1.1875rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--step-h3);
   line-height: 1.2;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
 }
 .cn-prose ul {
   display: grid;
@@ -323,12 +309,11 @@
 }
 .cn-tldr h2 {
   margin: 0;
-  font-family: var(--cn-condensed);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: 0.9375rem;
-  line-height: 1.2;
-  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: var(--track-label);
   text-transform: uppercase;
   color: var(--cn-orange);
 }
@@ -457,24 +442,22 @@
 .cn .cn-btn {
   display: inline-flex;
   align-items: center;
-  min-height: 2.75rem;
-  padding: 0 1.25rem;
-  border-radius: 999px;
+  justify-content: center;
+  white-space: nowrap;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  border-radius: var(--cn-radius-btn);
   background: var(--cn-orange);
   color: var(--ink);
-  font-family: var(--cn-condensed);
-  font-stretch: 80%;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
   text-decoration: none;
-  transition:
-    transform 0.15s var(--ease-out),
-    background-color 0.15s var(--ease-out);
+  transition: background-color 150ms var(--ease-out);
 }
 .cn .cn-btn:hover {
   background: var(--cn-orange-press);
-  transform: translateY(-2px);
 }
 .cn-cta__line {
   font-size: 0.9375rem;
@@ -516,11 +499,9 @@
   letter-spacing: 0.04em;
 }
 .cn svg .big {
-  font-family: var(--cn-condensed);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: 16px;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
 }
 
 /* Pivot points, in the SVG's own user units (were inline style attributes). */
@@ -557,8 +538,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cn-card:hover,
-  .cn .cn-btn:hover {
+  .cn-card:hover {
     transform: none;
   }
 }

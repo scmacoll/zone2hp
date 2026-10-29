@@ -1,0 +1,209 @@
+---
+// Site menu: a disclosure button with a small dropdown of page links. "dark"
+// sits on the home page's video hero beside Book now; "light" sits in the
+// paper PageHeader on every other page.
+interface Props {
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const { tone = 'light', class: className = '' } = Astro.props;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/#about', label: 'About Dr Mintae Kim' },
+  { href: '/#find-us', label: 'Find us' },
+  { href: '/clinic-notes', label: 'Clinic notes' },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const current = (href: string) =>
+  href === '/clinic-notes' ? path.startsWith('/clinic-notes') : href === path;
+---
+
+<div class:list={['menu', `menu--${tone}`, className]} data-site-menu>
+  <button class="menu__button" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <span class="menu__label" aria-hidden="true">Menu</span>
+  </button>
+  <nav class="menu__panel" id="site-menu" aria-label="Site">
+    <ul class="menu__list" role="list">
+      {
+        links.map((l) => (
+          <li>
+            <a class="menu__link" href={l.href} aria-current={current(l.href) ? 'page' : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
+
+<style>
+  .menu {
+    position: relative;
+  }
+  .menu__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 0.9rem;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    cursor: pointer;
+    transition:
+      background-color 150ms var(--ease-out),
+      border-color 150ms var(--ease-out),
+      color 150ms var(--ease-out);
+  }
+  .menu__label {
+    line-height: 1;
+  }
+
+  .menu__panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 20;
+    min-width: 14rem;
+    padding: 0.35rem;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(-0.4rem);
+    visibility: hidden;
+    transition:
+      opacity 200ms var(--ease-out),
+      transform 200ms var(--ease-out),
+      visibility 0s linear 200ms;
+  }
+  .menu[data-open] .menu__panel {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition:
+      opacity 200ms var(--ease-out),
+      transform 200ms var(--ease-out),
+      visibility 0s linear;
+  }
+  .menu__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .menu__link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.85rem;
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: normal;
+    transition: background-color 150ms var(--ease-out);
+  }
+  .menu__link[aria-current='page'] {
+    font-weight: 600;
+  }
+
+  /* Dark: the same glass as the hero's Log in button and language menu. */
+  .menu--dark .menu__button {
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(15, 16, 19, 0.28);
+    color: var(--paper);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+  }
+  .menu--dark .menu__button:hover {
+    border-color: var(--paper);
+  }
+  .menu--dark .menu__panel {
+    background: rgba(15, 16, 19, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    backdrop-filter: blur(20px) saturate(120%);
+  }
+  .menu--dark .menu__link {
+    color: var(--paper);
+  }
+  .menu--dark .menu__link:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Light: paper chrome, like the booking and account pages. */
+  .menu--light .menu__button {
+    border: 1px solid var(--chrome-line);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .menu--light .menu__button:hover {
+    border-color: var(--ink-2);
+  }
+  .menu--light .menu__panel {
+    background: var(--paper);
+    border: var(--border-hairline);
+    box-shadow: 0 12px 32px rgba(28, 29, 31, 0.12);
+  }
+  .menu--light .menu__link {
+    color: var(--ink);
+  }
+  .menu--light .menu__link:hover {
+    background: var(--stone);
+  }
+
+  /* Phones: icon only, so the header keeps room for the logo and Book. */
+  @media (max-width: 47rem) {
+    .menu__button {
+      padding: 0;
+      justify-content: center;
+    }
+    .menu__label {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu__panel,
+    .menu[data-open] .menu__panel {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-site-menu]').forEach((menu) => {
+    const button = menu.querySelector<HTMLButtonElement>('.menu__button');
+    if (!button) return;
+    const setOpen = (open: boolean) => {
+      menu.toggleAttribute('data-open', open);
+      button.setAttribute('aria-expanded', String(open));
+    };
+    button.addEventListener('click', () => setOpen(!menu.hasAttribute('data-open')));
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('.menu__link')) setOpen(false);
+    });
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target as Node)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !menu.hasAttribute('data-open')) return;
+      setOpen(false);
+      button.focus();
+    });
+    menu.addEventListener('focusout', (e) => {
+      if (!menu.contains(e.relatedTarget as Node | null)) setOpen(false);
+    });
+  });
+</script>

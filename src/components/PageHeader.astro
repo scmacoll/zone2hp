@@ -2,6 +2,7 @@
 // Light functional-page chrome (booking, account, privacy). NOT the dark hero
 // chrome: these pages use the paper design language.
 import Logo from './Logo.astro';
+import SiteMenu from './SiteMenu.astro';
 
 interface Props {
   class?: string;
@@ -14,7 +15,10 @@ const { class: className = '' } = Astro.props;
   <a class="page-header__brand" href="/" aria-label="Zone Two Health and Performance, home">
     <Logo variant="full" />
   </a>
-  <a class="page-header__back" href="/">Back to site</a>
+  <div class="page-header__actions">
+    <a class="page-header__back" href="/">Back to site</a>
+    <SiteMenu />
+  </div>
 </header>
 
 <style>
@@ -38,6 +42,11 @@ const { class: className = '' } = Astro.props;
     min-height: 44px;
     color: var(--ink);
     text-decoration: none;
+  }
+  .page-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
   }
   .page-header__back {
     display: inline-flex;
