@@ -42,6 +42,7 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     <div class="map__details">
       <Eyebrow>Find us in Eastwood</Eyebrow>
       <h2 id="map-heading" class="map__title">{title}</h2>
+      <div class="map__place">
       <address class="map__address">
         {address1}<br />{address2}
       </address>
@@ -56,6 +57,7 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
             ))
           }
         </dl>
+      </div>
       </div>
       {
         bookingConfig.linksVisible ? (
@@ -161,9 +163,14 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
   }
   /* Hours under a hairline, in the same font, size and colour as the caption
      under Book now; the days are only a shade darker. */
+  /* Address and hours share one width, set by the address, so the hairline
+     and the hours table span exactly as wide as the address above them. */
+  .map__place {
+    display: grid;
+    gap: var(--space-xs);
+  }
   .map__info {
     display: grid;
-    justify-items: inherit;
     padding-top: var(--space-xs);
     border-top: var(--border-hairline);
   }
@@ -172,7 +179,7 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
   .map__hours {
     margin: 0;
     display: grid;
-    grid-template-columns: max-content max-content;
+    grid-template-columns: max-content 1fr;
     gap: 0.15rem 0.75rem;
     text-align: left;
     font-size: var(--step-small);
