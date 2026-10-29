@@ -1132,10 +1132,11 @@ const showAccounts = bookingConfig.accountsEnabled;
             justify-content: space-between;
             padding: 1rem 1.05rem;
         }
-        /* One centred row while all three fit; the script below adds
-           .is-stacked only once they no longer fit on one line. */
+        /* One row while all three fit, aligned like the desktop panel and
+           centred vertically; the script below adds .is-stacked only once
+           they no longer fit on one line. */
         .a2-panel :global(.a2-services) {
-            justify-content: center;
+            align-items: center;
         }
         .a2-panel :global(.a2-services.is-stacked) {
             display: grid;
