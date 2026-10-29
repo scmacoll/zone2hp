@@ -37,7 +37,7 @@ export const clinicNotes: ClinicNote[] = [
     heading: 'That pain at the base of your thumb',
     standfirst:
       "If gripping, lifting your baby or texting sends a sharp pain along the thumb side of your wrist, it may be De Quervain's tenosynovitis.",
-    datePublished: '2026-10-28',
+    datePublished: '2026-10-29',
   },
   {
     slug: 'low-back-pain-and-hips',
@@ -48,7 +48,7 @@ export const clinicNotes: ClinicNote[] = [
     heading: 'Low back pain? Check your hips',
     standfirst:
       "Your hips and lower back work as a team. When the hip muscles aren't pulling their weight, the back often notices first.",
-    datePublished: '2026-10-28',
+    datePublished: '2026-10-29',
   },
   {
     slug: 'dry-needling',
@@ -59,7 +59,7 @@ export const clinicNotes: ClinicNote[] = [
     heading: "Dry needling: what it can and can't do",
     standfirst:
       "A fine needle into a tight, tender muscle. Here's what the evidence says, minus the hype.",
-    datePublished: '2026-10-28',
+    datePublished: '2026-10-29',
   },
   {
     slug: 'zone-2-training',
@@ -70,7 +70,7 @@ export const clinicNotes: ClinicNote[] = [
     heading: 'Zone 2: the pace behind our name',
     standfirst:
       "Easy enough to chat, hard enough to count. Here's what zone 2 training is, why it matters, and where it fits.",
-    datePublished: '2026-10-28',
+    datePublished: '2026-10-29',
   },
 ];
 
