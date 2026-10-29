@@ -56,7 +56,6 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
             ))
           }
         </dl>
-        <p class="map__lang">Consultations in English and <span lang="ko">한국어</span></p>
       </div>
       {
         bookingConfig.linksVisible ? (
@@ -69,6 +68,7 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
           </button>
         )
       }
+      <p class="map__lang">Consultations in English and <span lang="ko">한국어</span></p>
     </div>
   </div>
 </section>
@@ -194,8 +194,11 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
   .map__hours dd {
     margin: 0;
   }
+  /* A caption for the Book now button above it. */
   .map__lang {
     margin: 0;
+    font-size: var(--step-small);
+    color: var(--ink-2);
   }
   /* Deliberately the same object as the header's Book now: same fill, label
      colour, radius, weight and height, so the two read as one control. */

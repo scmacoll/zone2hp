@@ -5,7 +5,6 @@
 // accent reads --a1-volt when present, else falls back to the brand --accent.
 // Columns carry only what exists now for a coming-soon clinic (no dead links).
 import Logo from "./Logo.astro";
-import { openingHours } from "../lib/clinic";
 
 interface Props {
     class?: string;
@@ -45,16 +44,6 @@ const year = 2026;
                 <address class="ff__address">
                     Suite 104, Level 1,<br />2 Rowe Street,<br />Eastwood, NSW 2122
                 </address>
-                <dl class="ff__hours" aria-label="Opening hours">
-                    {
-                        openingHours.map(([days, times]) => (
-                            <div>
-                                <dt>{days}</dt>
-                                <dd>{times}</dd>
-                            </div>
-                        ))
-                    }
-                </dl>
                 <a
                     class="ff__link"
                     href={mapsLink}
@@ -263,18 +252,6 @@ const year = 2026;
         font-style: normal;
         color: var(--ink-2);
         line-height: var(--ff-line);
-    }
-    /* Hours under the address on the same line rhythm, after one blank line. */
-    .ff__hours {
-        margin: var(--ff-line) 0 0;
-        line-height: var(--ff-line);
-        color: var(--ink-2);
-    }
-    .ff__hours dt {
-        color: var(--ink);
-    }
-    .ff__hours dd {
-        margin: 0;
     }
 
     .ff__link,

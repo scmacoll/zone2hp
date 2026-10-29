@@ -11,15 +11,15 @@ import { bookingConfig } from '../lib/booking/config';
 
 <div class="cn-cta">
   {bookingConfig.linksVisible && <a class="cn-btn" href="/book">Book online</a>}
-  <p class="cn-cta__line">
-    Suite 104, Level 1, 2 Rowe Street, Eastwood, NSW 2122 · <a href="tel:0450222122"
-      >0450 222 122</a
-    > · Consultations in English and <span lang="ko">한국어</span>
-  </p>
+  <div class="cn-cta__info">
+    <p><span class="cn-keep">Suite 104, Level 1,</span> <span class="cn-keep">2 Rowe Street,</span> <span class="cn-keep">Eastwood, NSW 2122</span></p>
+    <p><a href="tel:0450222122">0450 222 122</a></p>
+    <p>Consultations in English and <span lang="ko">한국어</span></p>
+  </div>
 </div>
 
 <div class="cn-disclaimer">
-  <p>Zone Two Health and Performance. Dr Mintae Kim, Chiropractor.</p>
+  <p>Zone Two Health and Performance. <span class="cn-keep">Dr Mintae Kim, Chiropractor.</span></p>
   <p>
     This information is general and educational, and isn't a substitute for an individual
     assessment. If you have symptoms, see a registered health practitioner.
