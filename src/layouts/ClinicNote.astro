@@ -25,6 +25,7 @@ const others = clinicNotes.filter((n) => n.slug !== post.slug);
 
 // Same computation as Base.astro's canonical, so the two always agree.
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
+const image = Astro.site ? new URL('/images/og-zone2hp.png', Astro.site).href : '/images/og-zone2hp.png';
 
 // Article only. No review or rating markup (s133 of the National Law, see
 // COMPLIANCE.md). Author and publisher point at the nodes Base.astro declares.
@@ -34,6 +35,8 @@ const articleData = {
   headline: post.heading,
   description: post.standfirst,
   datePublished: post.datePublished,
+  dateModified: post.datePublished,
+  image,
   inLanguage: 'en-AU',
   mainEntityOfPage: canonical,
   author: {
@@ -46,8 +49,9 @@ const articleData = {
 };
 ---
 
-<Base title={post.title} description={post.standfirst}>
+<Base title={post.title} description={post.standfirst} ogType="article">
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleData)} />
+  <meta property="article:published_time" content={post.datePublished} slot="head" />
 
   <PageHeader />
 

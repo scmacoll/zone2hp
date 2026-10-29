@@ -1,23 +1,27 @@
 ---
 // Google Analytics 4. Written as a bundled script rather than the pasted inline
 // snippet so Astro hashes it into the CSP; gtag.js itself is allowed by host in
-// astro.config.mjs.
+// astro.config.mjs. It only runs on the live domains, checked in the browser, so
+// local, Vercel preview and staging visits never reach the client's numbers.
 ---
 
 <script>
   const id = 'G-Q8N8YBKRHE';
-  const w = window as unknown as { dataLayer: unknown[] };
-  w.dataLayer = w.dataLayer || [];
-  // gtag.js only reads Arguments objects off the dataLayer, not arrays.
-  function gtag(..._args: unknown[]) {
-    // eslint-disable-next-line prefer-rest-params
-    w.dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-  gtag('config', id);
+  const live = ['zone2hp.com', 'www.zone2hp.com'].includes(location.hostname);
+  if (live) {
+    const w = window as unknown as { dataLayer: unknown[] };
+    w.dataLayer = w.dataLayer || [];
+    // gtag.js only reads Arguments objects off the dataLayer, not arrays.
+    function gtag(..._args: unknown[]) {
+      // eslint-disable-next-line prefer-rest-params
+      w.dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', id);
 
-  const s = document.createElement('script');
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-  document.head.append(s);
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+    document.head.append(s);
+  }
 </script>

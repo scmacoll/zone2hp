@@ -16,16 +16,15 @@ interface Props {
       booking/account pages while they are a mock surface, so a placeholder flow
       for a regulated health business is not indexed. */
   noindex?: boolean;
+  ogType?: 'website' | 'article';
 }
 
 const {
   title = 'Zone Two Health and Performance | Chiropractic & Rehab, Eastwood NSW',
   description = 'Chiropractic, post-operative rehabilitation and dry needling in Eastwood, NSW. Book a first visit at Zone Two Health and Performance.',
   noindex = false,
+  ogType = 'website',
 } = Astro.props;
-
-// Only the live zone2hp.com deploy reports, so dev and preview visits stay out of the numbers.
-const analyticsOn = process.env.VERCEL_ENV === 'production';
 
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
 
@@ -118,7 +117,7 @@ const structuredData = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {analyticsOn && <GoogleAnalytics />}
+    <GoogleAnalytics />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
     <meta name="generator" content={Astro.generator} />
@@ -127,7 +126,7 @@ const structuredData = {
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
