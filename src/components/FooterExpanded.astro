@@ -235,35 +235,45 @@ const year = 2026;
         background: var(--ff-volt);
     }
 
+    /* One line rhythm for every column (services, address, contact, blurb),
+       so lines across the four columns sit on the same spacing at any width. */
+    .ff__cols {
+        --ff-line: 2rem;
+    }
     .ff__list {
         margin: 0;
         padding: 0;
         list-style: none;
-        display: grid;
-        gap: 0.55rem;
+        line-height: var(--ff-line);
         color: var(--ink-2);
     }
 
     .ff__address {
         font-style: normal;
         color: var(--ink-2);
-        line-height: 1.5;
-        margin-bottom: var(--space-sm);
+        line-height: var(--ff-line);
     }
 
     .ff__link,
     .ff__note {
         display: block;
     }
+    /* Padding gives a 44px hit area, the negative margin cancels its height,
+       so the links keep the shared line rhythm. */
     .ff__link {
-        min-height: 2.75rem;
-        display: flex;
-        align-items: center;
+        padding-block: 0.375rem;
+        margin-block: -0.375rem;
+        line-height: var(--ff-line);
         color: var(--ink);
         text-decoration: none;
         width: fit-content;
         border-bottom: 1px solid transparent;
         transition: border-color 150ms var(--ease-out);
+    }
+    /* Adjacent negative margins collapse to one, so the second link needs the
+       full overlap itself to stay on the shared rhythm. */
+    .ff__link + .ff__link {
+        margin-top: -0.75rem;
     }
     .ff__link:hover {
         border-color: var(--ff-volt);
@@ -278,6 +288,7 @@ const year = 2026;
     }
 
     .ff__blurb {
+        line-height: var(--ff-line);
         color: var(--ink-2);
         max-width: 24ch;
         margin-bottom: var(--space-sm);
