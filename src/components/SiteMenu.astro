@@ -10,15 +10,13 @@ interface Props {
 const { tone = 'light', class: className = '' } = Astro.props;
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/#about', label: 'About Dr Mintae Kim' },
+  { href: '/#about', label: 'About' },
   { href: '/#find-us', label: 'Find us' },
   { href: '/clinic-notes', label: 'Clinic notes' },
 ];
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const current = (href: string) =>
-  href === '/clinic-notes' ? path.startsWith('/clinic-notes') : href === path;
+const onClinicNotes = Astro.url.pathname.startsWith('/clinic-notes');
+const current = (href: string) => href === '/clinic-notes' && onClinicNotes;
 ---
 
 <div class:list={['menu', `menu--${tone}`, className]} data-site-menu>
@@ -75,7 +73,7 @@ const current = (href: string) =>
     top: calc(100% + 0.5rem);
     right: 0;
     z-index: 20;
-    min-width: 14rem;
+    min-width: 12rem;
     padding: 0.35rem;
     border-radius: 8px;
     opacity: 0;

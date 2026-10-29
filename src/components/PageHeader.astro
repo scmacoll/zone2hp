@@ -15,10 +15,7 @@ const { class: className = '' } = Astro.props;
   <a class="page-header__brand" href="/" aria-label="Zone Two Health and Performance, home">
     <Logo variant="full" />
   </a>
-  <div class="page-header__actions">
-    <a class="page-header__back" href="/">Back to site</a>
-    <SiteMenu />
-  </div>
+  <SiteMenu />
 </header>
 
 <style>
@@ -42,24 +39,5 @@ const { class: className = '' } = Astro.props;
     min-height: 44px;
     color: var(--ink);
     text-decoration: none;
-  }
-  .page-header__actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-  }
-  .page-header__back {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-family: var(--font-mono);
-    font-size: var(--step-label);
-    letter-spacing: var(--track-label);
-    text-transform: uppercase;
-    color: var(--ink-2);
-    text-decoration: none;
-  }
-  .page-header__back:hover {
-    color: var(--accent-deep);
   }
 </style>
