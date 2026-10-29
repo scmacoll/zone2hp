@@ -27,7 +27,12 @@ const { class: className = '' } = Astro.props;
     justify-content: space-between;
     gap: var(--space-sm);
     padding-block: var(--space-sm);
-    padding-inline: var(--section-pad-inline);
+    /* Full-bleed bar, but its contents align with the page container (and the
+       footer) on wide screens rather than hugging the window edges. */
+    padding-inline: max(
+      var(--section-pad-inline),
+      calc((100% - var(--container-max)) / 2 + var(--section-pad-inline))
+    );
     border-bottom: var(--border-hairline);
     background: var(--grad-chrome);
     box-shadow: var(--glow-chrome);

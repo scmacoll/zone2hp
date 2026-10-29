@@ -69,21 +69,22 @@ const year = 2026;
         padding-inline: var(--section-pad-inline);
         display: grid;
         gap: var(--space-md);
-        /* Stacked only when genuinely squeezed. Centred then, so a narrow footer
-           reads as a deliberate block rather than a left-hugging column. */
-        justify-items: center;
-        text-align: center;
+        /* Left-aligned at every width: stacked lists and the hours table scan
+           best from a shared left edge, and it matches the home footer. start,
+           not stretch, because the logo is an SVG sized by height. */
+        justify-items: start;
+        text-align: left;
     }
     .footer__logo {
         --logo-height: clamp(24px, 1vw + 20px, 30px);
         color: var(--ink);
     }
 
-    /* Narrow: one centred stack in reading order (address, hours, contact,
+    /* Narrow: one left-aligned stack in reading order (address, hours, contact,
        copyright, links). */
     .footer__meta {
         display: grid;
-        justify-items: center;
+        justify-items: start;
         gap: var(--space-sm);
         font-size: var(--step-small);
         line-height: 1.45rem;
@@ -120,7 +121,7 @@ const year = 2026;
     .footer__contact {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         /* No gap: the two links run on the same rhythm as the address lines. */
         gap: 0;
     }
@@ -146,7 +147,7 @@ const year = 2026;
     .footer__links {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-start;
         gap: 0 var(--space-md);
     }
     /* Same 44px hit area as the contact links (padding, cancelled by negative
@@ -166,12 +167,6 @@ const year = 2026;
     /* Wide: address, copyright and links down the left; contact and hours down
        the right, all at one tight step. */
     @container (min-width: 34rem) {
-        .footer__inner {
-            /* start, not stretch: the logo is an SVG sized by height, so
-               stretching it would blow it across the footer. */
-            justify-items: start;
-            text-align: left;
-        }
         .footer__meta {
             justify-self: stretch;
             grid-template-columns: 1fr auto;
