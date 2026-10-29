@@ -437,10 +437,14 @@ const year = 2026;
     }
 
     @container (min-width: 34rem) {
+        /* The gap between the two groups never drops below the gap inside
+           them; once they can't fit with it, the links wrap to their own line. */
         .ff__legal {
             flex-direction: row;
+            flex-wrap: wrap;
             align-items: baseline;
             justify-content: space-between;
+            gap: 0.35rem var(--space-md);
             text-align: left;
         }
         .ff__legal-text {
