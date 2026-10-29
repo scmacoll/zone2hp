@@ -29,4 +29,11 @@ const { as: Tag = 'p', tone = 'muted', class: className = '', ...rest } = Astro.
   .eyebrow--accent {
     color: var(--accent-deep);
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css).
+     Eyebrows are labels. */
+  .eyebrow {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

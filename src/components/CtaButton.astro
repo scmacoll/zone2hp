@@ -53,4 +53,11 @@ const { href, variant = 'solid', class: className = '', ...rest } = Astro.props;
     background: var(--stone);
     border-color: var(--chrome-cool);
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). A link
+     styled as a button. */
+  .cta {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

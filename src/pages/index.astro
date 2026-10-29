@@ -1172,6 +1172,17 @@ const showAccounts = bookingConfig.accountsEnabled;
             clip-path: inset(0);
         }
     }
+
+    /* Unselectable UI (see the selection policy in src/styles/global.css). Hero
+       chrome: logo link, language toggle and the button-styled links. */
+    .a2-brand,
+    .a2-lang,
+    .a2-login,
+    .a2-book,
+    .a2-discover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
 </style>
 
 <script>

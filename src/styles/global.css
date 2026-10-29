@@ -33,6 +33,10 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* No grey flash on tap: every control has its own hover, pressed or
+       selected state plus the focus ring below, so the system highlight only
+       doubles it up. Inherited, so this covers the whole page. */
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -81,6 +85,76 @@
     max-width: 100%;
   }
 
+  /* Selection policy, applied by the nature of the element. Controls, form
+     labels, definition-list labels and decoration are UI, not text anyone
+     copies, so a double tap or a drag across them should not start a text
+     selection. Everything else (headings, body copy, the address, phone and
+     email, prices, messages) stays selectable. Class-based cases (links styled
+     as buttons, tiles, eyebrow labels) opt in from their own component styles.
+     Never put this on an input, a textarea or a container wrapping them. */
+  button,
+  summary,
+  select,
+  label,
+  legend,
+  dt,
+  svg,
+  input:is(
+      [type="button"],
+      [type="submit"],
+      [type="reset"],
+      [type="image"],
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="color"],
+      [type="file"]
+    ),
+  [role="button"],
+  [role="tab"],
+  [role="menuitem"],
+  [role="switch"],
+  [role="option"],
+  [aria-hidden="true"] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Text entry is always selectable, even inside a label or a decorative
+     wrapper: older iOS Safari will not take focus or a caret in a field whose
+     ancestor is unselectable. */
+  input:not(
+      [type="button"],
+      [type="submit"],
+      [type="reset"],
+      [type="image"],
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="color"],
+      [type="file"]
+    ),
+  textarea,
+  [contenteditable]:not([contenteditable="false"]) {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* Logos, icons and decorative images are not draggable. */
+  svg,
+  img[alt=""] {
+    -webkit-user-drag: none;
+  }
+
+  /* Pressed state, so every tap shows feedback now the system tap highlight is
+     off (see html above). Most controls also have a hover state, which touch
+     browsers apply on tap, but prose links, logo links, Read more and the
+     booking accordion heads have none. :where keeps this at zero specificity,
+     so a component's own opacity (a disabled button, say) still wins. */
+  :where(a[href], button:not(:disabled), summary, label, [role="button"]):active {
+    opacity: 0.72;
+  }
+
   /* Visible focus for keyboard users (AA). */
   :focus-visible {
     /* Two-tone so the ring survives any backing. A single accent-coloured ring
@@ -104,6 +178,8 @@
     color: var(--paper);
     border-radius: var(--radius-sm);
     transition: top 150ms var(--ease-out);
+    -webkit-user-select: none;
+    user-select: none;
   }
   .skip-link:focus {
     top: var(--space-sm);

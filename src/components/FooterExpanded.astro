@@ -436,6 +436,15 @@ const year = 2026;
             justify-content: flex-start;
         }
     }
+
+    /* Unselectable UI (see the selection policy in src/styles/global.css).
+       Column labels and footer navigation. The address, email and phone stay
+       selectable. */
+    .ff__head,
+    .ff__legal-link {
+        -webkit-user-select: none;
+        user-select: none;
+    }
 </style>
 
 <script>

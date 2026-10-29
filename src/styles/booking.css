@@ -1021,3 +1021,23 @@
     color: var(--ink-2);
     cursor: default;
 }
+
+/* ---- Selection ----------------------------------------------------------
+   Unselectable UI (see the selection policy in src/styles/global.css). Buttons,
+   the runtime date and slot buttons, form labels, legends and the review and
+   funding dt labels are covered there. These are the class-based cases: the
+   step indicator, choice tiles, links styled as buttons, Change and Back, the
+   panel headings that name a part of the booking UI, and small labels. The
+   summary values, prices, review details and messages stay selectable. */
+.book .steps__btn,
+.book .choice,
+.book .btn,
+.book .bsummary__change,
+.book .book__back,
+.book .bsummary__title,
+.book .review__gh,
+.book .timegroup__label,
+.book .pcard__eyebrow {
+    -webkit-user-select: none;
+    user-select: none;
+}

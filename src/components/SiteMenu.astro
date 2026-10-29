@@ -181,6 +181,13 @@ const current = (href: string) => href === '/clinic-notes' && onClinicNotes;
       transition: none;
     }
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). Menu
+     items. The menu button is a <button>, covered globally. */
+  .menu__link {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>
 
 <script>

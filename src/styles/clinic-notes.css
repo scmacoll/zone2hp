@@ -548,3 +548,20 @@
     transform: none;
   }
 }
+
+/* ---- Selection ----------------------------------------------------------
+   Unselectable UI (see the selection policy in src/styles/global.css): the
+   brand label, post cards, the breadcrumb, the tag and read-time label and the
+   Book online button. Titles, prose, the In 30 seconds and References boxes,
+   figure captions and the address line stay selectable. The diagrams are
+   role="img" SVGs with full text alternatives, so like every svg they are not
+   selectable (a drag across SVG text selects in drawing order, not reading
+   order). */
+.cn-brand,
+.cn-card,
+.cn-crumb a,
+.cn-eyebrow,
+.cn .cn-btn {
+  -webkit-user-select: none;
+  user-select: none;
+}

@@ -91,4 +91,12 @@ const heading = fundingType ? `${fundingType.label} bookings` : 'Contact us to b
     font-size: var(--step-small);
     color: var(--ink-2);
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). Field
+     labels and the back link. The phone and email values stay selectable. */
+  .refer__label,
+  .refer__back a {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

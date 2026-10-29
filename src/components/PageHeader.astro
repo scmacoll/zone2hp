@@ -40,4 +40,11 @@ const { class: className = '' } = Astro.props;
     color: var(--ink);
     text-decoration: none;
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). The
+     logo link. */
+  .page-header__brand {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

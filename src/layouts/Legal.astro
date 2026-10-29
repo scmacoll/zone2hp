@@ -124,4 +124,11 @@ const { title, heading, description, eyebrow } = Astro.props;
     font-size: var(--step-small);
     color: var(--ink-2);
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). The
+     next-page link. Its description stays selectable. */
+  .legal__body :global(.legal__next a) {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

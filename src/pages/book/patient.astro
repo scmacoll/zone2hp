@@ -55,4 +55,11 @@ if (!bookingConfig.linksVisible) return Astro.redirect('/');
     font-size: var(--step-small);
     color: var(--ink-2);
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). Back
+     link. */
+  .gate__back a {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

@@ -46,4 +46,11 @@ const { as: Tag = 'span', size = 'md', mark = false, class: className = '', ...r
     vertical-align: super;
     margin-left: 0.12em;
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). The
+     wordmark is a logo. */
+  .wordmark {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

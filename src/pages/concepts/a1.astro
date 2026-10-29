@@ -353,4 +353,13 @@ import FooterExpanded from "../../components/FooterExpanded.astro";
             display: none;
         }
     }
+
+    /* Unselectable UI (see the selection policy in src/styles/global.css). Logo
+       link and the button-styled link (the language control is a button,
+       covered globally). */
+    .a1-brand,
+    .a1-discover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
 </style>

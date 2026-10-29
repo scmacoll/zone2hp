@@ -201,4 +201,11 @@ const prefs = Astro.url.searchParams.get('prefs');
   .btn--ghost:hover {
     color: var(--accent-deep);
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). Card
+     titles here name a panel of the account UI. */
+  .card__title {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

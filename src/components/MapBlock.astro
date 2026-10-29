@@ -176,4 +176,13 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     opacity: 0.55;
     cursor: default;
   }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css).
+     Button-styled links (the disabled Book now is a <button>, covered
+     globally). */
+  .map__directions,
+  .map__book {
+    -webkit-user-select: none;
+    user-select: none;
+  }
 </style>

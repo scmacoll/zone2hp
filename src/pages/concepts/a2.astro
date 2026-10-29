@@ -735,6 +735,15 @@ import videoSrc from "../../asset/video-loop.mp4";
             clip-path: inset(0);
         }
     }
+
+    /* Unselectable UI (see the selection policy in src/styles/global.css). Logo
+       link and the button-styled link (the language controls are buttons,
+       covered globally). */
+    .a2-brand,
+    .a2-discover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
 </style>
 
 <script>
