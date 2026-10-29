@@ -52,16 +52,20 @@ export default defineConfig({
         "default-src 'self'",
         "base-uri 'self'",
         "object-src 'none'",
-        "img-src 'self' data:",
+        "img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com",
         "font-src 'self' data:",
         "media-src 'self'",
         // The keyless Google Maps embed and the Cliniko booking page.
         'frame-src https://www.google.com https://*.cliniko.com',
         // Own endpoints, plus the keep-in-touch form which posts to Formspree.
         "form-action 'self' https://formspree.io",
-        // The same form submits by fetch without leaving the page.
-        "connect-src 'self' https://formspree.io",
+        // The same form submits by fetch without leaving the page. Google
+        // Analytics sends its hits to these hosts.
+        "connect-src 'self' https://formspree.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
       ],
+      scriptDirective: {
+        resources: ["'self'", 'https://www.googletagmanager.com'],
+      },
     },
   },
 

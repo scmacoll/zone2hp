@@ -7,6 +7,7 @@ import '@fontsource-variable/hanken-grotesk';
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 
 interface Props {
   title?: string;
@@ -22,6 +23,9 @@ const {
   description = 'Chiropractic, post-operative rehabilitation, exercise physiology and dry needling in Eastwood, NSW. Book a first visit at Zone Two Health and Performance.',
   noindex = false,
 } = Astro.props;
+
+// Only the live zone2hp.com deploy reports, so dev and preview visits stay out of the numbers.
+const analyticsOn = process.env.VERCEL_ENV === 'production';
 
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
 
@@ -115,6 +119,7 @@ const structuredData = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {analyticsOn && <GoogleAnalytics />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
     <meta name="generator" content={Astro.generator} />

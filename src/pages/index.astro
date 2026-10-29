@@ -328,9 +328,8 @@ const showAccounts = bookingConfig.accountsEnabled;
                 </div>
             </section>
 
-            <section id="find-us" class="a2-find" aria-labelledby="find-us-heading">
-                <h2 id="find-us-heading" class="a2-find__heading">Book an appointment</h2>
-                <MapBlock />
+            <section id="find-us" class="a2-find">
+                <MapBlock title="Book an appointment" />
             </section>
         </main>
 
@@ -1026,41 +1025,27 @@ const showAccounts = bookingConfig.accountsEnabled;
     .a2-find {
         max-width: var(--container-max);
         margin-inline: auto;
-        padding-block: var(--section-pad-block);
+        padding-top: var(--section-pad-block);
+        padding-bottom: var(--space-lg);
         padding-inline: var(--section-pad-inline);
     }
-    .a2-find__heading {
-        font-family: var(--font-display);
-        font-weight: 600;
-        font-size: var(--step-h2);
-        letter-spacing: var(--track-tight);
-        color: var(--ink);
-        margin-bottom: var(--space-md);
-    }
 
-    /* Subtle chrome glow on the map card: the map frame is already a --chrome
-       surface, so the lit-from-above bloom reinforces its metallic quality and
-       lifts it off the warm paper. Decoration only (box-shadow) — no contrast or
-       layout impact. The inner highlight is hidden behind the opaque iframe; the
-       soft outer bloom is what reads on the light page. */
-    .a2-find :global(.map__frame) {
+    /* Subtle chrome glow on the map card, lifting it off the warm paper.
+       Decoration only (box-shadow), no contrast or layout impact. */
+    .a2-find :global(.map__card) {
         box-shadow: var(--glow-chrome);
     }
 
-    /* At mobile + half-laptop the MapBlock stacks (map on top, details below).
-       By default the details are left-aligned and create a sparse left-leaning
-       block with lots of empty space on the right. Centring the eyebrow, h2,
-       address and the "Open in Google Maps" link gives the stack a balanced
-       postcard look that mirrors the panel/footer treatment elsewhere. */
-    @media (max-width: 47rem) {
-        .a2-find :global(.map__details) {
-            align-items: center;
-            text-align: center;
-        }
-        .a2-find :global(.map__link),
-        .a2-find :global(.map__book) {
-            align-self: center;
-        }
+    /* Centred at every width, so the eyebrow, heading, address and Book now
+       read as one block beside (or above) the map. */
+    .a2-find :global(.map__details) {
+        align-items: center;
+        text-align: center;
+    }
+    .a2-find :global(.map__title) {
+        font-size: var(--step-h2);
+        font-weight: 600;
+        letter-spacing: var(--track-tight);
     }
 
     /* ---- Mobile / half-laptop reshuffle (matches the Nivis breakpoint) ------

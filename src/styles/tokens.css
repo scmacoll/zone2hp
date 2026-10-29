@@ -36,6 +36,7 @@
      Sits in the cool-grey family (a saturated --chrome-cool). Carries white text
      at AA (~6.7:1 on --paper-white). */
   --select:       #3E5C76;
+  --select-press: #2F475C; /* hover / pressed */
 
   /* ---- Type families (self-hosted via Fontsource, imported in Base) ---- */
   --font-display: 'Archivo Variable', Archivo, system-ui, sans-serif;

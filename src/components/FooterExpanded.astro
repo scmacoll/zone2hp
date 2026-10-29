@@ -377,23 +377,19 @@ const year = 2026;
         color: var(--ink);
     }
 
-    /* Two groups, not three loose children: the copyright and place belong
-       together, and Privacy sits opposite them. As three flex items,
-       space-between stranded the place line awkwardly in the middle. */
+    /* Styled like the simple Footer's bottom row: body type in sentence case,
+       the copyright group on the left and Privacy opposite, centred and stacked
+       only when the footer is genuinely narrow. */
     .ff__legal {
         position: relative;
         z-index: 2;
-        margin-top: clamp(0.5rem, 0.2rem + 1vw, 1.25rem);
-        padding-top: var(--space-sm);
-        border-top: 1px solid var(--chrome-line);
+        margin-top: var(--space-md);
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 0.35rem;
-        font-family: var(--font-mono);
-        font-size: var(--step-label);
-        letter-spacing: var(--track-label);
-        text-transform: uppercase;
+        text-align: center;
+        font-size: var(--step-small);
         color: var(--ink-2);
     }
     .ff__legal p {
@@ -403,27 +399,34 @@ const year = 2026;
        UNDER the copyright only when the two no longer fit, not at a fixed width. */
     .ff__legal-text {
         display: flex;
-        flex-direction: row;
         flex-wrap: wrap;
+        justify-content: center;
         align-items: baseline;
         gap: 0.2rem var(--space-md);
     }
-    /* The legal bar is dense, so this link keeps the bar's own type rather than
-       reusing .ff__link (whose 44px min-height is for the tall link columns).
-       The tap target is widened with padding instead. */
+    /* 44px tap target; the negative margin keeps it from adding height. */
     .ff__legal-link {
         display: inline-flex;
         align-items: center;
         min-height: 2.75rem;
-        /* Inherited from .ff__legal, so it has to be turned off explicitly. */
-        text-transform: none;
-        color: var(--ink-2);
+        margin-block: -0.6rem;
+        color: var(--ink);
         text-decoration: none;
-        border-bottom: 1px solid transparent;
     }
     .ff__legal-link:hover {
-        color: var(--ink);
-        border-bottom-color: var(--ff-volt);
+        color: var(--accent-deep);
+    }
+
+    @container (min-width: 34rem) {
+        .ff__legal {
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: space-between;
+            text-align: left;
+        }
+        .ff__legal-text {
+            justify-content: flex-start;
+        }
     }
 </style>
 

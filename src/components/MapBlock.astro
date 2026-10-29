@@ -8,36 +8,42 @@ import Eyebrow from './Eyebrow.astro';
 
 interface Props {
   class?: string;
+  title?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = '', title = 'Eastwood, NSW' } = Astro.props;
 
 const address1 = 'Suite 104 / 2 Rowe St,';
 const address2 = 'Eastwood, NSW 2122';
 const query = 'Suite 104/2 Rowe St, Eastwood NSW 2122';
 const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
-const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('2 Rowe St, Eastwood NSW 2122')}`;
 ---
 
 <section class:list={['map', className]} aria-labelledby="map-heading">
   <div class="map__grid">
-    <div class="map__frame">
-      <iframe
-        title="Map showing Zone Two Health and Performance at Suite 104 / 2 Rowe St, Eastwood NSW 2122"
-        src={mapSrc}
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="map__card">
+      <div class="map__frame">
+        <iframe
+          title="Map showing Zone Two Health and Performance at Suite 104 / 2 Rowe St, Eastwood NSW 2122"
+          src={mapSrc}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <a class="map__directions" href={directionsLink} target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M3 11 22 2l-9 19-2-8-8-2Z" fill="currentColor"></path>
+        </svg>
+        Get directions
+      </a>
     </div>
 
     <div class="map__details">
       <Eyebrow>Find us in Eastwood</Eyebrow>
-      <h2 id="map-heading" class="map__title">Eastwood, NSW</h2>
+      <h2 id="map-heading" class="map__title">{title}</h2>
       <address class="map__address">
         {address1}<br />{address2}
       </address>
-      <a class="map__link" href={mapsLink} target="_blank" rel="noopener noreferrer">
-        Open in Google Maps
-      </a>
       {
         bookingConfig.linksVisible ? (
           <a class="map__book" href="/book">
@@ -63,26 +69,66 @@ const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
     display: grid;
     gap: var(--space-md);
   }
+  /* Stacked, the details lead so Book now comes before the map. */
+  .map__details {
+    order: -1;
+  }
 
   @container (min-width: 38rem) {
     .map__grid {
       grid-template-columns: 1.5fr 1fr;
-      align-items: stretch;
+    }
+    .map__details {
+      order: 0;
+      align-self: center;
     }
   }
 
-  .map__frame {
+  /* Map and Get directions are one object: the bar is the card's footer. */
+  .map__card {
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     border: var(--border-hairline);
     border-radius: var(--radius-md);
     background: var(--chrome);
   }
+  .map__frame {
+    flex: 1;
+  }
   .map__frame iframe {
+    display: block;
     width: 100%;
     height: 100%;
     min-height: 16rem;
     aspect-ratio: 16 / 10;
     border: 0;
+  }
+  .map__directions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0 1rem;
+    background: var(--select);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    transition: background-color 150ms var(--ease-out);
+  }
+  .map__directions:hover {
+    background: var(--select-press);
+  }
+  /* The card clips overflow, so the ring sits inside the bar in white. */
+  .map__directions:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -5px;
+    box-shadow: none;
   }
 
   .map__details {
@@ -102,8 +148,7 @@ const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
   /* Deliberately the same object as the header's Book now: same fill, label
      colour, radius, weight and height, so the two read as one control. */
   .map__book {
-    align-self: start;
-    margin-top: var(--space-sm);
+    margin-top: var(--space-xs);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -130,21 +175,5 @@ const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
   .map__book[disabled] {
     opacity: 0.55;
     cursor: default;
-  }
-  .map__link {
-    align-self: start;
-    min-height: 2.75rem;
-    display: inline-flex;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: var(--step-label);
-    letter-spacing: var(--track-label);
-    text-transform: uppercase;
-    color: var(--accent-deep);
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent);
-  }
-  .map__link:hover {
-    color: var(--accent-press);
   }
 </style>
