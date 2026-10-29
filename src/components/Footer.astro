@@ -1,16 +1,15 @@
 ---
 // Light footer: wordmark, address, contact, copyright. Reflows from a row to a
-// stack on its own container width. `hours` adds the opening hours under the
-// address, as part of the same block.
+// stack on its own container width. Used by every white page (privacy,
+// account, booking, Clinic Notes); the home page has its own FooterExpanded.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
 interface Props {
     class?: string;
-    hours?: boolean;
 }
 
-const { class: className = "", hours = false } = Astro.props;
+const { class: className = "" } = Astro.props;
 
 const email = "info@zone2hp.com";
 const phoneDisplay = "0450 222 122";
@@ -27,18 +26,16 @@ const year = 2026;
             <address class="footer__address">
                 Suite 104, Level 1, 2 Rowe Street,<br />Eastwood, NSW 2122
             </address>
-            {
-                hours && (
-                    <dl class="footer__hours" aria-label="Opening hours">
-                        {openingHours.map(([days, times]) => (
-                            <div class="footer__hours-row">
-                                <dt>{days}</dt>
-                                <dd>{times}</dd>
-                            </div>
-                        ))}
-                    </dl>
-                )
-            }
+            <dl class="footer__hours" aria-label="Opening hours">
+                {
+                    openingHours.map(([days, times]) => (
+                        <div class="footer__hours-row">
+                            <dt>{days}</dt>
+                            <dd>{times}</dd>
+                        </div>
+                    ))
+                }
+            </dl>
             </div>
             <div class="footer__contact">
                 <a href={`mailto:${email}`}>{email}</a>
@@ -210,7 +207,7 @@ const year = 2026;
         }
         /* The hours sit as close to the copyright row as to the address
            above them, so the three read as one evenly spaced stack. */
-        .footer__inner:has(.footer__hours) .footer__legal {
+        .footer__legal {
             margin-top: calc(0.35rem - var(--space-md));
         }
         .footer__legal {
