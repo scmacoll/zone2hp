@@ -143,6 +143,7 @@ const structuredData = {
     <link rel="apple-touch-icon" href="/images/logo-square.png" />
 
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <slot name="head" />
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

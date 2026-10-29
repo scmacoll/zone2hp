@@ -1,0 +1,108 @@
+---
+// Shell for one Clinic Notes post. The page supplies the client's copy:
+//   default slot  the prose column
+//   slot "side"   the In 30 seconds card, the figure and the See your GP box
+//   slot "refs"   the <li> items of the references list
+// Everything else (chrome, eyebrow, H1, standfirst, grid, CTA, disclaimer,
+// links to the other posts, Article structured data) lives here.
+//
+// Styles are a plain stylesheet rather than a scoped <style>: slotted content
+// carries the page's scope, not this layout's, and the SVG diagrams need the
+// same rules. Everything in it sits under the .cn class.
+import '@fontsource-variable/archivo/standard.css';
+import '../styles/clinic-notes.css';
+import Base from './Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+import ClinicNotesClose from '../components/ClinicNotesClose.astro';
+import { clinicNotes, getClinicNote } from '../lib/clinic-notes';
+
+interface Props {
+  slug: string;
+}
+
+const post = getClinicNote(Astro.props.slug);
+const others = clinicNotes.filter((n) => n.slug !== post.slug);
+
+// Same computation as Base.astro's canonical, so the two always agree.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
+
+// Article only. No review or rating markup (s133 of the National Law, see
+// COMPLIANCE.md). Author and publisher point at the nodes Base.astro declares.
+const articleData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.heading,
+  description: post.standfirst,
+  datePublished: post.datePublished,
+  inLanguage: 'en-AU',
+  mainEntityOfPage: canonical,
+  author: {
+    '@type': 'Person',
+    '@id': 'https://zone2hp.com/#practitioner',
+    name: 'Dr Mintae Kim',
+    jobTitle: 'Chiropractor',
+  },
+  publisher: { '@id': 'https://zone2hp.com/#organization' },
+};
+---
+
+<Base title={post.title} description={post.standfirst}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleData)} />
+
+  <PageHeader />
+
+  <main id="main" class="cn">
+    <div class="cn-wrap cn-page">
+      <nav class="cn-crumb" aria-label="Breadcrumb">
+        <a href="/clinic-notes"><span aria-hidden="true">&larr;</span> Clinic Notes</a>
+      </nav>
+
+      <article class="cn-article">
+        <div class="cn-eyebrow">
+          <span class="cn-tag">{post.tag}</span><span>{post.readTime}</span>
+        </div>
+        <h1 class="cn-title">{post.heading}</h1>
+        <p class="cn-stand">{post.standfirst}</p>
+
+        <div class="cn-grid">
+          <div class="cn-prose">
+            <slot />
+          </div>
+          <div class="cn-side">
+            <slot name="side" />
+          </div>
+        </div>
+
+        <div class="cn-refs">
+          <h2>References</h2>
+          <ol>
+            <slot name="refs" />
+          </ol>
+        </div>
+      </article>
+
+      <hr class="cn-trail" />
+
+      <nav class="cn-more" aria-labelledby="cn-more-heading">
+        <h2 id="cn-more-heading" class="cn-more__heading">More clinic notes</h2>
+        <ul class="cn-cards cn-cards--three">
+          {
+            others.map((n) => (
+              <li>
+                <a class="cn-card" href={`/clinic-notes/${n.slug}`}>
+                  <small>{n.tag}</small>
+                  <span class="cn-card__title">{n.cardTitle}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <ClinicNotesClose />
+    </div>
+  </main>
+
+  <Footer />
+</Base>

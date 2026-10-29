@@ -1,0 +1,27 @@
+---
+// Closing block for the Clinic Notes pages: the client's Book online button,
+// the address/phone line and the general-information disclaimer. Styled by
+// src/styles/clinic-notes.css (the .cn scope), so it only belongs on those pages.
+//
+// The Book button follows the same switch as every other booking link on the
+// site: /book redirects home while PUBLIC_BOOKING_LINKS_VISIBLE is off, so the
+// button would otherwise lead nowhere.
+import { bookingConfig } from '../lib/booking/config';
+---
+
+<div class="cn-cta">
+  {bookingConfig.linksVisible && <a class="cn-btn" href="/book">Book online</a>}
+  <p class="cn-cta__line">
+    Suite 104, Level 1, 2 Rowe Street, Eastwood, NSW 2122 · <a href="tel:0450222122"
+      >0450 222 122</a
+    > · Consultations in English and <span lang="ko">한국어</span>
+  </p>
+</div>
+
+<div class="cn-disclaimer">
+  <p>Zone Two Health and Performance. Dr Mintae Kim, Chiropractor.</p>
+  <p>
+    This information is general and educational, and isn't a substitute for an individual
+    assessment. If you have symptoms, see a registered health practitioner.
+  </p>
+</div>

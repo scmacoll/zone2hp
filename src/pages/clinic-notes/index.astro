@@ -1,0 +1,71 @@
+---
+// Clinic Notes index: the client's contour-line hero and table of contents,
+// then a short teaser for each post. Copy is the client's, verbatim, from
+// zone-two-clinic-notes.html (the index description is that file's meta
+// description). Styles: src/styles/clinic-notes.css.
+import '@fontsource-variable/archivo/standard.css';
+import '../../styles/clinic-notes.css';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import ClinicNotesClose from '../../components/ClinicNotesClose.astro';
+import { clinicNotes } from '../../lib/clinic-notes';
+---
+
+<Base
+  title="Clinic Notes | Zone Two Eastwood"
+  description="Evidence-based reads from Zone Two Health and Performance, Eastwood: De Quervain's tenosynovitis, low back pain and the hips, dry needling, and zone 2 training."
+>
+  <PageHeader />
+
+  <main id="main" class="cn">
+    <header class="cn-hero">
+      <div class="cn-wrap cn-hero__inner">
+        <p class="cn-brand"><i aria-hidden="true"></i>Zone Two Health and Performance · Eastwood</p>
+        <h1 class="cn-hero__title">Clinic<br /><span>Notes</span></h1>
+        <p class="cn-hero__intro">
+          Short, evidence-based reads on the problems we see every week. Written by Dr Mintae Kim,
+          Chiropractor. Slow is fast.
+        </p>
+        <nav aria-label="Posts">
+          <ul class="cn-cards">
+            {
+              clinicNotes.map((n) => (
+                <li>
+                  <a class="cn-card" href={`/clinic-notes/${n.slug}`}>
+                    <small>{n.tag}</small>
+                    <span class="cn-card__title">{n.cardTitle}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="cn-wrap cn-index">
+      {
+        clinicNotes.map((n) => (
+          <>
+            <article class="cn-teaser">
+              <div class="cn-eyebrow">
+                <span class="cn-tag">{n.tag}</span>
+                <span>{n.readTime}</span>
+              </div>
+              <h2 class="cn-teaser__title">
+                <a href={`/clinic-notes/${n.slug}`}>{n.heading}</a>
+              </h2>
+              <p class="cn-stand">{n.standfirst}</p>
+            </article>
+            <hr class="cn-trail" />
+          </>
+        ))
+      }
+
+      <ClinicNotesClose />
+    </div>
+  </main>
+
+  <Footer />
+</Base>

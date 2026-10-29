@@ -1,0 +1,87 @@
+---
+// Client copy, reproduced verbatim from zone-two-clinic-notes.html. Only the
+// markup changed: subheads and box headings are H2 (the post title is the H1),
+// class names are the .cn ones, the diagram's inline transform-origins are
+// classes (CSP), and its colours point at the site tokens.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+---
+
+<ClinicNote slug="de-quervains-tenosynovitis">
+  <p>Two tendons that move your thumb, abductor pollicis longus and extensor pollicis brevis, slide through a narrow tunnel on the thumb side of the wrist. When that tunnel's lining thickens, the tendons stop gliding smoothly and every pinch or twist rubs. It's most common in people in their 40s and 50s, more common in women, and often shows up in the weeks after having a baby.</p>
+  <h2>How we check it</h2>
+  <p>We start with how it began and what aggravates it, then examine the wrist and thumb. A simple test (tucking the thumb into the palm and gently tilting the wrist towards the little finger) usually reproduces the pain. Scans are rarely needed.</p>
+  <h2>What helps</h2>
+  <ul>
+    <li>Changing how you grip, lift and carry for a while, so the tendons can settle</li>
+    <li>A thumb splint, especially overnight</li>
+    <li>Graded thumb and wrist strengthening once pain allows</li>
+    <li>A corticosteroid injection from your GP or specialist when symptoms are significant</li>
+  </ul>
+  <blockquote><p>"These findings suggest that administration of CSI followed by 3 to 4 weeks immobilization should be considered as a first-line treatment for patients with DQT."</p><cite>Challoumas et al., JAMA Network Open, 2023 [2]</cite></blockquote>
+  <p>That's why care here works alongside your GP. We'll help you manage load, fit a splint and rebuild strength, and we'll tell you if an injection referral is the smarter next step.</p>
+  <blockquote><p>"Most patients with De Quervain's tenosynovitis do very well."</p><cite>American Academy of Orthopaedic Surgeons, OrthoInfo [1]</cite></blockquote>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>In 30 seconds</h2><ul>
+      <li>Two thumb tendons are irritated where they pass through a tight tunnel at the wrist.</li>
+      <li>Rest from aggravating grips, a splint and strengthening are the foundation.</li>
+      <li>Injection plus 3 to 4 weeks of splinting has the strongest evidence.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 400" role="img" aria-labelledby="dq-t">
+        <title id="dq-t">Back of a right hand with the thumb on top. The two thumb tendons run along the thumb side of the wrist, where De Quervain's pain is felt. Below, a fist with the thumb tucked in tilts towards the little finger, a movement that is typically painful.</title>
+        <rect x="0" y="0" width="420" height="400" class="s-surface"/>
+        <path d="M0 122 L150 132 L150 198 L0 210 Z" class="s-skin"/>
+        <rect x="138" y="128" width="150" height="74" rx="28" class="s-skin"/>
+        <rect x="262" y="128" width="116" height="19" rx="9.5" class="s-skin"/>
+        <rect x="262" y="149" width="128" height="19" rx="9.5" class="s-skin"/>
+        <rect x="262" y="170" width="116" height="18" rx="9" class="s-skin"/>
+        <rect x="256" y="189" width="92" height="15" rx="7.5" class="s-skin"/>
+        <g stroke="var(--cn-skin-line)" stroke-width="1.4" stroke-linecap="round">
+        <line x1="322" y1="131" x2="322" y2="144"/><line x1="356" y1="131" x2="356" y2="144"/>
+        <line x1="330" y1="152" x2="330" y2="165"/><line x1="366" y1="152" x2="366" y2="165"/>
+        <line x1="322" y1="173" x2="322" y2="185"/><line x1="356" y1="173" x2="356" y2="185"/>
+        <line x1="306" y1="192" x2="306" y2="201"/><line x1="332" y1="192" x2="332" y2="201"/>
+        </g>
+        <line x1="188" y1="142" x2="238" y2="98" stroke="var(--cn-skin)" stroke-width="27" stroke-linecap="round"/>
+        <line x1="238" y1="98" x2="280" y2="70" stroke="var(--cn-skin)" stroke-width="22" stroke-linecap="round"/>
+        <path d="M270 62 q10 -4 16 4" stroke="var(--cn-skin-line)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M30 128 C 100 132, 160 134, 196 128 C 216 122, 232 104, 274 74" stroke="var(--ink)" stroke-width="2.4" fill="none" opacity=".7" stroke-linecap="round"/>
+        <path d="M30 135 C 100 139, 162 141, 200 136 C 222 130, 240 112, 282 80" stroke="var(--ink)" stroke-width="2.4" fill="none" opacity=".45" stroke-linecap="round"/>
+        <circle class="pulse" cx="176" cy="134" r="24" fill="var(--cn-orange)" opacity=".35"/>
+        <circle cx="176" cy="134" r="9" fill="var(--cn-orange)"/>
+        <line x1="176" y1="124" x2="150" y2="62" stroke="var(--cn-orange)" stroke-width="1.5"/>
+        <text x="40" y="38" class="big s-ink">Pain usually here</text>
+        <text x="40" y="56" class="s-muted">Thumb side of the wrist</text>
+        <text x="296" y="44" class="lbl s-ink">THUMB</text>
+        <text x="24" y="232" class="lbl s-muted">FOREARM</text>
+        <text x="300" y="226" class="lbl s-muted">FINGERS</text>
+        <text x="50" y="118" class="lbl s-muted">2 THUMB TENDONS</text>
+        <line x1="16" y1="256" x2="404" y2="256" stroke="var(--chrome-line)" stroke-width="1"/>
+        <text x="16" y="282" class="big s-ink">A typically painful movement</text>
+        <rect x="20" y="318" width="96" height="36" rx="10" class="s-skin"/>
+        <g class="tilt origin-fist">
+        <rect x="108" y="306" width="62" height="56" rx="18" class="s-skin"/>
+        <path d="M120 318 Q140 312 156 322" stroke="var(--cn-skin-line)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <g stroke="var(--cn-skin-line)" stroke-width="1.4"><line x1="168" y1="324" x2="160" y2="324"/><line x1="169" y1="336" x2="160" y2="336"/><line x1="168" y1="348" x2="160" y2="348"/></g>
+        </g>
+        <circle class="pulse" cx="112" cy="318" r="12" fill="var(--cn-orange)" opacity=".4"/>
+        <path d="M184 318 q14 16 2 34 M180 346 l6 7 l6 -8" stroke="var(--cn-orange)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="208" y="316" class="s-ink">Thumb tucked in a fist,</text>
+        <text x="208" y="334" class="s-ink">wrist tilted towards the</text>
+        <text x="208" y="352" class="s-ink">little finger.</text>
+        <text x="208" y="376" class="lbl s-muted">IF THIS HURTS, GET IT CHECKED</text>
+      </svg>
+      </div>
+      <figcaption>Back of the right hand. Two thumb tendons share a narrow tunnel on the thumb side of the wrist, which is where the pain is felt. Simplified illustration; feeling pain here doesn't confirm the diagnosis.</figcaption>
+    </figure>
+    <p class="cn-gp"><b>See your GP</b> if the wrist is hot, red and swollen, if you've had a fall onto the hand, or if you have numbness or tingling.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>American Academy of Orthopaedic Surgeons. <a href="https://www.orthoinfo.org/diseases--conditions/de-quervains-tendinosis" target="_blank" rel="noopener">De Quervain's Tendinosis</a>. OrthoInfo.</li>
+    <li>Challoumas D, Ramasubbu R, Rooney E, et al. Management of de Quervain tenosynovitis: a systematic review and network meta-analysis. JAMA Netw Open. 2023;6(10):e2337001. <a href="https://doi.org/10.1001/jamanetworkopen.2023.37001" target="_blank" rel="noopener">doi:10.1001/jamanetworkopen.2023.37001</a></li>
+    <li>Peters-Veluthamaningal C, van der Windt DA, Winters JC, Meyboom-de Jong B. Corticosteroid injection for de Quervain's tenosynovitis. Cochrane Database Syst Rev. 2009;(3):CD005616. <a href="https://doi.org/10.1002/14651858.CD005616.pub2" target="_blank" rel="noopener">doi:10.1002/14651858.CD005616.pub2</a></li>
+  </Fragment>
+</ClinicNote>

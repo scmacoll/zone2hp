@@ -1,0 +1,91 @@
+---
+// Client copy, reproduced verbatim from zone-two-clinic-notes.html. Only the
+// markup changed: subheads and box headings are H2 (the post title is the H1),
+// class names are the .cn ones, the diagram's inline transform-origins are
+// classes (CSP), and its colours point at the site tokens.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+---
+
+<ClinicNote slug="low-back-pain-and-hips">
+  <p>Low back pain is incredibly common. The World Health Organization estimates about 1 in 13 people worldwide were living with it in 2020.</p>
+  <blockquote><p>"Low back pain is the leading cause of disability globally."</p><cite>World Health Organization, 2023 [1]</cite></blockquote>
+  <p>One muscle we look at closely is gluteus medius, on the side of the hip. Each time you stand on one leg (every step you walk or run), it holds your pelvis level. If it's weak or slow to switch on, the pelvis can dip and the lower back takes extra strain.</p>
+  <blockquote><p>"Gluteus medius weakness and gluteal muscle tenderness are common symptoms in people with chronic non-specific LBP."</p><cite>Cooper et al., European Spine Journal, 2016 [2]</cite></blockquote>
+  <h2>What the research actually says</h2>
+  <p>People with back pain tend to have weaker hip muscles, and adding hip strengthening to a back rehab program has improved pain and disability in several trials [4]. But weakness and pain are linked, and that doesn't prove one causes the other. The reviewers are careful about this too:</p>
+  <blockquote><p>"Further research is needed before this can be confidently recommended."</p><cite>Sadler et al., BMC Musculoskeletal Disorders, 2019 [3]</cite></blockquote>
+  <p>So we don't blame everything on "imbalances". We test how your hips, pelvis and back move and share load, then build strength where it's missing, as one part of a plan that also covers activity, sleep, work set-up and confidence in moving.</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>In 30 seconds</h2><ul>
+      <li>Gluteus medius keeps your pelvis level every time you're on one leg.</li>
+      <li>People with low back pain often have weaker, more tender hip muscles.</li>
+      <li>Hip strength work is a useful part of back rehab, not the whole answer.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 330" role="img" aria-labelledby="hip-t">
+        <title id="hip-t">Two people seen from behind, each standing on the left leg. On the left, strong hip muscles keep the pelvis level. On the right, weak hip muscles let the pelvis drop on the lifted-leg side, loading the lower back.</title>
+        <rect x="0" y="0" width="420" height="330" class="s-surface"/>
+        <line x1="12" y1="274" x2="408" y2="274" stroke="var(--chrome-line)" stroke-width="1.5"/>
+        <line x1="210" y1="8" x2="210" y2="300" stroke="var(--chrome-line)" stroke-width="1"/>
+        <circle cx="100" cy="34" r="14" class="s-skin"/>
+        <rect x="95" y="44" width="10" height="14" class="s-skin"/>
+        <path d="M66 62 Q100 50 134 62 L126 142 L74 142 Z" class="s-skin"/>
+        <line x1="69" y1="66" x2="59" y2="138" stroke="var(--cn-skin)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="131" y1="66" x2="141" y2="138" stroke="var(--cn-skin)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="100" y1="70" x2="100" y2="128" stroke="var(--cn-skin-line)" stroke-width="1.5"/>
+        <line x1="86" y1="160" x2="87" y2="214" stroke="var(--cn-skin)" stroke-width="18" stroke-linecap="round"/>
+        <line x1="87" y1="214" x2="88" y2="264" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        <ellipse cx="87" cy="269" rx="12" ry="4.5" class="s-skin"/>
+        <line x1="44" y1="130" x2="156" y2="130" stroke="var(--ink-2)" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <g class="origin-hip-left">
+        <line x1="114" y1="160" x2="135" y2="210" stroke="var(--cn-skin)" stroke-width="18" stroke-linecap="round"/>
+        <line x1="135" y1="210" x2="156" y2="257" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        <ellipse cx="159" cy="262" rx="12" ry="4.5" class="s-skin" transform="rotate(22 159 262)"/>
+        <path d="M74 128 L126 128 Q134 150 129 165 Q100 175 71 165 Q66 150 74 128 Z" class="s-skin"/>
+        <line x1="100" y1="150" x2="100" y2="170" stroke="var(--cn-skin-line)" stroke-width="1.5"/>
+        <line x1="70" y1="130" x2="130" y2="130" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <path d="M70 132 Q84 126 94 134 L80 160 Q70 150 70 132 Z" fill="var(--cn-orange)" opacity=".95"/>
+        <circle cx="320" cy="34" r="14" class="s-skin"/>
+        <rect x="315" y="44" width="10" height="14" class="s-skin"/>
+        <path d="M286 62 Q320 50 354 62 L346 142 L294 142 Z" class="s-skin"/>
+        <line x1="289" y1="66" x2="279" y2="138" stroke="var(--cn-skin)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="351" y1="66" x2="361" y2="138" stroke="var(--cn-skin)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="320" y1="70" x2="320" y2="128" stroke="var(--cn-skin-line)" stroke-width="1.5"/>
+        <line x1="306" y1="160" x2="307" y2="214" stroke="var(--cn-skin)" stroke-width="18" stroke-linecap="round"/>
+        <line x1="307" y1="214" x2="308" y2="264" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        <ellipse cx="307" cy="269" rx="12" ry="4.5" class="s-skin"/>
+        <line x1="264" y1="130" x2="376" y2="130" stroke="var(--ink-2)" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <g class="drop origin-hip-right">
+        <line x1="334" y1="160" x2="355" y2="210" stroke="var(--cn-skin)" stroke-width="18" stroke-linecap="round"/>
+        <line x1="355" y1="210" x2="376" y2="257" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        <ellipse cx="379" cy="262" rx="12" ry="4.5" class="s-skin" transform="rotate(22 379 262)"/>
+        <path d="M294 128 L346 128 Q354 150 349 165 Q320 175 291 165 Q286 150 294 128 Z" class="s-skin"/>
+        <line x1="320" y1="150" x2="320" y2="170" stroke="var(--cn-skin-line)" stroke-width="1.5"/>
+        <line x1="290" y1="130" x2="350" y2="130" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <path d="M290 132 Q304 126 314 134 L300 160 Q290 150 290 132 Z" fill="var(--cn-orange)" opacity=".35"/>
+        <ellipse class="pulse" cx="320" cy="122" rx="20" ry="13" fill="var(--cn-orange)" opacity=".35"/>
+        <path d="M392 136 l0 22 M386 151 l6 7 l6 -7" stroke="var(--cn-orange)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <text x="100" y="296" text-anchor="middle" class="big s-ink">Pelvis stays level</text>
+        <text x="100" y="314" text-anchor="middle" class="lbl s-muted">STRONG GLUTE MED</text>
+        <text x="320" y="296" text-anchor="middle" class="big s-ink">Pelvis drops</text>
+        <text x="320" y="314" text-anchor="middle" class="lbl s-muted">WEAK GLUTE MED</text>
+        <text x="14" y="20" class="lbl s-muted">VIEW FROM BEHIND</text>
+        <text x="406" y="20" text-anchor="end" class="lbl s-muted">STANDING ON LEFT LEG</text>
+      </svg>
+      </div>
+      <figcaption>Seen from behind, standing on the left leg. Gluteus medius (orange) holds the pelvis level. When it can't, the lifted-leg side drops and the lower back works harder. Simplified illustration.</figcaption>
+    </figure>
+    <p class="cn-gp"><b>See your GP urgently</b> if back pain comes with numbness around the groin or buttocks, new bladder or bowel changes, leg weakness, fever, or unexplained weight loss.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>World Health Organization. <a href="https://www.who.int/news/item/07-12-2023-who-releases-guidelines-on-chronic-low-back-pain" target="_blank" rel="noopener">WHO releases guidelines on chronic low back pain</a>. 7 December 2023.</li>
+    <li>Cooper NA, Scavo KM, Strickland KJ, et al. Prevalence of gluteus medius weakness in people with chronic low back pain compared to healthy controls. Eur Spine J. 2016;25:1258–1265. <a href="https://doi.org/10.1007/s00586-015-4027-6" target="_blank" rel="noopener">doi:10.1007/s00586-015-4027-6</a></li>
+    <li>Sadler S, Cassidy S, Peterson B, Spink M, Chuter V. Gluteus medius muscle function in people with and without low back pain: a systematic review. BMC Musculoskelet Disord. 2019;20:463. <a href="https://doi.org/10.1186/s12891-019-2833-4" target="_blank" rel="noopener">doi:10.1186/s12891-019-2833-4</a></li>
+    <li>Santamaría G, Rodríguez I, Rodríguez-Pérez V, et al. Effect of hip muscle strengthening exercises on pain and disability in patients with non-specific low back pain: a systematic review. Sports. 2023;11(9):167. <a href="https://doi.org/10.3390/sports11090167" target="_blank" rel="noopener">doi:10.3390/sports11090167</a></li>
+  </Fragment>
+</ClinicNote>

@@ -1,0 +1,564 @@
+/* Clinic Notes (/clinic-notes and its four posts).
+   A port of the client's "trail-map journal" page (zone-two-clinic-notes.html)
+   into the site's own system: site tokens for paper, stone, ink and lines, the
+   self-hosted Archivo with its width axis for the condensed display headlines,
+   Hanken Grotesk for body and Geist Mono for labels. Light theme only.
+
+   Everything is scoped under .cn (the <main> of these pages). Imported only by
+   the Clinic Notes layout and index, together with
+   @fontsource-variable/archivo/standard.css, which carries the wdth axis
+   (font-stretch 62% to 125%) that the default Archivo import lacks.
+
+   No inline style="" anywhere: the CSP has no 'unsafe-inline', so the SVG
+   transform-origins the client set inline live here as classes instead. */
+
+.cn {
+  /* Fills only. #FF8419 is the home page's button orange (--concept-volt,
+     which is scoped to the home page, so it is restated here). Charcoal text
+     on it measures ~6.9:1. Never use it for text on paper (~2.3:1): orange
+     text is --accent-deep. */
+  --cn-orange: #ff8419;
+  --cn-orange-press: #e66a0f;
+  --cn-wash: #ffe8da;
+  --cn-surface: #ffffff;
+  --cn-contour: rgba(28, 29, 31, 0.08);
+  --cn-skin: #e6d9cd;
+  --cn-skin-line: #c9b6a6;
+  --cn-condensed: 'Archivo Variable', 'Arial Narrow', Arial, sans-serif;
+  --cn-measure: 66ch;
+  --cn-radius: 10px;
+  --cn-radius-lg: 14px;
+
+  display: block;
+  line-height: 1.65;
+}
+
+.cn a {
+  color: var(--accent-deep);
+  text-underline-offset: 0.2em;
+}
+
+.cn-wrap {
+  max-width: 67.5rem;
+  margin-inline: auto;
+  padding-inline: var(--section-pad-inline);
+}
+
+/* ---- Index hero: contour lines on stone ---------------------------------- */
+.cn-hero {
+  container: cn-hero / inline-size;
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-radial-gradient(ellipse at 82% 30%, transparent 0 22px, var(--cn-contour) 22px 23.5px),
+    repeating-radial-gradient(ellipse at 10% 110%, transparent 0 30px, var(--cn-contour) 30px 31.5px),
+    var(--stone);
+  border-bottom: var(--border-hairline);
+}
+.cn-hero__inner {
+  display: grid;
+  gap: 1.125rem;
+  padding-block: clamp(2.5rem, 2rem + 2.5vw, 3.5rem) clamp(2rem, 1.6rem + 2vw, 2.75rem);
+}
+.cn-brand {
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  font-family: var(--cn-condensed);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cn-brand i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cn-orange);
+}
+.cn-hero__title {
+  margin: 0;
+  font-family: var(--cn-condensed);
+  font-stretch: 62%;
+  font-weight: 900;
+  font-size: clamp(3.5rem, 1rem + 11vw, 8rem);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.cn-hero__title span {
+  color: var(--accent-deep);
+}
+.cn-hero__intro {
+  max-width: 52ch;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  color: var(--ink-2);
+}
+
+/* ---- Post cards (index table of contents, and More clinic notes) -------- */
+.cn-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.125rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+@container cn-hero (min-width: 46rem) {
+  .cn-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.cn-card {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+  height: 100%;
+  min-height: 2.75rem;
+  padding: 0.875rem 0.875rem 1rem;
+  background: var(--cn-surface);
+  border: var(--border-hairline);
+  border-radius: var(--cn-radius);
+  text-decoration: none;
+  transition:
+    transform 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out);
+}
+.cn .cn-card {
+  color: var(--ink);
+  text-decoration: none;
+}
+.cn-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--cn-orange);
+}
+.cn-card small {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+.cn-card__title {
+  font-family: var(--cn-condensed);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* ---- Index: one teaser per post ----------------------------------------- */
+.cn-index {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  padding-block: clamp(2.5rem, 2rem + 2.5vw, 3.5rem) clamp(3rem, 2.5rem + 3vw, 4.5rem);
+}
+.cn-teaser {
+  display: grid;
+  gap: 1rem;
+}
+.cn-teaser__title {
+  margin: 0;
+  max-width: 18ch;
+  font-family: var(--cn-condensed);
+  font-stretch: 68%;
+  font-weight: 900;
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 3.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.cn .cn-teaser__title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.cn .cn-teaser__title a:hover {
+  color: var(--accent-deep);
+}
+
+/* ---- Post page ---------------------------------------------------------- */
+.cn-page {
+  display: grid;
+  gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  padding-block: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem) clamp(3rem, 2.5rem + 3vw, 4.5rem);
+}
+.cn-crumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 2.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.cn-crumb a:hover {
+  text-decoration: underline;
+}
+
+.cn-article {
+  container: cn-article / inline-size;
+  display: grid;
+  gap: 1.375rem;
+  min-width: 0;
+}
+.cn-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.cn-tag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--cn-orange);
+  color: var(--ink);
+  font-weight: 500;
+}
+.cn-title {
+  margin: 0;
+  max-width: 18ch;
+  font-family: var(--cn-condensed);
+  font-stretch: 68%;
+  font-weight: 900;
+  font-size: clamp(2.375rem, 1.2rem + 5.2vw, 4.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.cn-stand {
+  max-width: var(--cn-measure);
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.cn-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+@container cn-article (min-width: 52rem) {
+  .cn-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+}
+
+.cn-prose {
+  display: grid;
+  gap: 0.875rem;
+  min-width: 0;
+}
+.cn-prose p {
+  max-width: var(--cn-measure);
+}
+/* The client's H3 subheads: H2 here, since the post title is now the H1. */
+.cn-prose h2 {
+  margin: 0.625rem 0 0;
+  font-family: var(--cn-condensed);
+  font-stretch: 80%;
+  font-weight: 800;
+  font-size: 1.1875rem;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.cn-prose ul {
+  display: grid;
+  gap: 0.375rem;
+  max-width: var(--cn-measure);
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.cn blockquote {
+  display: grid;
+  gap: 0.375rem;
+  max-width: var(--cn-measure);
+  margin: 0;
+  padding: 4px 0 4px 1rem;
+  border-left: 3px solid var(--cn-orange);
+}
+.cn blockquote p {
+  font-size: clamp(1.0625rem, 1rem + 0.2vw, 1.125rem);
+  line-height: 1.5;
+  font-style: italic;
+}
+.cn blockquote cite {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-2);
+}
+
+.cn-side {
+  display: grid;
+  gap: 1.125rem;
+  min-width: 0;
+}
+
+/* Dark summary card. */
+.cn-tldr {
+  display: grid;
+  gap: 0.625rem;
+  padding: 1.25rem 1.375rem;
+  border-radius: var(--cn-radius-lg);
+  background: var(--ink);
+  color: var(--paper);
+}
+.cn-tldr h2 {
+  margin: 0;
+  font-family: var(--cn-condensed);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cn-orange);
+}
+.cn-tldr ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding-left: 1.125rem;
+  list-style: disc;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+/* Bordered figure card. The SVG scrolls sideways inside its own box when the
+   column is narrower than the diagram's minimum, never the page. */
+.cn figure {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 1rem 1rem 0.75rem;
+  background: var(--cn-surface);
+  border: var(--border-hairline);
+  border-radius: var(--cn-radius-lg);
+}
+.cn-scroll {
+  overflow-x: auto;
+}
+.cn figure svg {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-width: 300px;
+}
+.cn figcaption {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+/* Peach "See your GP" box. */
+.cn-gp {
+  max-width: var(--cn-measure);
+  padding: 0.75rem 1rem;
+  border-radius: var(--cn-radius);
+  background: var(--cn-wash);
+  font-size: 0.9375rem;
+}
+.cn-gp b {
+  color: var(--accent-deep);
+}
+
+.cn-refs {
+  display: grid;
+  gap: 0.375rem;
+  padding-top: 0.875rem;
+  border-top: var(--border-hairline);
+}
+.cn-refs h2 {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.cn-refs ol {
+  display: grid;
+  gap: 0.375rem;
+  margin: 0;
+  padding-left: 1.375rem;
+  list-style: decimal;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* ---- More clinic notes -------------------------------------------------- */
+.cn-more {
+  container: cn-more / inline-size;
+}
+.cn-more__heading {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.cn-cards--three {
+  grid-template-columns: minmax(0, 1fr);
+}
+@container cn-more (min-width: 26rem) {
+  .cn-cards--three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container cn-more (min-width: 46rem) {
+  .cn-cards--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---- Dotted trail divider ----------------------------------------------- */
+.cn-trail {
+  height: 14px;
+  margin: 0;
+  border: 0;
+  background: radial-gradient(circle, var(--chrome-cool) 1.6px, transparent 2px) 0 50% / 14px 14px
+    repeat-x;
+}
+
+/* ---- Book online and the address line ----------------------------------- */
+.cn-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+.cn .cn-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  background: var(--cn-orange);
+  color: var(--ink);
+  font-family: var(--cn-condensed);
+  font-stretch: 80%;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    transform 0.15s var(--ease-out),
+    background-color 0.15s var(--ease-out);
+}
+.cn .cn-btn:hover {
+  background: var(--cn-orange-press);
+  transform: translateY(-2px);
+}
+.cn-cta__line {
+  font-size: 0.9375rem;
+  color: var(--ink-2);
+}
+/* 44px hit area without opening up the line. */
+.cn-cta__line a {
+  display: inline-block;
+  padding-block: 0.6rem;
+  margin-block: -0.6rem;
+}
+
+.cn-disclaimer {
+  display: grid;
+  gap: 0.375rem;
+  padding-top: 1.75rem;
+  border-top: var(--border-hairline);
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+
+/* ---- SVG diagrams ------------------------------------------------------- */
+.cn .s-ink { fill: var(--ink); }
+.cn .s-muted { fill: var(--ink-2); }
+.cn .s-line { stroke: var(--chrome-line); }
+.cn .s-or { fill: var(--cn-orange); }
+.cn .s-orst { stroke: var(--cn-orange); }
+.cn .s-wash { fill: var(--cn-wash); }
+.cn .s-surface { fill: var(--cn-surface); }
+.cn .s-bg { fill: var(--stone); }
+.cn .s-skin { fill: var(--cn-skin); }
+.cn svg text {
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+.cn svg .lbl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.cn svg .big {
+  font-family: var(--cn-condensed);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+/* Pivot points, in the SVG's own user units (were inline style attributes). */
+.cn .origin-fist { transform-origin: 114px 336px; }
+.cn .origin-hip-left { transform-origin: 86px 160px; }
+.cn .origin-hip-right { transform-origin: 306px 160px; }
+
+/* Resting pose: what reduced-motion users see. */
+.cn .drop { transform: rotate(9deg); }
+.cn .tilt { transform: rotate(26deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .cn .pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: cn-pulse 2.4s ease-in-out infinite;
+  }
+  .cn .drop { animation: cn-drop 4s ease-in-out infinite; }
+  .cn .tilt { animation: cn-tilt 3.2s ease-in-out infinite; }
+}
+@keyframes cn-pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.25; }
+  50% { transform: scale(1.15); opacity: 0.5; }
+}
+@keyframes cn-drop {
+  0%, 15% { transform: rotate(0deg); }
+  45%, 75% { transform: rotate(9deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes cn-tilt {
+  0%, 15% { transform: rotate(0deg); }
+  45%, 75% { transform: rotate(26deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cn-card:hover,
+  .cn .cn-btn:hover {
+    transform: none;
+  }
+}

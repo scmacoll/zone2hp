@@ -1,0 +1,66 @@
+---
+// Client copy, reproduced verbatim from zone-two-clinic-notes.html. Only the
+// markup changed: subheads and box headings are H2 (the post title is the H1),
+// class names are the .cn ones, the diagram's inline transform-origins are
+// classes (CSP), and its colours point at the site tokens.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+---
+
+<ClinicNote slug="zone-2-training">
+  <p>Exercise intensity is often split into five zones, from very easy (zone 1) to all-out (zone 5). Zone 2 is the steady, comfortable effort you could hold for a long time: a brisk walk, an easy jog, a relaxed ride.</p>
+  <p>In 2025, a panel of endurance-science experts (including Stephen Seiler, one of the best-known researchers on endurance training intensity) agreed on a definition:</p>
+  <blockquote><p>Zone 2 sits at "intensities located immediately below the first lactate or ventilatory threshold."</p><cite>Sitko et al., Int J Sports Physiol Perform, 2025 [1]</cite></blockquote>
+  <h2>How to find it without a lab</h2>
+  <p>Use the talk test. You can speak in full sentences, but you'd rather not sing. Breathing is deeper than at rest, but steady. If you're gasping between words, ease off.</p>
+  <h2>Is it magic? No.</h2>
+  <p>Zone 2 builds an aerobic base you can repeat day after day without wrecking your body, which is why we love it. But a 2025 review found it isn't the single best intensity for fitness:</p>
+  <blockquote><p>"Evidence suggests prioritizing higher exercise intensities (&gt; Zone 2) is critical to maximize cardiometabolic health."</p><cite>Storoschuk et al., Sports Medicine, 2025 [2]</cite></blockquote>
+  <p>The practical answer is both: plenty of easy, steady work, plus some harder efforts each week. Australia's guidelines recommend 2.5 to 5 hours of moderate activity a week, plus muscle strengthening on at least two days [3].</p>
+  <h2>Why we named the clinic after it</h2>
+  <p>Zone 2 is foundational, sustainable effort, done consistently. That's how we think about recovery too. Slow is fast.</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>In 30 seconds</h2><ul>
+      <li>Zone 2 is steady effort just below your first lactate threshold.</li>
+      <li>Talk test: full sentences yes, singing no.</li>
+      <li>Build the base in zone 2, add some harder work, and lift weights twice a week.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 300" role="img" aria-labelledby="z-t">
+        <title id="z-t">Five training zones shown as rising bars; zone 2 is highlighted just below the first lactate or ventilatory threshold</title>
+        <rect x="0" y="0" width="420" height="300" class="s-surface"/>
+        <text x="16" y="26" class="big s-ink">The five intensity zones</text>
+        <line x1="16" y1="236" x2="404" y2="236" stroke="var(--chrome-line)" stroke-width="1.5"/>
+        <rect x="24"  y="196" width="64" height="40"  rx="6" class="s-wash"/>
+        <rect x="100" y="166" width="64" height="70"  rx="6" class="s-or"/>
+        <rect x="176" y="136" width="64" height="100" rx="6" class="s-wash"/>
+        <rect x="252" y="106" width="64" height="130" rx="6" class="s-wash"/>
+        <rect x="328" y="70"  width="64" height="166" rx="6" class="s-wash"/>
+        <line x1="170" y1="56" x2="170" y2="244" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="176" y="52" class="lbl s-ink">1ST LACTATE /</text>
+        <text x="176" y="66" class="lbl s-ink">VENTILATORY THRESHOLD</text>
+        <text x="56"  y="256" text-anchor="middle" class="lbl s-muted">Z1</text>
+        <text x="132" y="256" text-anchor="middle" class="lbl s-ink" font-weight="700">Z2</text>
+        <text x="208" y="256" text-anchor="middle" class="lbl s-muted">Z3</text>
+        <text x="284" y="256" text-anchor="middle" class="lbl s-muted">Z4</text>
+        <text x="360" y="256" text-anchor="middle" class="lbl s-muted">Z5</text>
+        <text x="56"  y="276" text-anchor="middle" class="s-muted">Very easy</text>
+        <text x="132" y="276" text-anchor="middle" class="s-ink">Can chat</text>
+        <text x="208" y="276" text-anchor="middle" class="s-muted">Short phrases</text>
+        <text x="284" y="276" text-anchor="middle" class="s-muted">Few words</text>
+        <text x="360" y="276" text-anchor="middle" class="s-muted">All-out</text>
+        <text x="132" y="156" text-anchor="middle" class="big s-ink">Zone 2</text>
+      </svg>
+      </div>
+      <figcaption>Bar heights show relative effort and aren't to a physiological scale. Zone 2 sits just under the first threshold, where breathing first deepens noticeably.</figcaption>
+    </figure>
+    <p class="cn-gp"><b>Check with your GP</b> before starting new exercise if you have heart or lung conditions, chest pain, dizziness on exertion, or haven't exercised in a long time.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>Sitko S, Artetxe X, Bonnevie-Svendsen M, et al. What is "zone 2 training"? Experts' viewpoint on definition, training methods, and expected adaptations. Int J Sports Physiol Perform. 2025;20(11):1614–1617. <a href="https://doi.org/10.1123/ijspp.2024-0303" target="_blank" rel="noopener">doi:10.1123/ijspp.2024-0303</a></li>
+    <li>Storoschuk KL, Moran-MacDonald A, Gibala MJ, Gurd BJ. Much ado about zone 2: a narrative review assessing the efficacy of zone 2 training for improving mitochondrial capacity and cardiorespiratory fitness in the general population. Sports Med. 2025. <a href="https://doi.org/10.1007/s40279-025-02261-y" target="_blank" rel="noopener">doi:10.1007/s40279-025-02261-y</a></li>
+    <li>Australian Government Department of Health, Disability and Ageing. <a href="https://www.health.gov.au/topics/physical-activity-and-exercise/physical-activity-and-exercise-guidelines-for-all-australians/for-adults-18-to-64-years" target="_blank" rel="noopener">Physical activity and exercise guidelines for adults (18 to 64 years)</a>.</li>
+  </Fragment>
+</ClinicNote>
