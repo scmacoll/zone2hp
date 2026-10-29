@@ -149,11 +149,13 @@ const year = 2026;
         justify-content: center;
         gap: 0 var(--space-md);
     }
+    /* Same 44px hit area as the contact links (padding, cancelled by negative
+       margin), so the links keep the footer's line rhythm. */
     .footer__legal-link {
-        display: inline-flex;
-        align-items: center;
-        min-height: 2.75rem;
+        display: inline-block;
+        padding-block: 0.6rem;
         margin-block: -0.6rem;
+        line-height: 1.45rem;
         color: var(--ink);
         text-decoration: none;
     }
@@ -177,6 +179,10 @@ const year = 2026;
                 "address contact"
                 "copy    hours"
                 "links   hours";
+            /* The taller hours column spans the last two rows; its extra height
+               goes to the flexible last row, so the links stay one step under
+               the copyright instead of drifting down. */
+            grid-template-rows: auto auto 1fr;
             gap: 0.35rem var(--space-xl);
             justify-items: start;
         }
@@ -200,6 +206,7 @@ const year = 2026;
         }
         .footer__links {
             grid-area: links;
+            align-self: start;
             justify-content: flex-start;
         }
     }
