@@ -126,11 +126,10 @@ const year = 2026;
 
     /* Hours continue the address block: same font, size, colour and line
        rhythm, with the days a shade darker so the two columns read. */
-    /* Same step as the rest of the footer (logo, address, hours, legal). */
     .footer__visit {
         display: grid;
         justify-items: center;
-        gap: var(--space-md);
+        gap: 0.35rem;
     }
     .footer__hours {
         margin: 0;
@@ -208,6 +207,11 @@ const year = 2026;
         }
         .footer__visit {
             justify-items: start;
+        }
+        /* The hours sit as close to the copyright row as to the address
+           above them, so the three read as one evenly spaced stack. */
+        .footer__inner:has(.footer__hours) .footer__legal {
+            margin-top: calc(0.35rem - var(--space-md));
         }
         .footer__legal {
             flex-direction: row;
