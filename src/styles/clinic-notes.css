@@ -36,7 +36,7 @@
 }
 
 .cn-wrap {
-  max-width: 67.5rem;
+  max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--section-pad-inline);
 }
@@ -62,10 +62,7 @@
   gap: 0.625rem;
   align-items: center;
   font-family: var(--font-mono);
-  font-size: var(--step-label);
-  font-weight: 500;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
+  font-size: var(--step-small);
   color: var(--ink-2);
 }
 .cn-brand i {
@@ -80,8 +77,8 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: var(--track-tight);
-  font-size: clamp(2.75rem, 1.6rem + 5vw, 5rem);
-  line-height: 1;
+  font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  line-height: 1.04;
   text-wrap: balance;
 }
 .cn-hero__title span {
@@ -132,9 +129,7 @@
 }
 .cn-card small {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: var(--step-label);
   color: var(--accent-deep);
 }
 .cn-card__title {
@@ -160,8 +155,8 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: var(--track-tight);
-  font-size: var(--step-h2);
-  line-height: 1.1;
+  font-size: var(--step-h3);
+  line-height: 1.2;
   text-wrap: balance;
 }
 .cn .cn-teaser__title a {
@@ -184,9 +179,7 @@
   gap: 0.5em;
   min-height: 2.75rem;
   font-family: var(--font-mono);
-  font-size: var(--step-label);
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
+  font-size: var(--step-small);
   text-decoration: none;
 }
 .cn-crumb a:hover {
@@ -202,20 +195,21 @@
 .cn-eyebrow {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  align-items: center;
+  gap: 0.25rem 0.6rem;
+  align-items: baseline;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: var(--step-small);
   color: var(--ink-2);
 }
+/* Same treatment as the site's plain-case labels: small mono accent text. */
 .cn-tag {
-  padding: 3px 9px;
-  border-radius: var(--cn-radius-btn);
-  background: var(--cn-orange);
-  color: var(--ink);
+  color: var(--accent-deep);
   font-weight: 500;
+}
+.cn-eyebrow > * + *::before {
+  content: '·';
+  margin-right: 0.6rem;
+  color: var(--ink-3);
 }
 .cn-title {
   margin: 0;
@@ -223,8 +217,8 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: var(--track-tight);
-  font-size: clamp(2rem, 1.3rem + 3vw, 3.5rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  line-height: 1.04;
   text-wrap: balance;
 }
 .cn-stand {
@@ -310,11 +304,9 @@
 .cn-tldr h2 {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: var(--step-label);
+  font-size: var(--step-small);
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
   color: var(--cn-orange);
 }
 .cn-tldr ul {
@@ -335,9 +327,13 @@
   min-width: 0;
   margin: 0;
   padding: 1rem 1rem 0.75rem;
-  background: var(--cn-surface);
+  background: var(--paper);
   border: var(--border-hairline);
-  border-radius: var(--cn-radius-lg);
+  border-radius: var(--radius-md);
+}
+/* The diagrams paint their own backdrop; match it to the paper card. */
+.cn figure .s-surface {
+  fill: var(--paper);
 }
 .cn-scroll {
   overflow-x: auto;
@@ -376,11 +372,9 @@
 .cn-refs h2 {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--step-small);
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--ink-2);
 }
 .cn-refs ol {
@@ -402,15 +396,27 @@
 .cn-more__heading {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: var(--step-label);
+  font-size: var(--step-small);
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
   color: var(--ink-2);
 }
 .cn-cards--three {
   grid-template-columns: minmax(0, 1fr);
+}
+/* Same object as the booking tiles: paper, hairline, cool hover, no lift. */
+.cn-cards--three .cn-card {
+  padding: var(--space-sm);
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  transition:
+    background-color 150ms var(--ease-out),
+    border-color 150ms var(--ease-out);
+}
+.cn-cards--three .cn-card:hover {
+  transform: none;
+  background: var(--stone-cool);
+  border-color: var(--chrome-cool);
 }
 @container cn-more (min-width: 26rem) {
   .cn-cards--three {

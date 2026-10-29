@@ -1,4 +1,5 @@
 ---
+import { bookingConfig } from '../lib/booking/config';
 // Site menu: a disclosure button with a small dropdown of page links. "dark"
 // sits on the home page's video hero beside Book now; "light" sits in the
 // paper PageHeader on every other page.
@@ -9,13 +10,15 @@ interface Props {
 
 const { tone = 'light', class: className = '' } = Astro.props;
 
+const onClinicNotes = Astro.url.pathname.startsWith('/clinic-notes');
+
+// Clinic Notes pages have no Book button in their header, so the menu leads with it.
 const links = [
+  ...(onClinicNotes && bookingConfig.linksVisible ? [{ href: '/book', label: 'Book' }] : []),
   { href: '/#about', label: 'About' },
   { href: '/#find-us', label: 'Find us' },
   { href: '/clinic-notes', label: 'Clinic notes' },
 ];
-
-const onClinicNotes = Astro.url.pathname.startsWith('/clinic-notes');
 const current = (href: string) => href === '/clinic-notes' && onClinicNotes;
 ---
 
