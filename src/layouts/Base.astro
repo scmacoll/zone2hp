@@ -40,9 +40,10 @@ const ogImage = Astro.site
  * and AI tools use to match the clinic to local searches. Keep every value
  * identical to the footer, the map block and the Google Business Profile.
  *
- * Omitted on purpose: openingHours (add only once the client confirms the
- * hours, and keep them in sync with the Google Business Profile), and
- * aggregateRating/review (prohibited outright under s133 of the National Law,
+ * Opening hours were confirmed by the client (Oct 2026). Keep them identical to
+ * the Google Business Profile whenever either changes.
+ *
+ * Omitted on purpose: aggregateRating/review (prohibited outright under s133 of the National Law,
  * see COMPLIANCE.md). knowsAbout carries the services instead of
  * medicalSpecialty, since schema.org defines it as suggesting expertise without
  * implying it, which is the register AHPRA advertising rules require.
@@ -76,6 +77,26 @@ const structuredData = {
         postalCode: '2122',
         addressCountry: 'AU',
       },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+          opens: '09:00',
+          closes: '12:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+          opens: '14:00',
+          closes: '18:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: 'Saturday',
+          opens: '09:00',
+          closes: '13:00',
+        },
+      ],
       areaServed: { '@type': 'AdministrativeArea', name: 'Sydney, New South Wales' },
       knowsAbout: [
         'Chiropractic care',
