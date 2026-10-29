@@ -1,8 +1,8 @@
 ---
 // Light footer: wordmark, address, contact, opening hours, copyright and links.
 // Used by every white page (privacy, account, booking, Clinic Notes); the home
-// page has its own FooterExpanded. Wide: address and copyright on the left;
-// contact, hours and links on the right. Narrow: one centred stack.
+// page has its own FooterExpanded. Wide: address, copyright and links on the
+// left; contact and hours on the right. Narrow: one centred stack.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
@@ -161,9 +161,8 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* Wide: address and copyright on the left; contact, hours and links on the
-       right, all at one tight step, with the copyright and links sharing the
-       bottom line. */
+    /* Wide: address, copyright and links down the left; contact and hours down
+       the right, all at one tight step. */
     @container (min-width: 34rem) {
         .footer__inner {
             /* start, not stretch: the logo is an SVG sized by height, so
@@ -176,8 +175,8 @@ const year = 2026;
             grid-template-columns: 1fr auto;
             grid-template-areas:
                 "address contact"
-                ".       hours"
-                "copy    links";
+                "copy    hours"
+                "links   hours";
             gap: 0.35rem var(--space-xl);
             justify-items: start;
         }
@@ -195,13 +194,13 @@ const year = 2026;
         }
         .footer__copy {
             grid-area: copy;
-            align-self: end;
+        }
+        .footer__hours {
+            align-self: start;
         }
         .footer__links {
             grid-area: links;
-            justify-self: end;
-            align-self: end;
-            justify-content: flex-end;
+            justify-content: flex-start;
         }
     }
 
