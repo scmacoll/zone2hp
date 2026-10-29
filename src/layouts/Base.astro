@@ -35,16 +35,15 @@ const ogImage = Astro.site
   : '/images/og-zone2hp.png';
 
 /**
- * Structured data. MedicalOrganization deliberately, not MedicalClinic or
- * LocalBusiness: it descends from Organization only, NOT from Place, so it
- * cannot express openingHours, geo or priceRange. Those are exactly the
- * properties we must not assert for a clinic that has not opened, and the type
- * makes it impossible to add them back by accident.
+ * Structured data. MedicalClinic (a LocalBusiness/Place), now the clinic is
+ * open, so it can carry the phone number and a map link, the details search
+ * and AI tools use to match the clinic to local searches. Keep every value
+ * identical to the footer, the map block and the Google Business Profile.
  *
- * Omitted on purpose: telephone (no real number yet), openingHours and
- * foundingDate (would publish the opening date, which the client wants private),
- * and aggregateRating/review (prohibited outright under s133 of the National
- * Law, see COMPLIANCE.md). knowsAbout carries the services instead of
+ * Omitted on purpose: openingHours (add only once the client confirms the
+ * hours, and keep them in sync with the Google Business Profile), and
+ * aggregateRating/review (prohibited outright under s133 of the National Law,
+ * see COMPLIANCE.md). knowsAbout carries the services instead of
  * medicalSpecialty, since schema.org defines it as suggesting expertise without
  * implying it, which is the register AHPRA advertising rules require.
  */
@@ -52,13 +51,15 @@ const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'MedicalOrganization',
+      '@type': 'MedicalClinic',
       '@id': 'https://zone2hp.com/#organization',
       name: 'Zone Two Health and Performance',
       url: 'https://zone2hp.com',
       email: 'info@zone2hp.com',
+      telephone: '+61 450 222 122',
+      hasMap: 'https://www.google.com/maps/search/?api=1&query=Suite%20104%2F2%20Rowe%20St%2C%20Eastwood%20NSW%202122',
       description:
-        'Chiropractic, post-operative rehabilitation and dry needling in Eastwood, New South Wales. Opening soon.',
+        'Chiropractic, post-operative rehabilitation and dry needling in Eastwood, New South Wales.',
       logo: {
         '@type': 'ImageObject',
         '@id': 'https://zone2hp.com/#logo',

@@ -41,6 +41,10 @@ const services = ['Chiropractic', 'Rehab', 'Dry Needling'];
     text-transform: uppercase;
     color: var(--ink-2);
   }
+  /* A label never breaks inside itself ("Dry / Needling"); whole items wrap. */
+  .services__item {
+    white-space: nowrap;
+  }
   .services__sep {
     color: var(--accent);
   }

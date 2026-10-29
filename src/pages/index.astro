@@ -1132,12 +1132,17 @@ const showAccounts = bookingConfig.accountsEnabled;
             justify-content: space-between;
             padding: 1rem 1.05rem;
         }
+        /* One centred row while all three fit; the script below adds
+           .is-stacked only once they no longer fit on one line. */
         .a2-panel :global(.a2-services) {
+            justify-content: center;
+        }
+        .a2-panel :global(.a2-services.is-stacked) {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.55rem 1rem;
         }
-        .a2-panel :global(.a2-services .services__sep) {
+        .a2-panel :global(.a2-services.is-stacked .services__sep) {
             display: none;
         }
     }
@@ -1190,6 +1195,21 @@ const showAccounts = bookingConfig.accountsEnabled;
     // across the 47rem breakpoint just tweens the opacity over 250ms,
     // instead of replaying the 1500ms-delayed reveal. This is what stops
     // the strip from flickering during drag-resize.
+    // Services line: measure whether all items fit on one line (with their
+    // gaps and dots) and only stack them into two rows when they don't.
+    const services = document.querySelector<HTMLElement>(".a2-panel .a2-services");
+    if (services) {
+        const fit = () => {
+            services.classList.remove("is-stacked");
+            services.style.flexWrap = "nowrap";
+            const overflows = services.scrollWidth > services.clientWidth + 1;
+            services.style.flexWrap = "";
+            services.classList.toggle("is-stacked", overflows);
+        };
+        new ResizeObserver(fit).observe(services);
+        document.fonts.ready.then(fit);
+    }
+
     const markRevealed = () =>
         document.querySelector(".a2")?.classList.add("is-revealed");
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
