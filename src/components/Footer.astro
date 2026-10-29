@@ -3,9 +3,10 @@
 // Used by every white page (privacy, account, booking, Clinic Notes); the home
 // page has its own FooterExpanded.
 //   Two columns at every width: address, copyright and links on the left;
-//   contact and hours on the right. Wide, the left column drops one line so
-//   the street sits level with the phone; narrow, it starts level with the
-//   email and its lines wrap within the narrower column.
+//   contact and hours on the right. The left column drops one line so the
+//   street sits level with the phone, except while the copyright has to wrap
+//   onto two lines (the script below checks), when it starts level with the
+//   email instead.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
@@ -104,6 +105,10 @@ const year = 2026;
     .footer__col--left {
         min-width: 0;
         justify-items: start;
+        padding-top: 1.45rem;
+    }
+    .footer__col--left.is-wrapped {
+        padding-top: 0;
     }
     .footer__col--right {
         flex: none;
@@ -190,14 +195,10 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* Wide: the left column drops one line so the street sits level with the
-       phone number, and the columns move further apart. */
+    /* Wide: the columns move further apart. */
     @container (min-width: 34rem) {
         .footer__meta {
             gap: var(--space-xl);
-        }
-        .footer__col--left {
-            padding-top: 1.45rem;
         }
     }
 
@@ -208,3 +209,20 @@ const year = 2026;
         user-select: none;
     }
 </style>
+
+<script>
+    // Drop the left column one line unless the copyright wraps onto a second
+    // line. Its width doesn't depend on the drop, so one measure is enough.
+    document.querySelectorAll<HTMLElement>(".footer__col--left").forEach((col) => {
+        const copy = col.querySelector<HTMLElement>(".footer__copy");
+        if (!copy) return;
+        const fit = () => {
+            const range = document.createRange();
+            range.selectNodeContents(copy);
+            const lines = new Set(Array.from(range.getClientRects(), (r) => Math.round(r.top)));
+            col.classList.toggle("is-wrapped", lines.size > 1);
+        };
+        new ResizeObserver(fit).observe(col);
+        document.fonts.ready.then(fit);
+    });
+</script>
