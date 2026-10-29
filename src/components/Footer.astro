@@ -1,8 +1,12 @@
 ---
 // Light footer: wordmark, address, contact, opening hours, copyright and links.
 // Used by every white page (privacy, account, booking, Clinic Notes); the home
-// page has its own FooterExpanded. Wide: address, copyright and links on the
-// left; contact and hours on the right. Narrow: one centred stack.
+// page has its own FooterExpanded.
+//   Narrow: one full-width, left-aligned column. Each group (address, hours,
+//   contact, copyright and links) runs as a single line while it fits and wraps
+//   only when it can't.
+//   Wide: address, copyright and links on the left, dropped one line so the
+//   street lines up with the phone; contact and hours on the right.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
@@ -23,31 +27,36 @@ const year = 2026;
         <Logo variant="full" class="footer__logo" />
 
         <div class="footer__meta">
-            <address class="footer__address">
-                Suite 104, Level 1, 2 Rowe Street,<br />Eastwood, NSW 2122
-            </address>
-            <dl class="footer__hours" aria-label="Opening hours">
-                {
-                    openingHours.map(([days, times]) => (
-                        <div class="footer__hours-row">
-                            <dt>{days}</dt>
-                            <dd>
-                                {times.split(", ").map((t) => (
-                                    <span>{t}</span>
-                                ))}
-                            </dd>
-                        </div>
-                    ))
-                }
-            </dl>
-            <div class="footer__contact">
-                <a href={`mailto:${email}`}>{email}</a>
-                <a href={phoneHref}>{phoneDisplay}</a>
+            <div class="footer__col footer__col--left">
+                <address class="footer__address">
+                    <span class="footer__keep">Suite 104, Level 1,</span> <span class="footer__keep">2 Rowe Street,</span> <br class="footer__br" /><span class="footer__keep">Eastwood, NSW 2122</span>
+                </address>
+                <div class="footer__legal">
+                    <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
+                    <div class="footer__links">
+                        <a class="footer__legal-link" href="/clinic-notes">Clinic notes</a>
+                        <a class="footer__legal-link" href="/privacy">Privacy</a>
+                    </div>
+                </div>
             </div>
-            <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
-            <div class="footer__links">
-                <a class="footer__legal-link" href="/clinic-notes">Clinic notes</a>
-                <a class="footer__legal-link" href="/privacy">Privacy</a>
+
+            <div class="footer__col footer__col--right">
+                <div class="footer__contact">
+                    <a href={`mailto:${email}`}>{email}</a>
+                    <a href={phoneHref}>{phoneDisplay}</a>
+                </div>
+                <dl class="footer__hours" aria-label="Opening hours">
+                    {
+                        openingHours.map(([days, times]) => (
+                            <div class="footer__hours-row">
+                                <dt>{days}</dt>
+                                <dd>
+                                    {times.split(", ").map((t, i, all) => <span class="footer__session">{t}{i < all.length - 1 && <span class="footer__sep">,</span>}</span>)}
+                                </dd>
+                            </div>
+                        ))
+                    }
+                </dl>
             </div>
         </div>
     </div>
@@ -80,23 +89,43 @@ const year = 2026;
         color: var(--ink);
     }
 
-    /* Narrow: one left-aligned stack in reading order (address, hours, contact,
-       copyright, links). */
+    /* Narrow: the two column wrappers dissolve so their groups can stack in
+       reading order: address, hours, contact, then copyright and links. */
     .footer__meta {
+        justify-self: stretch;
         display: grid;
-        justify-items: start;
         gap: var(--space-sm);
         font-size: var(--step-small);
         line-height: 1.45rem;
         color: var(--ink-2);
     }
-
+    .footer__col {
+        display: contents;
+    }
     .footer__address {
+        order: 1;
         font-style: normal;
     }
+    .footer__br {
+        display: none;
+    }
+    /* Address phrases stay whole, so a narrow footer wraps between them. */
+    .footer__keep {
+        white-space: nowrap;
+    }
+    .footer__hours {
+        order: 2;
+    }
+    .footer__contact {
+        order: 3;
+    }
+    .footer__legal {
+        order: 4;
+    }
 
-    /* Days and sessions as a two-column table; each session on its own line,
-       right-aligned, so the times share one clean right edge. */
+    /* Days and sessions as a two-column table. Narrow: each day is one line
+       ("9am–12pm, 2pm–6pm"). Wide: each session gets its own right-aligned
+       line, so the times share one clean right edge. */
     .footer__hours {
         margin: 0;
         display: grid;
@@ -112,21 +141,20 @@ const year = 2026;
     }
     .footer__hours dd {
         margin: 0;
-        text-align: right;
     }
-    .footer__hours dd span {
-        display: block;
+    /* Narrow: sessions run on one line, separated by ", ". */
+    .footer__session + .footer__session::before {
+        content: " ";
     }
 
+    /* Email and phone side by side, wrapping only when they can't share a
+       line. Padding gives each a 44px hit area, negative margin cancels its
+       height, so the links keep the address's line rhythm. */
     .footer__contact {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        /* No gap: the two links run on the same rhythm as the address lines. */
-        gap: 0;
+        flex-wrap: wrap;
+        gap: 0 var(--space-md);
     }
-    /* Padding gives a 44px hit area, negative margin cancels the visual height,
-       so the tap target survives without opening a gap between the lines. */
     .footer__contact a {
         display: block;
         padding-block: 0.6rem;
@@ -141,17 +169,24 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
+    /* Copyright and links on one line, wrapping only when they can't share
+       it. The gap between them is never narrower than the gap between the
+       two links. */
+    .footer__legal {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.35rem var(--space-md);
+    }
     .footer__copy {
         margin: 0;
     }
     .footer__links {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
         gap: 0 var(--space-md);
     }
-    /* Same 44px hit area as the contact links (padding, cancelled by negative
-       margin), so the links keep the footer's line rhythm. */
+    /* Same 44px hit area trick as the contact links. */
     .footer__legal-link {
         display: inline-block;
         padding-block: 0.6rem;
@@ -164,45 +199,52 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* Wide: address, copyright and links down the left; contact and hours down
-       the right, all at one tight step. */
+    /* Wide: two columns. The left one drops a line so the street sits level
+       with the phone number; everything runs at one tight step. */
     @container (min-width: 34rem) {
         .footer__meta {
-            justify-self: stretch;
-            grid-template-columns: 1fr auto;
-            grid-template-areas:
-                "address contact"
-                "copy    hours"
-                "links   hours";
-            /* The taller hours column spans the last two rows; its extra height
-               goes to the flexible last row, so the links stay one step under
-               the copyright instead of drifting down. */
-            grid-template-rows: auto auto 1fr;
-            gap: 0.35rem var(--space-xl);
-            justify-items: start;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: var(--space-xl);
         }
-        .footer__address {
-            grid-area: address;
+        .footer__col {
+            display: grid;
+            gap: 0.35rem;
+        }
+        .footer__col > * {
+            order: 0;
+        }
+        .footer__col--left {
+            justify-items: start;
+            padding-top: 1.45rem;
+        }
+        .footer__col--right {
+            justify-items: end;
+        }
+        .footer__br {
+            display: inline;
         }
         .footer__contact {
-            grid-area: contact;
-            justify-self: end;
+            flex-direction: column;
             align-items: flex-end;
         }
-        .footer__hours {
-            grid-area: hours;
-            justify-self: end;
+        .footer__legal {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.35rem;
         }
-        .footer__copy {
-            grid-area: copy;
+        .footer__hours dd {
+            text-align: right;
         }
-        .footer__hours {
-            align-self: start;
+        .footer__session {
+            display: block;
         }
-        .footer__links {
-            grid-area: links;
-            align-self: start;
-            justify-content: flex-start;
+        .footer__session + .footer__session::before {
+            content: none;
+        }
+        .footer__sep {
+            display: none;
         }
     }
 
