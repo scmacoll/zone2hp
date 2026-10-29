@@ -163,9 +163,14 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
   }
   /* Hours under a hairline, in the same font, size and colour as the caption
      under Book now; the days are only a shade darker. */
-  /* Address and hours share one width, set by the address, so the hairline
-     and the hours table span exactly as wide as the address above them. */
+  /* Address and hours share one width: the heading's longest line, set by
+     the script below (CSS can't measure wrapped text), so the hairline and
+     hours span exactly as wide as "Book an appointment". Without JS it falls
+     back to the address width, and it never squeezes the address onto more
+     lines than it needs. */
   .map__place {
+    min-width: max-content;
+    max-width: 100%;
     display: grid;
     gap: var(--space-xs);
   }
@@ -248,3 +253,19 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     user-select: none;
   }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.map__details').forEach((details) => {
+    const title = details.querySelector<HTMLElement>('.map__title');
+    const place = details.querySelector<HTMLElement>('.map__place');
+    if (!title || !place) return;
+    const fit = () => {
+      const range = document.createRange();
+      range.selectNodeContents(title);
+      const widest = Math.max(...Array.from(range.getClientRects(), (r) => r.width));
+      place.style.width = `${Math.ceil(widest)}px`;
+    };
+    new ResizeObserver(fit).observe(title);
+    document.fonts.ready.then(fit);
+  });
+</script>
