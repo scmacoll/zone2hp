@@ -52,7 +52,14 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
             openingHours.map(([days, times]) => (
               <div class="map__hours-row">
                 <dt>{days}</dt>
-                <dd>{times.split(', ').map((t) => <span>{t}</span>)}</dd>
+                <dd>
+                {times.split(', ').map((t, i, all) => (
+                  <>
+                    {i > 0 && ' '}
+                    <span>{i < all.length - 1 ? `${t},` : t}</span>
+                  </>
+                ))}
+              </dd>
               </div>
             ))
           }
@@ -197,12 +204,13 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
   .map__hours dt {
     color: var(--ink);
   }
-  /* Each session on its own line, right-aligned, so split days take two rows. */
+  /* Sessions share one right-aligned line, and break between sessions (never
+     inside one) only when the box is too narrow for both. */
   .map__hours dd {
     text-align: right;
   }
   .map__hours dd span {
-    display: block;
+    white-space: nowrap;
   }
   .map__hours dd {
     margin: 0;
