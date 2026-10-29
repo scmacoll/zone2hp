@@ -1,7 +1,8 @@
 ---
-// Light footer: wordmark, address, contact, copyright. Reflows from a row to a
-// stack on its own container width. Used by every white page (privacy,
-// account, booking, Clinic Notes); the home page has its own FooterExpanded.
+// Light footer: wordmark, address, contact, opening hours, copyright and links.
+// Used by every white page (privacy, account, booking, Clinic Notes); the home
+// page has its own FooterExpanded. Wide: address and copyright on the left;
+// contact, hours and links on the right. Narrow: one centred stack.
 import Logo from "./Logo.astro";
 import { openingHours } from "../lib/clinic";
 
@@ -22,7 +23,6 @@ const year = 2026;
         <Logo variant="full" class="footer__logo" />
 
         <div class="footer__meta">
-            <div class="footer__visit">
             <address class="footer__address">
                 Suite 104, Level 1, 2 Rowe Street,<br />Eastwood, NSW 2122
             </address>
@@ -31,19 +31,19 @@ const year = 2026;
                     openingHours.map(([days, times]) => (
                         <div class="footer__hours-row">
                             <dt>{days}</dt>
-                            <dd>{times}</dd>
+                            <dd>
+                                {times.split(", ").map((t) => (
+                                    <span>{t}</span>
+                                ))}
+                            </dd>
                         </div>
                     ))
                 }
             </dl>
-            </div>
             <div class="footer__contact">
                 <a href={`mailto:${email}`}>{email}</a>
                 <a href={phoneHref}>{phoneDisplay}</a>
             </div>
-        </div>
-
-        <div class="footer__legal">
             <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
             <div class="footer__links">
                 <a class="footer__legal-link" href="/clinic-notes">Clinic notes</a>
@@ -79,23 +79,42 @@ const year = 2026;
         color: var(--ink);
     }
 
-    /* Address and contact share one row so their lines pair up: street with
-       email, suburb with phone. */
+    /* Narrow: one centred stack in reading order (address, hours, contact,
+       copyright, links). */
     .footer__meta {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        justify-items: center;
         gap: var(--space-sm);
-    }
-
-    /* Same absolute line-height AND the same font size on both sides, so the two
-       columns share a rhythm. A matching line-height alone is not enough: at
-       different font sizes the text sits differently inside the line box. */
-    .footer__address {
-        font-style: normal;
-        color: var(--ink-2);
         font-size: var(--step-small);
         line-height: 1.45rem;
+        color: var(--ink-2);
+    }
+
+    .footer__address {
+        font-style: normal;
+    }
+
+    /* Days and sessions as a two-column table; each session on its own line,
+       right-aligned, so the times share one clean right edge. */
+    .footer__hours {
+        margin: 0;
+        display: grid;
+        grid-template-columns: max-content max-content;
+        column-gap: 0.75rem;
+        text-align: left;
+    }
+    .footer__hours-row {
+        display: contents;
+    }
+    .footer__hours dt {
+        color: var(--ink);
+    }
+    .footer__hours dd {
+        margin: 0;
+        text-align: right;
+    }
+    .footer__hours dd span {
+        display: block;
     }
 
     .footer__contact {
@@ -121,41 +140,6 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* Hours continue the address block: same font, size, colour and line
-       rhythm, with the days a shade darker so the two columns read. */
-    .footer__visit {
-        display: grid;
-        justify-items: center;
-        gap: 0.35rem;
-    }
-    .footer__hours {
-        margin: 0;
-        display: grid;
-        grid-template-columns: max-content max-content;
-        column-gap: 0.75rem;
-        text-align: left;
-        font-size: var(--step-small);
-        line-height: 1.45rem;
-        color: var(--ink-2);
-    }
-    .footer__hours-row {
-        display: contents;
-    }
-    .footer__hours dt {
-        color: var(--ink);
-    }
-    .footer__hours dd {
-        margin: 0;
-    }
-
-    .footer__legal {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.35rem;
-        font-size: var(--step-small);
-        color: var(--ink-2);
-    }
     .footer__copy {
         margin: 0;
     }
@@ -177,43 +161,47 @@ const year = 2026;
         color: var(--accent-deep);
     }
 
-    /* 34rem, not 44rem: the two columns fit well below the old threshold, so the
-       footer was stacking while there was still room for them side by side. */
+    /* Wide: address and copyright on the left; contact, hours and links on the
+       right, all at one tight step, with the copyright and links sharing the
+       bottom line. */
     @container (min-width: 34rem) {
         .footer__inner {
             /* start, not stretch: the logo is an SVG sized by height, so
-               stretching it would blow it across the footer. The two blocks that
-               DO need full width opt in below. */
+               stretching it would blow it across the footer. */
             justify-items: start;
             text-align: left;
         }
-        /* Both need the full width so their space-between has something to
-           spread across. */
-        .footer__meta,
-        .footer__legal {
-            justify-self: stretch;
-        }
         .footer__meta {
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: var(--space-xl);
-        }
-        .footer__contact {
-            align-items: flex-end;
-        }
-        .footer__visit {
+            justify-self: stretch;
+            grid-template-columns: 1fr auto;
+            grid-template-areas:
+                "address contact"
+                ".       hours"
+                "copy    links";
+            gap: 0.35rem var(--space-xl);
             justify-items: start;
         }
-        /* The hours sit as close to the copyright row as to the address
-           above them, so the three read as one evenly spaced stack. */
-        .footer__legal {
-            margin-top: calc(0.35rem - var(--space-md));
+        .footer__address {
+            grid-area: address;
         }
-        .footer__legal {
-            flex-direction: row;
-            align-items: baseline;
-            justify-content: space-between;
+        .footer__contact {
+            grid-area: contact;
+            justify-self: end;
+            align-items: flex-end;
+        }
+        .footer__hours {
+            grid-area: hours;
+            justify-self: end;
+        }
+        .footer__copy {
+            grid-area: copy;
+            align-self: end;
+        }
+        .footer__links {
+            grid-area: links;
+            justify-self: end;
+            align-self: end;
+            justify-content: flex-end;
         }
     }
 
