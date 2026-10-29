@@ -126,10 +126,13 @@ const year = 2026;
     /* Days and sessions as a two-column table. Narrow: each day is one line
        ("9am–12pm, 2pm–6pm"). Wide: each session gets its own right-aligned
        line, so the times share one clean right edge. */
+    /* Narrow: rows run edge to edge, labels on the left and values flush
+       right, so the times, phone and links share one right edge. */
     .footer__hours {
+        justify-self: stretch;
         margin: 0;
         display: grid;
-        grid-template-columns: max-content max-content;
+        grid-template-columns: max-content 1fr;
         column-gap: 0.75rem;
         text-align: left;
     }
@@ -141,6 +144,7 @@ const year = 2026;
     }
     .footer__hours dd {
         margin: 0;
+        text-align: right;
     }
     /* Narrow: sessions run on one line, separated by ", ". */
     .footer__session + .footer__session::before {
@@ -151,8 +155,10 @@ const year = 2026;
        line. Padding gives each a 44px hit area, negative margin cancels its
        height, so the links keep the address's line rhythm. */
     .footer__contact {
+        justify-self: stretch;
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-between;
         gap: 0 var(--space-md);
     }
     .footer__contact a {
@@ -173,6 +179,7 @@ const year = 2026;
        it. The gap between them is never narrower than the gap between the
        two links. */
     .footer__legal {
+        justify-self: stretch;
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
@@ -181,7 +188,9 @@ const year = 2026;
     .footer__copy {
         margin: 0;
     }
+    /* Pushed to the right edge, even when it wraps under the copyright. */
     .footer__links {
+        margin-left: auto;
         display: flex;
         flex-wrap: wrap;
         gap: 0 var(--space-md);
@@ -233,6 +242,12 @@ const year = 2026;
             flex-direction: column;
             align-items: flex-start;
             gap: 0.35rem;
+        }
+        .footer__links {
+            margin-left: 0;
+        }
+        .footer__hours {
+            grid-template-columns: max-content max-content;
         }
         .footer__hours dd {
             text-align: right;
