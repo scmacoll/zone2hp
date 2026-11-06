@@ -441,10 +441,10 @@
 
 /* ---- Dotted trail divider ----------------------------------------------- */
 .cn-trail {
-  height: 14px;
+  height: 8px;
   margin: 0;
   border: 0;
-  background: radial-gradient(circle, var(--chrome-cool) 1.6px, transparent 2px) 0 50% / 14px 14px
+  background: radial-gradient(circle, var(--chrome-cool) 0.9px, transparent 1.2px) 0 50% / 8px 8px
     repeat-x;
 }
 

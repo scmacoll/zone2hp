@@ -6,31 +6,20 @@
 //
 // The Book button follows the same switch as every other booking link on the
 // site: /book redirects home while PUBLIC_BOOKING_LINKS_VISIBLE is off, so the
-// button would otherwise lead nowhere.
+// button would otherwise lead nowhere. The caption belongs to the button, so the
+// two show or hide together.
 import { bookingConfig } from '../lib/booking/config';
-
-interface Props {
-  /** Show the consultations caption. The Clinic Notes index leaves it out. */
-  languages?: boolean;
-}
-
-const { languages = true } = Astro.props;
-const showCta = bookingConfig.linksVisible || languages;
 ---
 
 {
-  showCta && (
+  bookingConfig.linksVisible && (
     <div class="cn-cta">
-      {bookingConfig.linksVisible && (
-        <a class="cn-btn" href="/book">
-          Book online
-        </a>
-      )}
-      {languages && (
-        <p class="cn-cta__lang">
-          Consultations in English and <span lang="ko">한국어</span>
-        </p>
-      )}
+      <a class="cn-btn" href="/book">
+        Book online
+      </a>
+      <p class="cn-cta__lang">
+        Consultations in English and <span lang="ko">한국어</span>
+      </p>
     </div>
   )
 }
