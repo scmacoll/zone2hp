@@ -3,14 +3,15 @@
 // so these pages never reach production. Delete src/pages/careers-compare once a
 // style is chosen.
 import CompareRole from '../_CompareRole.astro';
+import ComparePost from '../_ComparePost.astro';
 import { roles } from '../../../lib/careers';
 
 export function getStaticPaths() {
   if (!roles.some((role) => role.draft)) return [];
-  return [{ params: { variant: 'white' } }, { params: { variant: 'halfway' } }];
+  return ['white', 'halfway', 'post'].map((variant) => ({ params: { variant } }));
 }
 
-const variant = Astro.params.variant as 'white' | 'halfway';
+const variant = Astro.params.variant as 'white' | 'halfway' | 'post';
 ---
 
-<CompareRole variant={variant} />
+{variant === 'post' ? <ComparePost /> : <CompareRole variant={variant} />}
