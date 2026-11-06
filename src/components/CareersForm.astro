@@ -34,16 +34,20 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
       <input id="cr-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="cr-phone-error" />
       <p class="cr-field__error" id="cr-phone-error" data-error="phone" hidden></p>
     </div>
-    <div class="cr-field">
-      <label for="cr-profession">Profession or course</label>
-      <input id="cr-profession" name="profession" type="text" required aria-describedby="cr-profession-error" />
-      <p class="cr-field__error" id="cr-profession-error" data-error="profession" hidden></p>
+    {
+      !role && (
+        <div class="cr-field">
+          <label for="cr-profession">Profession or course</label>
+          <input id="cr-profession" name="profession" type="text" required aria-describedby="cr-profession-error" />
+          <p class="cr-field__error" id="cr-profession-error" data-error="profession" hidden />
+        </div>
+      )
+    }
+    <!-- Beside Phone on a role page, so that row stays full; its own row otherwise. -->
+    <div class:list={['cr-field', !role && 'cr-field--wide']}>
+      <label for="cr-ahpra">AHPRA registration number <span class="cr-field__opt">(optional)</span></label>
+      <input id="cr-ahpra" name="ahpra_registration" type="text" autocomplete="off" />
     </div>
-  </div>
-
-  <div class="cr-field">
-    <label for="cr-ahpra">AHPRA registration number <span class="cr-field__opt">(optional)</span></label>
-    <input id="cr-ahpra" name="ahpra_registration" type="text" autocomplete="off" />
   </div>
 
   <div class="cr-field">

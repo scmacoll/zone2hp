@@ -1,0 +1,48 @@
+---
+// TEMPORARY style comparison. Delete src/pages/careers-compare once a style is chosen.
+import '../../styles/clinic-notes.css';
+import '../../styles/careers.css';
+import './_compare.css';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import CareersForm from '../../components/CareersForm.astro';
+import { roles } from '../../lib/careers';
+
+const { variant } = Astro.props as { variant: 'white' | 'halfway' };
+const role = roles[0];
+---
+
+<Base title={`Role compare: ${variant}`} noindex>
+  <PageHeader />
+  <main id="main" class:list={['cn', 'cr', 'crv', `crv--${variant}`]}>
+    <header class="crv-intro">
+      <div class="crv-col crv-intro__inner">
+        <nav class="cn-crumb" aria-label="Breadcrumb"><a href={`/careers-compare/${variant}`}><span aria-hidden="true">&larr;</span> All open roles</a></nav>
+        <p class="cr-role__draft">Sample role for staging only. This is not a real position.</p>
+        <Eyebrow tone="accent">Careers</Eyebrow>
+        <h1 class="crv-title">{role.title}</h1>
+        <p class="cn-eyebrow"><span>{role.location}</span><span>{role.commitment}</span></p>
+        <div><a class="cn-btn" href="#apply">Apply for this role</a></div>
+      </div>
+    </header>
+    <div class="crv-col crv-body">
+      <div class="cn-prose cr-prose">
+        {role.sections.map((section) => (
+          <section>
+            <h2>{section.heading}</h2>
+            {section.paragraphs?.map((p) => <p>{p}</p>)}
+            {section.items && <ul>{section.items.map((item) => <li>{item}</li>)}</ul>}
+          </section>
+        ))}
+      </div>
+      <hr class="crv-rule" />
+      <section class="cr-section" id="apply" aria-labelledby="cr-apply">
+        <h2 class="cr-heading" id="cr-apply">Apply for this role</h2>
+        <CareersForm role={role.title} />
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Base>

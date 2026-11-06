@@ -1,0 +1,16 @@
+---
+// TEMPORARY client style comparison. Built only where the sample role exists,
+// so these pages never reach production. Delete src/pages/careers-compare once a
+// style is chosen.
+import CompareRole from '../_CompareRole.astro';
+import { roles } from '../../../lib/careers';
+
+export function getStaticPaths() {
+  if (!roles.some((role) => role.draft)) return [];
+  return [{ params: { variant: 'white' } }, { params: { variant: 'halfway' } }];
+}
+
+const variant = Astro.params.variant as 'white' | 'halfway';
+---
+
+<CompareRole variant={variant} />

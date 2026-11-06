@@ -1,0 +1,29 @@
+/* TEMPORARY style comparison. Delete with src/pages/careers-compare. */
+.crv-rule { margin: 0; border: 0; border-top: var(--border-hairline); }
+.crv-intro__inner { display: grid; gap: var(--space-xs); justify-items: start; }
+.crv-title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: var(--step-h2); letter-spacing: var(--track-tight); line-height: 1.1; text-wrap: balance; }
+.crv-lead { margin: 0; max-width: 52ch; color: var(--ink-2); }
+.crv-body { display: grid; gap: var(--space-lg); }
+
+/* White: the /privacy page. One narrow column on paper, hairlines, no band,
+   roles as ruled rows, and the booking and account pages' solid button. */
+.crv--white .crv-col { max-width: var(--measure); margin-inline: auto; padding-inline: var(--section-pad-inline); }
+.crv--white { padding-block: var(--section-pad-block); }
+.crv--white .crv-intro__inner { padding-bottom: var(--space-md); }
+.crv--white .crv-intro { margin-bottom: var(--space-md); }
+.crv--white .crv-intro__inner { position: relative; }
+.crv--white .crv-intro__inner::after { content: ''; position: absolute; left: var(--section-pad-inline); right: var(--section-pad-inline); bottom: 0; border-bottom: var(--border-hairline); }
+.crv--white .cr-roles { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.cn.crv--white .cr-role { padding: var(--space-sm) 0; background: none; border: 0; border-top: var(--border-hairline); border-radius: 0; }
+.cn.crv--white .cr-role:hover { transform: none; border-color: var(--chrome-line); }
+.cn.crv--white .cr-role:hover .cr-role__title { color: var(--accent-deep); }
+.cn.crv--white .cn-btn { background: var(--accent-deep); color: var(--paper); border-radius: var(--radius-md); }
+.cn.crv--white .cn-btn:hover { background: var(--accent-press); }
+.crv--white .cr-prose p, .crv--white .cr-prose li { color: var(--ink-2); }
+
+/* Halfway: the full page width and role cards of the current style, with a plain
+   stone band, the white pages' eyebrow and hairlines, and the brand orange button. */
+.crv--halfway .crv-col { max-width: var(--container-max); margin-inline: auto; padding-inline: var(--section-pad-inline); }
+.crv--halfway .crv-intro { background: var(--stone); border-bottom: var(--border-hairline); }
+.crv--halfway .crv-intro__inner { padding-block: clamp(2.5rem, 2rem + 2.5vw, 3.5rem); }
+.crv--halfway .crv-body { padding-block: clamp(2.5rem, 2rem + 2.5vw, 3.5rem) clamp(3rem, 2.5rem + 3vw, 4.5rem); }

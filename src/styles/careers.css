@@ -125,6 +125,9 @@
   align-content: start;
   min-width: 0;
 }
+.cr-field--wide {
+  grid-column: 1 / -1;
+}
 .cr-field > label:not(.cr-check) {
   font-size: var(--step-small);
   font-weight: 500;
