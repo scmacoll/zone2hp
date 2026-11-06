@@ -9,6 +9,9 @@ import PageHeader from '../../components/PageHeader.astro';
 import Footer from '../../components/Footer.astro';
 import ClinicNotesClose from '../../components/ClinicNotesClose.astro';
 import { clinicNotes } from '../../lib/clinic-notes';
+
+// The zone 2 post keeps its card in the hero but has no teaser below.
+const teasers = clinicNotes.filter((n) => n.slug !== 'zone-2-training');
 ---
 
 <Base
@@ -45,7 +48,7 @@ import { clinicNotes } from '../../lib/clinic-notes';
 
     <div class="cn-wrap cn-index">
       {
-        clinicNotes.map((n) => (
+        teasers.map((n, i) => (
           <>
             <article class="cn-teaser">
               <div class="cn-eyebrow">
@@ -57,7 +60,7 @@ import { clinicNotes } from '../../lib/clinic-notes';
               </h2>
               <p class="cn-stand">{n.standfirst}</p>
             </article>
-            <hr class="cn-trail" />
+            {i < teasers.length - 1 && <hr class="cn-trail" />}
           </>
         ))
       }
