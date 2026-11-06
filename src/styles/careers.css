@@ -1,0 +1,225 @@
+/* Careers (/careers and each role page). Builds on the Clinic Notes page
+   language (src/styles/clinic-notes.css: hero, labels, buttons, trail divider)
+   so the white pages read as one site. Everything is scoped under .cr or a cr-
+   class. No inline style="": the CSP has no 'unsafe-inline'. */
+
+.cr-body {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  padding-block: clamp(2.5rem, 2rem + 2.5vw, 3.5rem)
+    clamp(3rem, 2.5rem + 3vw, 4.5rem);
+}
+.cr-section {
+  display: grid;
+  gap: var(--space-sm);
+  min-width: 0;
+  /* The Apply button lands here, clear of the window edge. */
+  scroll-margin-top: var(--space-md);
+}
+.cr-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--track-tight);
+  font-size: var(--step-h3);
+  line-height: 1.15;
+}
+.cr-lead,
+.cr-empty {
+  margin: 0;
+  max-width: var(--cn-measure);
+  color: var(--ink-2);
+}
+
+/* ---- Role cards --------------------------------------------------------- */
+.cr-roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cn .cr-role {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1.125rem 1.125rem 1.25rem;
+  background: var(--cn-surface);
+  border: var(--border-hairline);
+  border-radius: var(--cn-radius);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    transform 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out);
+}
+.cn .cr-role:hover {
+  transform: translateY(-3px);
+  border-color: var(--cn-orange);
+}
+.cr-role__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+.cr-role__summary {
+  color: var(--ink-2);
+  font-size: var(--step-small);
+  line-height: 1.5;
+}
+.cr-role__more {
+  margin-top: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+.cr-role__draft {
+  justify-self: start;
+  margin: 0;
+  padding: 0.15rem 0.5rem;
+  background: var(--cn-wash);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  color: var(--ink);
+}
+
+/* ---- Role page ---------------------------------------------------------- */
+.cr-prose {
+  display: grid;
+  gap: var(--space-sm);
+}
+.cr-prose section {
+  display: grid;
+  gap: 0.625rem;
+}
+.cr-prose h2 {
+  margin: 0;
+}
+
+/* ---- Form --------------------------------------------------------------- */
+.cr-form {
+  container: cr-form / inline-size;
+  display: grid;
+  gap: 1.25rem;
+  max-width: 42rem;
+  min-width: 0;
+}
+.cr-form__pair {
+  display: grid;
+  gap: 1.25rem;
+}
+@container cr-form (min-width: 32rem) {
+  .cr-form__pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 1rem;
+  }
+}
+.cr-field {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  min-width: 0;
+}
+.cr-field > label:not(.cr-check) {
+  font-size: var(--step-small);
+  font-weight: 500;
+  color: var(--ink);
+}
+.cr-field__opt {
+  font-weight: 400;
+  color: var(--ink-2);
+}
+.cr-field input:not([type="checkbox"]),
+.cr-field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.75rem;
+  background: var(--cn-surface);
+  border: 1px solid var(--ink-3);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  color: var(--ink);
+}
+.cr-field textarea {
+  resize: vertical;
+}
+.cr-field [aria-invalid="true"] {
+  border-color: var(--accent-deep);
+}
+.cr-field__hint,
+.cr-form__notice {
+  margin: 0;
+  max-width: var(--cn-measure);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.cr-field__error {
+  margin: 0;
+  font-size: var(--step-small);
+  color: var(--accent-deep);
+}
+.cr-check {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  min-height: 44px;
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--ink);
+  cursor: pointer;
+}
+.cr-check input {
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0.1rem 0 0;
+  accent-color: var(--accent-deep);
+}
+.cr-form__actions {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2xs);
+}
+.cn button.cn-btn {
+  border: 0;
+  cursor: pointer;
+}
+.cn button.cn-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.cr-form__ok {
+  margin: 0;
+  max-width: var(--cn-measure);
+  padding: 1rem 1.125rem;
+  background: var(--cn-surface);
+  border: var(--border-hairline);
+  border-radius: var(--cn-radius);
+}
+/* Off-screen rather than display:none, because bots skip hidden fields. */
+.cr-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cn .cr-role:hover {
+    transform: none;
+  }
+}
+
+/* Unselectable UI (see the selection policy in src/styles/global.css). */
+.cr-role {
+  -webkit-user-select: none;
+  user-select: none;
+}

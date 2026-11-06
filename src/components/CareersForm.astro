@@ -1,0 +1,164 @@
+---
+// Application and expression-of-interest form, used on /careers and on each
+// role page. Posts to the same Formspree form as the footer signup, which emails
+// info@zone2hp.com; the subject line tells applications apart. Formspree's
+// current plan is assumed to have no file upload, so a CV is a link or an email.
+//
+// With no JS the browser's own required checks apply and the form posts to
+// Formspree's page. The script adds inline errors and stays on the page.
+// Styles: src/styles/careers.css.
+interface Props {
+  /** Role title. Leave out for an expression of interest. */
+  role?: string;
+}
+
+const { role } = Astro.props;
+const email = 'info@zone2hp.com';
+const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expression of interest';
+---
+
+<form class="cr-form" action="https://formspree.io/f/xlgkvgjw" method="POST" data-careers-form>
+  <div class="cr-form__pair">
+    <div class="cr-field">
+      <label for="cr-name">Full name</label>
+      <input id="cr-name" name="name" type="text" autocomplete="name" required aria-describedby="cr-name-error" />
+      <p class="cr-field__error" id="cr-name-error" data-error="name" hidden></p>
+    </div>
+    <div class="cr-field">
+      <label for="cr-email">Email</label>
+      <input id="cr-email" name="email" type="email" autocomplete="email" required aria-describedby="cr-email-error" />
+      <p class="cr-field__error" id="cr-email-error" data-error="email" hidden></p>
+    </div>
+    <div class="cr-field">
+      <label for="cr-phone">Phone</label>
+      <input id="cr-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="cr-phone-error" />
+      <p class="cr-field__error" id="cr-phone-error" data-error="phone" hidden></p>
+    </div>
+    <div class="cr-field">
+      <label for="cr-profession">Profession or course</label>
+      <input id="cr-profession" name="profession" type="text" required aria-describedby="cr-profession-error" />
+      <p class="cr-field__error" id="cr-profession-error" data-error="profession" hidden></p>
+    </div>
+  </div>
+
+  <div class="cr-field">
+    <label for="cr-ahpra">AHPRA registration number <span class="cr-field__opt">(optional)</span></label>
+    <input id="cr-ahpra" name="ahpra_registration" type="text" autocomplete="off" />
+  </div>
+
+  <div class="cr-field">
+    <label for="cr-cv">Link to your CV or LinkedIn <span class="cr-field__opt">(optional)</span></label>
+    <input id="cr-cv" name="cv_or_linkedin" type="text" inputmode="url" autocomplete="url" aria-describedby="cr-cv-hint" />
+    <p class="cr-field__hint" id="cr-cv-hint">Or email your CV to <a href={`mailto:${email}`}>{email}</a>.</p>
+  </div>
+
+  <div class="cr-field">
+    <label for="cr-message">Message <span class="cr-field__opt">(optional)</span></label>
+    <textarea id="cr-message" name="message" rows="4"></textarea>
+  </div>
+
+  <p class="cr-form__notice">
+    We use these details only to consider you for current or future roles. They reach us through
+    Formspree, a form service that may store them outside Australia. Please don't include health
+    information. See our <a href="/privacy">Privacy Policy</a>.
+  </p>
+
+  <div class="cr-field">
+    <label class="cr-check">
+      <input type="checkbox" name="privacy_consent" value="Agreed" required aria-describedby="cr-consent-error" />
+      <span>I agree to Zone Two collecting and using these details for this purpose.</span>
+    </label>
+    <p class="cr-field__error" id="cr-consent-error" data-error="privacy_consent" hidden></p>
+  </div>
+
+  <!-- Honeypot: real people never fill this in, and Formspree drops the submission if a bot does. -->
+  <input class="cr-honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <input type="hidden" name="_subject" value={subject} />
+  <input type="hidden" name="role" value={role ?? 'Expression of interest'} />
+
+  <div class="cr-form__actions">
+    <button class="cn-btn" type="submit">{role ? 'Submit application' : 'Send expression of interest'}</button>
+    <p class="cr-field__error" data-form-error role="alert" hidden></p>
+  </div>
+</form>
+<p class="cr-form__ok" data-careers-ok tabindex="-1" role="status" hidden></p>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-careers-form]');
+  const okEl = document.querySelector<HTMLElement>('[data-careers-ok]');
+
+  if (form) {
+    form.noValidate = true;
+    const formError = form.querySelector<HTMLElement>('[data-form-error]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+    const messages: Record<string, string> = {
+      name: 'Please enter your full name.',
+      email: 'Please enter a valid email address.',
+      phone: 'Please enter your phone number.',
+      profession: 'Please enter your profession or course.',
+      privacy_consent: 'Please agree so we can consider your details.',
+    };
+
+    const isValid = (input: HTMLInputElement) => {
+      if (input.type === 'checkbox') return input.checked;
+      if (input.name === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+      return input.value.trim() !== '';
+    };
+
+    const show = (input: HTMLInputElement, message?: string) => {
+      const error = form.querySelector<HTMLElement>(`[data-error="${input.name}"]`);
+      input.setAttribute('aria-invalid', message ? 'true' : 'false');
+      if (error) {
+        error.hidden = !message;
+        error.textContent = message ?? '';
+      }
+    };
+
+    const required = Object.keys(messages).flatMap((name) => {
+      const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+      return input ? [input] : [];
+    });
+
+    required.forEach((input) => {
+      const clear = () => {
+        if (isValid(input)) show(input);
+      };
+      input.addEventListener('input', clear);
+      input.addEventListener('change', clear);
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const invalid = required.filter((input) => !isValid(input));
+      required.forEach((input) => show(input, invalid.includes(input) ? messages[input.name] : undefined));
+      if (invalid.length > 0) {
+        invalid[0].focus();
+        return;
+      }
+
+      if (formError) formError.hidden = true;
+      if (button) button.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error('Request failed');
+        form.hidden = true;
+        if (okEl) {
+          okEl.textContent = "Thanks, we've received your details. We'll be in touch if there's a suitable role.";
+          okEl.hidden = false;
+          okEl.focus();
+        }
+      } catch {
+        if (button) button.disabled = false;
+        if (formError) {
+          formError.textContent = 'Something went wrong. Please try again, or email us at info@zone2hp.com.';
+          formError.hidden = false;
+        }
+      }
+    });
+  }
+</script>
