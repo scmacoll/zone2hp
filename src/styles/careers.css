@@ -113,10 +113,25 @@
   display: grid;
   gap: 1.25rem;
 }
+/* The hint belongs to the CV field, so it cancels most of the row gap. */
+.cr-cv-hint {
+  margin-top: -0.85rem;
+}
 @container cr-form (min-width: 32rem) {
   .cr-form__pair {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem 1rem;
+  }
+  .cr-cv-hint--below {
+    grid-column: 2;
+  }
+  /* Level with the input beside it. */
+  .cr-cv-hint--beside {
+    display: flex;
+    align-items: center;
+    align-self: end;
+    min-height: 44px;
+    margin-top: 0;
   }
 }
 .cr-field {
@@ -124,9 +139,6 @@
   gap: 0.4rem;
   align-content: start;
   min-width: 0;
-}
-.cr-field--wide {
-  grid-column: 1 / -1;
 }
 .cr-field > label:not(.cr-check) {
   font-size: var(--step-small);

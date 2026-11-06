@@ -43,17 +43,18 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
         </div>
       )
     }
-    <!-- Beside Phone on a role page, so that row stays full; its own row otherwise. -->
-    <div class:list={['cr-field', !role && 'cr-field--wide']}>
+    <div class="cr-field">
       <label for="cr-ahpra">AHPRA registration number <span class="cr-field__opt">(optional)</span></label>
       <input id="cr-ahpra" name="ahpra_registration" type="text" autocomplete="off" />
     </div>
-  </div>
-
-  <div class="cr-field">
-    <label for="cr-cv">Link to your CV or LinkedIn <span class="cr-field__opt">(optional)</span></label>
-    <input id="cr-cv" name="cv_or_linkedin" type="text" inputmode="url" autocomplete="url" aria-describedby="cr-cv-hint" />
-    <p class="cr-field__hint" id="cr-cv-hint">Or email your CV to <a href={`mailto:${email}`}>{email}</a>.</p>
+    <div class="cr-field">
+      <label for="cr-cv">Link to your CV or LinkedIn <span class="cr-field__opt">(optional)</span></label>
+      <input id="cr-cv" name="cv_or_linkedin" type="text" inputmode="url" autocomplete="url" aria-describedby="cr-cv-hint" />
+    </div>
+    <!-- A role form has an odd number of fields, so the hint fills the cell beside the CV field. -->
+    <p class:list={['cr-field__hint', 'cr-cv-hint', role ? 'cr-cv-hint--beside' : 'cr-cv-hint--below']} id="cr-cv-hint">
+      <span>Or email your CV to <a href={`mailto:${email}`}>{email}</a>.</span>
+    </p>
   </div>
 
   <div class="cr-field">
