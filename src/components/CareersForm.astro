@@ -34,15 +34,12 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
       <input id="cr-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="cr-phone-error" />
       <p class="cr-field__error" id="cr-phone-error" data-error="phone" hidden></p>
     </div>
-    {
-      !role && (
-        <div class="cr-field">
-          <label for="cr-profession">Profession or course</label>
-          <input id="cr-profession" name="profession" type="text" required aria-describedby="cr-profession-error" />
-          <p class="cr-field__error" id="cr-profession-error" data-error="profession" hidden />
-        </div>
-      )
-    }
+    <!-- Optional on a role form, where the role already says what they do. -->
+    <div class="cr-field">
+      <label for="cr-profession">Profession or course {role && <span class="cr-field__opt">(optional)</span>}</label>
+      <input id="cr-profession" name="profession" type="text" required={!role} aria-describedby="cr-profession-error" />
+      <p class="cr-field__error" id="cr-profession-error" data-error="profession" hidden></p>
+    </div>
     <div class="cr-field">
       <label for="cr-ahpra">AHPRA registration number <span class="cr-field__opt">(optional)</span></label>
       <input id="cr-ahpra" name="ahpra_registration" type="text" autocomplete="off" />
@@ -51,9 +48,8 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
       <label for="cr-cv">Link to your CV or LinkedIn <span class="cr-field__opt">(optional)</span></label>
       <input id="cr-cv" name="cv_or_linkedin" type="text" inputmode="url" autocomplete="url" aria-describedby="cr-cv-hint" />
     </div>
-    <!-- A role form has an odd number of fields, so the hint fills the cell beside the CV field. -->
-    <p class:list={['cr-field__hint', 'cr-cv-hint', role ? 'cr-cv-hint--beside' : 'cr-cv-hint--below']} id="cr-cv-hint">
-      <span>Or email your CV to <a href={`mailto:${email}`}>{email}</a>.</span>
+    <p class="cr-field__hint cr-cv-hint" id="cr-cv-hint">
+      Or email your CV to <a href={`mailto:${email}`}>{email}</a>.
     </p>
   </div>
 
@@ -122,7 +118,7 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
 
     const required = Object.keys(messages).flatMap((name) => {
       const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
-      return input ? [input] : [];
+      return input?.required ? [input] : [];
     });
 
     required.forEach((input) => {
