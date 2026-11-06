@@ -8,12 +8,32 @@
 // site: /book redirects home while PUBLIC_BOOKING_LINKS_VISIBLE is off, so the
 // button would otherwise lead nowhere.
 import { bookingConfig } from '../lib/booking/config';
+
+interface Props {
+  /** Show the consultations caption. The Clinic Notes index leaves it out. */
+  languages?: boolean;
+}
+
+const { languages = true } = Astro.props;
+const showCta = bookingConfig.linksVisible || languages;
 ---
 
-<div class="cn-cta">
-  {bookingConfig.linksVisible && <a class="cn-btn" href="/book">Book online</a>}
-  <p class="cn-cta__lang">Consultations in English and <span lang="ko">한국어</span></p>
-</div>
+{
+  showCta && (
+    <div class="cn-cta">
+      {bookingConfig.linksVisible && (
+        <a class="cn-btn" href="/book">
+          Book online
+        </a>
+      )}
+      {languages && (
+        <p class="cn-cta__lang">
+          Consultations in English and <span lang="ko">한국어</span>
+        </p>
+      )}
+    </div>
+  )
+}
 
 <div class="cn-disclaimer">
   <p>Zone Two Health and Performance. <span class="cn-keep">Dr Mintae Kim, Chiropractor.</span></p>

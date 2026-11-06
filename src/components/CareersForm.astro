@@ -34,11 +34,9 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
       <input id="cr-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="cr-phone-error" />
       <p class="cr-field__error" id="cr-phone-error" data-error="phone" hidden></p>
     </div>
-    <!-- Optional on a role form, where the role already says what they do. -->
     <div class="cr-field">
-      <label for="cr-profession">Profession or course {role && <span class="cr-field__opt">(optional)</span>}</label>
-      <input id="cr-profession" name="profession" type="text" required={!role} aria-describedby="cr-profession-error" />
-      <p class="cr-field__error" id="cr-profession-error" data-error="profession" hidden></p>
+      <label for="cr-profession">Profession or course <span class="cr-field__opt">(optional)</span></label>
+      <input id="cr-profession" name="profession" type="text" />
     </div>
     <div class="cr-field">
       <label for="cr-ahpra">AHPRA registration number <span class="cr-field__opt">(optional)</span></label>
@@ -97,7 +95,6 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
       name: 'Please enter your full name.',
       email: 'Please enter a valid email address.',
       phone: 'Please enter your phone number.',
-      profession: 'Please enter your profession or course.',
       privacy_consent: 'Please agree so we can consider your details.',
     };
 
@@ -118,7 +115,7 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
 
     const required = Object.keys(messages).flatMap((name) => {
       const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
-      return input?.required ? [input] : [];
+      return input ? [input] : [];
     });
 
     required.forEach((input) => {

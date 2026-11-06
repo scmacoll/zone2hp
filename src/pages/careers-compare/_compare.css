@@ -7,7 +7,8 @@
 
 /* White: the /privacy page. One narrow column on paper, hairlines, no band,
    roles as ruled rows, and the booking and account pages' solid button. */
-.crv--white .crv-col { max-width: var(--measure); margin-inline: auto; padding-inline: var(--section-pad-inline); }
+/* Content width matches the /careers form, so the form gets its two columns. */
+.crv--white .crv-col { max-width: calc(var(--cn-measure) + 2 * var(--section-pad-inline)); margin-inline: auto; padding-inline: var(--section-pad-inline); }
 .crv--white { padding-block: var(--section-pad-block); }
 .crv--white .crv-intro__inner { padding-bottom: var(--space-md); }
 .crv--white .crv-intro { margin-bottom: var(--space-md); }
