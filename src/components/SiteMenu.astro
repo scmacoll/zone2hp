@@ -10,17 +10,17 @@ interface Props {
 
 const { tone = 'light', class: className = '' } = Astro.props;
 
-const onClinicNotes = Astro.url.pathname.startsWith('/clinic-notes');
+const onClinicNotes = Astro.url.pathname.startsWith('/blog');
 
 // Clinic Notes pages have no Book button in their header, so the menu leads with it.
 const links = [
   ...(onClinicNotes && bookingConfig.linksVisible ? [{ href: '/book', label: 'Book' }] : []),
   { href: '/#about', label: 'About' },
   { href: '/#find-us', label: 'Find us' },
-  { href: '/clinic-notes', label: 'Clinic notes' },
+  { href: '/blog', label: 'Clinic notes' },
   { href: '/faq', label: 'FAQ' },
 ];
-const current = (href: string) => href === '/clinic-notes' && onClinicNotes;
+const current = (href: string) => href === '/blog' && onClinicNotes;
 ---
 
 <div class:list={['menu', `menu--${tone}`, className]} data-site-menu>

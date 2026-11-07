@@ -58,7 +58,7 @@ const articleData = {
   <main id="main" class="cn">
     <div class="cn-wrap cn-page">
       <nav class="cn-crumb" aria-label="Breadcrumb">
-        <a href="/clinic-notes"><span aria-hidden="true">&larr;</span> Clinic Notes</a>
+        <a href="/blog"><span aria-hidden="true">&larr;</span> Clinic Notes</a>
       </nav>
 
       <article class="cn-article">
@@ -93,7 +93,7 @@ const articleData = {
           {
             others.map((n) => (
               <li>
-                <a class="cn-card" href={`/clinic-notes/${n.slug}`}>
+                <a class="cn-card" href={`/blog/${n.slug}`}>
                   <small>{n.tag}</small>
                   <span class="cn-card__title">{n.cardTitle}</span>
                 </a>

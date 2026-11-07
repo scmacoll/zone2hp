@@ -34,7 +34,7 @@ const teasers = clinicNotes.filter((n) => n.slug !== 'zone-2-training');
             {
               clinicNotes.map((n) => (
                 <li>
-                  <a class="cn-card" href={`/clinic-notes/${n.slug}`}>
+                  <a class="cn-card" href={`/blog/${n.slug}`}>
                     <small>{n.tag}</small>
                     <span class="cn-card__title">{n.cardTitle}</span>
                   </a>
@@ -56,7 +56,7 @@ const teasers = clinicNotes.filter((n) => n.slug !== 'zone-2-training');
                 <span>{n.readTime}</span>
               </div>
               <h2 class="cn-teaser__title">
-                <a href={`/clinic-notes/${n.slug}`}>{n.heading}</a>
+                <a href={`/blog/${n.slug}`}>{n.heading}</a>
               </h2>
               <p class="cn-stand">{n.standfirst}</p>
             </article>
