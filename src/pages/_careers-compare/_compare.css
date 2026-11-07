@@ -1,4 +1,4 @@
-/* TEMPORARY style comparison. Delete with src/pages/careers-compare. */
+/* Alternative careers styles, kept for reference. See README.md in this folder. */
 .crv-rule { margin: 0; border: 0; border-top: var(--border-hairline); }
 .crv-intro__inner { display: grid; gap: var(--space-xs); justify-items: start; }
 .crv-title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: var(--step-h2); letter-spacing: var(--track-tight); line-height: 1.1; text-wrap: balance; }

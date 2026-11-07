@@ -1,6 +1,7 @@
 ---
-// One open role, built from src/lib/careers.ts. The application form sits at
-// the foot of the page, and the Apply button in the hero jumps to it.
+// One open role, built from src/lib/careers.ts, in the Clinic Notes post layout.
+// The details panel takes the place of a post's side box, and its Apply button
+// jumps to the form at the foot of the page.
 import '../../styles/clinic-notes.css';
 import '../../styles/careers.css';
 import Base from '../../layouts/Base.astro';
@@ -23,36 +24,46 @@ const { role } = Astro.props as { role: Role };
 >
   <PageHeader />
 
-  <main id="main" class="cn cr">
-    <header class="cn-hero">
-      <div class="cn-wrap cn-hero__inner">
-        <nav class="cn-crumb" aria-label="Breadcrumb"><a href="/careers"><span aria-hidden="true">&larr;</span> All open roles</a></nav>
-        {role.draft && <p class="cr-role__draft">Sample role for staging only. This is not a real position.</p>}
-        <h1 class="cn-hero__title">{role.title}</h1>
-        <p class="cn-eyebrow">
-          <span>{role.location}</span>
-          <span>{role.commitment}</span>
-        </p>
-        <div><a class="cn-btn" href="#apply">Apply for this role</a></div>
-      </div>
-    </header>
+  <main id="main" class="cn cr cr-post">
+    <div class="cn-wrap cn-page">
+      <nav class="cn-crumb" aria-label="Breadcrumb">
+        <a href="/careers"><span aria-hidden="true">&larr;</span> All open roles</a>
+      </nav>
 
-    <div class="cn-wrap cr-body">
-      <div class="cn-prose cr-prose">
-        {
-          role.sections.map((section) => (
-            <section>
-              <h2>{section.heading}</h2>
-              {section.paragraphs?.map((p) => <p>{p}</p>)}
-              {section.items && (
-                <ul>
-                  {section.items.map((item) => <li>{item}</li>)}
-                </ul>
-              )}
-            </section>
-          ))
-        }
-      </div>
+      <article class="cn-article">
+        {role.draft && <p class="cr-role__draft">Sample role for staging only. This is not a real position.</p>}
+        <div class="cn-eyebrow">
+          <span class="cn-tag">Careers</span>
+          <span>{role.location}</span>
+        </div>
+        <h1 class="cn-title">{role.title}</h1>
+        <p class="cn-stand">{role.summary}</p>
+
+        <div class="cn-grid">
+          <div class="cn-prose cr-prose">
+            {
+              role.sections.map((section) => (
+                <section>
+                  <h2>{section.heading}</h2>
+                  {section.paragraphs?.map((p) => <p>{p}</p>)}
+                  {section.items && (
+                    <ul>
+                      {section.items.map((item) => <li>{item}</li>)}
+                    </ul>
+                  )}
+                </section>
+              ))
+            }
+          </div>
+          <aside class="cr-side" aria-label="Role details">
+            <dl class="cr-facts">
+              <div><dt>Location</dt><dd>{role.location}</dd></div>
+              <div><dt>Type</dt><dd>{role.commitment}</dd></div>
+            </dl>
+            <a class="cn-btn" href="#apply">Apply for this role</a>
+          </aside>
+        </div>
+      </article>
 
       <hr class="cn-trail" />
 
