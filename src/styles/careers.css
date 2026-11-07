@@ -166,11 +166,6 @@
 }
 
 /* ---- Role page: details panel ------------------------------------------- */
-/* Pulls the content up under the back link; the page's own gap suits the larger
-   breaks further down. */
-.cr-post .cn-crumb {
-  margin-bottom: calc(0.25rem - clamp(2.5rem, 2rem + 3vw, 4.5rem));
-}
 /* Above the text when stacked, so Apply comes first on a phone, and held in view
    beside it on wide screens. */
 .cr-side {

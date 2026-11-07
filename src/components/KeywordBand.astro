@@ -1,0 +1,169 @@
+---
+// Scrolling keyword band under the home page hero. The words are the services
+// the client lists in his FAQ. Real text, not links.
+//
+// The list repeats four times so the loop has no gap on very wide screens: the
+// track moves by exactly one copy, then starts again. Only the first copy is read
+// by screen readers. Moving content needs a way to stop it (WCAG 2.2.2), hence
+// the pause button; under reduced motion the list simply sits still.
+const keywords = [
+  'Chiropractic care',
+  'Dry needling',
+  'Soft tissue therapy',
+  'Exercise rehabilitation',
+  'Strength programmes',
+  'Aged care treatment',
+  'Aged care rehabilitation',
+];
+const copies = [0, 1, 2, 3];
+---
+
+<section class="kb" aria-label="Our services" data-keyword-band>
+  <div class="kb__viewport">
+    <div class="kb__track">
+      {
+        copies.map((copy) => (
+          <ul class="kb__group" role="list" aria-hidden={copy > 0 ? 'true' : undefined}>
+            {keywords.map((keyword) => (
+              <li class="kb__item">{keyword}</li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+  <button class="kb__toggle" type="button" aria-label="Pause scrolling services" aria-pressed="false" hidden>
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path class="kb__icon-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"></path>
+      <path class="kb__icon-play" d="M8 5v14l11-7z" fill="currentColor"></path>
+    </svg>
+  </button>
+</section>
+
+<script>
+  const band = document.querySelector<HTMLElement>('[data-keyword-band]');
+  const toggle = band?.querySelector<HTMLButtonElement>('.kb__toggle');
+
+  if (band && toggle && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      const paused = toggle.getAttribute('aria-pressed') !== 'true';
+      toggle.setAttribute('aria-pressed', String(paused));
+      band.classList.toggle('kb--paused', paused);
+    });
+  }
+</script>
+
+<style>
+  .kb {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding-block: var(--space-xs);
+    padding-inline-end: var(--section-pad-inline);
+    background: var(--stone);
+    border-bottom: var(--border-hairline);
+  }
+  .kb__viewport {
+    overflow: hidden;
+  }
+  .kb__track {
+    display: flex;
+    width: max-content;
+    animation: kb-scroll 50s linear infinite;
+  }
+  .kb--paused .kb__track {
+    animation-play-state: paused;
+  }
+  @keyframes kb-scroll {
+    to {
+      transform: translateX(-25%);
+    }
+  }
+  .kb__group {
+    display: flex;
+    flex: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .kb__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding-inline-end: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--step-h3);
+    font-weight: 600;
+    letter-spacing: var(--track-tight);
+    line-height: 1.2;
+    /* text-transform inherits, and an ancestor sets uppercase. */
+    text-transform: none;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  .kb__item::after {
+    content: '';
+    flex: none;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--concept-volt, var(--accent));
+  }
+
+  .kb__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .kb__toggle[hidden] {
+    display: none;
+  }
+  .kb__toggle:hover {
+    color: var(--accent-deep);
+  }
+  .kb__icon-play {
+    display: none;
+  }
+  .kb__toggle[aria-pressed='true'] .kb__icon-pause {
+    display: none;
+  }
+  .kb__toggle[aria-pressed='true'] .kb__icon-play {
+    display: block;
+  }
+
+  /* Still: one centred list, wrapping between phrases. */
+  @media (prefers-reduced-motion: reduce) {
+    .kb {
+      padding-inline: var(--section-pad-inline);
+    }
+    .kb__track {
+      width: auto;
+      animation: none;
+    }
+    .kb__group {
+      flex: 1;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-2xs) 0;
+    }
+    .kb__group[aria-hidden='true'] {
+      display: none;
+    }
+    .kb__item:last-child {
+      padding-inline-end: 0;
+    }
+    .kb__item:last-child::after {
+      display: none;
+    }
+  }
+</style>

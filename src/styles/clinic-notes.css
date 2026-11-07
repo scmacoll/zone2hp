@@ -183,6 +183,11 @@
   gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
   padding-block: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem) clamp(3rem, 2.5rem + 3vw, 4.5rem);
 }
+/* Pulls the content up under the back link; the page's own gap suits the larger
+   breaks further down. */
+.cn-page > .cn-crumb {
+  margin-bottom: calc(0.25rem - clamp(2.5rem, 2rem + 3vw, 4.5rem));
+}
 .cn-crumb a {
   display: inline-flex;
   align-items: center;
