@@ -2,8 +2,13 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/clinic-notes/:path*",
-      "destination": "/blog/:path*",
+      "source": "/clinic-notes",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/clinic-notes/(.*)",
+      "destination": "/blog/$1",
       "permanent": true
     }
   ],
