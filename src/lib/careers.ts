@@ -2,11 +2,10 @@
  * Open roles for /careers. Adding a role here creates its card and its page at
  * /careers/<slug>; delete the entry when the role closes.
  *
- * A role marked `draft` is built only for Vercel preview deployments (staging),
- * `npm run dev`, or a build with PUBLIC_SHOW_DRAFT_ROLES=true. Production builds
- * leave it out entirely, so no card and no page exist on the live site. Anything
- * unknown counts as production: a draft must never reach the live site by accident.
+ * A role marked `draft` is built only where drafts are shown (see drafts.ts), so
+ * no card and no page exist on the live site.
  */
+import { showDrafts } from "./drafts";
 
 export interface RoleSection {
   heading: string;
@@ -25,11 +24,6 @@ export interface Role {
   sections: RoleSection[];
   draft?: boolean;
 }
-
-const showDrafts =
-  import.meta.env.DEV ||
-  process.env.VERCEL_ENV === "preview" ||
-  process.env.PUBLIC_SHOW_DRAFT_ROLES === "true";
 
 const allRoles: Role[] = [
   {
