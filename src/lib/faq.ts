@@ -245,7 +245,7 @@ export const faq = {
         {
           question: "I want to join the Zone Two team. How do I apply?",
           answer:
-            "<p>We're growing into a multidisciplinary allied health team and always keen to meet great practitioners who share our values. Email us at <b>info@zone2hp.com</b> with your CV and a short note about you.</p>",
+            "<p>We're growing into a multidisciplinary allied health team and always keen to meet great practitioners who share our values. Apply through our <a href=\"/careers\">careers page</a>, or email your CV to <b>info@zone2hp.com</b>.</p>",
         },
       ],
     },
