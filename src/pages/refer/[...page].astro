@@ -44,7 +44,7 @@ const steps = [
 
   <main id="main" class="cn faq rf">
     <div class="faq-col">
-      <p class="rf-proto-banner">Prototype for review. Codes are not stored or tracked yet.</p>
+      <p class="cn-gp rf-notice"><b>Prototype for review.</b> Codes are not stored or tracked yet.</p>
 
       <header class="faq-intro">
         <Eyebrow tone="accent">Refer a friend</Eyebrow>
@@ -57,7 +57,7 @@ const steps = [
         <div class="rf-ticket" aria-label="Referral reward summary">
           <div class="rf-ticket__amt"><b>$50</b><span>Off their first session</span></div>
           <div class="rf-ticket__amt"><b>$50</b><span>Credit for you</span></div>
-          <small>For new patients booking an initial consultation. Terms below.</small>
+          <p>For new patients booking an initial consultation. Terms below.</p>
         </div>
         <nav class="faq-jump" aria-label="Referral sections">
           <a href="#get-code">Get my code</a>
@@ -74,8 +74,8 @@ const steps = [
               steps.map((step, i) => (
                 <li>
                   <span class="rf-steps__num" aria-hidden="true">{i + 1}</span>
-                  <b>{step.title}</b>
-                  <span>{step.text}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
                 </li>
               ))
             }
@@ -86,7 +86,7 @@ const steps = [
           <h2 class="faq-heading" id="codes-heading">Your code</h2>
           <div class="rf-panels">
             <div class="rf-panel" id="get-code">
-              <span class="rf-proto">Prototype · codes aren't saved yet</span>
+              <Eyebrow as="span" tone="accent">Prototype · codes aren't saved yet</Eyebrow>
               <h3>Get my code</h3>
               <p>For current Zone Two patients.</p>
               <form class="rf-form" id="rf-gen" novalidate>
@@ -101,7 +101,7 @@ const steps = [
                 <button class="cn-btn" type="submit">Create my code</button>
               </form>
               <div class="rf-codebox" id="rf-out" hidden>
-                <span class="rf-proto">Your code</span>
+                <Eyebrow as="span" tone="accent">Your code</Eyebrow>
                 <span class="rf-code" id="rf-code"></span>
                 <div class="cr-field">
                   <label for="rf-share">Message to share</label>
@@ -109,15 +109,15 @@ const steps = [
                 </div>
                 <div class="rf-btns">
                   <button class="cn-btn" type="button" id="rf-copy-code">Copy code</button>
-                  <button class="cn-btn rf-btn--ghost" type="button" id="rf-copy-msg">Copy message</button>
+                  <button class="cn-btn rf-btn--outline" type="button" id="rf-copy-msg">Copy message</button>
                 </div>
-                <span class="rf-proto" id="rf-copy-status" aria-live="polite"></span>
+                <p class="cr-field__hint" id="rf-copy-status" aria-live="polite"></p>
               </div>
-              <p class="rf-msg rf-msg--err" id="rf-gen-err" role="alert" hidden></p>
+              <p class="cr-field__error" id="rf-gen-err" role="alert" hidden></p>
             </div>
 
             <div class="rf-panel" id="have-code">
-              <span class="rf-proto">Prototype · checks the format only</span>
+              <Eyebrow as="span" tone="accent">Prototype · checks the format only</Eyebrow>
               <h3>I have a code</h3>
               <p>New to Zone Two? Enter the code a friend gave you.</p>
               <form class="rf-form" id="rf-chk" novalidate>
@@ -129,7 +129,7 @@ const steps = [
                   </div>
                 </div>
               </form>
-              <p class="rf-msg" id="rf-chk-out" role="status" hidden></p>
+              <p class="rf-result" id="rf-chk-out" role="status" hidden></p>
             </div>
           </div>
         </section>
@@ -203,7 +203,7 @@ const steps = [
   const err = byId<HTMLParagraphElement>('rf-gen-err');
   const codeEl = byId<HTMLSpanElement>('rf-code');
   const share = byId<HTMLTextAreaElement>('rf-share');
-  const status = byId<HTMLSpanElement>('rf-copy-status');
+  const status = byId<HTMLParagraphElement>('rf-copy-status');
 
   byId<HTMLFormElement>('rf-gen').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -247,7 +247,7 @@ const steps = [
     chkOut.hidden = false;
     chkOut.replaceChildren();
     if (CODE_RE.test(value)) {
-      chkOut.className = 'rf-msg rf-msg--ok';
+      chkOut.className = 'rf-result';
       const strong = document.createElement('b');
       strong.textContent = value;
       chkOut.append(
@@ -255,7 +255,7 @@ const steps = [
         ' looks good. Mention this code when you book your first session, and $50 comes off your initial consultation.',
       );
     } else {
-      chkOut.className = 'rf-msg rf-msg--err';
+      chkOut.className = 'cr-field__error';
       chkOut.textContent =
         "That code doesn't look right. Codes look like ZONE2-ALEX-K7Q. Check with the friend who shared it, or call us on 0450 222 122.";
     }
