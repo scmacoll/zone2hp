@@ -89,7 +89,7 @@ function postUnits(file: string): string[] {
   src = src.slice(src.indexOf('<ClinicNote'), src.indexOf('<Fragment slot="refs">'));
   const units: string[] = [];
   const re =
-    /<(h2|p|li|cite|figcaption|title|text)\b[^>]*>([\s\S]*?)<\/\1>|^\s*(\w+): "((?:[^"\\]|\\.)*)",$/gm;
+    /<(h2|p|li|cite|figcaption|title|text|th|td)\b[^>]*>([\s\S]*?)<\/\1>|^\s*(\w+): "((?:[^"\\]|\\.)*)",$/gm;
   for (const m of src.matchAll(re)) {
     const raw = m[2] ?? m[4] ?? '';
     if (/<(p|li|ul)\b/.test(raw)) continue; // a wrapper; its children are listed

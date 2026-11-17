@@ -24,6 +24,11 @@
 | low back pain | 허리 통증 |
 | ACL injuries | 전방십자인대(ACL) 손상 |
 | rotator cuff injuries | 회전근개 손상 |
+| frozen shoulder | 오십견(동결견) |
+| dislocation / instability | 탈구 / 불안정성 |
+| mobility problem / stability problem | 가동성 문제 / 안정성 문제 |
+| (joint) mobilisation | 관절 가동술 |
+| painful arc | 특정 구간에서 아픔 |
 | Achilles tendinopathy | 아킬레스건병증 |
 | De Quervain's tenosynovitis | 드퀘르뱅 건초염 |
 | hip strength | 고관절 근력 |

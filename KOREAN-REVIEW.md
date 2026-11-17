@@ -33,6 +33,11 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | low back pain | 허리 통증 |
 | ACL injuries | 전방십자인대(ACL) 손상 |
 | rotator cuff injuries | 회전근개 손상 |
+| frozen shoulder | 오십견(동결견) |
+| dislocation / instability | 탈구 / 불안정성 |
+| mobility problem / stability problem | 가동성 문제 / 안정성 문제 |
+| (joint) mobilisation | 관절 가동술 |
+| painful arc | 특정 구간에서 아픔 |
 | Achilles tendinopathy | 아킬레스건병증 |
 | De Quervain's tenosynovitis | 드퀘르뱅 건초염 |
 | hip strength | 고관절 근력 |
@@ -474,3 +479,45 @@ Each post's text in reading order. References stay in English on both pages and 
 | 28 | Muscle holds | 근육이 버팀 | |
 | 29 | No movement | 움직임 없음 | |
 | 30 | Same muscle (the bicep, in orange), three jobs. Simplified illustration. | 같은 근육(주황색 이두근), 세 가지 일. 단순화한 그림이에요. | |
+
+### Shoulder pain: stiff, unstable, or overloaded?
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | A mobility problem: "It won't go there" | 가동성 문제: "거기까지 안 올라가요" | |
+| 2 | The shoulder is stiff, and it stops early whether you lift it yourself or someone else lifts it for you. Turning the arm outwards is usually the first thing lost. The classic example is frozen shoulder, most common between 40 and 60 and more likely with diabetes or thyroid conditions. It often passes through painful, stiff and recovery phases, and without treatment it can take one to three years [6]. | 어깨가 뻣뻣해서, 스스로 들어 올리든 다른 사람이 들어 올려 주든 일찍 멈춰요. 보통 팔을 바깥쪽으로 돌리는 동작이 가장 먼저 안 돼요. 대표적인 예가 오십견(동결견)이에요. 40~60세 사이에 가장 흔하고, 당뇨나 갑상선 질환이 있으면 생길 가능성이 더 높아요. 흔히 통증기, 경직기, 회복기를 거치고, 치료하지 않으면 1~3년이 걸릴 수 있어요 [6]. | |
+| 3 | A stability problem: "It goes there, but doesn't stay put" | 안정성 문제: "올라가긴 하는데, 제자리에 있지 않아요" | |
+| 4 | The range is there, but the ball doesn't stay centred in the socket. You might feel it slip, clunk or "go dead", especially overhead. This can follow a dislocation, or come on without injury in people with naturally flexible joints. After a first dislocation, recurrence is common, especially in younger people: | 움직이는 범위는 충분한데, 공 모양의 위팔뼈 머리가 관절 소켓 가운데에 머물지 않아요. 특히 팔을 머리 위로 올릴 때 미끄러지는 느낌, "덜컥" 하는 느낌, 또는 팔에 힘이 "쭉 빠지는" 느낌이 들 수 있어요. 탈구 뒤에 생기기도 하고, 관절이 원래 유연한 사람에게는 부상 없이 생기기도 해요. 처음 탈구된 뒤에는 재발이 흔하고, 특히 젊은 사람에게 그래요. | |
+| 5 | "Recurrent instability following a first-time traumatic anterior shoulder dislocation was 39%." | "처음 외상성 전방 어깨 탈구를 겪은 뒤 불안정성이 재발한 비율은 39%였어요." | |
+| 7 | The most common one: overloaded | 가장 흔한 경우: 과부하 | |
+| 8 | Rotator cuff related shoulder pain is a load problem more than either of the above: the shoulder moves and stays put, but the tendons can't currently handle what you're asking of them. Scans often show cuff changes, but those are common in shoulders that don't hurt: in one population study, tears without symptoms were twice as common as tears with symptoms [4]. Exercise is the first-line treatment [3], and placebo-controlled surgery trials have found shaving bone off the shoulder offers no extra benefit: | 회전근개 관련 어깨 통증은 위의 두 가지보다는 부하의 문제예요. 어깨는 움직이고 제자리에도 있지만, 지금 힘줄이 요구받는 일을 감당하지 못하는 거예요. 영상 검사에서 회전근개 변화가 자주 보이지만, 그런 변화는 아프지 않은 어깨에서도 흔해요. 한 인구 연구에서는 증상 없는 파열이 증상 있는 파열보다 두 배 흔했어요 [4]. 운동이 1차 치료이고 [3], 위약 대조 수술 시험들에서는 어깨뼈를 깎아 내는 수술이 추가 이득을 주지 않았어요. | |
+| 9 | "Surgical decompression appeared to offer no extra benefit over arthroscopy only." | "수술적 감압술은 관절경 검사만 한 경우보다 추가 이득이 없는 것으로 보였어요." | |
+| 11 | How I can help | 제가 도울 수 있는 방법 | |
+| 12 | The assessment works out which pattern you have (often it's a mix). Stiff shoulders get hands-on mobilisation and range work, plus a referral for an injection when it's warranted. In a large UK trial, physio plus an injection held up well against surgery [5]. Unstable shoulders get progressive strength and control training, which has strong results for non-injury instability [8]. Overloaded shoulders get load management and a progressive strength plan. In every case, you'll know what we're doing and why. | 평가를 통해 어떤 패턴인지 알아봐요(섞여 있는 경우도 많아요). 뻣뻣한 어깨에는 도수 관절 가동술과 가동 범위 운동을 하고, 필요할 때는 주사 치료를 위한 의뢰도 해요. 영국의 한 대규모 시험에서는 물리치료와 주사를 함께 한 경우가 수술에 견줄 만한 결과를 보였어요 [5]. 불안정한 어깨에는 점진적인 근력과 조절 훈련을 하는데, 부상 없이 생긴 불안정성에서 좋은 결과가 나와 있어요 [8]. 과부하된 어깨에는 부하 관리와 점진적인 근력 계획을 세워요. 어떤 경우든 무엇을 왜 하는지 알고 진행하실 수 있어요. | |
+| 13 | In 30 seconds | 30초 요약 | |
+| 14 | Stiff: can't get there, even with help. Unstable: gets there, but doesn't feel secure. | 뻣뻣함: 도움을 받아도 거기까지 안 올라가요. 불안정: 올라가긴 하지만 불안한 느낌이에요. | |
+| 15 | Most shoulder pain is the rotator cuff being overloaded, and exercise is first-line care. | 어깨 통증은 대부분 회전근개에 과부하가 걸린 경우이고, 운동이 1차 치료예요. | |
+| 16 | A scan "tear" isn't always the cause. Plenty of pain-free shoulders have one. | 영상 검사의 "파열"이 늘 원인인 건 아니에요. 통증 없는 어깨에도 파열이 있는 경우가 많아요. | |
+| 17 | Two people raising an arm out to the side. Mobility problem: the arm stops at about shoulder height. Stability problem: the arm goes all the way up, but a close-up shows the ball shifting in the socket. | 팔을 옆으로 들어 올리는 두 사람. 가동성 문제: 팔이 어깨 높이쯤에서 멈춰요. 안정성 문제: 팔이 끝까지 올라가지만, 확대 그림을 보면 공 모양의 뼈가 소켓 안에서 움직여요. | |
+| 18 | Stops | 멈춤 | |
+| 19 | Mobility problem | 가동성 문제 | |
+| 20 | Can't get there | 끝까지 못 올라가요 | |
+| 21 | Stability problem | 안정성 문제 | |
+| 22 | Gets there, doesn't stay put | 올라가지만 자리를 못 지켜요 | |
+| 23 | Left: the arm stops early (dashed line shows normal range). Right: full range, but the ball (close-up) shifts in its shallow socket. Simplified illustration. | 왼쪽: 팔이 일찍 멈춰요(점선은 정상 범위). 오른쪽: 범위는 충분하지만, 얕은 소켓 안에서 공 모양의 뼈(확대 그림)가 움직여요. 단순화한 그림이에요. | |
+| 24 | Stiff | 뻣뻣함 | |
+| 25 | Unstable | 불안정 | |
+| 26 | Overloaded | 과부하 | |
+| 27 | Feels like | 느낌 | |
+| 28 | Tight, blocked, aching at night | 뻐근하고 막힌 느낌, 밤에 욱신거림 | |
+| 29 | Slipping, clunking, apprehensive | 미끄러지거나 덜컥거림, 불안함 | |
+| 30 | Ache with reaching or lifting | 팔을 뻗거나 들 때 아픔 | |
+| 31 | Range | 가동 범위 | |
+| 32 | Reduced, even with help | 도움을 받아도 줄어 있음 | |
+| 33 | Full, sometimes too much | 충분함, 때로는 지나침 | |
+| 34 | Mostly full, painful arc | 대부분 충분, 특정 구간에서 아픔 | |
+| 35 | Focus | 치료 초점 | |
+| 36 | Restore movement | 움직임 회복 | |
+| 37 | Strength and control | 근력과 조절 | |
+| 38 | Graded loading | 단계적 부하 | |
+| 39 | See your GP or go to hospital if the shoulder looks deformed after a fall, you can't move the arm, there's sudden weakness, or the pain comes with chest pain or breathlessness. | GP에게 진료받거나 병원에 가세요. 넘어진 뒤 어깨 모양이 변형돼 보일 때, 팔을 움직일 수 없을 때, 갑자기 힘이 빠질 때, 또는 가슴 통증이나 숨 가쁨이 함께 올 때요. | |
