@@ -161,6 +161,7 @@ import { showDrafts } from "../lib/drafts";
                 <a class="ff__legal-link" href="/blog">Clinic notes</a>
                 <a class="ff__legal-link" href="/careers">Careers</a>
                 {showDrafts && <a class="ff__legal-link" href="/faq">FAQ</a>}
+                {showDrafts && <a class="ff__legal-link" href="/refer">Refer a friend</a>}
                 <a class="ff__legal-link" href="/privacy">Privacy</a>
             </div>
         </div>
@@ -394,8 +395,8 @@ import { showDrafts } from "../lib/drafts";
     }
 
     /* Styled like the simple Footer's bottom row: body type in sentence case,
-       the copyright group on the left and Privacy opposite, centred and stacked
-       only when the footer is genuinely narrow. */
+       the copyright group on the left and the links opposite, centred and
+       stacked when they cannot share one line. */
     .ff__legal {
         position: relative;
         z-index: 2;
@@ -439,9 +440,11 @@ import { showDrafts } from "../lib/drafts";
         color: var(--accent-deep);
     }
 
-    @container (min-width: 34rem) {
-        /* The gap between the two groups never drops below the gap inside
-           them; once they can't fit with it, the links wrap to their own line. */
+    /* Side by side only from the width where the copyright, the place and every
+       link fit on one line (about 55rem with all six links, the FAQ and
+       Refer a friend included). Narrower than that, the two lines stack and
+       centre under the full-width logo instead of wrapping ragged-left. */
+    @container (min-width: 57rem) {
         .ff__legal {
             flex-direction: row;
             flex-wrap: wrap;
