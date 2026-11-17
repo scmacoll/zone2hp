@@ -1,18 +1,36 @@
 ---
 // Korean pages (/ko/...). Each renders the same view as its English twin; the
-// view reads the language from the URL (src/i18n/lang.ts). Built only while
+// views read the language from the URL (src/i18n/lang.ts). Built only while
 // koreanLive is on: staging and preview until Dr Kim signs the translation off,
-// so production has no /ko/ pages at all rather than hidden ones.
+// so production has no /ko/ pages at all rather than hidden ones. Keep this list
+// in step with TRANSLATED in src/i18n/lang.ts.
 import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import Home from '../../views/Home.astro';
+import Faq from '../../views/Faq.astro';
+import Careers from '../../views/Careers.astro';
+import CareersRole from '../../views/CareersRole.astro';
 import { koreanLive } from '../../i18n/lang';
+import { roles, type Role } from '../../lib/careers';
+
+type View = 'home' | 'faq' | 'careers' | 'role';
 
 export function getStaticPaths() {
   if (!koreanLive) return [];
-  return [{ params: { page: undefined }, props: { view: 'home' } }];
+  return [
+    { params: { page: undefined }, props: { view: 'home' as View } },
+    { params: { page: 'faq' }, props: { view: 'faq' as View } },
+    { params: { page: 'careers' }, props: { view: 'careers' as View } },
+    ...roles.map((role) => ({
+      params: { page: `careers/${role.slug}` },
+      props: { view: 'role' as View, role },
+    })),
+  ];
 }
 
-const { view } = Astro.props;
+const { view, role } = Astro.props as { view: View; role?: Role };
 ---
 
 {view === 'home' && <Home />}
+{view === 'faq' && <Faq />}
+{view === 'careers' && <Careers />}
+{view === 'role' && role && <CareersRole role={role} />}

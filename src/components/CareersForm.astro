@@ -7,65 +7,81 @@
 // With no JS the browser's own required checks apply and the form posts to
 // Formspree's page. The script adds inline errors and stays on the page.
 // Styles: src/styles/careers.css.
+import { langFromUrl } from '../i18n/lang';
+import { careers } from '../i18n/careers';
+
 interface Props {
-  /** Role title. Leave out for an expression of interest. */
+  /** Role title in English (for the clinic's inbox). Leave out for an expression of interest. */
   role?: string;
 }
 
 const { role } = Astro.props;
 const email = 'info@zone2hp.com';
+// The subject and role reach the clinic's inbox, so they stay in English; a
+// Korean application says so in its own field.
 const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expression of interest';
+const lang = langFromUrl(Astro.url);
+const t = careers[lang].form;
 ---
 
-<form class="cr-form" action="https://formspree.io/f/xlgkvgjw" method="POST" data-careers-form>
+<form
+  class="cr-form"
+  action="https://formspree.io/f/xlgkvgjw"
+  method="POST"
+  data-careers-form
+  data-msg-name={t.errors.name}
+  data-msg-email={t.errors.email}
+  data-msg-phone={t.errors.phone}
+  data-msg-privacy_consent={t.errors.privacy_consent}
+  data-msg-thanks={t.thanks}
+  data-msg-failed={t.failed}
+>
   <div class="cr-form__pair">
     <div class="cr-field">
-      <label for="cr-name">Full name</label>
+      <label for="cr-name">{t.name}</label>
       <input id="cr-name" name="name" type="text" autocomplete="name" required aria-describedby="cr-name-error" />
       <p class="cr-field__error" id="cr-name-error" data-error="name" hidden></p>
     </div>
     <div class="cr-field">
-      <label for="cr-email">Email</label>
+      <label for="cr-email">{t.email}</label>
       <input id="cr-email" name="email" type="email" autocomplete="email" required aria-describedby="cr-email-error" />
       <p class="cr-field__error" id="cr-email-error" data-error="email" hidden></p>
     </div>
     <div class="cr-field">
-      <label for="cr-phone">Phone</label>
+      <label for="cr-phone">{t.phone}</label>
       <input id="cr-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="cr-phone-error" />
       <p class="cr-field__error" id="cr-phone-error" data-error="phone" hidden></p>
     </div>
     <div class="cr-field">
-      <label for="cr-profession">Profession or course <span class="cr-field__opt">(optional)</span></label>
+      <label for="cr-profession">{t.profession} <span class="cr-field__opt">{t.optional}</span></label>
       <input id="cr-profession" name="profession" type="text" />
     </div>
     <div class="cr-field">
-      <label for="cr-ahpra">AHPRA registration number <span class="cr-field__opt">(optional)</span></label>
+      <label for="cr-ahpra">{t.ahpra} <span class="cr-field__opt">{t.optional}</span></label>
       <input id="cr-ahpra" name="ahpra_registration" type="text" autocomplete="off" />
     </div>
     <div class="cr-field">
-      <label for="cr-cv">Link to your CV or LinkedIn <span class="cr-field__opt">(optional)</span></label>
+      <label for="cr-cv">{t.cv} <span class="cr-field__opt">{t.optional}</span></label>
       <input id="cr-cv" name="cv_or_linkedin" type="text" inputmode="url" autocomplete="url" aria-describedby="cr-cv-hint" />
     </div>
     <p class="cr-field__hint cr-cv-hint" id="cr-cv-hint">
-      Or email your CV to <a href={`mailto:${email}`}>{email}</a>.
+      {t.cvHint[0]}<a href={`mailto:${email}`}>{email}</a>{t.cvHint[1]}
     </p>
   </div>
 
   <div class="cr-field">
-    <label for="cr-message">Message <span class="cr-field__opt">(optional)</span></label>
+    <label for="cr-message">{t.message} <span class="cr-field__opt">{t.optional}</span></label>
     <textarea id="cr-message" name="message" rows="4"></textarea>
   </div>
 
   <p class="cr-form__notice">
-    We use these details only to consider you for current or future roles. They reach us through
-    Formspree, a form service that may store them outside Australia. Please don't include health
-    information. See our <a href="/privacy">Privacy Policy</a>.
+    {t.notice[0]}<a href="/privacy">{t.notice[1]}</a>{t.notice[2]}
   </p>
 
   <div class="cr-field">
     <label class="cr-check">
       <input type="checkbox" name="privacy_consent" value="Agreed" required aria-describedby="cr-consent-error" />
-      <span>I agree to Zone Two collecting and using these details for this purpose.</span>
+      <span>{t.consent}</span>
     </label>
     <p class="cr-field__error" id="cr-consent-error" data-error="privacy_consent" hidden></p>
   </div>
@@ -74,9 +90,10 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
   <input class="cr-honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <input type="hidden" name="_subject" value={subject} />
   <input type="hidden" name="role" value={role ?? 'Expression of interest'} />
+  {lang === 'ko' && <input type="hidden" name="language" value="Korean (한국어 page)" />}
 
   <div class="cr-form__actions">
-    <button class="cn-btn" type="submit">{role ? 'Submit application' : 'Send expression of interest'}</button>
+    <button class="cn-btn" type="submit">{role ? t.submitApplication : t.submitInterest}</button>
     <p class="cr-field__error" data-form-error role="alert" hidden></p>
   </div>
 </form>
@@ -91,11 +108,13 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
     const formError = form.querySelector<HTMLElement>('[data-form-error]');
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
 
+    // Messages come from the page (data-msg-*), in the page's language.
+    const msg = (key: string) => form.getAttribute(`data-msg-${key}`) ?? '';
     const messages: Record<string, string> = {
-      name: 'Please enter your full name.',
-      email: 'Please enter a valid email address.',
-      phone: 'Please enter your phone number.',
-      privacy_consent: 'Please agree so we can consider your details.',
+      name: msg('name'),
+      email: msg('email'),
+      phone: msg('phone'),
+      privacy_consent: msg('privacy_consent'),
     };
 
     const isValid = (input: HTMLInputElement) => {
@@ -146,14 +165,14 @@ const subject = role ? `Zone Two: application for ${role}` : 'Zone Two: expressi
         if (!res.ok) throw new Error('Request failed');
         form.hidden = true;
         if (okEl) {
-          okEl.textContent = "Thanks, we've received your details. We'll be in touch if there's a suitable role.";
+          okEl.textContent = msg('thanks');
           okEl.hidden = false;
           okEl.focus();
         }
       } catch {
         if (button) button.disabled = false;
         if (formError) {
-          formError.textContent = 'Something went wrong. Please try again, or email us at info@zone2hp.com.';
+          formError.textContent = msg('failed');
           formError.hidden = false;
         }
       }

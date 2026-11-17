@@ -105,3 +105,14 @@ Propose **"The Zone Two Method"** as the named, numbered approach (the structura
 ### Wordmark
 
 No logo exists. Set the name as a wordmark in the display typeface (see `DESIGN-SYSTEM.md`). A common, on-brand treatment: `ZONE` and `TWO` stacked or paired, with a small superscript `2` as an optional mark. Keep it monoline and confident.
+
+## Korean (한국어)
+
+The Korean pages live under `/ko/` (see `src/i18n/`). The copy is translated from the English by an LLM and reviewed by Dr Kim before it goes live (`KOREAN-REVIEW.md`).
+
+- **Register:** polite-warm 해요체 throughout (`~해요`, `~예요`, `~할 수 있어요`). Plain and physical, like the English. Don't mix in 합니다체.
+- **Same rules as the English:** no em dashes, no invented claims, testimonials or outcomes. The Korean equivalents of the banned words stay out too: 완치, 즉시, 보장, 최고, 최상, 무통, and comparisons with other practitioners. "Pain-free" (통증 없는) appears only where the client's English has it.
+- **Stays in English:** Zone Two Health and Performance, Zone Two, the logo, street addresses, phone and email, health fund names, qualifications (B.Chir.Sci., M.Chiro.), study and journal citations. Eastwood is 이스트우드 in running text.
+- **Clinical terms:** the words Korean patients use, with the English in brackets where people might search either, for example 전방십자인대(ACL) 손상. The working glossary is in `KOREAN-REVIEW.md`.
+- **Typography:** Hangul is set in Pretendard, after the Latin brand fonts in each stack, so English inside Korean text keeps the brand fonts. Korean has no capitals, so labels drop the wide tracking.
+- **Links:** a Korean page links to Korean pages where they exist, otherwise to the English page.

@@ -1,0 +1,116 @@
+---
+// FAQ, from the client's zone-two-faq.html (copy in src/lib/faq.ts), signed off
+// Nov 2026. Laid out like /careers: one centred column, hairlines, native
+// accordions. Draft questions (the referral one) show only where drafts do.
+// Rendered at /faq (English, src/lib/faq.ts) and /ko/faq (Korean, faq.ko.ts).
+import '../styles/clinic-notes.css';
+import '../styles/faq.css';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import { faq as faqEn } from '../lib/faq';
+import { faqKo } from '../lib/faq.ko';
+import { showDrafts } from '../lib/drafts';
+import { bookingConfig } from '../lib/booking/config';
+import { langFromUrl } from '../i18n/lang';
+import { ui } from '../i18n/ui';
+
+const lang = langFromUrl(Astro.url);
+const faq = lang === 'ko' ? faqKo : faqEn;
+const t = ui[lang];
+
+const sections = faq.sections.map((section) => ({
+  ...section,
+  items: section.items.filter((item) => showDrafts || !('draft' in item && item.draft)),
+}));
+
+// FAQPage structured data: the same questions and answers as plain text. No
+// reviews or ratings (see COMPLIANCE.md).
+const plain = (html: string) =>
+  html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+([.,:;])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  ...(lang === 'ko' ? { inLanguage: 'ko' } : {}),
+  mainEntity: sections.flatMap((section) =>
+    section.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: plain(item.answer) },
+    })),
+  ),
+};
+---
+
+<Base
+  title={t.faqPage.title}
+  description={faq.intro}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredData)} />
+
+  <PageHeader />
+
+  <main id="main" class="cn faq">
+    <div class="faq-col">
+      <header class="faq-intro">
+        <Eyebrow tone="accent">{t.faqPage.eyebrow}</Eyebrow>
+        <h1 class="faq-title">{t.faqPage.heading}</h1>
+        <p class="faq-intro__lead">{faq.intro}</p>
+        <nav class="faq-jump" aria-label={t.faqPage.sections}>
+          {sections.map((section) => <a href={`#${section.id}`}>{section.title}</a>)}
+        </nav>
+      </header>
+
+      <div class="faq-stack">
+        {
+          sections.map((section) => (
+            <section class="faq-section" id={section.id} aria-labelledby={`${section.id}-heading`}>
+              <h2 class="faq-heading" id={`${section.id}-heading`}>
+                {section.title}
+              </h2>
+              <div class="faq-list">
+                {section.items.map((item) => (
+                  <details class="faq-item" open={'open' in item && item.open}>
+                    <summary>
+                      <span>{item.question}</span>
+                      <span class="faq-item__icon" aria-hidden="true" />
+                    </summary>
+                    <div class="faq-answer" set:html={item.answer} />
+                  </details>
+                ))}
+              </div>
+            </section>
+          ))
+        }
+
+        <section class="faq-close" aria-labelledby="faq-close-heading">
+          <h2 class="faq-heading" id="faq-close-heading">{faq.closingTitle}</h2>
+          <p>{faq.closingText}</p>
+          <div class="faq-close__row">
+            {bookingConfig.linksVisible && <a class="cn-btn" href="/book">{t.bookOnline}</a>}
+            <a class="faq-close__phone" href="tel:0450222122">0450 222 122</a>
+          </div>
+          {
+            bookingConfig.linksVisible && (
+              <p class="cn-cta__lang">
+                {t.map.consultations[0]}<span lang="ko">한국어</span>{t.map.consultations[1]}
+              </p>
+            )
+          }
+        </section>
+
+        <div class="cn-disclaimer">
+          <p>{faq.note}</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

@@ -1,0 +1,72 @@
+---
+// Careers: open roles as ruled rows, then the expression-of-interest form, which
+// stays useful when no role is open. Roles live in src/lib/careers.ts. Other
+// styles we tried are kept in src/pages/_careers-compare.
+// Rendered at /careers and /ko/careers; copy in src/i18n/careers.ts.
+import '../styles/clinic-notes.css';
+import '../styles/careers.css';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import CareersForm from '../components/CareersForm.astro';
+import { roles, roleText } from '../lib/careers';
+import { langFromUrl, localise } from '../i18n/lang';
+import { careers } from '../i18n/careers';
+
+const lang = langFromUrl(Astro.url);
+const t = careers[lang].page;
+const cards = roles.map((role) => ({ ...roleText(role, lang), slug: role.slug, draft: role.draft }));
+---
+
+<Base title={t.title} description={t.description}>
+  <PageHeader />
+
+  <main id="main" class="cn cr cr-list">
+    <div class="cr-col">
+      <header class="cr-intro">
+        <Eyebrow tone="accent">{t.eyebrow}</Eyebrow>
+        <h1 class="cr-title">{t.heading}</h1>
+        <p class="cr-intro__lead">{t.lead}</p>
+      </header>
+
+      <div class="cr-stack">
+        <section class="cr-section" aria-labelledby="cr-roles">
+          <h2 class="cr-heading" id="cr-roles">{t.openRoles}</h2>
+          {
+            cards.length > 0 ? (
+              <ul class="cr-roles" role="list">
+                {cards.map((r) => (
+                  <li>
+                    <a class="cr-role" href={localise(lang, `/careers/${r.slug}`)}>
+                      {r.draft && <span class="cr-role__draft">{t.draftBadge}</span>}
+                      <span class="cr-role__title">{r.title}</span>
+                      <span class="cn-eyebrow">
+                        <span>{r.location}</span>
+                        <span>{r.commitment}</span>
+                      </span>
+                      <span class="cr-role__summary">{r.summary}</span>
+                      <span class="cr-role__more">{t.viewRole}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="cr-empty">{t.empty}</p>
+            )
+          }
+        </section>
+
+        <hr class="cr-rule" />
+
+        <section class="cr-section" id="interest" aria-labelledby="cr-interest">
+          <h2 class="cr-heading" id="cr-interest">{t.interest}</h2>
+          <p class="cr-lead">{t.interestLead}</p>
+          <CareersForm />
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

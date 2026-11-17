@@ -61,6 +61,13 @@ const en = {
     mapLang: '',
   },
   services: ['Chiropractic', 'Rehab', 'Dry Needling'],
+  bookOnline: 'Book online',
+  faqPage: {
+    title: 'FAQ | Zone Two Health and Performance, Eastwood',
+    eyebrow: 'FAQ',
+    heading: 'Questions, answered',
+    sections: 'FAQ sections',
+  },
   keywords: {
     label: 'Services and conditions',
     pause: 'Pause scrolling services',
@@ -142,6 +149,13 @@ const ko: Ui = {
     mapLang: 'ko',
   },
   services: ['카이로프랙틱', '재활', '드라이 니들링'],
+  bookOnline: '온라인 예약',
+  faqPage: {
+    title: '자주 묻는 질문 | Zone Two Health and Performance, 이스트우드',
+    eyebrow: 'FAQ',
+    heading: '궁금한 점, 답해 드려요',
+    sections: 'FAQ 섹션',
+  },
   keywords: {
     label: '서비스와 질환',
     pause: '서비스 스크롤 멈추기',

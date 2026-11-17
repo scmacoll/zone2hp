@@ -1,0 +1,85 @@
+---
+// One open role, built from src/lib/careers.ts, in the Clinic Notes post layout.
+// The details panel takes the place of a post's side box, and its Apply button
+// jumps to the form at the foot of the page. Rendered at /careers/<slug> and
+// /ko/careers/<slug>; page copy in src/i18n/careers.ts, role text per language
+// in src/lib/careers.ts.
+import '../styles/clinic-notes.css';
+import '../styles/careers.css';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Footer from '../components/Footer.astro';
+import CareersForm from '../components/CareersForm.astro';
+import { roleText, type Role } from '../lib/careers';
+import { langFromUrl, localise } from '../i18n/lang';
+import { careers } from '../i18n/careers';
+
+interface Props {
+  role: Role;
+}
+
+const { role: roleData } = Astro.props;
+const lang = langFromUrl(Astro.url);
+const t = careers[lang].role;
+const role = { ...roleText(roleData, lang), draft: roleData.draft };
+---
+
+<Base
+  title={`${role.title}, ${role.location} | ${t.titleSuffix}`}
+  description={role.summary}
+  noindex={role.draft}
+>
+  <PageHeader />
+
+  <main id="main" class="cn cr cr-post">
+    <div class="cn-wrap cn-page">
+      <nav class="cn-crumb" aria-label={t.breadcrumb}>
+        <a href={localise(lang, '/careers')}><span aria-hidden="true">&larr;</span> {t.back}</a>
+      </nav>
+
+      <article class="cn-article">
+        {role.draft && <p class="cr-role__draft">{t.sampleNotice}</p>}
+        <div class="cn-eyebrow">
+          <span class="cn-tag">{t.tag}</span>
+          <span>{role.location}</span>
+        </div>
+        <h1 class="cn-title">{role.title}</h1>
+        <p class="cn-stand">{role.summary}</p>
+
+        <div class="cn-grid">
+          <div class="cn-prose cr-prose">
+            {
+              role.sections.map((section) => (
+                <section>
+                  <h2>{section.heading}</h2>
+                  {section.paragraphs?.map((p) => <p>{p}</p>)}
+                  {section.items && (
+                    <ul>
+                      {section.items.map((item) => <li>{item}</li>)}
+                    </ul>
+                  )}
+                </section>
+              ))
+            }
+          </div>
+          <aside class="cr-side" aria-label={t.details}>
+            <dl class="cr-facts">
+              <div><dt>{t.location}</dt><dd>{role.location}</dd></div>
+              <div><dt>{t.type}</dt><dd>{role.commitment}</dd></div>
+            </dl>
+            <a class="cn-btn" href="#apply">{t.apply}</a>
+          </aside>
+        </div>
+      </article>
+
+      <hr class="cn-trail" />
+
+      <section class="cr-section" id="apply" aria-labelledby="cr-apply">
+        <h2 class="cr-heading" id="cr-apply">{t.apply}</h2>
+        <CareersForm role={roleData.title} />
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
