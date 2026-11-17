@@ -1,13 +1,14 @@
 /**
- * Clinic Notes: the four client-written posts.
+ * Clinic Notes: the client-written posts, newest first.
  *
  * Copy here (headings, standfirsts, tags, card labels) is the client's own,
- * reproduced verbatim from zone-two-clinic-notes.html. Do not edit it to fit
- * house style without asking. The <title>s come from the client's
- * README-for-developer.txt.
+ * reproduced verbatim from zone-two-clinic-notes.html (the first four, Oct
+ * 2026) and zone-two-clinic-notes-02.html (the next four, Nov 2026). Do not
+ * edit it to fit house style without asking. The <title>s come from each
+ * batch's README-for-developer.txt.
  *
- * PUBLISH DATES: all four live here, in one place. Change them at publish
- * time; they feed the Article structured data on each post page.
+ * PUBLISH DATES: all of them live here, in one place. They feed the Article
+ * structured data on each post page.
  */
 
 export type ClinicNote = {
@@ -28,6 +29,50 @@ export type ClinicNote = {
 };
 
 export const clinicNotes: ClinicNote[] = [
+  {
+    slug: 'achilles-tendinopathy',
+    title: "Achilles Tendinopathy: Load It, Don't Rest It | Zone Two Eastwood",
+    tag: 'Heel & calf',
+    readTime: '4 min read',
+    cardTitle: 'Achilles pain',
+    heading: "Achilles pain: load it, don't rest it",
+    standfirst:
+      "Stiff and sore first thing in the morning, easing once you get moving, then grumbling after a run? That's the classic pattern of Achilles tendinopathy.",
+    datePublished: '2026-11-17',
+  },
+  {
+    slug: 'concentric-eccentric-isometric',
+    title: 'Concentric, Eccentric and Isometric Exercise Explained | Zone Two Eastwood',
+    tag: 'Exercise',
+    readTime: '4 min read',
+    cardTitle: 'Lift, lower, hold',
+    heading: 'Lift, lower, hold: three ways to load a muscle',
+    standfirst:
+      "Concentric, eccentric and isometric sound like jargon. They're just three ways a muscle can work, and each has a job in rehab.",
+    datePublished: '2026-11-17',
+  },
+  {
+    slug: 'shoulder-pain-stiff-or-unstable',
+    title: 'Shoulder Pain: Stiff, Unstable or Overloaded? | Zone Two Eastwood',
+    tag: 'Shoulder',
+    readTime: '4 min read',
+    cardTitle: 'Stiff or unstable?',
+    heading: 'Shoulder pain: stiff, unstable, or overloaded?',
+    standfirst:
+      "Your shoulder trades stability for range: it's the most mobile joint in the body. When it hurts, it helps to know which side of that trade has gone wrong.",
+    datePublished: '2026-11-17',
+  },
+  {
+    slug: 'understand-your-pain',
+    title: 'Understand Your Pain | Zone Two Eastwood',
+    tag: 'The big one',
+    readTime: '7 min read',
+    cardTitle: 'Understand your pain',
+    heading: 'Understand your pain',
+    standfirst:
+      "Pain is real, and it's yours. But it doesn't always mean what you think it means. Understanding how it works is one of the most useful things you can do for it.",
+    datePublished: '2026-11-17',
+  },
   {
     slug: 'de-quervains-tenosynovitis',
     title: "De Quervain's Tenosynovitis (Thumb & Wrist Pain) | Zone Two Eastwood",
@@ -73,6 +118,16 @@ export const clinicNotes: ClinicNote[] = [
     datePublished: '2026-10-29',
   },
 ];
+
+/**
+ * The three posts shown under "More clinic notes" on a post: the next three in
+ * the list, wrapping round, so every post is linked from three others and the
+ * row stays three cards wide.
+ */
+export function moreClinicNotes(slug: string): ClinicNote[] {
+  const i = clinicNotes.findIndex((n) => n.slug === slug);
+  return [1, 2, 3].map((step) => clinicNotes[(i + step) % clinicNotes.length]);
+}
 
 export function getClinicNote(slug: string): ClinicNote {
   const note = clinicNotes.find((n) => n.slug === slug);

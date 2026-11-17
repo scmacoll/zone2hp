@@ -14,14 +14,14 @@ import Base from './Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Footer from '../components/Footer.astro';
 import ClinicNotesClose from '../components/ClinicNotesClose.astro';
-import { clinicNotes, getClinicNote } from '../lib/clinic-notes';
+import { getClinicNote, moreClinicNotes } from '../lib/clinic-notes';
 
 interface Props {
   slug: string;
 }
 
 const post = getClinicNote(Astro.props.slug);
-const others = clinicNotes.filter((n) => n.slug !== post.slug);
+const others = moreClinicNotes(post.slug);
 
 // Same computation as Base.astro's canonical, so the two always agree.
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;

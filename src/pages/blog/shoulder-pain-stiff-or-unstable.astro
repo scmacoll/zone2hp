@@ -1,0 +1,89 @@
+---
+// Client copy, reproduced verbatim from zone-two-clinic-notes-02.html. Only the
+// markup changed: subheads and box headings are H2 (the post title is the H1),
+// class names are the .cn ones, diagram labels are sentence case, the diagram's
+// inline transform-origin is a class (CSP), its colours point at the site
+// tokens, and the table's row labels are row headers (empty corner cell).
+import ClinicNote from '../../layouts/ClinicNote.astro';
+---
+
+<ClinicNote slug="shoulder-pain-stiff-or-unstable">
+  <h2>A mobility problem: "It won't go there"</h2>
+  <p>The shoulder is stiff, and it stops early whether you lift it yourself or someone else lifts it for you. Turning the arm outwards is usually the first thing lost. The classic example is frozen shoulder, most common between 40 and 60 and more likely with diabetes or thyroid conditions. It often passes through painful, stiff and recovery phases, and without treatment it can take one to three years [6].</p>
+  <h2>A stability problem: "It goes there, but doesn't stay put"</h2>
+  <p>The range is there, but the ball doesn't stay centred in the socket. You might feel it slip, clunk or "go dead", especially overhead. This can follow a dislocation, or come on without injury in people with naturally flexible joints. After a first dislocation, recurrence is common, especially in younger people:</p>
+  <blockquote><p>"Recurrent instability following a first-time traumatic anterior shoulder dislocation was 39%."</p><cite>Olds et al., Br J Sports Med, 2015 [7]</cite></blockquote>
+  <h2>The most common one: overloaded</h2>
+  <p>Rotator cuff related shoulder pain is a load problem more than either of the above: the shoulder moves and stays put, but the tendons can't currently handle what you're asking of them. Scans often show cuff changes, but those are common in shoulders that don't hurt: in one population study, tears without symptoms were twice as common as tears with symptoms [4]. Exercise is the first-line treatment [3], and placebo-controlled surgery trials have found shaving bone off the shoulder offers no extra benefit:</p>
+  <blockquote><p>"Surgical decompression appeared to offer no extra benefit over arthroscopy only."</p><cite>Beard et al. (CSAW trial), The Lancet, 2018 [1]</cite></blockquote>
+  <h2>How I can help</h2>
+  <p>The assessment works out which pattern you have (often it's a mix). Stiff shoulders get hands-on mobilisation and range work, plus a referral for an injection when it's warranted. In a large UK trial, physio plus an injection held up well against surgery [5]. Unstable shoulders get progressive strength and control training, which has strong results for non-injury instability [8]. Overloaded shoulders get load management and a progressive strength plan. In every case, you'll know what we're doing and why.</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>In 30 seconds</h2><ul>
+      <li>Stiff: can't get there, even with help. Unstable: gets there, but doesn't feel secure.</li>
+      <li>Most shoulder pain is the rotator cuff being overloaded, and exercise is first-line care.</li>
+      <li>A scan "tear" isn't always the cause. Plenty of pain-free shoulders have one.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 320" role="img" aria-labelledby="sh-t">
+        <title id="sh-t">Two people raising an arm out to the side. Mobility problem: the arm stops at about shoulder height. Stability problem: the arm goes all the way up, but a close-up shows the ball shifting in the socket.</title>
+        <rect x="0" y="0" width="420" height="320" class="s-surface"/>
+        <line x1="210" y1="10" x2="210" y2="270" stroke="var(--chrome-line)"/>
+        <path d="M98 158 A80 80 0 0 1 98 -2" stroke="var(--chrome-line)" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+        <circle cx="136" cy="44" r="14" class="s-skin"/>
+        <rect x="131" y="56" width="10" height="12" class="s-skin"/>
+        <path d="M96 72 Q136 62 176 72 L164 176 L108 176 Z" class="s-skin"/>
+        <line x1="174" y1="78" x2="182" y2="170" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        <g class="raise-stop origin-shoulder">
+          <line x1="98" y1="78" x2="94" y2="158" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        </g>
+        <line x1="16" y1="82" x2="24" y2="108" stroke="var(--cn-orange)" stroke-width="4" stroke-linecap="round"/>
+        <text x="8" y="126" class="lbl s-accent">Stops</text>
+        <line x1="108" y1="176" x2="108" y2="262" stroke="var(--cn-skin)" stroke-width="16" stroke-linecap="round"/>
+        <line x1="164" y1="176" x2="164" y2="262" stroke="var(--cn-skin)" stroke-width="16" stroke-linecap="round"/>
+        <text x="105" y="288" text-anchor="middle" class="big s-ink">Mobility problem</text>
+        <text x="105" y="306" text-anchor="middle" class="lbl s-muted">Can't get there</text>
+        <circle cx="300" cy="44" r="14" class="s-skin"/>
+        <rect x="295" y="56" width="10" height="12" class="s-skin"/>
+        <path d="M260 72 Q300 62 340 72 L328 176 L272 176 Z" class="s-skin"/>
+        <line x1="338" y1="78" x2="346" y2="170" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        <line x1="262" y1="78" x2="232" y2="8" stroke="var(--cn-skin)" stroke-width="13" stroke-linecap="round"/>
+        <circle cx="262" cy="80" r="9" fill="none" stroke="var(--cn-orange)" stroke-width="2"/>
+        <line x1="268" y1="88" x2="334" y2="196" stroke="var(--cn-orange)" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <line x1="272" y1="176" x2="272" y2="262" stroke="var(--cn-skin)" stroke-width="16" stroke-linecap="round"/>
+        <line x1="328" y1="176" x2="328" y2="262" stroke="var(--cn-skin)" stroke-width="16" stroke-linecap="round"/>
+        <circle cx="370" cy="214" r="38" class="s-bg" stroke="var(--cn-orange)" stroke-width="2"/>
+        <path d="M352 188 Q340 214 352 240" stroke="var(--ink)" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <g class="wobble"><circle cx="372" cy="214" r="17" class="s-skin" stroke="var(--cn-skin-line)" stroke-width="2"/></g>
+        <text x="315" y="288" text-anchor="middle" class="big s-ink">Stability problem</text>
+        <text x="315" y="306" text-anchor="middle" class="lbl s-muted">Gets there, doesn't stay put</text>
+      </svg>
+      </div>
+      <figcaption>Left: the arm stops early (dashed line shows normal range). Right: full range, but the ball (close-up) shifts in its shallow socket. Simplified illustration.</figcaption>
+    </figure>
+    <div class="cn-tablewrap" tabindex="0" role="region" aria-label="Stiff, unstable or overloaded compared">
+      <table class="cn-compare">
+        <thead><tr><td></td><th scope="col">Stiff</th><th scope="col">Unstable</th><th scope="col">Overloaded</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Feels like</th><td>Tight, blocked, aching at night</td><td>Slipping, clunking, apprehensive</td><td>Ache with reaching or lifting</td></tr>
+          <tr><th scope="row">Range</th><td>Reduced, even with help</td><td>Full, sometimes too much</td><td>Mostly full, painful arc</td></tr>
+          <tr><th scope="row">Focus</th><td>Restore movement</td><td>Strength and control</td><td>Graded loading</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cn-gp"><b>See your GP or go to hospital</b> if the shoulder looks deformed after a fall, you can't move the arm, there's sudden weakness, or the pain comes with chest pain or breathlessness.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>Beard DJ, Rees JL, Cook JA, et al. Arthroscopic subacromial decompression for subacromial shoulder pain (CSAW): a multicentre, pragmatic, parallel group, placebo-controlled, three-group, randomised surgical trial. Lancet. 2018;391(10118):329–338. <a href="https://doi.org/10.1016/S0140-6736(17)32457-1" target="_blank" rel="noopener">doi:10.1016/S0140-6736(17)32457-1</a></li>
+    <li>Paavola M, Malmivaara A, Taimela S, et al. Subacromial decompression versus diagnostic arthroscopy for shoulder impingement: randomised, placebo surgery controlled clinical trial. BMJ. 2018;362:k2860. <a href="https://doi.org/10.1136/bmj.k2860" target="_blank" rel="noopener">doi:10.1136/bmj.k2860</a></li>
+    <li>Desmeules F, Roy JS, Lafrance S, et al. Rotator cuff tendinopathy diagnosis, nonsurgical medical care, and rehabilitation: a clinical practice guideline. J Orthop Sports Phys Ther. 2025;55(4):235–274. <a href="https://doi.org/10.2519/jospt.2025.13182" target="_blank" rel="noopener">doi:10.2519/jospt.2025.13182</a></li>
+    <li>Minagawa H, Yamamoto N, Abe H, et al. Prevalence of symptomatic and asymptomatic rotator cuff tears in the general population: from mass-screening in one village. J Orthop. 2013;10(1):8–12. <a href="https://doi.org/10.1016/j.jor.2013.01.008" target="_blank" rel="noopener">doi:10.1016/j.jor.2013.01.008</a></li>
+    <li>Rangan A, Brealey SD, Keding A, et al. Management of adults with primary frozen shoulder in secondary care (UK FROST): a multicentre, pragmatic, three-arm, superiority randomised clinical trial. Lancet. 2020;396(10256):977–989. <a href="https://doi.org/10.1016/S0140-6736(20)31965-6" target="_blank" rel="noopener">doi:10.1016/S0140-6736(20)31965-6</a></li>
+    <li>Healthdirect Australia. <a href="https://www.healthdirect.gov.au/frozen-shoulder" target="_blank" rel="noopener">Frozen shoulder</a>.</li>
+    <li>Olds M, Ellis R, Donaldson K, Parmar P, Kersten P. Risk factors which predispose first-time traumatic anterior shoulder dislocations to recurrent instability in adults: a systematic review and meta-analysis. Br J Sports Med. 2015;49(14):913–922. <a href="https://doi.org/10.1136/bjsports-2014-094342" target="_blank" rel="noopener">doi:10.1136/bjsports-2014-094342</a></li>
+    <li>Warby SA, Ford JJ, Hahne AJ, et al. Comparison of 2 exercise rehabilitation programs for multidirectional instability of the glenohumeral joint: a randomized controlled trial. Am J Sports Med. 2018;46(1):87–97. <a href="https://doi.org/10.1177/0363546517734508" target="_blank" rel="noopener">doi:10.1177/0363546517734508</a></li>
+  </Fragment>
+</ClinicNote>

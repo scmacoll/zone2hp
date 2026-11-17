@@ -1,8 +1,8 @@
 // The client's FAQ, generated from zone-two-faq.html (Oct 2026). The wording is his,
 // verbatim, except: Australian spelling ("programmes"), no inline styles (the CSP
-// blocks them), sub-headings as h3, and site links as paths. Two answers differ:
+// blocks them), sub-headings as h3, and site links as paths. "Understand your
+// pain" links to its post, live since Nov 2026. One answer is held back:
 //   - The referral question is a draft: shown with the draft /refer page, hidden on production.
-//   - "Understand your pain" is plain text until that post is published.
 // Answers are trusted HTML from the client, rendered with set:html.
 
 export interface FaqItem {
@@ -224,7 +224,7 @@ export const faq = {
         {
           question: "Why am I in pain?",
           answer:
-            '<p>Pain is your body\'s protection system, and it\'s rarely about one thing. The world\'s pain scientists put it this way:</p><blockquote><p>"Pain is always a personal experience that is influenced to varying degrees by biological, psychological, and social factors."</p><cite>International Association for the Study of Pain, 2020</cite></blockquote><div class="pillars"><div><b>Body</b><span>Load beyond what your tissues are ready for. Not enough strength, mobility or control, or a mobility gap that leaves a joint less stable.</span></div><div><b>Mind</b><span>Stress, worry about damage, and how much attention you pay to your body\'s early warning signs.</span></div><div><b>Life</b><span>Sleep, how much you sit and move, work demands, and support around you.</span></div></div><p>Our job is to find which of these matter most for you, then work on the ones you can change. Read more in our post Understand your pain.</p><p class="src">Sources: <a href="https://www.iasp-pain.org/publications/iasp-news/iasp-announces-revised-definition-of-pain/" target="_blank" rel="noopener">IASP revised definition of pain</a> · Hartvigsen J, et al. <a href="https://doi.org/10.1016/S0140-6736(18)30480-X" target="_blank" rel="noopener">What low back pain is and why we need to pay attention</a>. Lancet. 2018;391(10137):2356–2367.</p>',
+            '<p>Pain is your body\'s protection system, and it\'s rarely about one thing. The world\'s pain scientists put it this way:</p><blockquote><p>"Pain is always a personal experience that is influenced to varying degrees by biological, psychological, and social factors."</p><cite>International Association for the Study of Pain, 2020</cite></blockquote><div class="pillars"><div><b>Body</b><span>Load beyond what your tissues are ready for. Not enough strength, mobility or control, or a mobility gap that leaves a joint less stable.</span></div><div><b>Mind</b><span>Stress, worry about damage, and how much attention you pay to your body\'s early warning signs.</span></div><div><b>Life</b><span>Sleep, how much you sit and move, work demands, and support around you.</span></div></div><p>Our job is to find which of these matter most for you, then work on the ones you can change. Read more in our post <a href="/blog/understand-your-pain">Understand your pain</a>.</p><p class="src">Sources: <a href="https://www.iasp-pain.org/publications/iasp-news/iasp-announces-revised-definition-of-pain/" target="_blank" rel="noopener">IASP revised definition of pain</a> · Hartvigsen J, et al. <a href="https://doi.org/10.1016/S0140-6736(18)30480-X" target="_blank" rel="noopener">What low back pain is and why we need to pay attention</a>. Lancet. 2018;391(10137):2356–2367.</p>',
         },
         {
           question: "How much exercise and strength training should I do?",

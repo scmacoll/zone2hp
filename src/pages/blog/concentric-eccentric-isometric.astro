@@ -1,0 +1,99 @@
+---
+// Client copy, reproduced verbatim from zone-two-clinic-notes-02.html, with
+// Australian spelling ("programmes"). Only the markup changed: subheads and box
+// headings are H2 (the post title is the H1), class names are the .cn ones,
+// diagram labels are sentence case, the diagram's inline transform-origins are
+// classes (CSP), and its colours point at the site tokens.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+---
+
+<ClinicNote slug="concentric-eccentric-isometric">
+  <p>Picture a bicep curl. The same muscle works in three different ways depending on what the weight is doing:</p>
+  <ul>
+    <li><b>Concentric (lift):</b> the muscle shortens as it works. Curling the weight up, standing up from a chair, climbing stairs.</li>
+    <li><b>Eccentric (lower):</b> the muscle lengthens under control, like a brake. Lowering the weight slowly, walking downstairs, landing from a jump.</li>
+    <li><b>Isometric (hold):</b> the muscle works but doesn't change length. Holding the weight still, a wall sit, a plank.</li>
+  </ul>
+  <h2>Isometric: settle and build</h2>
+  <p>Holds are often where rehab starts, because they load tissue without much movement. A small 2015 study found heavy holds eased knee-tendon pain for at least 45 minutes [1]. Larger reviews since then are more cautious:</p>
+  <blockquote><p>"Isometric exercise does not appear to be superior to isotonic exercise in the management of chronic tendinopathy."</p><cite>Clifford et al., BMJ Open Sport Exerc Med, 2020 [2]</cite></blockquote>
+  <p>So holds are a useful tool, not a magic switch. Bonus: a 2023 analysis of 270 trials found isometric training lowered resting blood pressure more than any other exercise type [7].</p>
+  <h2>Eccentric: the brakes</h2>
+  <p>Muscles can lower more weight than they can lift, which makes lowering work a strong strength builder [6]. It's also protective. The Nordic hamstring exercise, a slow lowering movement, is one of the best-supported injury-prevention exercises in sport:</p>
+  <blockquote><p>"Programmes that include the NHE reduce hamstring injuries by up to 51%."</p><cite>van Dyk et al., Br J Sports Med, 2019 [3]</cite></blockquote>
+  <h2>Concentric: the engine</h2>
+  <p>Lifting is what gets you up hills, out of chairs and off the blocks. In real life it comes paired with lowering. Heavy, slow lifting and lowering together has matched eccentric-only programmes for knee and Achilles tendon pain, with people more satisfied and more likely to stick with it [4][5].</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>In 30 seconds</h2><ul>
+      <li>Concentric = lift. Eccentric = lower. Isometric = hold.</li>
+      <li>None is "best". Each suits a different stage and goal.</li>
+      <li>Most good rehab moves from holds, to slow heavy work, to speed and sport.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 250" role="img" aria-labelledby="ld-t">
+        <title id="ld-t">Three arms doing a bicep curl. Concentric: the forearm lifts the weight as the bicep shortens. Eccentric: the forearm slowly lowers the weight as the bicep lengthens. Isometric: the forearm holds the weight still at a right angle.</title>
+        <rect x="0" y="0" width="420" height="250" class="s-surface"/>
+        <line x1="140" y1="10" x2="140" y2="236" stroke="var(--chrome-line)"/>
+        <line x1="280" y1="10" x2="280" y2="236" stroke="var(--chrome-line)"/>
+        <g>
+          <line x1="44" y1="36" x2="44" y2="128" stroke="var(--cn-skin)" stroke-width="24" stroke-linecap="round"/>
+          <ellipse cx="54" cy="84" rx="8" ry="27" fill="var(--cn-orange)" opacity=".9"/>
+          <g class="curl-con origin-elbow-a">
+            <line x1="44" y1="128" x2="108" y2="128" stroke="var(--cn-skin)" stroke-width="18" stroke-linecap="round"/>
+            <rect x="104" y="106" width="9" height="44" rx="3" class="s-ink"/>
+            <rect x="100" y="108" width="17" height="10" rx="3" class="s-ink"/><rect x="100" y="138" width="17" height="10" rx="3" class="s-ink"/>
+          </g>
+          <path d="M118 96 l0 -22 M112 80 l6 -7 l6 7" stroke="var(--cn-orange)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <text x="70" y="200" text-anchor="middle" class="big s-ink">Concentric</text>
+          <text x="70" y="218" text-anchor="middle" class="lbl s-muted">Muscle shortens</text>
+          <text x="70" y="234" text-anchor="middle" class="lbl s-accent">Lift</text>
+        </g>
+        <g>
+          <line x1="184" y1="36" x2="184" y2="128" stroke="var(--cn-skin)" stroke-width="24" stroke-linecap="round"/>
+          <ellipse cx="194" cy="84" rx="6" ry="32" fill="var(--cn-orange)" opacity=".9"/>
+          <g class="curl-ecc origin-elbow-b">
+            <line x1="184" y1="128" x2="248" y2="128" stroke="var(--cn-skin)" stroke-width="18" stroke-linecap="round"/>
+            <rect x="244" y="106" width="9" height="44" rx="3" class="s-ink"/>
+            <rect x="240" y="108" width="17" height="10" rx="3" class="s-ink"/><rect x="240" y="138" width="17" height="10" rx="3" class="s-ink"/>
+          </g>
+          <path d="M262 74 l0 22 M256 90 l6 7 l6 -7" stroke="var(--cn-orange)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <text x="210" y="200" text-anchor="middle" class="big s-ink">Eccentric</text>
+          <text x="210" y="218" text-anchor="middle" class="lbl s-muted">Muscle lengthens</text>
+          <text x="210" y="234" text-anchor="middle" class="lbl s-accent">Lower, slowly</text>
+        </g>
+        <g>
+          <line x1="324" y1="36" x2="324" y2="128" stroke="var(--cn-skin)" stroke-width="24" stroke-linecap="round"/>
+          <ellipse cx="334" cy="84" rx="8" ry="29" fill="var(--cn-orange)" opacity=".9"/>
+          <line x1="324" y1="128" x2="388" y2="128" stroke="var(--cn-skin)" stroke-width="18" stroke-linecap="round"/>
+          <rect x="384" y="106" width="9" height="44" rx="3" class="s-ink"/>
+          <rect x="380" y="108" width="17" height="10" rx="3" class="s-ink"/><rect x="380" y="138" width="17" height="10" rx="3" class="s-ink"/>
+          <circle class="pulse" cx="360" cy="60" r="16" fill="var(--cn-orange)" opacity=".35"/>
+          <circle cx="360" cy="60" r="12" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <path d="M360 52 v8 l5 4" stroke="var(--ink)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <text x="350" y="200" text-anchor="middle" class="big s-ink">Isometric</text>
+          <text x="350" y="218" text-anchor="middle" class="lbl s-muted">Muscle holds</text>
+          <text x="350" y="234" text-anchor="middle" class="lbl s-accent">No movement</text>
+        </g>
+      </svg>
+      </div>
+      <figcaption>Same muscle (the bicep, in orange), three jobs. Simplified illustration.</figcaption>
+    </figure>
+    <div class="cn-stages" role="group" aria-label="Typical rehab stages">
+      <div class="cn-stage"><small>Stage 1</small><b>Settle</b><span>Holds (isometrics) to load without flaring things up.</span></div>
+      <div class="cn-stage"><small>Stage 2</small><b>Build</b><span>Slow, heavy lifting and lowering for strength and tendon capacity.</span></div>
+      <div class="cn-stage"><small>Stage 3</small><b>Perform</b><span>Faster, springier work: hopping, sprinting, sport-specific drills.</span></div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>Rio E, Kidgell D, Purdam C, et al. Isometric exercise induces analgesia and reduces inhibition in patellar tendinopathy. Br J Sports Med. 2015;49(19):1277–1283. <a href="https://doi.org/10.1136/bjsports-2014-094386" target="_blank" rel="noopener">doi:10.1136/bjsports-2014-094386</a></li>
+    <li>Clifford C, et al. Effectiveness of isometric exercise in the management of tendinopathy: a systematic review and meta-analysis of randomised trials. BMJ Open Sport Exerc Med. 2020;6(1):e000760. <a href="https://doi.org/10.1136/bmjsem-2020-000760" target="_blank" rel="noopener">doi:10.1136/bmjsem-2020-000760</a></li>
+    <li>van Dyk N, Behan FP, Whiteley R. Including the Nordic hamstring exercise in injury prevention programmes halves the rate of hamstring injuries: a systematic review and meta-analysis of 8459 athletes. Br J Sports Med. 2019;53(21):1362–1370. <a href="https://doi.org/10.1136/bjsports-2018-100045" target="_blank" rel="noopener">doi:10.1136/bjsports-2018-100045</a></li>
+    <li>Kongsgaard M, Kovanen V, Aagaard P, et al. Corticosteroid injections, eccentric decline squat training and heavy slow resistance training in patellar tendinopathy. Scand J Med Sci Sports. 2009;19(6):790–802. <a href="https://doi.org/10.1111/j.1600-0838.2009.00949.x" target="_blank" rel="noopener">doi:10.1111/j.1600-0838.2009.00949.x</a></li>
+    <li>Beyer R, Kongsgaard M, Hougs Kjær B, et al. Heavy slow resistance versus eccentric training as treatment for Achilles tendinopathy: a randomized controlled trial. Am J Sports Med. 2015;43(7):1704–1711. <a href="https://doi.org/10.1177/0363546515584760" target="_blank" rel="noopener">doi:10.1177/0363546515584760</a></li>
+    <li>Roig M, O'Brien K, Kirk G, et al. The effects of eccentric versus concentric resistance training on muscle strength and mass in healthy adults: a systematic review with meta-analysis. Br J Sports Med. 2009;43(8):556–568. <a href="https://doi.org/10.1136/bjsm.2008.051417" target="_blank" rel="noopener">doi:10.1136/bjsm.2008.051417</a></li>
+    <li>Edwards JJ, Deenmamode AHP, Griffiths M, et al. Exercise training and resting blood pressure: a large-scale pairwise and network meta-analysis of randomised controlled trials. Br J Sports Med. 2023;57(20):1317. <a href="https://doi.org/10.1136/bjsports-2022-106503" target="_blank" rel="noopener">doi:10.1136/bjsports-2022-106503</a></li>
+  </Fragment>
+</ClinicNote>

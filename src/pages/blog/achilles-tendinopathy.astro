@@ -1,0 +1,126 @@
+---
+// Client copy, reproduced verbatim from zone-two-clinic-notes-02.html, with
+// Australian spelling ("programme"). Only the markup changed: subheads and box
+// headings are H2 (the post title is the H1), class names are the .cn ones,
+// diagram labels are sentence case, and its colours point at the site tokens.
+// The calf-raise geometry was built by an inline script in the client's file;
+// it lives in src/lib/achilles-diagram.ts, drawn here at rest and animated by
+// the script below unless the visitor prefers reduced motion.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+import { achillesFrame } from '../../lib/achilles-diagram';
+
+const rest = achillesFrame(0);
+---
+
+<ClinicNote slug="achilles-tendinopathy">
+  <p>Your Achilles is the thick tendon joining the calf to the heel. Tendinopathy means it has become painful and less able to cope with load. It comes in two main types:</p>
+  <ul>
+    <li><b>Mid-portion:</b> pain about 2 to 6 cm above the heel. Most common in runners and active people.</li>
+    <li><b>Insertional:</b> pain right where the tendon attaches to the heel bone. It can happen at any age or activity level.</li>
+  </ul>
+  <h2>The big myth: complete rest</h2>
+  <p>Tendons get stronger when they're loaded, and they lose capacity when they're not. The 2024 clinical practice guideline for mid-portion Achilles tendinopathy is clear:</p>
+  <blockquote><p>"Clinicians should use tendon loading exercise, with loads as high as tolerated, as a first-line treatment."</p><cite>Chimenti et al., JOSPT Clinical Practice Guideline, 2024 [1]</cite></blockquote>
+  <p>The same guideline advises that complete rest is not indicated. A randomised trial found people who kept running and training while monitoring their pain did just as well as those who rested:</p>
+  <blockquote><p>"No negative effects could be demonstrated from continuing Achilles tendon-loading activity."</p><cite>Silbernagel et al., Am J Sports Med, 2007 [3]</cite></blockquote>
+  <h2>Which exercises?</h2>
+  <p>Slow, heavy calf raises done about three times a week worked as well as the classic daily heel-drop programme, and people stuck with them better (92% vs 78% of sessions completed) [2]. For insertional pain, we usually keep the heel above floor level early on, so the tendon isn't squashed against the bone.</p>
+  <h2>What about injections and gadgets?</h2>
+  <p>In a double-blind trial, a platelet-rich plasma (PRP) injection was no better than a saltwater injection when both groups also did exercise [4]. A 2026 meta-analysis found shockwave "showed no clear overall benefits compared to sham" [6]. Researchers now recommend giving exercise alone a proper trial of around three months before adding extras [5].</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>In 30 seconds</h2><ul>
+      <li>Morning stiffness that eases as you move is the classic sign.</li>
+      <li>Progressive calf loading is first-line care. Complete rest isn't.</li>
+      <li>Expect around 12 weeks of consistent work. Tendons are slow, and slow is fast.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 410" role="img" aria-labelledby="ach-t" data-achilles>
+        <title id="ach-t">Side view of a lower leg doing a calf raise: the heel lifts, the ankle points (plantarflexes) and the toes bend up while staying on the floor, with the two common pain spots marked: mid-portion, 2 to 6 cm above the heel, and insertional, where the tendon meets the heel. Below, a pain scale showing that pain up to about 5 out of 10 during exercise is generally acceptable.</title>
+        <rect x="0" y="0" width="420" height="410" class="s-surface"/>
+        <line x1="16" y1="300" x2="404" y2="300" stroke="var(--chrome-line)" stroke-width="1.5"/>
+        <path data-part="outline" class="s-skin" d={rest.outline}/>
+        <ellipse data-part="calc" cx="248" cy="278" rx="22" ry="13" fill="var(--cn-skin-line)" opacity=".55" transform={rest.calc}/>
+        <path data-part="tendon" d={rest.tendon} stroke="var(--ink)" stroke-width="6" fill="none" stroke-linecap="round" opacity=".55"/>
+        <g data-part="mid" transform={rest.mid}><circle class="pulse" cx="0" cy="0" r="17" fill="var(--cn-orange)" opacity=".35"/><circle cx="0" cy="0" r="6" fill="var(--cn-orange)"/></g>
+        <g data-part="ins" transform={rest.ins}><circle class="pulse" cx="0" cy="0" r="12" fill="var(--cn-orange)" opacity=".35"/><circle cx="0" cy="0" r="5" fill="var(--cn-orange)"/></g>
+        <line data-part="l1" x1={rest.l1.x1} y1={rest.l1.y1} x2="168" y2="196" stroke="var(--cn-orange)" stroke-width="1.5"/>
+        <text x="16" y="178" class="big s-ink">Mid-portion</text>
+        <text x="16" y="194" class="lbl s-muted">2 to 6 cm above heel</text>
+        <line data-part="l2" x1={rest.l2.x1} y1={rest.l2.y1} x2="190" y2="262" stroke="var(--cn-orange)" stroke-width="1.5"/>
+        <text x="16" y="250" class="big s-ink">Insertional</text>
+        <text x="16" y="266" class="lbl s-muted">Where it meets the heel</text>
+        <text x="300" y="60" class="lbl s-muted">Calf</text>
+        <text x="292" y="150" class="lbl s-muted">Shin</text>
+        <text x="352" y="286" class="lbl s-muted">Toes</text>
+        <text x="16" y="334" class="big s-ink">Pain guide during exercise</text>
+        <rect x="16" y="346" width="195" height="16" rx="4" fill="var(--cn-orange)" opacity=".35"/>
+        <rect x="211" y="346" width="193" height="16" rx="4" fill="var(--cn-orange)"/>
+        <g class="lbl s-muted">
+          <text x="16" y="378">0</text><text x="207" y="378">5</text><text x="396" y="378">10</text>
+        </g>
+        <text x="16" y="398" class="lbl s-ink">Generally OK</text>
+        <text x="404" y="398" text-anchor="end" class="lbl s-ink">Ease off</text>
+      </svg>
+      </div>
+      <figcaption>In a calf raise the ankle points (plantarflexes), the heel lifts and the toes bend up while staying on the floor. Calf raises load the tendon. A common rule of thumb from the pain-monitoring model: pain up to about 5/10 during exercise is acceptable if it settles by the next morning and morning stiffness isn't getting worse week to week [3]. Simplified illustration.</figcaption>
+    </figure>
+    <p class="cn-gp"><b>Get urgent care</b> if you felt a sudden snap or "kick" at the back of the ankle and now can't push off or stand on tiptoe. That can be a tendon rupture.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>Chimenti RL, Neville C, Houck J, Cuddeford T, Carreira D, Martin RL. Achilles pain, stiffness, and muscle power deficits: midportion Achilles tendinopathy revision 2024. J Orthop Sports Phys Ther. 2024;54(12):CPG1–CPG32. <a href="https://doi.org/10.2519/jospt.2024.0302" target="_blank" rel="noopener">doi:10.2519/jospt.2024.0302</a></li>
+    <li>Beyer R, Kongsgaard M, Hougs Kjær B, et al. Heavy slow resistance versus eccentric training as treatment for Achilles tendinopathy: a randomized controlled trial. Am J Sports Med. 2015;43(7):1704–1711. <a href="https://doi.org/10.1177/0363546515584760" target="_blank" rel="noopener">doi:10.1177/0363546515584760</a></li>
+    <li>Silbernagel KG, Thomeé R, Eriksson BI, Karlsson J. Continued sports activity, using a pain-monitoring model, during rehabilitation in patients with Achilles tendinopathy: a randomized controlled study. Am J Sports Med. 2007;35(6):897–906. <a href="https://doi.org/10.1177/0363546506298279" target="_blank" rel="noopener">doi:10.1177/0363546506298279</a></li>
+    <li>de Vos RJ, Weir A, van Schie HTM, et al. Platelet-rich plasma injection for chronic Achilles tendinopathy: a randomized controlled trial. JAMA. 2010;303(2):144–149. <a href="https://doi.org/10.1001/jama.2009.1986" target="_blank" rel="noopener">doi:10.1001/jama.2009.1986</a></li>
+    <li>Challoumas D, Crosbie G, O'Neill S, Pedret C, Millar NL. Effectiveness of exercise treatments with or without adjuncts for common lower limb tendinopathies: a living systematic review and network meta-analysis. Sports Med Open. 2023;9:71. <a href="https://doi.org/10.1186/s40798-023-00616-1" target="_blank" rel="noopener">doi:10.1186/s40798-023-00616-1</a></li>
+    <li>Ni T, Zhao Y, Pang L, Fu W. Extracorporeal shockwave therapy versus sham extracorporeal shockwave therapy for chronic Achilles tendinopathy: a meta-analysis of randomized controlled trials. PeerJ. 2026;14:e20506. <a href="https://doi.org/10.7717/peerj.20506" target="_blank" rel="noopener">doi:10.7717/peerj.20506</a></li>
+    <li>American Academy of Orthopaedic Surgeons. <a href="https://www.orthoinfo.org/diseases--conditions/Achilles-tendinitis" target="_blank" rel="noopener">Achilles Tendinitis</a>. OrthoInfo.</li>
+  </Fragment>
+</ClinicNote>
+
+<script>
+  // Animate the calf raise (the client's 3.6s loop). Reduced motion keeps the
+  // build-time resting frame. Runs only while the diagram is on screen.
+  import { achillesAmount, achillesFrame } from '../../lib/achilles-diagram';
+
+  const svg = document.querySelector<SVGSVGElement>('[data-achilles]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (svg && !reduce) {
+    const part = (name: string) => svg.querySelector(`[data-part="${name}"]`)!;
+    const outline = part('outline');
+    const tendon = part('tendon');
+    const calc = part('calc');
+    const mid = part('mid');
+    const ins = part('ins');
+    const l1 = part('l1');
+    const l2 = part('l2');
+
+    const draw = (a: number) => {
+      const fr = achillesFrame(a);
+      outline.setAttribute('d', fr.outline);
+      tendon.setAttribute('d', fr.tendon);
+      calc.setAttribute('transform', fr.calc);
+      mid.setAttribute('transform', fr.mid);
+      ins.setAttribute('transform', fr.ins);
+      l1.setAttribute('x1', fr.l1.x1);
+      l1.setAttribute('y1', fr.l1.y1);
+      l2.setAttribute('x1', fr.l2.x1);
+      l2.setAttribute('y1', fr.l2.y1);
+    };
+
+    let start: number | null = null;
+    let frameId = 0;
+    const loop = (ts: number) => {
+      if (start === null) start = ts;
+      draw(achillesAmount(ts - start));
+      frameId = requestAnimationFrame(loop);
+    };
+    new IntersectionObserver(([entry]) => {
+      cancelAnimationFrame(frameId);
+      if (entry.isIntersecting) frameId = requestAnimationFrame(loop);
+    }).observe(svg);
+  }
+</script>

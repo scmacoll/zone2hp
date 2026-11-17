@@ -1,4 +1,4 @@
-/* Clinic Notes (/clinic-notes and its four posts).
+/* Clinic Notes (/blog and its posts).
    A port of the client's "trail-map journal" page (zone-two-clinic-notes.html)
    into the site's own system: site tokens, the site's heading and button
    styles (Archivo, sentence case), Hanken Grotesk for body and Geist Mono for
@@ -378,6 +378,123 @@
   color: var(--accent-deep);
 }
 
+/* ---- Vol. 2 blocks (zone-two-clinic-notes-02.html) ----------------------
+   The client's stages, comparison table and numbered steps, on the site's
+   tokens: paper cards with a hairline like the figures, mono labels in
+   sentence case like the eyebrow, and the orange number disc of /refer. */
+
+/* Links in the dark card: paper text, underlined (the client's color:inherit). */
+.cn-tldr a {
+  color: inherit;
+}
+
+/* Stage 1, 2, 3 cards: stacked on phones, three across from there (never
+   two plus an orphan). */
+.cn-stages {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.625rem;
+}
+@container cn-article (min-width: 30rem) {
+  .cn-stages {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.cn-stage {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+  padding: 0.75rem 0.875rem;
+  background: var(--paper);
+  border: var(--border-hairline);
+  border-radius: var(--cn-radius);
+}
+.cn-stage small {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  color: var(--accent-deep);
+}
+.cn-stage b {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.2;
+}
+.cn-stage span {
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+/* Comparison table: scrolls inside its own card, never the page. */
+.cn-tablewrap {
+  max-width: 100%;
+  overflow-x: auto;
+  background: var(--paper);
+  border: var(--border-hairline);
+  border-radius: var(--radius-md);
+}
+.cn-compare {
+  width: 100%;
+  min-width: 26rem;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.cn-compare th,
+.cn-compare td {
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: var(--border-hairline);
+}
+.cn-compare tbody tr:last-child > * {
+  border-bottom: 0;
+}
+.cn-compare thead th {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+.cn-compare tbody th {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+/* Numbered steps: the number in an orange disc, the text beside it. */
+.cn-steps {
+  display: grid;
+  gap: 0.75rem;
+  max-width: var(--cn-measure);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: cn-step;
+}
+.cn-steps li {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  counter-increment: cn-step;
+}
+.cn-steps li::before {
+  content: counter(cn-step);
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: 0.05rem;
+  border-radius: 50%;
+  background: var(--cn-orange);
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .cn-refs {
   display: grid;
   gap: 0.375rem;
@@ -508,6 +625,9 @@
 .cn .s-surface { fill: var(--cn-surface); }
 .cn .s-bg { fill: var(--stone); }
 .cn .s-skin { fill: var(--cn-skin); }
+/* Small orange-family text on paper: --accent-deep keeps it at AA. */
+.cn .s-accent { fill: var(--accent-deep); }
+.cn .s-paper { fill: var(--paper); }
 .cn svg text {
   font-family: var(--font-body);
   font-size: 13px;
@@ -527,10 +647,18 @@
 .cn .origin-fist { transform-origin: 114px 336px; }
 .cn .origin-hip-left { transform-origin: 86px 160px; }
 .cn .origin-hip-right { transform-origin: 306px 160px; }
+.cn .origin-elbow-a { transform-origin: 44px 128px; }
+.cn .origin-elbow-b { transform-origin: 184px 128px; }
+.cn .origin-shoulder { transform-origin: 98px 78px; }
+.cn .origin-dial { transform-origin: 210px 170px; }
 
 /* Resting pose: what reduced-motion users see. */
 .cn .drop { transform: rotate(9deg); }
 .cn .tilt { transform: rotate(26deg); }
+.cn .curl-con { transform: rotate(-55deg); }
+.cn .curl-ecc { transform: rotate(30deg); }
+.cn .raise-stop { transform: rotate(78deg); }
+.cn .needle { transform: rotate(-30deg); }
 
 @media (prefers-reduced-motion: no-preference) {
   .cn .pulse {
@@ -540,6 +668,12 @@
   }
   .cn .drop { animation: cn-drop 4s ease-in-out infinite; }
   .cn .tilt { animation: cn-tilt 3.2s ease-in-out infinite; }
+  .cn .curl-con { animation: cn-con 3.2s ease-in-out infinite; }
+  .cn .curl-ecc { animation: cn-ecc 4s ease-in-out infinite; }
+  .cn .raise-stop { animation: cn-raise 4s ease-in-out infinite; }
+  .cn .wobble { animation: cn-wobble 1.6s ease-in-out infinite; }
+  .cn .signal { animation: cn-signal 2.6s linear infinite; }
+  .cn .needle { animation: cn-needle 5s ease-in-out infinite; }
 }
 @keyframes cn-pulse {
   0%, 100% { transform: scale(0.85); opacity: 0.25; }
@@ -554,6 +688,34 @@
   0%, 15% { transform: rotate(0deg); }
   45%, 75% { transform: rotate(26deg); }
   100% { transform: rotate(0deg); }
+}
+@keyframes cn-con {
+  0% { transform: rotate(30deg); }
+  55%, 70% { transform: rotate(-55deg); }
+  100% { transform: rotate(30deg); }
+}
+@keyframes cn-ecc {
+  0%, 10% { transform: rotate(-55deg); }
+  85%, 100% { transform: rotate(30deg); }
+}
+@keyframes cn-raise {
+  0%, 10% { transform: rotate(0deg); }
+  45%, 75% { transform: rotate(78deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes cn-wobble {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(5px, 3px); }
+  50% { transform: translate(-2px, 5px); }
+  75% { transform: translate(4px, -2px); }
+}
+@keyframes cn-signal {
+  from { stroke-dashoffset: 420; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes cn-needle {
+  0%, 100% { transform: rotate(-55deg); }
+  50% { transform: rotate(55deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
