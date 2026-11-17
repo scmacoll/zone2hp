@@ -977,6 +977,16 @@ const showAccounts = bookingConfig.accountsEnabled;
     .a2-about__more {
         margin-top: var(--space-md);
     }
+    /* Nothing below the bio but the Find us section's own padding. Closed, the
+       44px tap target leaves ~14px under the Read more label, so pull that back
+       (the target keeps its full size); open, the last paragraph drops its
+       bottom margin. */
+    .a2-about__more:not([open]) {
+        margin-bottom: -0.875rem;
+    }
+    .a2-about__more > p:last-child {
+        margin-bottom: 0;
+    }
     /* The summary keeps a block display on purpose: giving <summary> a flex
        display breaks the native toggle in some WebKit versions, so the flex row
        lives on the inner label span instead. */
