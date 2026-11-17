@@ -1,7 +1,7 @@
 // The client's FAQ, generated from zone-two-faq.html (Oct 2026). The wording is his,
 // verbatim, except: Australian spelling ("programmes"), no inline styles (the CSP
 // blocks them), sub-headings as h3, and site links as paths. Two answers differ:
-//   - The referral question is hidden until the referral programme exists.
+//   - The referral question is a draft: shown with the draft /refer page, hidden on production.
 //   - "Understand your pain" is plain text until that post is published.
 // Answers are trusted HTML from the client, rendered with set:html.
 
@@ -10,8 +10,8 @@ export interface FaqItem {
   answer: string;
   /** Open on load, as in the client's design. */
   open?: boolean;
-  /** Left out of the page and the structured data. */
-  hidden?: boolean;
+  /** Left out of the page and the structured data on production (see drafts.ts). */
+  draft?: boolean;
 }
 
 export interface FaqSection {
@@ -240,7 +240,9 @@ export const faq = {
           question: "How can I refer a friend or family member?",
           answer:
             '<p><b>Give $50, get $50.</b> When a friend books and completes their first session at Zone Two with your code, they get $50 off, and you get $50 credit toward your next visit.</p><p>Get your code and see the full terms on our <a href="/refer">referral programme page</a>.</p>',
-          hidden: true,
+          // Shown with the draft /refer page, hidden on production until the
+          // referral programme launches.
+          draft: true,
         },
         {
           question: "I want to join the Zone Two team. How do I apply?",

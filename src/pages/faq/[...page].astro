@@ -19,7 +19,7 @@ export function getStaticPaths() {
 
 const sections = faq.sections.map((section) => ({
   ...section,
-  items: section.items.filter((item) => !('hidden' in item && item.hidden)),
+  items: section.items.filter((item) => showDrafts || !('draft' in item && item.draft)),
 }));
 
 // FAQPage structured data: the same questions and answers as plain text. No
