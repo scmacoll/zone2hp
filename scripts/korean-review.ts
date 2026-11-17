@@ -13,6 +13,7 @@ import { faqKo } from '../src/lib/faq.ko';
 import { roles } from '../src/lib/careers';
 import { blog } from '../src/i18n/blog';
 import { clinicNotes } from '../src/lib/clinic-notes';
+import { KOREAN_POSTS } from '../src/i18n/lang';
 
 type Row = [where: string, en: string, ko: string];
 
@@ -78,6 +79,36 @@ const noteRows: Row[] = clinicNotes.flatMap((note) =>
   ),
 );
 
+/**
+ * A post's words in reading order: headings, paragraphs, list items, quotes,
+ * captions, diagram labels and figure props (name: "text"). The reference list
+ * is left out: it stays in English on both pages.
+ */
+function postUnits(file: string): string[] {
+  let src = readFileSync(file, 'utf8');
+  src = src.slice(src.indexOf('<ClinicNote'), src.indexOf('<Fragment slot="refs">'));
+  const units: string[] = [];
+  const re =
+    /<(h2|p|li|cite|figcaption|title|text)\b[^>]*>([\s\S]*?)<\/\1>|^\s*(\w+): "((?:[^"\\]|\\.)*)",$/gm;
+  for (const m of src.matchAll(re)) {
+    const raw = m[2] ?? m[4] ?? '';
+    if (/<(p|li|ul)\b/.test(raw)) continue; // a wrapper; its children are listed
+    const t = text(raw);
+    if (t && !/^[\d\s]+$/.test(t)) units.push(t);
+  }
+  return units;
+}
+
+const postSections = KOREAN_POSTS.map((slug) => {
+  const en = postUnits(`src/pages/blog/${slug}.astro`);
+  const ko = postUnits(`src/views/blog-ko/${slug}.astro`);
+  if (en.length !== ko.length) {
+    throw new Error(`${slug}: ${en.length} English pieces but ${ko.length} Korean. Keep the two in step.`);
+  }
+  const rows: Row[] = en.map((e, i) => [String(i + 1), e, ko[i]]);
+  return `### ${clinicNotes.find((n) => n.slug === slug)?.heading ?? slug}\n\n${table(rows)}`;
+});
+
 const roleRows: Row[] = roles.flatMap((role) =>
   role.ko ? pairs({ ...role, slug: undefined, draft: undefined, ko: undefined }, role.ko, role.slug) : [],
 );
@@ -123,6 +154,12 @@ ${table(pairs(blog.en, blog.ko))}
 ### Post titles and standfirsts (the client's words)
 
 ${table(noteRows)}
+
+## Clinic Notes posts
+
+Each post's text in reading order. References stay in English on both pages and aren't listed.
+
+${postSections.join('\n\n')}
 `;
 
 writeFileSync('KOREAN-REVIEW.md', doc);

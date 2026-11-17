@@ -1,0 +1,60 @@
+---
+// Korean translation of src/pages/blog/achilles-tendinopathy.astro (the client's
+// post), rendered at /ko/blog/achilles-tendinopathy. Our translation, 해요체,
+// awaiting Dr Kim's review. Quotes are translated; their citations and the
+// reference list stay in English, as published. Keep in step with the English.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+import AchillesFigure from '../../components/blog/AchillesFigure.astro';
+---
+
+<ClinicNote slug="achilles-tendinopathy">
+  <p>아킬레스건은 종아리와 발뒤꿈치를 잇는 두꺼운 힘줄이에요. 건병증(tendinopathy)은 힘줄이 아프고, 부하를 견디는 능력이 떨어진 상태를 말해요. 크게 두 가지 유형이 있어요.</p>
+  <ul>
+    <li><b>중간부(mid-portion):</b> 발뒤꿈치에서 2~6cm 위쪽의 통증이에요. 달리기를 하는 분이나 활동적인 분에게 가장 흔해요.</li>
+    <li><b>부착부(insertional):</b> 힘줄이 발뒤꿈치뼈에 붙는 바로 그 자리의 통증이에요. 나이나 활동 수준과 상관없이 생길 수 있어요.</li>
+  </ul>
+  <h2>가장 큰 오해: 완전한 휴식</h2>
+  <p>힘줄은 부하를 받으면 더 튼튼해지고, 부하를 받지 않으면 견디는 능력이 떨어져요. 중간부 아킬레스건병증에 대한 2024년 임상 진료 지침은 분명해요.</p>
+  <blockquote><p>"임상의는 견딜 수 있는 한 높은 부하로 힘줄 부하 운동을 하도록 하고, 이를 1차 치료로 사용해야 해요."</p><cite>Chimenti et al., JOSPT Clinical Practice Guideline, 2024 [1]</cite></blockquote>
+  <p>같은 지침은 완전한 휴식이 권장되지 않는다고 말해요. 한 무작위 대조 시험에서는 통증을 지켜보면서 달리기와 훈련을 계속한 사람들도 쉬었던 사람들만큼 좋은 결과를 보였어요.</p>
+  <blockquote><p>"아킬레스건에 부하를 주는 활동을 계속해도 부정적인 영향은 확인되지 않았어요."</p><cite>Silbernagel et al., Am J Sports Med, 2007 [3]</cite></blockquote>
+  <h2>어떤 운동을 할까요?</h2>
+  <p>일주일에 세 번 정도 느리고 무겁게 하는 종아리 들기(카프 레이즈)는 매일 하는 고전적인 발뒤꿈치 내리기 프로그램만큼 효과가 있었고, 사람들이 더 꾸준히 해냈어요(완료한 세션 92% 대 78%) [2]. 부착부 통증이 있다면 초기에는 보통 발뒤꿈치를 바닥 높이보다 아래로 내리지 않게 해서, 힘줄이 뼈에 눌리지 않도록 해요.</p>
+  <h2>주사나 기기는 어떨까요?</h2>
+  <p>이중맹검 시험에서, 두 그룹 모두 운동을 함께 했을 때 혈소판 풍부 혈장(PRP) 주사는 식염수 주사보다 나은 점이 없었어요 [4]. 2026년 메타분석에서는 체외충격파 치료가 "가짜 치료(sham)와 비교해 전반적으로 뚜렷한 이점을 보이지 않았다"고 했어요 [6]. 연구자들은 이제 다른 치료를 더하기 전에 운동만으로 약 3개월 동안 제대로 해 보라고 권해요 [5].</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>30초 요약</h2><ul>
+      <li>움직이면 풀리는 아침 뻣뻣함이 대표적인 신호예요.</li>
+      <li>점진적인 종아리 부하 운동이 1차 치료예요. 완전한 휴식은 아니에요.</li>
+      <li>약 12주는 꾸준히 해야 한다고 생각하세요. 힘줄은 느리고, 느림이 곧 빠름이에요.</li>
+    </ul></div>
+    <AchillesFigure
+      t={{
+        title: "종아리 들기(카프 레이즈)를 하는 아래 다리의 옆모습: 발뒤꿈치가 들리고, 발목이 펴지며(발바닥 굽힘), 발가락은 바닥에 닿은 채 위로 굽혀져요. 흔한 통증 부위 두 곳이 표시되어 있어요. 발뒤꿈치에서 2~6cm 위의 중간부, 그리고 힘줄이 발뒤꿈치와 만나는 부착부예요. 아래에는 운동 중 통증이 10점 중 약 5점까지는 대체로 괜찮다는 통증 척도가 있어요.",
+        midPortion: "중간부",
+        midWhere: "발뒤꿈치 위 2~6cm",
+        insertional: "부착부",
+        insWhere: "발뒤꿈치와 만나는 곳",
+        calf: "종아리",
+        shin: "정강이",
+        toes: "발가락",
+        painGuide: "운동 중 통증 기준",
+        ok: "대체로 괜찮아요",
+        easeOff: "강도 줄이기",
+        caption: "종아리 들기를 하면 발목이 펴지고(발바닥 굽힘), 발뒤꿈치가 들리며, 발가락은 바닥에 닿은 채 위로 굽혀져요. 종아리 들기는 힘줄에 부하를 줘요. 통증 모니터링 모델에서 나온 흔한 기준은 이래요. 운동 중 통증이 10점 중 약 5점까지라면, 다음 날 아침까지 가라앉고 아침 뻣뻣함이 주마다 심해지지 않는 한 괜찮아요 [3]. 단순화한 그림이에요.",
+      }}
+    />
+    <p class="cn-gp"><b>바로 응급 진료를 받으세요.</b> 발목 뒤쪽에서 갑자기 "뚝" 하거나 누가 걷어찬 듯한 느낌이 든 뒤로 발을 딛고 밀어내거나 까치발로 설 수 없다면, 힘줄 파열일 수 있어요.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>Chimenti RL, Neville C, Houck J, Cuddeford T, Carreira D, Martin RL. Achilles pain, stiffness, and muscle power deficits: midportion Achilles tendinopathy revision 2024. J Orthop Sports Phys Ther. 2024;54(12):CPG1–CPG32. <a href="https://doi.org/10.2519/jospt.2024.0302" target="_blank" rel="noopener">doi:10.2519/jospt.2024.0302</a></li>
+    <li>Beyer R, Kongsgaard M, Hougs Kjær B, et al. Heavy slow resistance versus eccentric training as treatment for Achilles tendinopathy: a randomized controlled trial. Am J Sports Med. 2015;43(7):1704–1711. <a href="https://doi.org/10.1177/0363546515584760" target="_blank" rel="noopener">doi:10.1177/0363546515584760</a></li>
+    <li>Silbernagel KG, Thomeé R, Eriksson BI, Karlsson J. Continued sports activity, using a pain-monitoring model, during rehabilitation in patients with Achilles tendinopathy: a randomized controlled study. Am J Sports Med. 2007;35(6):897–906. <a href="https://doi.org/10.1177/0363546506298279" target="_blank" rel="noopener">doi:10.1177/0363546506298279</a></li>
+    <li>de Vos RJ, Weir A, van Schie HTM, et al. Platelet-rich plasma injection for chronic Achilles tendinopathy: a randomized controlled trial. JAMA. 2010;303(2):144–149. <a href="https://doi.org/10.1001/jama.2009.1986" target="_blank" rel="noopener">doi:10.1001/jama.2009.1986</a></li>
+    <li>Challoumas D, Crosbie G, O'Neill S, Pedret C, Millar NL. Effectiveness of exercise treatments with or without adjuncts for common lower limb tendinopathies: a living systematic review and network meta-analysis. Sports Med Open. 2023;9:71. <a href="https://doi.org/10.1186/s40798-023-00616-1" target="_blank" rel="noopener">doi:10.1186/s40798-023-00616-1</a></li>
+    <li>Ni T, Zhao Y, Pang L, Fu W. Extracorporeal shockwave therapy versus sham extracorporeal shockwave therapy for chronic Achilles tendinopathy: a meta-analysis of randomized controlled trials. PeerJ. 2026;14:e20506. <a href="https://doi.org/10.7717/peerj.20506" target="_blank" rel="noopener">doi:10.7717/peerj.20506</a></li>
+    <li>American Academy of Orthopaedic Surgeons. <a href="https://www.orthoinfo.org/diseases--conditions/Achilles-tendinitis" target="_blank" rel="noopener">Achilles Tendinitis</a>. OrthoInfo.</li>
+  </Fragment>
+</ClinicNote>

@@ -1,0 +1,107 @@
+---
+// The calf-raise figure for the Achilles post, shared by the English and Korean
+// pages so both draw and animate the same diagram; only the words differ (the
+// page passes them in). Geometry: src/lib/achilles-diagram.ts, drawn here at
+// rest and animated by the script below unless the visitor prefers reduced motion.
+import { achillesFrame } from '../../lib/achilles-diagram';
+
+interface Props {
+  t: {
+    /** The SVG's accessible description. */
+    title: string;
+    midPortion: string;
+    midWhere: string;
+    insertional: string;
+    insWhere: string;
+    calf: string;
+    shin: string;
+    toes: string;
+    painGuide: string;
+    ok: string;
+    easeOff: string;
+    /** Figure caption (trusted HTML: plain text and citation numbers). */
+    caption: string;
+  };
+}
+
+const { t } = Astro.props;
+const rest = achillesFrame(0);
+---
+
+<figure>
+  <div class="cn-scroll" tabindex="0">
+  <svg viewBox="0 0 420 410" role="img" aria-labelledby="ach-t" data-achilles>
+    <title id="ach-t">{t.title}</title>
+    <rect x="0" y="0" width="420" height="410" class="s-surface"/>
+    <line x1="16" y1="300" x2="404" y2="300" stroke="var(--chrome-line)" stroke-width="1.5"/>
+    <path data-part="outline" class="s-skin" d={rest.outline}/>
+    <ellipse data-part="calc" cx="248" cy="278" rx="22" ry="13" fill="var(--cn-skin-line)" opacity=".55" transform={rest.calc}/>
+    <path data-part="tendon" d={rest.tendon} stroke="var(--ink)" stroke-width="6" fill="none" stroke-linecap="round" opacity=".55"/>
+    <g data-part="mid" transform={rest.mid}><circle class="pulse" cx="0" cy="0" r="17" fill="var(--cn-orange)" opacity=".35"/><circle cx="0" cy="0" r="6" fill="var(--cn-orange)"/></g>
+    <g data-part="ins" transform={rest.ins}><circle class="pulse" cx="0" cy="0" r="12" fill="var(--cn-orange)" opacity=".35"/><circle cx="0" cy="0" r="5" fill="var(--cn-orange)"/></g>
+    <line data-part="l1" x1={rest.l1.x1} y1={rest.l1.y1} x2="168" y2="196" stroke="var(--cn-orange)" stroke-width="1.5"/>
+    <text x="16" y="178" class="big s-ink">{t.midPortion}</text>
+    <text x="16" y="194" class="lbl s-muted">{t.midWhere}</text>
+    <line data-part="l2" x1={rest.l2.x1} y1={rest.l2.y1} x2="190" y2="262" stroke="var(--cn-orange)" stroke-width="1.5"/>
+    <text x="16" y="250" class="big s-ink">{t.insertional}</text>
+    <text x="16" y="266" class="lbl s-muted">{t.insWhere}</text>
+    <text x="300" y="60" class="lbl s-muted">{t.calf}</text>
+    <text x="292" y="150" class="lbl s-muted">{t.shin}</text>
+    <text x="352" y="286" class="lbl s-muted">{t.toes}</text>
+    <text x="16" y="334" class="big s-ink">{t.painGuide}</text>
+    <rect x="16" y="346" width="195" height="16" rx="4" fill="var(--cn-orange)" opacity=".35"/>
+    <rect x="211" y="346" width="193" height="16" rx="4" fill="var(--cn-orange)"/>
+    <g class="lbl s-muted">
+      <text x="16" y="378">0</text><text x="207" y="378">5</text><text x="396" y="378">10</text>
+    </g>
+    <text x="16" y="398" class="lbl s-ink">{t.ok}</text>
+    <text x="404" y="398" text-anchor="end" class="lbl s-ink">{t.easeOff}</text>
+  </svg>
+  </div>
+  <figcaption><Fragment set:html={t.caption} /></figcaption>
+</figure>
+
+<script>
+  // Animate the calf raise (the client's 3.6s loop). Reduced motion keeps the
+  // build-time resting frame. Runs only while the diagram is on screen.
+  import { achillesAmount, achillesFrame } from '../../lib/achilles-diagram';
+
+  const svg = document.querySelector<SVGSVGElement>('[data-achilles]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (svg && !reduce) {
+    const part = (name: string) => svg.querySelector(`[data-part="${name}"]`)!;
+    const outline = part('outline');
+    const tendon = part('tendon');
+    const calc = part('calc');
+    const mid = part('mid');
+    const ins = part('ins');
+    const l1 = part('l1');
+    const l2 = part('l2');
+
+    const draw = (a: number) => {
+      const fr = achillesFrame(a);
+      outline.setAttribute('d', fr.outline);
+      tendon.setAttribute('d', fr.tendon);
+      calc.setAttribute('transform', fr.calc);
+      mid.setAttribute('transform', fr.mid);
+      ins.setAttribute('transform', fr.ins);
+      l1.setAttribute('x1', fr.l1.x1);
+      l1.setAttribute('y1', fr.l1.y1);
+      l2.setAttribute('x1', fr.l2.x1);
+      l2.setAttribute('y1', fr.l2.y1);
+    };
+
+    let start: number | null = null;
+    let frameId = 0;
+    const loop = (ts: number) => {
+      if (start === null) start = ts;
+      draw(achillesAmount(ts - start));
+      frameId = requestAnimationFrame(loop);
+    };
+    new IntersectionObserver(([entry]) => {
+      cancelAnimationFrame(frameId);
+      if (entry.isIntersecting) frameId = requestAnimationFrame(loop);
+    }).observe(svg);
+  }
+</script>

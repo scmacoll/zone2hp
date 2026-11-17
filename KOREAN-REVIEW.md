@@ -399,3 +399,41 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | zone-2-training.cardTitle | Zone 2, explained | 존 2 알아보기 | |
 | zone-2-training.heading | Zone 2: the pace behind our name | 존 2: 저희 이름에 담긴 페이스 | |
 | zone-2-training.standfirst | Easy enough to chat, hard enough to count. Here's what zone 2 training is, why it matters, and where it fits. | 대화할 수 있을 만큼 편하고, 운동이라고 할 만큼은 힘든 강도. 존 2 트레이닝이 무엇인지, 왜 중요한지, 어디에 들어맞는지 알려 드려요. | |
+
+## Clinic Notes posts
+
+Each post's text in reading order. References stay in English on both pages and aren't listed.
+
+### Achilles pain: load it, don't rest it
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | Your Achilles is the thick tendon joining the calf to the heel. Tendinopathy means it has become painful and less able to cope with load. It comes in two main types: | 아킬레스건은 종아리와 발뒤꿈치를 잇는 두꺼운 힘줄이에요. 건병증(tendinopathy)은 힘줄이 아프고, 부하를 견디는 능력이 떨어진 상태를 말해요. 크게 두 가지 유형이 있어요. | |
+| 2 | Mid-portion: pain about 2 to 6 cm above the heel. Most common in runners and active people. | 중간부(mid-portion): 발뒤꿈치에서 2~6cm 위쪽의 통증이에요. 달리기를 하는 분이나 활동적인 분에게 가장 흔해요. | |
+| 3 | Insertional: pain right where the tendon attaches to the heel bone. It can happen at any age or activity level. | 부착부(insertional): 힘줄이 발뒤꿈치뼈에 붙는 바로 그 자리의 통증이에요. 나이나 활동 수준과 상관없이 생길 수 있어요. | |
+| 4 | The big myth: complete rest | 가장 큰 오해: 완전한 휴식 | |
+| 5 | Tendons get stronger when they're loaded, and they lose capacity when they're not. The 2024 clinical practice guideline for mid-portion Achilles tendinopathy is clear: | 힘줄은 부하를 받으면 더 튼튼해지고, 부하를 받지 않으면 견디는 능력이 떨어져요. 중간부 아킬레스건병증에 대한 2024년 임상 진료 지침은 분명해요. | |
+| 6 | "Clinicians should use tendon loading exercise, with loads as high as tolerated, as a first-line treatment." | "임상의는 견딜 수 있는 한 높은 부하로 힘줄 부하 운동을 하도록 하고, 이를 1차 치료로 사용해야 해요." | |
+| 8 | The same guideline advises that complete rest is not indicated. A randomised trial found people who kept running and training while monitoring their pain did just as well as those who rested: | 같은 지침은 완전한 휴식이 권장되지 않는다고 말해요. 한 무작위 대조 시험에서는 통증을 지켜보면서 달리기와 훈련을 계속한 사람들도 쉬었던 사람들만큼 좋은 결과를 보였어요. | |
+| 9 | "No negative effects could be demonstrated from continuing Achilles tendon-loading activity." | "아킬레스건에 부하를 주는 활동을 계속해도 부정적인 영향은 확인되지 않았어요." | |
+| 11 | Which exercises? | 어떤 운동을 할까요? | |
+| 12 | Slow, heavy calf raises done about three times a week worked as well as the classic daily heel-drop programme, and people stuck with them better (92% vs 78% of sessions completed) [2]. For insertional pain, we usually keep the heel above floor level early on, so the tendon isn't squashed against the bone. | 일주일에 세 번 정도 느리고 무겁게 하는 종아리 들기(카프 레이즈)는 매일 하는 고전적인 발뒤꿈치 내리기 프로그램만큼 효과가 있었고, 사람들이 더 꾸준히 해냈어요(완료한 세션 92% 대 78%) [2]. 부착부 통증이 있다면 초기에는 보통 발뒤꿈치를 바닥 높이보다 아래로 내리지 않게 해서, 힘줄이 뼈에 눌리지 않도록 해요. | |
+| 13 | What about injections and gadgets? | 주사나 기기는 어떨까요? | |
+| 14 | In a double-blind trial, a platelet-rich plasma (PRP) injection was no better than a saltwater injection when both groups also did exercise [4]. A 2026 meta-analysis found shockwave "showed no clear overall benefits compared to sham" [6]. Researchers now recommend giving exercise alone a proper trial of around three months before adding extras [5]. | 이중맹검 시험에서, 두 그룹 모두 운동을 함께 했을 때 혈소판 풍부 혈장(PRP) 주사는 식염수 주사보다 나은 점이 없었어요 [4]. 2026년 메타분석에서는 체외충격파 치료가 "가짜 치료(sham)와 비교해 전반적으로 뚜렷한 이점을 보이지 않았다"고 했어요 [6]. 연구자들은 이제 다른 치료를 더하기 전에 운동만으로 약 3개월 동안 제대로 해 보라고 권해요 [5]. | |
+| 15 | In 30 seconds | 30초 요약 | |
+| 16 | Morning stiffness that eases as you move is the classic sign. | 움직이면 풀리는 아침 뻣뻣함이 대표적인 신호예요. | |
+| 17 | Progressive calf loading is first-line care. Complete rest isn't. | 점진적인 종아리 부하 운동이 1차 치료예요. 완전한 휴식은 아니에요. | |
+| 18 | Expect around 12 weeks of consistent work. Tendons are slow, and slow is fast. | 약 12주는 꾸준히 해야 한다고 생각하세요. 힘줄은 느리고, 느림이 곧 빠름이에요. | |
+| 19 | Side view of a lower leg doing a calf raise: the heel lifts, the ankle points (plantarflexes) and the toes bend up while staying on the floor, with the two common pain spots marked: mid-portion, 2 to 6 cm above the heel, and insertional, where the tendon meets the heel. Below, a pain scale showing that pain up to about 5 out of 10 during exercise is generally acceptable. | 종아리 들기(카프 레이즈)를 하는 아래 다리의 옆모습: 발뒤꿈치가 들리고, 발목이 펴지며(발바닥 굽힘), 발가락은 바닥에 닿은 채 위로 굽혀져요. 흔한 통증 부위 두 곳이 표시되어 있어요. 발뒤꿈치에서 2~6cm 위의 중간부, 그리고 힘줄이 발뒤꿈치와 만나는 부착부예요. 아래에는 운동 중 통증이 10점 중 약 5점까지는 대체로 괜찮다는 통증 척도가 있어요. | |
+| 20 | Mid-portion | 중간부 | |
+| 21 | 2 to 6 cm above heel | 발뒤꿈치 위 2~6cm | |
+| 22 | Insertional | 부착부 | |
+| 23 | Where it meets the heel | 발뒤꿈치와 만나는 곳 | |
+| 24 | Calf | 종아리 | |
+| 25 | Shin | 정강이 | |
+| 26 | Toes | 발가락 | |
+| 27 | Pain guide during exercise | 운동 중 통증 기준 | |
+| 28 | Generally OK | 대체로 괜찮아요 | |
+| 29 | Ease off | 강도 줄이기 | |
+| 30 | In a calf raise the ankle points (plantarflexes), the heel lifts and the toes bend up while staying on the floor. Calf raises load the tendon. A common rule of thumb from the pain-monitoring model: pain up to about 5/10 during exercise is acceptable if it settles by the next morning and morning stiffness isn't getting worse week to week [3]. Simplified illustration. | 종아리 들기를 하면 발목이 펴지고(발바닥 굽힘), 발뒤꿈치가 들리며, 발가락은 바닥에 닿은 채 위로 굽혀져요. 종아리 들기는 힘줄에 부하를 줘요. 통증 모니터링 모델에서 나온 흔한 기준은 이래요. 운동 중 통증이 10점 중 약 5점까지라면, 다음 날 아침까지 가라앉고 아침 뻣뻣함이 주마다 심해지지 않는 한 괜찮아요 [3]. 단순화한 그림이에요. | |
+| 31 | Get urgent care if you felt a sudden snap or "kick" at the back of the ankle and now can't push off or stand on tiptoe. That can be a tendon rupture. | 바로 응급 진료를 받으세요. 발목 뒤쪽에서 갑자기 "뚝" 하거나 누가 걷어찬 듯한 느낌이 든 뒤로 발을 딛고 밀어내거나 까치발로 설 수 없다면, 힘줄 파열일 수 있어요. | |

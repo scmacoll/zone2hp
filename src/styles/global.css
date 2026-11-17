@@ -44,6 +44,9 @@
   :lang(ko) {
     word-break: keep-all;
     overflow-wrap: break-word;
+    /* Korean has no italics; a faked slant on Hangul (quotes, the slogan's
+       emphasis) reads as a rendering fault, so it stays upright. */
+    font-synthesis-style: none;
   }
 
   body {
