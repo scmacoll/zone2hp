@@ -1,6 +1,5 @@
 ---
 import { bookingConfig } from '../lib/booking/config';
-import { showDrafts } from '../lib/drafts';
 // Site menu: a disclosure button with a small dropdown of page links. "dark"
 // sits on the home page's video hero beside Book now; "light" sits in the
 // paper PageHeader on every other page.
@@ -19,8 +18,7 @@ const links = [
   { href: '/#about', label: 'About' },
   { href: '/#find-us', label: 'Find us' },
   { href: '/blog', label: 'Clinic notes' },
-  // The FAQ is a draft until the client signs it off (see drafts.ts).
-  ...(showDrafts ? [{ href: '/faq', label: 'FAQ' }] : []),
+  { href: '/faq', label: 'FAQ' },
 ];
 const current = (href: string) =>
   (href === '/blog' && onClinicNotes) || (href === '/faq' && Astro.url.pathname.startsWith('/faq'));

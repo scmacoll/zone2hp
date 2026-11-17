@@ -1,6 +1,7 @@
 ---
-// Scrolling keyword band under the home page hero. The words are the services
-// the client lists in his FAQ. Real text, not links.
+// Scrolling keyword band under the home page hero: the services the client lists
+// in his FAQ, then the conditions he has written about or asked for (Nov 2026).
+// Real text, not links.
 //
 // The list repeats four times so the loop has no gap on very wide screens: the
 // track moves by exactly one copy, then starts again. Only the first copy is read
@@ -14,14 +15,19 @@ const keywords = [
   'Strength programmes',
   'Aged care treatment',
   'Aged care rehabilitation',
+  'Posture correction',
   'Low back pain',
+  'Knee pain',
+  'Shoulder pain',
+  'ACL injuries',
+  'Rotator cuff injuries',
   'Hip strength',
   "De Quervain's tenosynovitis",
 ];
 const copies = [0, 1, 2, 3];
 ---
 
-<section class="kb" aria-label="Our services" data-keyword-band>
+<section class="kb" aria-label="Services and conditions" data-keyword-band>
   <div class="kb__viewport">
     <div class="kb__track">
       {

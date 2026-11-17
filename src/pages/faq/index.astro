@@ -1,8 +1,7 @@
 ---
-// FAQ, from the client's zone-two-faq.html (copy in src/lib/faq.ts). A draft until
-// he signs it off, so it is built only where drafts are shown (see drafts.ts):
-// the catch-all route returns no page on production, rather than a hidden one.
-// Laid out like /careers: one centred column, hairlines, native accordions.
+// FAQ, from the client's zone-two-faq.html (copy in src/lib/faq.ts), signed off
+// Nov 2026. Laid out like /careers: one centred column, hairlines, native
+// accordions. Draft questions (the referral one) show only where drafts do.
 import '../../styles/clinic-notes.css';
 import '../../styles/faq.css';
 import Base from '../../layouts/Base.astro';
@@ -12,10 +11,6 @@ import Eyebrow from '../../components/Eyebrow.astro';
 import { faq } from '../../lib/faq';
 import { showDrafts } from '../../lib/drafts';
 import { bookingConfig } from '../../lib/booking/config';
-
-export function getStaticPaths() {
-  return showDrafts ? [{ params: { page: undefined } }] : [];
-}
 
 const sections = faq.sections.map((section) => ({
   ...section,
@@ -47,7 +42,6 @@ const structuredData = {
 <Base
   title="FAQ | Zone Two Health and Performance, Eastwood"
   description={faq.intro}
-  noindex
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(structuredData)} />
 
