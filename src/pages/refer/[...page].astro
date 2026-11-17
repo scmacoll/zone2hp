@@ -1,0 +1,263 @@
+---
+// Referral programme, from the client's zone-two-referrals.html prototype. A
+// placeholder for review only: codes are made in the browser and nothing is
+// stored, and the terms still need finalising and checking. Built only where
+// drafts are shown (see drafts.ts), so production has no /refer page at all.
+// Laid out like /faq: one centred column on paper, hairlines.
+import '../../styles/clinic-notes.css';
+import '../../styles/faq.css';
+import '../../styles/careers.css';
+import '../../styles/refer.css';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import { showDrafts } from '../../lib/drafts';
+import { bookingConfig } from '../../lib/booking/config';
+
+export function getStaticPaths() {
+  return showDrafts ? [{ params: { page: undefined } }] : [];
+}
+
+const steps = [
+  {
+    title: 'Share your code',
+    text: 'Get your personal code below and send it to a friend or family member.',
+  },
+  {
+    title: 'They book',
+    text: 'They enter or mention your code when booking their first appointment with us.',
+  },
+  {
+    title: 'You both save',
+    text: 'Once they complete their first session, they get $50 off it, and $50 credit is added to your account.',
+  },
+];
+---
+
+<Base
+  title="Refer a friend | Zone Two Health and Performance, Eastwood"
+  description="Give $50, get $50. Share your code with a friend who's new to Zone Two."
+  noindex
+>
+  <PageHeader />
+
+  <main id="main" class="cn faq rf">
+    <div class="faq-col">
+      <p class="rf-proto-banner">Prototype for review. Codes are not stored or tracked yet.</p>
+
+      <header class="faq-intro">
+        <Eyebrow tone="accent">Refer a friend</Eyebrow>
+        <h1 class="faq-title">Give $50. <span class="rf-accent">Get $50.</span></h1>
+        <p class="faq-intro__lead">
+          Know someone who's been putting up with a sore back, a cranky knee or an old injury? Share
+          your code. When they book and complete their first session, they get $50 off, and you get
+          $50 credit toward your next visit.
+        </p>
+        <div class="rf-ticket" aria-label="Referral reward summary">
+          <div class="rf-ticket__amt"><b>$50</b><span>Off their first session</span></div>
+          <div class="rf-ticket__amt"><b>$50</b><span>Credit for you</span></div>
+          <small>For new patients booking an initial consultation. Terms below.</small>
+        </div>
+        <nav class="faq-jump" aria-label="Referral sections">
+          <a href="#get-code">Get my code</a>
+          <a href="#have-code">I have a code</a>
+          <a href="#terms">Terms</a>
+        </nav>
+      </header>
+
+      <div class="faq-stack">
+        <section class="faq-section" aria-labelledby="how-heading">
+          <h2 class="faq-heading" id="how-heading">How it works</h2>
+          <ol class="rf-steps" role="list">
+            {
+              steps.map((step, i) => (
+                <li>
+                  <span class="rf-steps__num" aria-hidden="true">{i + 1}</span>
+                  <b>{step.title}</b>
+                  <span>{step.text}</span>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        <section class="faq-section" aria-labelledby="codes-heading">
+          <h2 class="faq-heading" id="codes-heading">Your code</h2>
+          <div class="rf-panels">
+            <div class="rf-panel" id="get-code">
+              <span class="rf-proto">Prototype · codes aren't saved yet</span>
+              <h3>Get my code</h3>
+              <p>For current Zone Two patients.</p>
+              <form class="rf-form" id="rf-gen" novalidate>
+                <div class="cr-field">
+                  <label for="rf-first">First name</label>
+                  <input id="rf-first" name="first" autocomplete="given-name" maxlength="20" required />
+                </div>
+                <div class="cr-field">
+                  <label for="rf-last">Last name initial</label>
+                  <input id="rf-last" name="last" maxlength="1" autocomplete="off" required />
+                </div>
+                <button class="cn-btn" type="submit">Create my code</button>
+              </form>
+              <div class="rf-codebox" id="rf-out" hidden>
+                <span class="rf-proto">Your code</span>
+                <span class="rf-code" id="rf-code"></span>
+                <div class="cr-field">
+                  <label for="rf-share">Message to share</label>
+                  <textarea id="rf-share" readonly></textarea>
+                </div>
+                <div class="rf-btns">
+                  <button class="cn-btn" type="button" id="rf-copy-code">Copy code</button>
+                  <button class="cn-btn rf-btn--ghost" type="button" id="rf-copy-msg">Copy message</button>
+                </div>
+                <span class="rf-proto" id="rf-copy-status" aria-live="polite"></span>
+              </div>
+              <p class="rf-msg rf-msg--err" id="rf-gen-err" role="alert" hidden></p>
+            </div>
+
+            <div class="rf-panel" id="have-code">
+              <span class="rf-proto">Prototype · checks the format only</span>
+              <h3>I have a code</h3>
+              <p>New to Zone Two? Enter the code a friend gave you.</p>
+              <form class="rf-form" id="rf-chk" novalidate>
+                <div class="cr-field">
+                  <label for="rf-chk-code">Referral code</label>
+                  <div class="rf-row">
+                    <input id="rf-chk-code" name="code" placeholder="ZONE2-ALEX-K7Q" autocomplete="off" maxlength="24" />
+                    <button class="cn-btn" type="submit">Apply</button>
+                  </div>
+                </div>
+              </form>
+              <p class="rf-msg" id="rf-chk-out" role="status" hidden></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="faq-section" id="terms" aria-labelledby="terms-heading">
+          <h2 class="faq-heading" id="terms-heading">Terms and conditions</h2>
+          <ol class="rf-terms">
+            <li>
+              The $50 discount applies to an initial consultation for new patients only (normally $200,
+              so you pay $150). New patients are people who haven't had a consultation at Zone Two
+              before.
+            </li>
+            <li>
+              The referral code must be given when the appointment is booked. It can't be applied
+              after the session.
+            </li>
+            <li>
+              The referrer receives a $50 credit once the new patient has attended and completed their
+              first session. Credit is applied to the referrer's next consultation.
+            </li>
+            <li>
+              Credit has no cash value, can't be transferred, and expires <span class="rf-ph">[12]</span>
+              months after it's issued.
+            </li>
+            <li>
+              One discount per new patient. Codes can't be combined with package discounts or other
+              offers.
+            </li>
+            <li>Not available on sessions funded by Medicare, WorkCover, CTP or other third parties.</li>
+            <li>
+              Health fund claims are based on the amount you actually pay after any discount or credit.
+            </li>
+            <li>Referrals never affect clinical advice. We'll only recommend care that you need.</li>
+            <li>
+              Zone Two may change or end this programme at any time. Credits already issued will be
+              honoured until they expire.
+            </li>
+          </ol>
+        </section>
+
+        <section class="faq-close" aria-labelledby="rf-close-heading">
+          <h2 class="faq-heading" id="rf-close-heading">Ready to book?</h2>
+          <div class="faq-close__row">
+            {bookingConfig.linksVisible && <a class="cn-btn" href="/book">Book online</a>}
+            <a class="faq-close__phone" href="tel:0450222122">0450 222 122</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  // The client's prototype logic: codes are ZONE2-FIRSTNAME-XXX, made here in the
+  // browser and never stored. The "I have a code" box checks the format only.
+  const CODE_RE = /^ZONE2-[A-Z]{2,12}-[A-HJ-NP-Z2-9]{3}$/;
+  const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+  const rand3 = () =>
+    Array.from(crypto.getRandomValues(new Uint32Array(3)), (n) => ALPHABET[n % ALPHABET.length]).join('');
+  const clean = (s: string) =>
+    s
+      .normalize('NFD')
+      .replace(/[^A-Za-z]/g, '')
+      .toUpperCase();
+  const byId = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  const out = byId<HTMLDivElement>('rf-out');
+  const err = byId<HTMLParagraphElement>('rf-gen-err');
+  const codeEl = byId<HTMLSpanElement>('rf-code');
+  const share = byId<HTMLTextAreaElement>('rf-share');
+  const status = byId<HTMLSpanElement>('rf-copy-status');
+
+  byId<HTMLFormElement>('rf-gen').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const first = clean(byId<HTMLInputElement>('rf-first').value).slice(0, 12);
+    const last = clean(byId<HTMLInputElement>('rf-last').value).slice(0, 1);
+    if (first.length < 2 || !last) {
+      err.textContent =
+        'Enter your first name (at least 2 letters) and the first letter of your last name.';
+      err.hidden = false;
+      out.hidden = true;
+      return;
+    }
+    err.hidden = true;
+    const code = `ZONE2-${first}-${rand3()}`;
+    codeEl.textContent = code;
+    share.value = `I've been seeing Zone Two Health and Performance in Eastwood. Use my code ${code} when you book your first session and you'll get $50 off. Book at zone2hp.com/book`;
+    out.hidden = false;
+    status.textContent = '';
+  });
+
+  const copy = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      status.textContent = `${label} copied`;
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(codeEl);
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      status.textContent = 'Selected. Press Ctrl+C or Cmd+C to copy';
+    }
+  };
+  byId('rf-copy-code').addEventListener('click', () => copy(codeEl.textContent ?? '', 'Code'));
+  byId('rf-copy-msg').addEventListener('click', () => copy(share.value, 'Message'));
+
+  const chkOut = byId<HTMLParagraphElement>('rf-chk-out');
+  byId<HTMLFormElement>('rf-chk').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const value = byId<HTMLInputElement>('rf-chk-code').value.trim().toUpperCase().replace(/\s+/g, '');
+    chkOut.hidden = false;
+    chkOut.replaceChildren();
+    if (CODE_RE.test(value)) {
+      chkOut.className = 'rf-msg rf-msg--ok';
+      const strong = document.createElement('b');
+      strong.textContent = value;
+      chkOut.append(
+        strong,
+        ' looks good. Mention this code when you book your first session, and $50 comes off your initial consultation.',
+      );
+    } else {
+      chkOut.className = 'rf-msg rf-msg--err';
+      chkOut.textContent =
+        "That code doesn't look right. Codes look like ZONE2-ALEX-K7Q. Check with the friend who shared it, or call us on 0450 222 122.";
+    }
+  });
+</script>
