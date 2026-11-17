@@ -15,7 +15,7 @@ const { tone = 'light', class: className = '' } = Astro.props;
 const lang = langFromUrl(Astro.url);
 const t = ui[lang].menu;
 const path = Astro.url.pathname;
-const onClinicNotes = path.startsWith('/blog');
+const onClinicNotes = /^(\/ko)?\/blog/.test(path);
 
 // Clinic Notes pages have no Book button in their header, so the menu leads with it.
 // Links go to the Korean page when there is one (see src/i18n/lang.ts).
@@ -27,7 +27,7 @@ const links = [
   { href: '/faq', label: t.faq },
 ].map((l) => ({ ...l, href: localise(lang, l.href) }));
 const current = (href: string) =>
-  (href === '/blog' && onClinicNotes) || (href.endsWith('/faq') && /^(\/ko)?\/faq/.test(path));
+  (href.endsWith('/blog') && onClinicNotes) || (href.endsWith('/faq') && /^(\/ko)?\/faq/.test(path));
 
 // The same page in the other language, last in the list, when it exists.
 const twin = twinPath(path);

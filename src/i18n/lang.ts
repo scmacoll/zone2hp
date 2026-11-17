@@ -13,7 +13,11 @@ export const koreanPublished = false;
 export const koreanLive = koreanPublished || showDrafts;
 
 /** English paths (trailing slash) that have a Korean twin. */
-const TRANSLATED = ['/', '/faq/', '/careers/'];
+const TRANSLATED = ['/', '/faq/', '/careers/', '/blog/'];
+
+/** Clinic Notes posts translated so far (slugs). Add each as it is done; the
+    route at src/pages/ko/[...page].astro builds a page for each one. */
+export const KOREAN_POSTS: string[] = [];
 
 const withSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
 
@@ -35,7 +39,9 @@ export function englishPath(pathname: string): string {
 export function hasTwin(pathname: string): boolean {
   if (!koreanLive) return false;
   const path = withSlash(englishPath(pathname).split('#')[0].split('?')[0]);
-  return TRANSLATED.includes(path) || path.startsWith('/careers/');
+  if (TRANSLATED.includes(path) || path.startsWith('/careers/')) return true;
+  const post = path.match(/^\/blog\/([^/]+)\/$/);
+  return post !== null && KOREAN_POSTS.includes(post[1]);
 }
 
 /**

@@ -26,7 +26,9 @@ describe('hasTwin', () => {
     expect(hasTwin('/')).toBe(true);
     expect(hasTwin('/faq')).toBe(true);
     expect(hasTwin('/careers/sample-chiropractor/')).toBe(true);
-    expect(hasTwin('/blog/')).toBe(false);
+    expect(hasTwin('/blog/')).toBe(true);
+    expect(hasTwin('/blog/not-translated-yet')).toBe(false);
+    expect(hasTwin('/privacy/')).toBe(false);
     expect(hasTwin('/careers-compare/')).toBe(false);
   });
 });
@@ -40,7 +42,8 @@ describe('localise', () => {
   });
   it('leaves English, external and untranslated links alone', () => {
     expect(localise('en', '/faq')).toBe('/faq');
-    expect(localise('ko', '/blog')).toBe('/blog');
+    expect(localise('ko', '/blog')).toBe('/ko/blog');
+    expect(localise('ko', '/blog/not-translated-yet')).toBe('/blog/not-translated-yet');
     expect(localise('ko', '/privacy')).toBe('/privacy');
     expect(localise('ko', 'tel:0450222122')).toBe('tel:0450222122');
   });
@@ -52,6 +55,6 @@ describe('twinPath', () => {
     expect(twinPath('/ko/')).toBe('/');
     expect(twinPath('/faq/')).toBe('/ko/faq/');
     expect(twinPath('/ko/careers/')).toBe('/careers/');
-    expect(twinPath('/blog/')).toBeNull();
+    expect(twinPath('/privacy/')).toBeNull();
   });
 });

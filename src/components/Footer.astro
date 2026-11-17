@@ -59,7 +59,7 @@ const openingHours = t.hours;
         <div class="footer__legal">
             <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
             <div class="footer__links">
-                <a class="footer__legal-link" href="/blog">{t.footer.clinicNotes}</a>
+                <a class="footer__legal-link" href={localise(lang, "/blog")}>{t.footer.clinicNotes}</a>
                 <a class="footer__legal-link" href={localise(lang, "/careers")}>{t.footer.careers}</a>
                 <a class="footer__legal-link" href={localise(lang, "/faq")}>{t.footer.faq}</a>
                 {showDrafts && <a class="footer__legal-link" href="/refer">{t.footer.refer}</a>}

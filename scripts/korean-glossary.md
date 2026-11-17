@@ -27,6 +27,7 @@
 | Achilles tendinopathy | 아킬레스건병증 |
 | De Quervain's tenosynovitis | 드퀘르뱅 건초염 |
 | hip strength | 고관절 근력 |
+| concentric / eccentric / isometric | 단축성 / 신장성 / 등척성 |
 | registered practitioner | 등록된 의료인 |
 | initial consultation / follow-up | 첫 진료(초진) / 재진 |
 | GP, referral, specialist, imaging | GP, 의뢰서(referral), 전문의, 영상 검사 |

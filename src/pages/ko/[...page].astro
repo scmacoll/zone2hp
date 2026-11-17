@@ -9,10 +9,11 @@ import Home from '../../views/Home.astro';
 import Faq from '../../views/Faq.astro';
 import Careers from '../../views/Careers.astro';
 import CareersRole from '../../views/CareersRole.astro';
+import BlogIndex from '../../views/BlogIndex.astro';
 import { koreanLive } from '../../i18n/lang';
 import { roles, type Role } from '../../lib/careers';
 
-type View = 'home' | 'faq' | 'careers' | 'role';
+type View = 'home' | 'faq' | 'careers' | 'role' | 'blog';
 
 export function getStaticPaths() {
   if (!koreanLive) return [];
@@ -20,6 +21,7 @@ export function getStaticPaths() {
     { params: { page: undefined }, props: { view: 'home' as View } },
     { params: { page: 'faq' }, props: { view: 'faq' as View } },
     { params: { page: 'careers' }, props: { view: 'careers' as View } },
+    { params: { page: 'blog' }, props: { view: 'blog' as View } },
     ...roles.map((role) => ({
       params: { page: `careers/${role.slug}` },
       props: { view: 'role' as View, role },
@@ -34,3 +36,4 @@ const { view, role } = Astro.props as { view: View; role?: Role };
 {view === 'faq' && <Faq />}
 {view === 'careers' && <Careers />}
 {view === 'role' && role && <CareersRole role={role} />}
+{view === 'blog' && <BlogIndex />}

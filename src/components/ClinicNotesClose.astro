@@ -9,25 +9,28 @@
 // button would otherwise lead nowhere. The caption belongs to the button, so the
 // two show or hide together.
 import { bookingConfig } from '../lib/booking/config';
+import { langFromUrl } from '../i18n/lang';
+import { ui } from '../i18n/ui';
+import { blog } from '../i18n/blog';
+
+const lang = langFromUrl(Astro.url);
+const t = blog[lang].close;
 ---
 
 {
   bookingConfig.linksVisible && (
     <div class="cn-cta">
       <a class="cn-btn" href="/book">
-        Book online
+        {ui[lang].bookOnline}
       </a>
       <p class="cn-cta__lang">
-        Consultations in English and <span lang="ko">한국어</span>
+        {ui[lang].map.consultations[0]}<span lang="ko">한국어</span>{ui[lang].map.consultations[1]}
       </p>
     </div>
   )
 }
 
 <div class="cn-disclaimer">
-  <p>Zone Two Health and Performance. <span class="cn-keep">Dr Mintae Kim, Chiropractor.</span></p>
-  <p>
-    This information is general and educational, and isn't a substitute for an individual
-    assessment. If you have symptoms, see a registered health practitioner.
-  </p>
+  <p>{t.signature[0]}<span class="cn-keep">{t.signature[1]}</span></p>
+  <p>{t.disclaimer}</p>
 </div>

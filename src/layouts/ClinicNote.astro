@@ -14,14 +14,28 @@ import Base from './Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Footer from '../components/Footer.astro';
 import ClinicNotesClose from '../components/ClinicNotesClose.astro';
-import { getClinicNote, moreClinicNotes } from '../lib/clinic-notes';
+import { getClinicNote, moreClinicNotes, noteText } from '../lib/clinic-notes';
+import { hasTwin, langFromUrl, localise } from '../i18n/lang';
+import { blog } from '../i18n/blog';
 
 interface Props {
   slug: string;
 }
 
-const post = getClinicNote(Astro.props.slug);
-const others = moreClinicNotes(post.slug);
+// Rendered at /blog/<slug> and, once translated, /ko/blog/<slug> (the page
+// supplies the prose in its language; this shell supplies the rest).
+const lang = langFromUrl(Astro.url);
+const t = blog[lang];
+const note = getClinicNote(Astro.props.slug);
+const post = { ...noteText(note, lang), slug: note.slug, datePublished: note.datePublished };
+const others = moreClinicNotes(note.slug).map((n) => {
+  const href = `/blog/${n.slug}`;
+  return {
+    ...noteText(n, lang),
+    href: localise(lang, href),
+    english: lang === 'ko' && !hasTwin(href),
+  };
+});
 
 // Same computation as Base.astro's canonical, so the two always agree.
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
@@ -37,7 +51,7 @@ const articleData = {
   datePublished: post.datePublished,
   dateModified: post.datePublished,
   image,
-  inLanguage: 'en-AU',
+  inLanguage: lang === 'ko' ? 'ko' : 'en-AU',
   mainEntityOfPage: canonical,
   author: {
     '@type': 'Person',
@@ -57,8 +71,8 @@ const articleData = {
 
   <main id="main" class="cn">
     <div class="cn-wrap cn-page">
-      <nav class="cn-crumb" aria-label="Breadcrumb">
-        <a href="/blog"><span aria-hidden="true">&larr;</span> Clinic Notes</a>
+      <nav class="cn-crumb" aria-label={t.post.breadcrumb}>
+        <a href={localise(lang, '/blog')}><span aria-hidden="true">&larr;</span> {t.post.back}</a>
       </nav>
 
       <article class="cn-article">
@@ -78,7 +92,7 @@ const articleData = {
         </div>
 
         <div class="cn-refs">
-          <h2>References</h2>
+          <h2>{t.post.references}</h2>
           <ol>
             <slot name="refs" />
           </ol>
@@ -88,13 +102,16 @@ const articleData = {
       <hr class="cn-trail" />
 
       <nav class="cn-more" aria-labelledby="cn-more-heading">
-        <h2 id="cn-more-heading" class="cn-more__heading">More clinic notes</h2>
+        <h2 id="cn-more-heading" class="cn-more__heading">{t.post.more}</h2>
         <ul class="cn-cards cn-cards--three">
           {
             others.map((n) => (
               <li>
-                <a class="cn-card" href={`/blog/${n.slug}`}>
-                  <small>{n.tag}</small>
+                <a class="cn-card" href={n.href} hreflang={n.english ? 'en' : undefined}>
+                  <small>
+                    {n.tag}
+                    {n.english && <span class="cn-en"> · {t.index.englishOnly}</span>}
+                  </small>
                   <span class="cn-card__title">{n.cardTitle}</span>
                 </a>
               </li>

@@ -160,7 +160,7 @@ const services = t.serviceList;
                 <p class="ff__place">{t.place}</p>
             </div>
             <div class="ff__links">
-                <a class="ff__legal-link" href="/blog">{t.clinicNotes}</a>
+                <a class="ff__legal-link" href={localise(lang, "/blog")}>{t.clinicNotes}</a>
                 <a class="ff__legal-link" href={localise(lang, "/careers")}>{t.careers}</a>
                 <a class="ff__legal-link" href={localise(lang, "/faq")}>{t.faq}</a>
                 {showDrafts && <a class="ff__legal-link" href="/refer">{t.refer}</a>}
