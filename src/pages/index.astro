@@ -1041,8 +1041,9 @@ const showAccounts = bookingConfig.accountsEnabled;
     .a2-find {
         max-width: var(--container-max);
         margin-inline: auto;
-        padding-top: var(--section-pad-block);
-        padding-bottom: var(--space-lg);
+        /* The same air above as below: the full section padding above read as
+           a gap after the bio's Read more. */
+        padding-block: var(--space-lg);
         padding-inline: var(--section-pad-inline);
     }
 
