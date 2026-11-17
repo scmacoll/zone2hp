@@ -100,19 +100,6 @@ const steps = [
                 </div>
                 <button class="cn-btn" type="submit">Create my code</button>
               </form>
-              <div class="rf-codebox" id="rf-out" hidden>
-                <Eyebrow as="span" tone="accent">Your code</Eyebrow>
-                <span class="rf-code" id="rf-code"></span>
-                <div class="cr-field">
-                  <label for="rf-share">Message to share</label>
-                  <textarea id="rf-share" readonly></textarea>
-                </div>
-                <div class="rf-btns">
-                  <button class="cn-btn" type="button" id="rf-copy-code">Copy code</button>
-                  <button class="cn-btn rf-btn--outline" type="button" id="rf-copy-msg">Copy message</button>
-                </div>
-                <p class="cr-field__hint" id="rf-copy-status" aria-live="polite"></p>
-              </div>
               <p class="cr-field__error" id="rf-gen-err" role="alert" hidden></p>
             </div>
 
@@ -130,6 +117,20 @@ const steps = [
                 </div>
               </form>
               <p class="rf-result" id="rf-chk-out" role="status" hidden></p>
+            </div>
+
+            <div class="rf-codebox" id="rf-out" tabindex="-1" hidden>
+              <Eyebrow as="span" tone="accent">Your code</Eyebrow>
+              <span class="rf-code" id="rf-code"></span>
+              <div class="cr-field">
+                <label for="rf-share">Message to share</label>
+                <textarea id="rf-share" rows="3" readonly></textarea>
+              </div>
+              <div class="rf-btns">
+                <button class="cn-btn" type="button" id="rf-copy-code">Copy code</button>
+                <button class="cn-btn rf-btn--outline" type="button" id="rf-copy-msg">Copy message</button>
+              </div>
+              <p class="cr-field__hint" id="rf-copy-status" aria-live="polite"></p>
             </div>
           </div>
         </section>
@@ -176,6 +177,13 @@ const steps = [
             {bookingConfig.linksVisible && <a class="cn-btn" href="/book">Book online</a>}
             <a class="faq-close__phone" href="tel:0450222122">0450 222 122</a>
           </div>
+          {
+            bookingConfig.linksVisible && (
+              <p class="cn-cta__lang">
+                Consultations in English and <span lang="ko">한국어</span>
+              </p>
+            )
+          }
         </section>
       </div>
     </div>
@@ -222,6 +230,12 @@ const steps = [
     share.value = `I've been seeing Zone Two Health and Performance in Eastwood. Use my code ${code} when you book your first session and you'll get $50 off. Book at zone2hp.com/book`;
     out.hidden = false;
     status.textContent = '';
+    // The code shows under both panels, so on a phone it can be off screen.
+    out.focus({ preventScroll: true });
+    out.scrollIntoView({
+      block: 'nearest',
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    });
   });
 
   const copy = async (text: string, label: string) => {

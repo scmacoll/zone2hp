@@ -157,8 +157,10 @@
   gap: 0.5rem;
 }
 
-/* The new code: the .cn-gp peach, at the FAQ card padding. */
+/* The new code: the .cn-gp peach, at the FAQ card padding, across the full
+   width under both panels so the message has room. */
 .rf-codebox {
+  grid-column: 1 / -1;
   display: grid;
   gap: 0.875rem;
   padding: 1rem 1.125rem;
@@ -168,6 +170,16 @@
 .rf-codebox[hidden],
 .rf-panel [hidden] {
   display: none;
+}
+/* The copy status line takes no room until it has something to say. */
+.rf-codebox p:empty {
+  display: none;
+}
+.rf-codebox:focus {
+  outline: none;
+}
+.rf-codebox textarea {
+  min-height: 6rem;
 }
 .rf-code {
   font-family: var(--font-mono);

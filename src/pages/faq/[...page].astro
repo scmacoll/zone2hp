@@ -93,6 +93,13 @@ const structuredData = {
             {bookingConfig.linksVisible && <a class="cn-btn" href="/book">Book online</a>}
             <a class="faq-close__phone" href="tel:0450222122">0450 222 122</a>
           </div>
+          {
+            bookingConfig.linksVisible && (
+              <p class="cn-cta__lang">
+                Consultations in English and <span lang="ko">한국어</span>
+              </p>
+            )
+          }
         </section>
 
         <div class="cn-disclaimer">
