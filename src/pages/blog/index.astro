@@ -1,8 +1,8 @@
 ---
 // Clinic Notes index: the client's contour-line hero and table of contents,
 // then a short teaser for each post. Copy is the client's, verbatim, from
-// zone-two-clinic-notes.html (the index description is that file's meta
-// description). Styles: src/styles/clinic-notes.css.
+// zone-two-clinic-notes.html (the index description started as that file's meta
+// description, widened to cover the round 2 posts, Nov 2026). Styles: src/styles/clinic-notes.css.
 import '../../styles/clinic-notes.css';
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
@@ -16,7 +16,7 @@ const teasers = clinicNotes.filter((n) => n.slug !== 'zone-2-training');
 
 <Base
   title="Clinic Notes | Zone Two Eastwood"
-  description="Evidence-based reads from Zone Two Health and Performance, Eastwood: De Quervain's tenosynovitis, low back pain and the hips, dry needling, and zone 2 training."
+  description="Evidence-based reads from Zone Two Health and Performance, Eastwood, on Achilles, shoulder, back and wrist pain, dry needling, exercise and zone 2 training."
 >
   <PageHeader />
 
