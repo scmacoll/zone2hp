@@ -42,6 +42,10 @@
   --font-display: 'Archivo Variable', Archivo, system-ui, sans-serif;
   --font-body:    'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, sans-serif;
   --font-mono:    'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  /* Hangul, for the Korean pages (/ko/). Pretendard is loaded only by those
+     pages and only ever draws Korean: it sits after the Latin family in each
+     stack, so English words, numbers and the logo keep the brand fonts. */
+  --font-hangul:  'Pretendard Variable', Pretendard;
 
   /* ---- Fluid type scale: clamp() so headlines never break awkwardly ---- */
   --step-hero:  clamp(2.75rem, 1.5rem + 6vw, 7rem);
@@ -126,3 +130,18 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --reveal-duration: 700ms;
 }
+
+/* ---- Korean (/ko/) -------------------------------------------------------
+   Hangul falls through to Pretendard. Korean has no capitals, so the wide
+   tracking that spaces out the uppercase mono labels would only scatter the
+   syllables: labels close up and step up a touch, and the tight display
+   tracking (tuned for Latin) relaxes to zero. */
+:root:lang(ko) {
+  --font-display: 'Archivo Variable', Archivo, var(--font-hangul), system-ui, sans-serif;
+  --font-body:    'Hanken Grotesk Variable', 'Hanken Grotesk', var(--font-hangul), system-ui, sans-serif;
+  --font-mono:    'Geist Mono Variable', 'Geist Mono', var(--font-hangul), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --step-label: 0.84rem;
+  --track-label: 0.02em;
+  --track-tight: 0em;
+}
+

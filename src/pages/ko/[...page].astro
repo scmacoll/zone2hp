@@ -1,0 +1,18 @@
+---
+// Korean pages (/ko/...). Each renders the same view as its English twin; the
+// view reads the language from the URL (src/i18n/lang.ts). Built only while
+// koreanLive is on: staging and preview until Dr Kim signs the translation off,
+// so production has no /ko/ pages at all rather than hidden ones.
+import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+import Home from '../../views/Home.astro';
+import { koreanLive } from '../../i18n/lang';
+
+export function getStaticPaths() {
+  if (!koreanLive) return [];
+  return [{ params: { page: undefined }, props: { view: 'home' } }];
+}
+
+const { view } = Astro.props;
+---
+
+{view === 'home' && <Home />}
