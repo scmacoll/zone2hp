@@ -1,5 +1,7 @@
 ---
 import { bookingConfig } from '../lib/booking/config';
+import { langFromUrl, localise, twinPath } from '../i18n/lang';
+import { ui } from '../i18n/ui';
 // Site menu: a disclosure button with a small dropdown of page links. "dark"
 // sits on the home page's video hero beside Book now; "light" sits in the
 // paper PageHeader on every other page.
@@ -10,28 +12,35 @@ interface Props {
 
 const { tone = 'light', class: className = '' } = Astro.props;
 
-const onClinicNotes = Astro.url.pathname.startsWith('/blog');
+const lang = langFromUrl(Astro.url);
+const t = ui[lang].menu;
+const path = Astro.url.pathname;
+const onClinicNotes = path.startsWith('/blog');
 
 // Clinic Notes pages have no Book button in their header, so the menu leads with it.
+// Links go to the Korean page when there is one (see src/i18n/lang.ts).
 const links = [
-  ...(onClinicNotes && bookingConfig.linksVisible ? [{ href: '/book', label: 'Book' }] : []),
-  { href: '/#about', label: 'About' },
-  { href: '/#find-us', label: 'Find us' },
-  { href: '/blog', label: 'Clinic notes' },
-  { href: '/faq', label: 'FAQ' },
-];
+  ...(onClinicNotes && bookingConfig.linksVisible ? [{ href: '/book', label: t.book }] : []),
+  { href: '/#about', label: t.about },
+  { href: '/#find-us', label: t.findUs },
+  { href: '/blog', label: t.clinicNotes },
+  { href: '/faq', label: t.faq },
+].map((l) => ({ ...l, href: localise(lang, l.href) }));
 const current = (href: string) =>
-  (href === '/blog' && onClinicNotes) || (href === '/faq' && Astro.url.pathname.startsWith('/faq'));
+  (href === '/blog' && onClinicNotes) || (href.endsWith('/faq') && /^(\/ko)?\/faq/.test(path));
+
+// The same page in the other language, last in the list, when it exists.
+const twin = twinPath(path);
 ---
 
 <div class:list={['menu', `menu--${tone}`, className]} data-site-menu>
-  <button class="menu__button" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
+  <button class="menu__button" type="button" aria-expanded="false" aria-controls="site-menu" aria-label={t.button}>
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
       <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
     </svg>
-    <span class="menu__label" aria-hidden="true">Menu</span>
+    <span class="menu__label" aria-hidden="true">{t.button}</span>
   </button>
-  <nav class="menu__panel" id="site-menu" aria-label="Site">
+  <nav class="menu__panel" id="site-menu" aria-label={t.nav}>
     <ul class="menu__list" role="list">
       {
         links.map((l) => (
@@ -41,6 +50,15 @@ const current = (href: string) =>
             </a>
           </li>
         ))
+      }
+      {
+        twin && (
+          <li class="menu__lang">
+            <a class="menu__link" href={twin} lang={ui[lang].switchToLang} hreflang={ui[lang].switchToLang}>
+              {ui[lang].switchTo}
+            </a>
+          </li>
+        )
       }
     </ul>
   </nav>
@@ -119,6 +137,15 @@ const current = (href: string) =>
   }
   .menu__link[aria-current='page'] {
     font-weight: 600;
+  }
+  /* The other-language link, set apart from the page links by a hairline. */
+  .menu__lang {
+    margin-top: 0.35rem;
+    padding-top: 0.35rem;
+    border-top: 1px solid var(--chrome-line);
+  }
+  .menu--dark .menu__lang {
+    border-top-color: rgba(255, 255, 255, 0.12);
   }
 
   /* Dark: the same glass as the hero's Log in button and language menu. */

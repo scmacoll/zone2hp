@@ -6,7 +6,8 @@
 //   hours on the right, and the legal line along the bottom (copyright left,
 //   links right), the usual footer grouping and the same as the home footer.
 import Logo from "./Logo.astro";
-import { openingHours } from "../lib/clinic";
+import { langFromUrl, localise } from "../i18n/lang";
+import { ui } from "../i18n/ui";
 
 interface Props {
     class?: string;
@@ -19,6 +20,9 @@ const phoneDisplay = "0450 222 122";
 const phoneHref = "tel:0450222122";
 const year = 2026;
 import { showDrafts } from "../lib/drafts";
+const lang = langFromUrl(Astro.url);
+const t = ui[lang];
+const openingHours = t.hours;
 ---
 
 <footer class:list={["footer", className]}>
@@ -37,7 +41,7 @@ import { showDrafts } from "../lib/drafts";
             </div>
 
             <div class="footer__col footer__col--right">
-                <dl class="footer__hours" aria-label="Opening hours">
+                <dl class="footer__hours" aria-label={t.hoursLabel}>
                     {
                         openingHours.map(([days, times]) => (
                             <div class="footer__hours-row">
@@ -55,11 +59,11 @@ import { showDrafts } from "../lib/drafts";
         <div class="footer__legal">
             <p class="footer__copy">&copy; {year} Zone Two Health and Performance</p>
             <div class="footer__links">
-                <a class="footer__legal-link" href="/blog">Clinic notes</a>
-                <a class="footer__legal-link" href="/careers">Careers</a>
-                <a class="footer__legal-link" href="/faq">FAQ</a>
-                {showDrafts && <a class="footer__legal-link" href="/refer">Refer a friend</a>}
-                <a class="footer__legal-link" href="/privacy">Privacy</a>
+                <a class="footer__legal-link" href="/blog">{t.footer.clinicNotes}</a>
+                <a class="footer__legal-link" href={localise(lang, "/careers")}>{t.footer.careers}</a>
+                <a class="footer__legal-link" href={localise(lang, "/faq")}>{t.footer.faq}</a>
+                {showDrafts && <a class="footer__legal-link" href="/refer">{t.footer.refer}</a>}
+                <a class="footer__legal-link" href="/privacy">{t.footer.privacy}</a>
             </div>
         </div>
     </div>

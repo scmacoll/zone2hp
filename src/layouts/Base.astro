@@ -8,6 +8,8 @@ import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import { englishPath, koreanPublished, langFromUrl, twinPath } from '../i18n/lang';
+import { ui } from '../i18n/ui';
 
 interface Props {
   title?: string;
@@ -19,14 +21,32 @@ interface Props {
   ogType?: 'website' | 'article';
 }
 
+// Language comes from the URL: Korean pages live under /ko/ (src/i18n/lang.ts).
+const lang = langFromUrl(Astro.url);
+const t = ui[lang];
+
 const {
-  title = 'Zone Two Health and Performance | Chiropractic & Rehab, Eastwood NSW',
-  description = 'Chiropractic, post-operative rehabilitation and dry needling in Eastwood, NSW. Book a first visit at Zone Two Health and Performance.',
-  noindex = false,
+  title = t.meta.title,
+  description = t.meta.description,
+  noindex: noindexProp = false,
   ogType = 'website',
 } = Astro.props;
 
+// Korean pages stay out of search until the translation is signed off.
+const noindex = noindexProp || (lang === 'ko' && !koreanPublished);
+
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
+
+// hreflang pairs for pages that exist in both languages. English is the default.
+const twin = twinPath(Astro.url.pathname);
+const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
+const alternates = twin
+  ? [
+      { hreflang: 'en-AU', href: abs(englishPath(Astro.url.pathname)) },
+      { hreflang: 'ko', href: abs(lang === 'ko' ? Astro.url.pathname : twin) },
+      { hreflang: 'x-default', href: abs(englishPath(Astro.url.pathname)) },
+    ]
+  : [];
 
 // Social card: the primary logo on paper, generated from brand/logotype_icon_hp.pdf
 // by brand/build-logos.py's sibling command (see brand/README notes).
@@ -136,20 +156,21 @@ const structuredData = {
       url: 'https://zone2hp.com',
       name: 'Zone Two Health and Performance',
       publisher: { '@id': 'https://zone2hp.com/#organization' },
-      inLanguage: 'en-AU',
+      inLanguage: lang === 'ko' ? 'ko' : 'en-AU',
     },
   ],
 };
 ---
 
 <!doctype html>
-<html lang="en-AU">
+<html lang={lang === 'ko' ? 'ko' : 'en-AU'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <GoogleAnalytics />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
     <meta name="generator" content={Astro.generator} />
     {noindex && <meta name="robots" content="noindex" />}
 
@@ -160,7 +181,7 @@ const structuredData = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="en_AU" />
+    <meta property="og:locale" content={lang === 'ko' ? 'ko_KR' : 'en_AU'} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -175,7 +196,7 @@ const structuredData = {
     <slot name="head" />
   </head>
   <body>
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link">{t.skip}</a>
     <slot />
     <div class="grain" aria-hidden="true"></div>
   </body>

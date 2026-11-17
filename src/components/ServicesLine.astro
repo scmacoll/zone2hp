@@ -7,8 +7,11 @@ interface Props {
   [key: string]: unknown;
 }
 
+import { langFromUrl } from '../i18n/lang';
+import { ui } from '../i18n/ui';
+
 const { class: className = '', ...rest } = Astro.props;
-const services = ['Chiropractic', 'Rehab', 'Dry Needling'];
+const services = ui[langFromUrl(Astro.url)].services;
 ---
 
 <p class:list={['services', className]} {...rest}>

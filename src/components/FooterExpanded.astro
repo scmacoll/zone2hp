@@ -17,13 +17,13 @@ const phoneDisplay = "0450 222 122";
 const phoneHref = "tel:0450222122";
 const mapsQuery = "Suite 104/2 Rowe St, Eastwood NSW 2122";
 const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
-const services = [
-    "Chiropractic",
-    "Rehab",
-    "Dry Needling",
-];
 const year = 2026;
 import { showDrafts } from "../lib/drafts";
+import { langFromUrl, localise } from "../i18n/lang";
+import { ui } from "../i18n/ui";
+const lang = langFromUrl(Astro.url);
+const t = ui[lang].footer;
+const services = t.serviceList;
 ---
 
 <footer class:list={["ff", className]}>
@@ -31,7 +31,7 @@ import { showDrafts } from "../lib/drafts";
         <div class="ff__cols">
             <section class="ff__col" aria-labelledby="ff-services">
                 <h2 class="ff__head" id="ff-services">
-                    <span class="ff__dot" aria-hidden="true"></span>Services
+                    <span class="ff__dot" aria-hidden="true"></span>{t.services}
                 </h2>
                 <ul class="ff__list" role="list">
                     {services.map((s) => <li>{s}</li>)}
@@ -40,7 +40,7 @@ import { showDrafts } from "../lib/drafts";
 
             <section class="ff__col" aria-labelledby="ff-visit">
                 <h2 class="ff__head" id="ff-visit">
-                    <span class="ff__dot" aria-hidden="true"></span>Visit
+                    <span class="ff__dot" aria-hidden="true"></span>{t.visit}
                 </h2>
                 <address class="ff__address">
                     Suite 104, Level 1,<br />2 Rowe Street,<br />Eastwood, NSW 2122
@@ -50,13 +50,13 @@ import { showDrafts } from "../lib/drafts";
                     href={mapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    hidden>Open in Google Maps</a
+                    hidden>{t.openInMaps}</a
                 >
             </section>
 
             <section class="ff__col" aria-labelledby="ff-contact">
                 <h2 class="ff__head" id="ff-contact">
-                    <span class="ff__dot" aria-hidden="true"></span>Contact
+                    <span class="ff__dot" aria-hidden="true"></span>{t.contact}
                 </h2>
                 <a class="ff__link" href={`mailto:${email}`}>{email}</a>
                 <a class="ff__link" href={phoneHref}>{phoneDisplay}</a>
@@ -64,17 +64,19 @@ import { showDrafts } from "../lib/drafts";
 
             <section class="ff__col ff__col--touch" aria-labelledby="ff-touch">
                 <h2 class="ff__head" id="ff-touch">
-                    <span class="ff__dot" aria-hidden="true"></span>Keep in
-                    touch
+                    <span class="ff__dot" aria-hidden="true"></span>{t.keepInTouch}
                 </h2>
                 <p class="ff__blurb">
-                    Sign up for news and updates from the clinic.
+                    {t.blurb}
                 </p>
                 <form
                     class="ff__subscribe"
                     action="https://formspree.io/f/xlgkvgjw"
                     method="POST"
                     data-subscribe
+                    data-msg-invalid={t.invalidEmail}
+                    data-msg-thanks={t.thanks}
+                    data-msg-failed={t.failed}
                     novalidate
                 >
                     <input
@@ -83,8 +85,8 @@ import { showDrafts } from "../lib/drafts";
                         type="email"
                         inputmode="email"
                         autocomplete="email"
-                        placeholder="EMAIL"
-                        aria-label="Your email address"
+                        placeholder={t.placeholder}
+                        aria-label={t.emailLabel}
                         aria-describedby="ff-sub-msg"
                         required
                         pattern="[^@\\s]+@[^@\\s]+\\.[^@\\s]+"
@@ -109,7 +111,7 @@ import { showDrafts } from "../lib/drafts";
                     <button
                         class="ff__send"
                         type="submit"
-                        aria-label="Subscribe to keep-in-touch updates"
+                        aria-label={t.subscribe}
                     >
                         <svg
                             viewBox="0 0 24 24"
@@ -155,14 +157,14 @@ import { showDrafts } from "../lib/drafts";
                 <p class="ff__copy">
                     &copy; {year} Zone Two Health and Performance
                 </p>
-                <p class="ff__place">Eastwood, NSW &middot; Australia</p>
+                <p class="ff__place">{t.place}</p>
             </div>
             <div class="ff__links">
-                <a class="ff__legal-link" href="/blog">Clinic notes</a>
-                <a class="ff__legal-link" href="/careers">Careers</a>
-                <a class="ff__legal-link" href="/faq">FAQ</a>
-                {showDrafts && <a class="ff__legal-link" href="/refer">Refer a friend</a>}
-                <a class="ff__legal-link" href="/privacy">Privacy</a>
+                <a class="ff__legal-link" href="/blog">{t.clinicNotes}</a>
+                <a class="ff__legal-link" href={localise(lang, "/careers")}>{t.careers}</a>
+                <a class="ff__legal-link" href={localise(lang, "/faq")}>{t.faq}</a>
+                {showDrafts && <a class="ff__legal-link" href="/refer">{t.refer}</a>}
+                <a class="ff__legal-link" href="/privacy">{t.privacy}</a>
             </div>
         </div>
     </div>
@@ -501,7 +503,7 @@ import { showDrafts } from "../lib/drafts";
             event.preventDefault();
             const value = input?.value.trim() ?? '';
             if (!isEmail(value)) {
-                showError('Please enter a valid email address.');
+                showError(form.dataset.msgInvalid ?? '');
                 input?.focus();
                 return;
             }
@@ -520,13 +522,13 @@ import { showDrafts } from "../lib/drafts";
                 }
                 form.hidden = true;
                 if (okEl) {
-                    okEl.textContent = `Thanks, you're on the list. We'll email news and updates to ${value}.`;
+                    okEl.textContent = (form.dataset.msgThanks ?? '').replace('{email}', value);
                     okEl.hidden = false;
                     okEl.focus();
                 }
             } catch {
                 if (button) button.disabled = false;
-                showError('Something went wrong. Please try again, or email us at info@zone2hp.com.');
+                showError(form.dataset.msgFailed ?? '');
             }
         });
     }

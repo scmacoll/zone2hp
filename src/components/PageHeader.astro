@@ -3,16 +3,19 @@
 // chrome: these pages use the paper design language.
 import Logo from './Logo.astro';
 import SiteMenu from './SiteMenu.astro';
+import { langFromUrl, localise } from '../i18n/lang';
+import { ui } from '../i18n/ui';
 
 interface Props {
   class?: string;
 }
 
 const { class: className = '' } = Astro.props;
+const lang = langFromUrl(Astro.url);
 ---
 
 <header class:list={['page-header', className]}>
-  <a class="page-header__brand" href="/" aria-label="Zone Two Health and Performance, home">
+  <a class="page-header__brand" href={localise(lang, '/')} aria-label={ui[lang].home}>
     <Logo variant="full" />
   </a>
   <SiteMenu />

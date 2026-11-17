@@ -5,7 +5,8 @@ import { bookingConfig } from '../lib/booking/config';
 // from side-by-side to stacked on its own container width via a container query,
 // which is the fix for the split-window case.
 import Eyebrow from './Eyebrow.astro';
-import { openingHours } from '../lib/clinic';
+import { langFromUrl } from '../i18n/lang';
+import { ui } from '../i18n/ui';
 
 interface Props {
   class?: string;
@@ -13,11 +14,14 @@ interface Props {
 }
 
 const { class: className = '', title = 'Eastwood, NSW' } = Astro.props;
+const lang = langFromUrl(Astro.url);
+const t = ui[lang].map;
+const openingHours = ui[lang].hours;
 
 const address1 = 'Suite 104, Level 1, 2 Rowe Street,';
 const address2 = 'Eastwood, NSW 2122';
 const query = 'Suite 104/2 Rowe St, Eastwood NSW 2122';
-const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed${t.mapLang ? `&hl=${t.mapLang}` : ''}`;
 const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent('2 Rowe St, Eastwood NSW 2122')}`;
 ---
 
@@ -26,7 +30,7 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
     <div class="map__card">
       <div class="map__frame">
         <iframe
-          title="Map showing Zone Two Health and Performance at Suite 104, Level 1, 2 Rowe Street, Eastwood, NSW 2122"
+          title={t.iframeTitle}
           src={mapSrc}
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -35,19 +39,19 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
           <path d="M3 11 22 2l-9 19-2-8-8-2Z" fill="currentColor"></path>
         </svg>
-        Get directions
+        {t.directions}
       </a>
     </div>
 
     <div class="map__details">
-      <Eyebrow>Find us in Eastwood</Eyebrow>
+      <Eyebrow>{t.eyebrow}</Eyebrow>
       <h2 id="map-heading" class="map__title">{title}</h2>
       <div class="map__place">
       <address class="map__address">
         {address1}<br />{address2}
       </address>
       <div class="map__info">
-        <dl class="map__hours" aria-label="Opening hours">
+        <dl class="map__hours" aria-label={ui[lang].hoursLabel}>
           {
             openingHours.map(([days, times]) => (
               <div class="map__hours-row">
@@ -69,15 +73,15 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
       {
         bookingConfig.linksVisible ? (
           <a class="map__book" href="/book">
-            Book now
+            {t.bookNow}
           </a>
         ) : (
           <button class="map__book" type="button" disabled aria-disabled="true">
-            Book now
+            {t.bookNow}
           </button>
         )
       }
-      <p class="map__lang">Consultations in English and <span lang="ko">한국어</span></p>
+      <p class="map__lang">{t.consultations[0]}<span lang="ko">한국어</span>{t.consultations[1]}</p>
     </div>
   </div>
 </section>
