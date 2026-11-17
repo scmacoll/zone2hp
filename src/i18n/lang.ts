@@ -17,7 +17,7 @@ const TRANSLATED = ['/', '/faq/', '/careers/', '/blog/'];
 
 /** Clinic Notes posts translated so far (slugs). Add each as it is done; the
     route at src/pages/ko/[...page].astro builds a page for each one. */
-export const KOREAN_POSTS: string[] = ['achilles-tendinopathy'];
+export const KOREAN_POSTS: string[] = ['achilles-tendinopathy', 'concentric-eccentric-isometric'];
 
 const withSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
 

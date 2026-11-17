@@ -37,6 +37,10 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | De Quervain's tenosynovitis | 드퀘르뱅 건초염 |
 | hip strength | 고관절 근력 |
 | concentric / eccentric / isometric | 단축성 / 신장성 / 등척성 |
+| isotonic | 등장성 |
+| Nordic hamstring exercise (NHE) | 노르딕 햄스트링 운동(NHE) |
+| tendinopathy / tendon | 건병증 / 힘줄 |
+| rehab stages: settle, build, perform | 가라앉히기, 다지기, 실전 |
 | registered practitioner | 등록된 의료인 |
 | initial consultation / follow-up | 첫 진료(초진) / 재진 |
 | GP, referral, specialist, imaging | GP, 의뢰서(referral), 전문의, 영상 검사 |
@@ -437,3 +441,36 @@ Each post's text in reading order. References stay in English on both pages and 
 | 29 | Ease off | 강도 줄이기 | |
 | 30 | In a calf raise the ankle points (plantarflexes), the heel lifts and the toes bend up while staying on the floor. Calf raises load the tendon. A common rule of thumb from the pain-monitoring model: pain up to about 5/10 during exercise is acceptable if it settles by the next morning and morning stiffness isn't getting worse week to week [3]. Simplified illustration. | 종아리 들기를 하면 발목이 펴지고(발바닥 굽힘), 발뒤꿈치가 들리며, 발가락은 바닥에 닿은 채 위로 굽혀져요. 종아리 들기는 힘줄에 부하를 줘요. 통증 모니터링 모델에서 나온 흔한 기준은 이래요. 운동 중 통증이 10점 중 약 5점까지라면, 다음 날 아침까지 가라앉고 아침 뻣뻣함이 주마다 심해지지 않는 한 괜찮아요 [3]. 단순화한 그림이에요. | |
 | 31 | Get urgent care if you felt a sudden snap or "kick" at the back of the ankle and now can't push off or stand on tiptoe. That can be a tendon rupture. | 바로 응급 진료를 받으세요. 발목 뒤쪽에서 갑자기 "뚝" 하거나 누가 걷어찬 듯한 느낌이 든 뒤로 발을 딛고 밀어내거나 까치발로 설 수 없다면, 힘줄 파열일 수 있어요. | |
+
+### Lift, lower, hold: three ways to load a muscle
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | Picture a bicep curl. The same muscle works in three different ways depending on what the weight is doing: | 이두근 컬(바이셉 컬)을 떠올려 보세요. 같은 근육이라도 무게가 어떻게 움직이느냐에 따라 세 가지 다른 방식으로 일해요. | |
+| 2 | Concentric (lift): the muscle shortens as it works. Curling the weight up, standing up from a chair, climbing stairs. | 단축성(들기): 근육이 짧아지면서 일해요. 무게를 들어 올리기, 의자에서 일어나기, 계단 오르기가 그래요. | |
+| 3 | Eccentric (lower): the muscle lengthens under control, like a brake. Lowering the weight slowly, walking downstairs, landing from a jump. | 신장성(내리기): 근육이 브레이크처럼 조절하면서 길어져요. 무게를 천천히 내리기, 계단 내려가기, 점프 후 착지하기가 그래요. | |
+| 4 | Isometric (hold): the muscle works but doesn't change length. Holding the weight still, a wall sit, a plank. | 등척성(버티기): 근육은 일하지만 길이는 변하지 않아요. 무게를 그대로 들고 있기, 벽에 기대 앉기(월 싯), 플랭크가 그래요. | |
+| 5 | Isometric: settle and build | 등척성: 가라앉히고 다지기 | |
+| 6 | Holds are often where rehab starts, because they load tissue without much movement. A small 2015 study found heavy holds eased knee-tendon pain for at least 45 minutes [1]. Larger reviews since then are more cautious: | 버티기 운동은 재활의 출발점이 되는 경우가 많아요. 많이 움직이지 않고도 조직에 부하를 줄 수 있기 때문이에요. 2015년의 한 작은 연구에서는 무거운 버티기 운동이 무릎 힘줄 통증을 적어도 45분 동안 덜어 줬어요 [1]. 그 뒤에 나온 더 큰 리뷰들은 더 신중해요. | |
+| 7 | "Isometric exercise does not appear to be superior to isotonic exercise in the management of chronic tendinopathy." | "만성 건병증 관리에서 등척성 운동이 등장성 운동보다 낫다고 보이지는 않아요." | |
+| 9 | So holds are a useful tool, not a magic switch. Bonus: a 2023 analysis of 270 trials found isometric training lowered resting blood pressure more than any other exercise type [7]. | 그러니 버티기 운동은 유용한 도구이지, 마법의 스위치는 아니에요. 덤으로, 270개 시험을 분석한 2023년 연구에서는 등척성 훈련이 다른 어떤 운동 유형보다 안정 시 혈압을 더 많이 낮췄어요 [7]. | |
+| 10 | Eccentric: the brakes | 신장성: 브레이크 | |
+| 11 | Muscles can lower more weight than they can lift, which makes lowering work a strong strength builder [6]. It's also protective. The Nordic hamstring exercise, a slow lowering movement, is one of the best-supported injury-prevention exercises in sport: | 근육은 들어 올릴 수 있는 것보다 더 무거운 무게를 내릴 수 있어서, 내리는 운동은 근력을 키우는 강력한 방법이에요 [6]. 부상을 막는 데도 도움이 돼요. 천천히 내려가는 동작인 노르딕 햄스트링 운동(NHE)은 스포츠에서 근거가 가장 탄탄한 부상 예방 운동 중 하나예요. | |
+| 12 | "Programmes that include the NHE reduce hamstring injuries by up to 51%." | "NHE를 포함한 프로그램은 햄스트링 부상을 최대 51%까지 줄여요." | |
+| 14 | Concentric: the engine | 단축성: 엔진 | |
+| 15 | Lifting is what gets you up hills, out of chairs and off the blocks. In real life it comes paired with lowering. Heavy, slow lifting and lowering together has matched eccentric-only programmes for knee and Achilles tendon pain, with people more satisfied and more likely to stick with it [4][5]. | 언덕을 오르고, 의자에서 일어나고, 출발대를 박차고 나가게 해 주는 게 바로 들어 올리는 힘이에요. 실제 생활에서는 내리는 동작과 짝을 이뤄요. 무겁고 느리게 들고 내리기를 함께 하는 운동은 무릎과 아킬레스건 통증에서 신장성 운동만 하는 프로그램과 같은 효과를 보였고, 사람들의 만족도가 더 높았으며 꾸준히 할 가능성도 더 컸어요 [4][5]. | |
+| 16 | In 30 seconds | 30초 요약 | |
+| 17 | Concentric = lift. Eccentric = lower. Isometric = hold. | 단축성 = 들기. 신장성 = 내리기. 등척성 = 버티기. | |
+| 18 | None is "best". Each suits a different stage and goal. | "제일 좋은" 하나는 없어요. 단계와 목표에 따라 맞는 방식이 달라요. | |
+| 19 | Most good rehab moves from holds, to slow heavy work, to speed and sport. | 좋은 재활은 대부분 버티기에서 느리고 무거운 운동으로, 그다음 속도와 스포츠로 나아가요. | |
+| 20 | Three arms doing a bicep curl. Concentric: the forearm lifts the weight as the bicep shortens. Eccentric: the forearm slowly lowers the weight as the bicep lengthens. Isometric: the forearm holds the weight still at a right angle. | 이두근 컬을 하는 팔 세 개. 단축성: 이두근이 짧아지면서 아래팔이 무게를 들어 올려요. 신장성: 이두근이 길어지면서 아래팔이 무게를 천천히 내려요. 등척성: 아래팔이 직각에서 무게를 그대로 버텨요. | |
+| 21 | Concentric | 단축성 | |
+| 22 | Muscle shortens | 근육이 짧아짐 | |
+| 23 | Lift | 들기 | |
+| 24 | Eccentric | 신장성 | |
+| 25 | Muscle lengthens | 근육이 길어짐 | |
+| 26 | Lower, slowly | 천천히 내리기 | |
+| 27 | Isometric | 등척성 | |
+| 28 | Muscle holds | 근육이 버팀 | |
+| 29 | No movement | 움직임 없음 | |
+| 30 | Same muscle (the bicep, in orange), three jobs. Simplified illustration. | 같은 근육(주황색 이두근), 세 가지 일. 단순화한 그림이에요. | |

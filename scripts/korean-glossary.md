@@ -28,6 +28,10 @@
 | De Quervain's tenosynovitis | 드퀘르뱅 건초염 |
 | hip strength | 고관절 근력 |
 | concentric / eccentric / isometric | 단축성 / 신장성 / 등척성 |
+| isotonic | 등장성 |
+| Nordic hamstring exercise (NHE) | 노르딕 햄스트링 운동(NHE) |
+| tendinopathy / tendon | 건병증 / 힘줄 |
+| rehab stages: settle, build, perform | 가라앉히기, 다지기, 실전 |
 | registered practitioner | 등록된 의료인 |
 | initial consultation / follow-up | 첫 진료(초진) / 재진 |
 | GP, referral, specialist, imaging | GP, 의뢰서(referral), 전문의, 영상 검사 |
