@@ -9,6 +9,7 @@
 7. **"(see above)"** in the referral answer points to the Medicare answer, which actually sits further down the page, in both languages. Should the English say "(see below)"?
 8. **Aged care** is 노인 치료 / 노인 재활 in the keyword band and 노인 요양(aged care) in the FAQ. Which do Korean families use?
 9. **Muscle names.** The thumb muscles use the newer Korean anatomy names (긴엄지벌림근, 짧은엄지폄근), but gluteus medius uses the familiar 중둔근 rather than the newer 중간볼기근, because patients know it from gyms and Pilates. Keep this mix, or use one naming style throughout?
+10. **Dry needling and acupuncture.** The post says acupuncture is "based on traditional Chinese medicine", translated as 중국 전통 의학에 바탕을 둔 침술 (not 한의학). Dry needling versus 침 is a sensitive topic for Korean readers. Is this wording right for them?
 
 ## Glossary
 
@@ -16,6 +17,8 @@
 |---|---|
 | chiropractic / chiropractor | 카이로프랙틱 / 카이로프랙터 |
 | dry needling | 드라이 니들링 |
+| trigger point / sham / umbrella review | 통증 유발점(trigger point) / 가짜 시술(sham) / 엄브렐러 리뷰(umbrella review) |
+| soreness / fatigue / blood thinners | 근육통 / 피로감 / 혈액을 묽게 하는 약(항응고제) |
 | soft tissue therapy | 연부조직 치료 |
 | exercise rehabilitation / exercise-based rehabilitation | 운동 재활 / 운동 기반 재활 |
 | post-operative rehabilitation | 수술 후 재활 |

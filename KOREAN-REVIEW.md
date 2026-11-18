@@ -18,6 +18,7 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 7. **"(see above)"** in the referral answer points to the Medicare answer, which actually sits further down the page, in both languages. Should the English say "(see below)"?
 8. **Aged care** is 노인 치료 / 노인 재활 in the keyword band and 노인 요양(aged care) in the FAQ. Which do Korean families use?
 9. **Muscle names.** The thumb muscles use the newer Korean anatomy names (긴엄지벌림근, 짧은엄지폄근), but gluteus medius uses the familiar 중둔근 rather than the newer 중간볼기근, because patients know it from gyms and Pilates. Keep this mix, or use one naming style throughout?
+10. **Dry needling and acupuncture.** The post says acupuncture is "based on traditional Chinese medicine", translated as 중국 전통 의학에 바탕을 둔 침술 (not 한의학). Dry needling versus 침 is a sensitive topic for Korean readers. Is this wording right for them?
 
 ## Glossary
 
@@ -25,6 +26,8 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 |---|---|
 | chiropractic / chiropractor | 카이로프랙틱 / 카이로프랙터 |
 | dry needling | 드라이 니들링 |
+| trigger point / sham / umbrella review | 통증 유발점(trigger point) / 가짜 시술(sham) / 엄브렐러 리뷰(umbrella review) |
+| soreness / fatigue / blood thinners | 근육통 / 피로감 / 혈액을 묽게 하는 약(항응고제) |
 | soft tissue therapy | 연부조직 치료 |
 | exercise rehabilitation / exercise-based rehabilitation | 운동 재활 / 운동 기반 재활 |
 | post-operative rehabilitation | 수술 후 재활 |
@@ -665,3 +668,36 @@ Each post's text in reading order. References stay in English on both pages and 
 | 22 | Standing on left leg | 왼쪽 다리로 서기 | |
 | 23 | Seen from behind, standing on the left leg. Gluteus medius (orange) holds the pelvis level. When it can't, the lifted-leg side drops and the lower back works harder. Simplified illustration. | 뒤에서 본 모습, 왼쪽 다리로 서 있어요. 중둔근(주황색)이 골반을 수평으로 잡아 줘요. 그러지 못하면 든 다리 쪽이 처지고 허리가 더 힘들게 일해요. 단순화한 그림이에요. | |
 | 24 | See your GP urgently if back pain comes with numbness around the groin or buttocks, new bladder or bowel changes, leg weakness, fever, or unexplained weight loss. | 바로 GP에게 진료받으세요. 허리 통증과 함께 사타구니나 엉덩이 주변에 감각이 없을 때, 소변이나 대변에 새로운 변화가 생겼을 때, 다리에 힘이 빠질 때, 열이 날 때, 또는 이유 없이 체중이 줄 때요. | |
+
+### Dry needling: what it can and can't do
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | Dry needling uses very fine, single-use needles placed into tight or tender spots in muscle, often called trigger points. "Dry" means nothing is injected. It's different from acupuncture, which is based on traditional Chinese medicine; dry needling is guided by anatomy and your examination. | 드라이 니들링은 아주 가는 일회용 바늘을 근육 속 뭉치거나 누르면 아픈 곳, 흔히 통증 유발점(trigger point)이라고 부르는 곳에 놓는 치료예요. "드라이(dry)"는 아무것도 주입하지 않는다는 뜻이에요. 중국 전통 의학에 바탕을 둔 침술과는 달라요. 드라이 니들링은 해부학과 진찰 결과를 바탕으로 해요. | |
+| 2 | Does it work? | 효과가 있나요? | |
+| 3 | A 2023 umbrella review pulled together the systematic reviews on dry needling for musculoskeletal pain across the body: | 2023년의 한 엄브렐러 리뷰(umbrella review)는 온몸의 근골격계 통증에 대한 드라이 니들링 체계적 문헌고찰들을 한데 모아 정리했어요. | |
+| 4 | Dry needling was "superior to sham/no intervention and equally effective to other interventions for pain reduction" in the short term. | 단기적으로 드라이 니들링은 "통증 감소에서 가짜 시술(sham)이나 무처치보다 우수했고, 다른 치료와는 비슷한 효과"를 보였어요. | |
+| 6 | The same authors are clear about the limits: | 같은 연구자들은 한계도 분명히 밝혀요. | |
+| 7 | "Rigorous evidence about the clinical effectiveness of this technique is still lacking." | "이 기법의 임상적 효과에 대한 엄밀한 근거는 아직 부족해요." | |
+| 9 | How we use it | 저희는 이렇게 써요 | |
+| 10 | Dry needling can ease pain and tightness so you can move and load the area more comfortably. That window is where the real work happens. At Zone Two it's always paired with exercise and a plan, and it's optional. If needles aren't for you, there are other ways to get the same job done. | 드라이 니들링은 통증과 뭉침을 덜어 줘서, 그 부위를 더 편하게 움직이고 부하를 줄 수 있게 도와줄 수 있어요. 진짜 중요한 일은 그렇게 열린 틈에 일어나요. Zone Two에서는 언제나 운동, 계획과 함께하고, 원하지 않으면 받지 않아도 돼요. 바늘이 싫다면 같은 목표를 이룰 다른 방법도 있어요. | |
+| 11 | Is it safe? | 안전한가요? | |
+| 12 | Side effects are usually mild and short-lived. Muscle soreness is the most common, along with occasional bruising, tiredness or a headache [2]. We'll go through your health history first, explain what to expect and ask for your consent before every session. | 부작용은 대개 가볍고 오래가지 않아요. 가장 흔한 건 근육통이고, 가끔 멍, 피로감, 두통이 생기기도 해요 [2]. 먼저 건강 이력을 함께 살펴보고, 어떤 느낌일지 설명해 드리고, 매번 시술 전에 동의를 구해요. | |
+| 13 | In 30 seconds | 30초 요약 | |
+| 14 | Fine needles into tight, tender muscle. Nothing is injected. | 뭉치고 누르면 아픈 근육에 가는 바늘을 놓아요. 아무것도 주입하지 않아요. | |
+| 15 | Better than sham for short-term pain relief; long-term data is limited. | 단기 통증 완화에는 가짜 시술보다 낫지만, 장기 자료는 부족해요. | |
+| 16 | Works best as a stepping stone to exercise, never on its own. | 운동으로 넘어가는 디딤돌로 쓸 때 가장 잘 맞고, 단독으로는 쓰지 않아요. | |
+| 17 | Bar chart of patient-reported side effects after dry needling: soreness 52 percent, fatigue 21.7 percent, headache 15.4 percent; and evidence strength by time frame | 드라이 니들링 후 보고된 부작용 막대그래프: 근육통 52퍼센트, 피로감 21.7퍼센트, 두통 15.4퍼센트. 그리고 기간별 근거의 강도. | |
+| 18 | Most common after-effects | 시술 후 가장 흔한 증상 | |
+| 19 | % of 221 patients reporting each (Tolbert et al., 2025) | 치료 부위 221곳 중 보고된 비율(Tolbert et al., 2025) | |
+| 23 | Soreness | 근육통 | |
+| 25 | Fatigue | 피로감 | |
+| 27 | Headache | 두통 | |
+| 29 | Evidence by time frame | 기간별 근거 | |
+| 30 | Short term | 단기 | |
+| 31 | Mid term | 중기 | |
+| 32 | Long term | 장기 | |
+| 33 | Better than sham | 가짜 시술보다 나음 | |
+| 34 | Limited data | 자료 부족 | |
+| 35 | Top: patient-reported after-effects in one 2025 survey [2]; most were mild. Bottom: summary of the 2023 umbrella review [1]. | 위: 2025년의 한 설문 조사에서 환자가 보고한 시술 후 증상 [2]. 대부분 가벼웠어요. 아래: 2023년 엄브렐러 리뷰 [1]의 요약이에요. | |
+| 36 | Tell us first if you're pregnant, take blood thinners, have a bleeding disorder, a pacemaker or a fear of needles. | 먼저 알려 주세요. 임신 중이거나, 혈액을 묽게 하는 약(항응고제)을 먹고 있거나, 출혈 질환이나 심장 박동기가 있거나, 바늘이 무섭다면요. | |

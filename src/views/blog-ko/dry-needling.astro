@@ -1,0 +1,72 @@
+---
+// Korean translation of src/pages/blog/dry-needling.astro (the client's
+// post), rendered at /ko/blog/dry-needling. Our translation, 해요체, awaiting
+// Dr Kim's review. Quotes are translated; their citations and the reference
+// list stay in English. The chart is the same drawing with Korean labels. Its
+// subtitle counts treated areas, as the study does (221 areas, 123 patients),
+// rather than the English "221 patients". Keep in step with the English.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+---
+
+<ClinicNote slug="dry-needling">
+  <p>드라이 니들링은 아주 가는 일회용 바늘을 근육 속 뭉치거나 누르면 아픈 곳, 흔히 통증 유발점(trigger point)이라고 부르는 곳에 놓는 치료예요. "드라이(dry)"는 아무것도 주입하지 않는다는 뜻이에요. 중국 전통 의학에 바탕을 둔 침술과는 달라요. 드라이 니들링은 해부학과 진찰 결과를 바탕으로 해요.</p>
+  <h2>효과가 있나요?</h2>
+  <p>2023년의 한 엄브렐러 리뷰(umbrella review)는 온몸의 근골격계 통증에 대한 드라이 니들링 체계적 문헌고찰들을 한데 모아 정리했어요.</p>
+  <blockquote><p>단기적으로 드라이 니들링은 "통증 감소에서 가짜 시술(sham)이나 무처치보다 우수했고, 다른 치료와는 비슷한 효과"를 보였어요.</p><cite>Chys et al., Journal of Clinical Medicine, 2023 [1]</cite></blockquote>
+  <p>같은 연구자들은 한계도 분명히 밝혀요.</p>
+  <blockquote><p>"이 기법의 임상적 효과에 대한 엄밀한 근거는 아직 부족해요."</p><cite>Chys et al., 2023 [1]</cite></blockquote>
+  <h2>저희는 이렇게 써요</h2>
+  <p>드라이 니들링은 통증과 뭉침을 덜어 줘서, 그 부위를 더 편하게 움직이고 부하를 줄 수 있게 도와줄 수 있어요. 진짜 중요한 일은 그렇게 열린 틈에 일어나요. Zone Two에서는 언제나 운동, 계획과 함께하고, 원하지 않으면 받지 않아도 돼요. 바늘이 싫다면 같은 목표를 이룰 다른 방법도 있어요.</p>
+  <h2>안전한가요?</h2>
+  <p>부작용은 대개 가볍고 오래가지 않아요. 가장 흔한 건 근육통이고, 가끔 멍, 피로감, 두통이 생기기도 해요 [2]. 먼저 건강 이력을 함께 살펴보고, 어떤 느낌일지 설명해 드리고, 매번 시술 전에 동의를 구해요.</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>30초 요약</h2><ul>
+      <li>뭉치고 누르면 아픈 근육에 가는 바늘을 놓아요. 아무것도 주입하지 않아요.</li>
+      <li>단기 통증 완화에는 가짜 시술보다 낫지만, 장기 자료는 부족해요.</li>
+      <li>운동으로 넘어가는 디딤돌로 쓸 때 가장 잘 맞고, 단독으로는 쓰지 않아요.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 300" role="img" aria-labelledby="dn-t">
+        <title id="dn-t">드라이 니들링 후 보고된 부작용 막대그래프: 근육통 52퍼센트, 피로감 21.7퍼센트, 두통 15.4퍼센트. 그리고 기간별 근거의 강도.</title>
+        <rect x="0" y="0" width="420" height="300" class="s-surface"/>
+        <text x="16" y="26" class="big s-ink">시술 후 가장 흔한 증상</text>
+        <text x="16" y="44" class="s-muted">치료 부위 221곳 중 보고된 비율(Tolbert et al., 2025)</text>
+        <g stroke="var(--chrome-line)" stroke-width="1">
+        <line x1="96" y1="58" x2="96" y2="160"/><line x1="196" y1="58" x2="196" y2="160"/><line x1="296" y1="58" x2="296" y2="160"/><line x1="396" y1="58" x2="396" y2="160"/>
+        </g>
+        <text x="96" y="176" text-anchor="middle" class="lbl s-muted">0</text>
+        <text x="196" y="176" text-anchor="middle" class="lbl s-muted">20%</text>
+        <text x="296" y="176" text-anchor="middle" class="lbl s-muted">40%</text>
+        <text x="392" y="176" text-anchor="end" class="lbl s-muted">60%</text>
+        <text x="88" y="84" text-anchor="end" class="s-ink">근육통</text>
+        <rect x="96" y="68" width="260" height="22" rx="4" class="s-or"/>
+        <text x="362" y="84" class="lbl s-ink">52%</text>
+        <text x="88" y="118" text-anchor="end" class="s-ink">피로감</text>
+        <rect x="96" y="102" width="108.5" height="22" rx="4" fill="var(--cn-orange)" opacity=".6"/>
+        <text x="210" y="118" class="lbl s-ink">21.7%</text>
+        <text x="88" y="152" text-anchor="end" class="s-ink">두통</text>
+        <rect x="96" y="136" width="77" height="22" rx="4" fill="var(--cn-orange)" opacity=".45"/>
+        <text x="179" y="152" class="lbl s-ink">15.4%</text>
+        <text x="16" y="212" class="big s-ink">기간별 근거</text>
+        <rect x="16" y="226" width="128" height="34" rx="6" class="s-or"/>
+        <text x="80" y="248" text-anchor="middle" class="lbl" fill="var(--ink)">단기</text>
+        <rect x="148" y="226" width="128" height="34" rx="6" class="s-wash"/>
+        <text x="212" y="248" text-anchor="middle" class="lbl s-ink">중기</text>
+        <rect x="280" y="226" width="124" height="34" rx="6" class="s-bg" stroke="var(--chrome-line)"/>
+        <text x="342" y="248" text-anchor="middle" class="lbl s-muted">장기</text>
+        <text x="80" y="280" text-anchor="middle" class="lbl s-ink">가짜 시술보다 나음</text>
+        <text x="276" y="280" text-anchor="middle" class="lbl s-muted">자료 부족</text>
+      </svg>
+      </div>
+      <figcaption>위: 2025년의 한 설문 조사에서 환자가 보고한 시술 후 증상 [2]. 대부분 가벼웠어요. 아래: 2023년 엄브렐러 리뷰 [1]의 요약이에요.</figcaption>
+    </figure>
+    <p class="cn-gp"><b>먼저 알려 주세요.</b> 임신 중이거나, 혈액을 묽게 하는 약(항응고제)을 먹고 있거나, 출혈 질환이나 심장 박동기가 있거나, 바늘이 무섭다면요.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>Chys M, De Meulemeester K, De Greef I, et al. Clinical effectiveness of dry needling in patients with musculoskeletal pain: an umbrella review. J Clin Med. 2023;12(3):1205. <a href="https://doi.org/10.3390/jcm12031205" target="_blank" rel="noopener">doi:10.3390/jcm12031205</a></li>
+    <li>Tolbert M, Leach KS, Condo MP, Mancini A, Tinius R. Patient-perceived benefits and adverse events of dry needling. Int J Sports Phys Ther. 2025;20(9):1355–1363. <a href="https://doi.org/10.26603/001c.143187" target="_blank" rel="noopener">doi:10.26603/001c.143187</a></li>
+  </Fragment>
+</ClinicNote>
