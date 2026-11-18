@@ -31,6 +31,9 @@
 | painful arc | 특정 구간에서 아픔 |
 | Achilles tendinopathy | 아킬레스건병증 |
 | De Quervain's tenosynovitis | 드퀘르뱅 건초염 |
+| abductor pollicis longus / extensor pollicis brevis | 긴엄지벌림근 / 짧은엄지폄근 |
+| splint / immobilisation | 보조기(스플린트) / 고정 |
+| corticosteroid injection | 코르티코스테로이드 주사 |
 | hip strength | 고관절 근력 |
 | concentric / eccentric / isometric | 단축성 / 신장성 / 등척성 |
 | isotonic | 등장성 |

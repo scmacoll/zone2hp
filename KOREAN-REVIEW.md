@@ -40,6 +40,9 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | painful arc | 특정 구간에서 아픔 |
 | Achilles tendinopathy | 아킬레스건병증 |
 | De Quervain's tenosynovitis | 드퀘르뱅 건초염 |
+| abductor pollicis longus / extensor pollicis brevis | 긴엄지벌림근 / 짧은엄지폄근 |
+| splint / immobilisation | 보조기(스플린트) / 고정 |
+| corticosteroid injection | 코르티코스테로이드 주사 |
 | hip strength | 고관절 근력 |
 | concentric / eccentric / isometric | 단축성 / 신장성 / 등척성 |
 | isotonic | 등장성 |
@@ -598,3 +601,37 @@ Each post's text in reading order. References stay in English on both pages and 
 | 76 | painHEALTH: tips and modules for musculoskeletal pain (University of Western Australia) | painHEALTH: 근골격계 통증을 위한 팁과 학습 모듈(서호주대학교) | |
 | 77 | Pain Revolution: Australian pain education initiative | Pain Revolution: 호주의 통증 교육 프로그램 | |
 | 78 | Healthdirect: chronic pain | Healthdirect: chronic pain(만성 통증) | |
+
+### That pain at the base of your thumb
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | Two tendons that move your thumb, abductor pollicis longus and extensor pollicis brevis, slide through a narrow tunnel on the thumb side of the wrist. When that tunnel's lining thickens, the tendons stop gliding smoothly and every pinch or twist rubs. It's most common in people in their 40s and 50s, more common in women, and often shows up in the weeks after having a baby. | 엄지를 움직이는 두 힘줄, 긴엄지벌림근(abductor pollicis longus)과 짧은엄지폄근(extensor pollicis brevis)의 힘줄은 손목 엄지 쪽의 좁은 터널을 지나 미끄러지듯 움직여요. 이 터널의 안쪽 막이 두꺼워지면 힘줄이 매끄럽게 미끄러지지 못하고, 집거나 비틀 때마다 쓸려요. 40~50대에게 가장 흔하고, 여성에게 더 흔하며, 출산 후 몇 주 안에 나타나는 경우가 많아요. | |
+| 2 | How we check it | 어떻게 확인하나요 | |
+| 3 | We start with how it began and what aggravates it, then examine the wrist and thumb. A simple test (tucking the thumb into the palm and gently tilting the wrist towards the little finger) usually reproduces the pain. Scans are rarely needed. | 어떻게 시작됐는지, 무엇을 하면 심해지는지부터 여쭤본 뒤 손목과 엄지를 진찰해요. 간단한 검사(엄지를 손바닥 안으로 접어 넣고 손목을 새끼손가락 쪽으로 살짝 기울이기)를 하면 보통 그 통증이 다시 나타나요. 영상 검사가 필요한 경우는 드물어요. | |
+| 4 | What helps | 도움이 되는 것 | |
+| 5 | Changing how you grip, lift and carry for a while, so the tendons can settle | 힘줄이 가라앉을 수 있도록, 한동안 쥐고 들고 나르는 방식을 바꾸기 | |
+| 6 | A thumb splint, especially overnight | 엄지 보조기(스플린트), 특히 밤에 착용하기 | |
+| 7 | Graded thumb and wrist strengthening once pain allows | 통증이 허락하면 단계적으로 엄지와 손목 근력 키우기 | |
+| 8 | A corticosteroid injection from your GP or specialist when symptoms are significant | 증상이 심할 때는 GP나 전문의에게 코르티코스테로이드 주사 받기 | |
+| 9 | "These findings suggest that administration of CSI followed by 3 to 4 weeks immobilization should be considered as a first-line treatment for patients with DQT." | "이 결과는 DQT(드퀘르뱅 건초염) 환자에게 CSI(코르티코스테로이드 주사) 후 3~4주간 고정하는 방법을 1차 치료로 고려해야 함을 시사해요." | |
+| 11 | That's why care here works alongside your GP. We'll help you manage load, fit a splint and rebuild strength, and we'll tell you if an injection referral is the smarter next step. | 그래서 이곳의 치료는 GP와 함께 이루어져요. 저희는 부하를 관리하고, 보조기를 맞추고, 근력을 다시 키우도록 도와 드리고, 주사를 위한 의뢰가 더 현명한 다음 단계라면 말씀드려요. | |
+| 12 | "Most patients with De Quervain's tenosynovitis do very well." | "드퀘르뱅 건초염 환자 대부분은 아주 잘 회복해요." | |
+| 14 | In 30 seconds | 30초 요약 | |
+| 15 | Two thumb tendons are irritated where they pass through a tight tunnel at the wrist. | 엄지 힘줄 두 개가 손목의 좁은 터널을 지나는 곳에서 자극을 받은 상태예요. | |
+| 16 | Rest from aggravating grips, a splint and strengthening are the foundation. | 통증을 일으키는 쥐는 동작을 쉬고, 보조기와 근력 운동을 하는 게 기본이에요. | |
+| 17 | Injection plus 3 to 4 weeks of splinting has the strongest evidence. | 주사와 3~4주간의 보조기 고정이 가장 강한 근거를 가지고 있어요. | |
+| 18 | Back of a right hand with the thumb on top. The two thumb tendons run along the thumb side of the wrist, where De Quervain's pain is felt. Below, a fist with the thumb tucked in tilts towards the little finger, a movement that is typically painful. | 엄지가 위쪽에 있는 오른손 등. 엄지 힘줄 두 개가 손목의 엄지 쪽을 따라 지나가고, 드퀘르뱅 통증은 이곳에서 느껴져요. 아래에는 엄지를 넣고 쥔 주먹이 새끼손가락 쪽으로 기울어지는 모습이 있는데, 보통 아픈 동작이에요. | |
+| 19 | Pain usually here | 보통 여기가 아파요 | |
+| 20 | Thumb side of the wrist | 손목의 엄지 쪽 | |
+| 21 | Thumb | 엄지 | |
+| 22 | Forearm | 아래팔 | |
+| 23 | Fingers | 손가락 | |
+| 24 | 2 thumb tendons | 엄지 힘줄 2개 | |
+| 25 | A typically painful movement | 흔히 아픈 동작 | |
+| 26 | Thumb tucked in a fist, | 엄지를 주먹 안에 넣고, | |
+| 27 | wrist tilted towards the | 손목을 새끼손가락 쪽으로 | |
+| 28 | little finger. | 기울여요. | |
+| 29 | If this hurts, get it checked | 아프다면 진찰을 받아 보세요 | |
+| 30 | Back of the right hand. Two thumb tendons share a narrow tunnel on the thumb side of the wrist, which is where the pain is felt. Simplified illustration; feeling pain here doesn't confirm the diagnosis. | 오른손 등. 엄지 힘줄 두 개가 손목 엄지 쪽의 좁은 터널을 함께 지나고, 바로 그곳에서 통증이 느껴져요. 단순화한 그림이에요. 이곳이 아프다고 해서 진단이 확정되는 건 아니에요. | |
+| 31 | See your GP if the wrist is hot, red and swollen, if you've had a fall onto the hand, or if you have numbness or tingling. | GP에게 진료받으세요. 손목이 뜨겁고 붉게 부었을 때, 손을 짚으며 넘어졌을 때, 또는 감각이 없거나 저릴 때요. | |
