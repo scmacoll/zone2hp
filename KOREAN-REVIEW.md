@@ -17,6 +17,7 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 6. **"Why are you expensive?"** is 왜 비싼가요? with 저희가 가장 저렴한 곳은 아니에요. Please check the tone.
 7. **"(see above)"** in the referral answer points to the Medicare answer, which actually sits further down the page, in both languages. Should the English say "(see below)"?
 8. **Aged care** is 노인 치료 / 노인 재활 in the keyword band and 노인 요양(aged care) in the FAQ. Which do Korean families use?
+9. **Muscle names.** The thumb muscles use the newer Korean anatomy names (긴엄지벌림근, 짧은엄지폄근), but gluteus medius uses the familiar 중둔근 rather than the newer 중간볼기근, because patients know it from gyms and Pilates. Keep this mix, or use one naming style throughout?
 
 ## Glossary
 
@@ -44,6 +45,9 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | splint / immobilisation | 보조기(스플린트) / 고정 |
 | corticosteroid injection | 코르티코스테로이드 주사 |
 | hip strength | 고관절 근력 |
+| gluteus medius (glute med) / pelvis | 중둔근 / 골반 |
+| chronic non-specific low back pain | 만성 비특이적 허리 통증 |
+| tenderness (muscle) | 압통 / 누르면 아픔 |
 | concentric / eccentric / isometric | 단축성 / 신장성 / 등척성 |
 | isotonic | 등장성 |
 | Nordic hamstring exercise (NHE) | 노르딕 햄스트링 운동(NHE) |
@@ -635,3 +639,29 @@ Each post's text in reading order. References stay in English on both pages and 
 | 29 | If this hurts, get it checked | 아프다면 진찰을 받아 보세요 | |
 | 30 | Back of the right hand. Two thumb tendons share a narrow tunnel on the thumb side of the wrist, which is where the pain is felt. Simplified illustration; feeling pain here doesn't confirm the diagnosis. | 오른손 등. 엄지 힘줄 두 개가 손목 엄지 쪽의 좁은 터널을 함께 지나고, 바로 그곳에서 통증이 느껴져요. 단순화한 그림이에요. 이곳이 아프다고 해서 진단이 확정되는 건 아니에요. | |
 | 31 | See your GP if the wrist is hot, red and swollen, if you've had a fall onto the hand, or if you have numbness or tingling. | GP에게 진료받으세요. 손목이 뜨겁고 붉게 부었을 때, 손을 짚으며 넘어졌을 때, 또는 감각이 없거나 저릴 때요. | |
+
+### Low back pain? Check your hips
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | Low back pain is incredibly common. The World Health Organization estimates about 1 in 13 people worldwide were living with it in 2020. | 허리 통증은 정말 흔해요. 세계보건기구(WHO)는 2020년에 전 세계 인구 약 13명 중 1명이 허리 통증을 안고 살았다고 추산해요. | |
+| 2 | "Low back pain is the leading cause of disability globally." | "허리 통증은 전 세계적으로 장애를 일으키는 가장 큰 원인이에요." | |
+| 4 | One muscle we look at closely is gluteus medius, on the side of the hip. Each time you stand on one leg (every step you walk or run), it holds your pelvis level. If it's weak or slow to switch on, the pelvis can dip and the lower back takes extra strain. | 저희가 꼼꼼히 살펴보는 근육 하나가 엉덩이 옆쪽에 있는 중둔근(gluteus medius)이에요. 한 다리로 설 때마다(걷거나 달릴 때 내딛는 걸음마다) 이 근육이 골반을 수평으로 잡아 줘요. 이 근육이 약하거나 힘이 늦게 들어가면 골반이 처질 수 있고, 그만큼 허리에 부담이 더 가요. | |
+| 5 | "Gluteus medius weakness and gluteal muscle tenderness are common symptoms in people with chronic non-specific LBP." | "중둔근 약화와 엉덩이 근육(둔근)의 압통은 만성 비특이적 허리 통증이 있는 사람들에게 흔한 증상이에요." | |
+| 7 | What the research actually says | 연구가 실제로 말해 주는 것 | |
+| 8 | People with back pain tend to have weaker hip muscles, and adding hip strengthening to a back rehab programme has improved pain and disability in several trials [4]. But weakness and pain are linked, and that doesn't prove one causes the other. The reviewers are careful about this too: | 허리 통증이 있는 사람은 고관절 근육이 더 약한 경향이 있고, 허리 재활 프로그램에 고관절 근력 강화를 더했을 때 통증과 장애가 개선된 시험이 여러 건 있어요 [4]. 하지만 약화와 통증이 서로 연관되어 있다고 해서, 한쪽이 다른 쪽을 일으킨다는 게 증명된 건 아니에요. 문헌을 검토한 연구자들도 이 점을 조심스럽게 짚어요. | |
+| 9 | "Further research is needed before this can be confidently recommended." | "이를 자신 있게 권하려면 더 많은 연구가 필요해요." | |
+| 11 | So we don't blame everything on "imbalances". We test how your hips, pelvis and back move and share load, then build strength where it's missing, as one part of a plan that also covers activity, sleep, work set-up and confidence in moving. | 그래서 저희는 모든 걸 "불균형" 탓으로 돌리지 않아요. 고관절, 골반, 허리가 어떻게 움직이고 부하를 나눠 받는지 검사한 다음, 부족한 곳의 근력을 키워요. 이것은 활동, 수면, 업무 환경, 움직임에 대한 자신감까지 함께 다루는 계획의 한 부분이에요. | |
+| 12 | In 30 seconds | 30초 요약 | |
+| 13 | Gluteus medius keeps your pelvis level every time you're on one leg. | 중둔근은 한 다리로 설 때마다 골반을 수평으로 잡아 줘요. | |
+| 14 | People with low back pain often have weaker, more tender hip muscles. | 허리 통증이 있는 사람은 고관절 근육이 더 약하고 누르면 더 아픈 경우가 많아요. | |
+| 15 | Hip strength work is a useful part of back rehab, not the whole answer. | 고관절 근력 운동은 허리 재활에 유용한 한 부분이지만, 그것만으로 답이 되지는 않아요. | |
+| 16 | Two people seen from behind, each standing on the left leg. On the left, strong hip muscles keep the pelvis level. On the right, weak hip muscles let the pelvis drop on the lifted-leg side, loading the lower back. | 뒤에서 본 두 사람이 각각 왼쪽 다리로 서 있어요. 왼쪽: 고관절 근육이 튼튼해서 골반이 수평을 유지해요. 오른쪽: 고관절 근육이 약해서 든 다리 쪽 골반이 처지고, 허리에 부담이 가요. | |
+| 17 | Pelvis stays level | 골반 수평 유지 | |
+| 18 | Strong glute med | 튼튼한 중둔근 | |
+| 19 | Pelvis drops | 골반 처짐 | |
+| 20 | Weak glute med | 약한 중둔근 | |
+| 21 | View from behind | 뒤에서 본 모습 | |
+| 22 | Standing on left leg | 왼쪽 다리로 서기 | |
+| 23 | Seen from behind, standing on the left leg. Gluteus medius (orange) holds the pelvis level. When it can't, the lifted-leg side drops and the lower back works harder. Simplified illustration. | 뒤에서 본 모습, 왼쪽 다리로 서 있어요. 중둔근(주황색)이 골반을 수평으로 잡아 줘요. 그러지 못하면 든 다리 쪽이 처지고 허리가 더 힘들게 일해요. 단순화한 그림이에요. | |
+| 24 | See your GP urgently if back pain comes with numbness around the groin or buttocks, new bladder or bowel changes, leg weakness, fever, or unexplained weight loss. | 바로 GP에게 진료받으세요. 허리 통증과 함께 사타구니나 엉덩이 주변에 감각이 없을 때, 소변이나 대변에 새로운 변화가 생겼을 때, 다리에 힘이 빠질 때, 열이 날 때, 또는 이유 없이 체중이 줄 때요. | |

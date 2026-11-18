@@ -8,6 +8,7 @@
 6. **"Why are you expensive?"** is 왜 비싼가요? with 저희가 가장 저렴한 곳은 아니에요. Please check the tone.
 7. **"(see above)"** in the referral answer points to the Medicare answer, which actually sits further down the page, in both languages. Should the English say "(see below)"?
 8. **Aged care** is 노인 치료 / 노인 재활 in the keyword band and 노인 요양(aged care) in the FAQ. Which do Korean families use?
+9. **Muscle names.** The thumb muscles use the newer Korean anatomy names (긴엄지벌림근, 짧은엄지폄근), but gluteus medius uses the familiar 중둔근 rather than the newer 중간볼기근, because patients know it from gyms and Pilates. Keep this mix, or use one naming style throughout?
 
 ## Glossary
 
@@ -35,6 +36,9 @@
 | splint / immobilisation | 보조기(스플린트) / 고정 |
 | corticosteroid injection | 코르티코스테로이드 주사 |
 | hip strength | 고관절 근력 |
+| gluteus medius (glute med) / pelvis | 중둔근 / 골반 |
+| chronic non-specific low back pain | 만성 비특이적 허리 통증 |
+| tenderness (muscle) | 압통 / 누르면 아픔 |
 | concentric / eccentric / isometric | 단축성 / 신장성 / 등척성 |
 | isotonic | 등장성 |
 | Nordic hamstring exercise (NHE) | 노르딕 햄스트링 운동(NHE) |

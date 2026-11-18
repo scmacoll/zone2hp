@@ -17,7 +17,7 @@ const TRANSLATED = ['/', '/faq/', '/careers/', '/blog/'];
 
 /** Clinic Notes posts translated so far (slugs). Add each as it is done; the
     route at src/pages/ko/[...page].astro builds a page for each one. */
-export const KOREAN_POSTS: string[] = ['achilles-tendinopathy', 'concentric-eccentric-isometric', 'shoulder-pain-stiff-or-unstable', 'understand-your-pain', 'de-quervains-tenosynovitis'];
+export const KOREAN_POSTS: string[] = ['achilles-tendinopathy', 'concentric-eccentric-isometric', 'shoulder-pain-stiff-or-unstable', 'understand-your-pain', 'de-quervains-tenosynovitis', 'low-back-pain-and-hips'];
 
 const withSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
 
