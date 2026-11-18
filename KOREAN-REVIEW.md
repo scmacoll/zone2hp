@@ -45,6 +45,11 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | isotonic | 등장성 |
 | Nordic hamstring exercise (NHE) | 노르딕 햄스트링 운동(NHE) |
 | tendinopathy / tendon | 건병증 / 힘줄 |
+| chronic / persistent pain | 만성 통증 / 지속성 통증 |
+| flare-up | 통증이 확 심해지는 때 |
+| disc degeneration / disc bulge | 디스크 퇴행 / 디스크 팽륜 |
+| spinal manipulation | 척추 교정(spinal manipulation) |
+| CFT (Cognitive Functional Therapy) | CFT(인지 기능 치료) |
 | rehab stages: settle, build, perform | 가라앉히기, 다지기, 실전 |
 | registered practitioner | 등록된 의료인 |
 | initial consultation / follow-up | 첫 진료(초진) / 재진 |
@@ -258,7 +263,7 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | services Q3 | What are the red flags? When should I go to hospital? | 위험 신호는 무엇인가요? 언제 병원에 가야 하나요? | |
 | services A3 | Call 000 now if you have pain with: Chest pain, or difficulty breathing A serious accident, fall or injury Sudden weakness or numbness in your face, arm or leg, or trouble speaking Loss of bladder or bowel control, or numbness around the groin or buttocks No → do any of these apply? See a GP or go to the emergency department today if: The pain came on very quickly and is severe You have a fever or feel unwell along with the pain You can't walk, move or put weight on it There's muscle weakness or numbness in your arms or legs There's unexplained weight loss, or a history of cancer The area looks deformed after a fall or knock No → none of the above Book a musculoskeletal assessment Book with us, or call 0450 222 122 if you're not sure. For 24/7 advice from a registered nurse, call healthdirect on 1800 022 222. Source: Healthdirect: back pain · Healthdirect Symptom Checker (Australian Government-funded) | 통증과 함께 다음 증상이 있다면 지금 바로 000에 전화하세요: 가슴 통증 또는 호흡 곤란 심각한 사고, 낙상 또는 부상 얼굴, 팔, 다리에 갑자기 힘이 빠지거나 감각이 없어짐, 또는 말하기 어려움 소변이나 대변을 조절하지 못함, 또는 사타구니나 엉덩이 주변의 감각 저하 아니요 → 다음 중 해당하는 것이 있나요? 다음에 해당하면 오늘 GP를 만나거나 응급실에 가세요: 통증이 매우 빠르게 시작되었고 심해요 통증과 함께 열이 나거나 몸이 안 좋아요 걷거나, 움직이거나, 체중을 실을 수 없어요 팔이나 다리에 근력 저하나 감각 저하가 있어요 원인을 알 수 없는 체중 감소가 있거나, 암 병력이 있어요 넘어지거나 부딪힌 뒤 그 부위가 변형되어 보여요 아니요 → 위 항목에 모두 해당하지 않음 근골격계 평가 예약하기 저희에게 예약하시거나, 잘 모르겠다면 0450 222 122로 전화 주세요. 등록 간호사에게 24시간 상담을 받으려면 healthdirect 1800 022 222로 전화하세요. 출처: Healthdirect: back pain · Healthdirect Symptom Checker (호주 정부 지원) | |
 | services Q4 | Why am I in pain? | 왜 통증이 생기나요? | |
-| services A4 | Pain is your body's protection system, and it's rarely about one thing. The world's pain scientists put it this way: "Pain is always a personal experience that is influenced to varying degrees by biological, psychological, and social factors." International Association for the Study of Pain, 2020BodyLoad beyond what your tissues are ready for. Not enough strength, mobility or control, or a mobility gap that leaves a joint less stable. MindStress, worry about damage, and how much attention you pay to your body's early warning signs. LifeSleep, how much you sit and move, work demands, and support around you. Our job is to find which of these matter most for you, then work on the ones you can change. Read more in our post Understand your pain. Sources: IASP revised definition of pain · Hartvigsen J, et al. What low back pain is and why we need to pay attention. Lancet. 2018;391(10137):2356–2367. | 통증은 몸을 지키는 보호 시스템이고, 한 가지 원인만으로 생기는 경우는 드물어요. 세계의 통증 과학자들은 이렇게 설명해요. "통증은 언제나 개인적인 경험이며, 생물학적, 심리적, 사회적 요인의 영향을 저마다 다른 정도로 받아요." International Association for the Study of Pain, 2020몸조직이 준비된 것보다 큰 부하. 근력, 가동성, 조절 능력이 부족하거나, 가동성의 차이로 관절이 덜 안정적인 상태. 마음스트레스, 손상에 대한 걱정, 그리고 몸이 보내는 초기 경고 신호에 얼마나 주의를 기울이는지. 생활수면, 앉아 있는 시간과 움직이는 양, 업무 부담, 그리고 주변의 지지. 저희가 하는 일은 이 중 무엇이 본인에게 가장 중요한지 찾고, 바꿀 수 있는 부분을 함께 다루는 거예요. 자세한 내용은 클리닉 노트의 Understand your pain(통증 이해하기) 글에서 읽어 보세요. 출처: IASP revised definition of pain · Hartvigsen J, et al. What low back pain is and why we need to pay attention. Lancet. 2018;391(10137):2356–2367. | |
+| services A4 | Pain is your body's protection system, and it's rarely about one thing. The world's pain scientists put it this way: "Pain is always a personal experience that is influenced to varying degrees by biological, psychological, and social factors." International Association for the Study of Pain, 2020BodyLoad beyond what your tissues are ready for. Not enough strength, mobility or control, or a mobility gap that leaves a joint less stable. MindStress, worry about damage, and how much attention you pay to your body's early warning signs. LifeSleep, how much you sit and move, work demands, and support around you. Our job is to find which of these matter most for you, then work on the ones you can change. Read more in our post Understand your pain. Sources: IASP revised definition of pain · Hartvigsen J, et al. What low back pain is and why we need to pay attention. Lancet. 2018;391(10137):2356–2367. | 통증은 몸을 지키는 보호 시스템이고, 한 가지 원인만으로 생기는 경우는 드물어요. 세계의 통증 과학자들은 이렇게 설명해요. "통증은 언제나 개인적인 경험이며, 생물학적, 심리적, 사회적 요인의 영향을 저마다 다른 정도로 받아요." International Association for the Study of Pain, 2020몸조직이 준비된 것보다 큰 부하. 근력, 가동성, 조절 능력이 부족하거나, 가동성의 차이로 관절이 덜 안정적인 상태. 마음스트레스, 손상에 대한 걱정, 그리고 몸이 보내는 초기 경고 신호에 얼마나 주의를 기울이는지. 생활수면, 앉아 있는 시간과 움직이는 양, 업무 부담, 그리고 주변의 지지. 저희가 하는 일은 이 중 무엇이 본인에게 가장 중요한지 찾고, 바꿀 수 있는 부분을 함께 다루는 거예요. 자세한 내용은 클리닉 노트의 통증 이해하기 글에서 읽어 보세요. 출처: IASP revised definition of pain · Hartvigsen J, et al. What low back pain is and why we need to pay attention. Lancet. 2018;391(10137):2356–2367. | |
 | services Q5 | How much exercise and strength training should I do? | 운동과 근력 운동은 얼마나 해야 하나요? | |
 | services A5 | The World Health Organization recommends that adults do: 150 to 300 minutes of moderate activity a week (brisk walking, cycling), or 75 to 150 minutes of vigorous activity (running, fast swimming), or a mix Strength training on 2 or more days a week, working all the major muscle groups If you're 65 or over: balance and strength work on 3 or more days a week to help prevent falls Less sitting. Break up long periods of sitting with movement. Starting from zero? Any amount is better than none. We'll help you find your starting point and build from there. Sources: Bull FC, et al. World Health Organization 2020 guidelines on physical activity and sedentary behaviour. Br J Sports Med. 2020;54(24):1451–1462 · WHO physical activity fact sheet · Australian guidelines for adults | 세계보건기구(WHO)는 성인에게 다음을 권해요. 일주일에 150~300분의 중간 강도 활동(빠르게 걷기, 자전거 타기), 또는 75~150분의 고강도 활동(달리기, 빠른 수영), 또는 두 가지를 섞어서 일주일에 2일 이상 근력 운동, 모든 주요 근육군을 사용해서 65세 이상이라면: 낙상 예방을 위해 일주일에 3일 이상 균형 운동과 근력 운동 앉아 있는 시간 줄이기. 오래 앉아 있을 때는 중간중간 움직여 주세요. 운동을 전혀 안 하고 있었나요? 조금이라도 하는 것이 안 하는 것보다 나아요. 시작점을 함께 찾고 거기서부터 쌓아 갈게요. 출처: Bull FC, et al. World Health Organization 2020 guidelines on physical activity and sedentary behaviour. Br J Sports Med. 2020;54(24):1451–1462 · WHO physical activity fact sheet · Australian guidelines for adults | |
 | services Q6 | When can I return to sport? | 언제 스포츠에 복귀할 수 있나요? | |
@@ -521,3 +526,75 @@ Each post's text in reading order. References stay in English on both pages and 
 | 37 | Strength and control | 근력과 조절 | |
 | 38 | Graded loading | 단계적 부하 | |
 | 39 | See your GP or go to hospital if the shoulder looks deformed after a fall, you can't move the arm, there's sudden weakness, or the pain comes with chest pain or breathlessness. | GP에게 진료받거나 병원에 가세요. 넘어진 뒤 어깨 모양이 변형돼 보일 때, 팔을 움직일 수 없을 때, 갑자기 힘이 빠질 때, 또는 가슴 통증이나 숨 가쁨이 함께 올 때요. | |
+
+### Understand your pain
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | 1. Pain is a protector, not a damage meter | 1. 통증은 손상 측정기가 아니라 보호자예요 | |
+| 2 | Think of pain as your body's alarm system. Nerves in your tissues send danger signals, but they don't send pain. Your brain weighs those signals alongside everything else it knows, like past injuries, how tired or stressed you are, and what you believe is going on, then decides whether you need protecting. If it decides yes, you feel pain. | 통증을 몸의 경보 시스템이라고 생각해 보세요. 조직의 신경은 위험 신호를 보내지만, 통증을 보내지는 않아요. 뇌는 그 신호를 과거의 부상, 얼마나 피곤하거나 스트레스를 받았는지, 지금 무슨 일이 일어나고 있다고 믿는지처럼 알고 있는 다른 모든 것과 함께 따져 본 뒤, 보호가 필요한지 결정해요. 필요하다고 판단하면 통증을 느끼게 돼요. | |
+| 3 | That's why the world's pain scientists define pain as an experience, not an injury: | 그래서 세계의 통증 과학자들은 통증을 부상이 아니라 경험으로 정의해요. | |
+| 4 | "An unpleasant sensory and emotional experience associated with, or resembling that associated with, actual or potential tissue damage." | "실제 또는 잠재적인 조직 손상과 관련된, 혹은 그와 비슷한 불쾌한 감각적, 정서적 경험." | |
+| 6 | "Pain cannot be inferred solely from activity in sensory neurons." | "통증은 감각 신경세포의 활동만으로 추론할 수 없어요." | |
+| 8 | This explains everyday puzzles: a paper cut that hurts more than a deep gash you didn't notice until later, or a sore back that's worse on a stressful week. | 이걸로 일상의 수수께끼가 풀려요. 나중에야 알아챈 깊은 상처보다 종이에 베인 상처가 더 아프거나, 스트레스가 많은 주에 허리가 더 아픈 것처럼요. | |
+| 9 | 2. Hurt doesn't always mean harm | 2. 아프다고 늘 다친 건 아니에요 | |
+| 10 | After an injury, pain is helpful: it makes you protect the area while it heals. Most tissues heal within weeks to a few months. But sometimes the alarm stays switched on, and becomes more sensitive, after the tissue has healed. Doctors call pain lasting more than three months, or beyond the expected healing time, chronic or persistent pain [3]. About 1 in 5 Australians aged 45 and over live with it [4]. | 부상 직후의 통증은 도움이 돼요. 낫는 동안 그 부위를 보호하게 해 주니까요. 대부분의 조직은 몇 주에서 몇 달 안에 회복돼요. 그런데 조직이 다 나은 뒤에도 경보가 켜진 채로 남아 더 예민해지는 경우가 있어요. 의사들은 3개월 넘게 지속되거나 예상되는 회복 기간을 넘어서는 통증을 만성 통증 또는 지속성 통증이라고 불러요 [3]. 45세 이상 호주인 약 5명 중 1명이 이런 통증을 안고 살아요 [4]. | |
+| 11 | With persistent pain, the system itself has become overprotective, like a smoke alarm that goes off when you make toast. The pain is completely real, but it's a less reliable sign of damage. | 지속성 통증에서는 시스템 자체가 지나치게 보호적으로 바뀌어 있어요. 토스트만 구워도 울리는 화재경보기처럼요. 통증은 분명히 진짜지만, 손상을 알려 주는 신호로서는 덜 믿을 만해요. | |
+| 12 | 3. Scans show your age, not always your pain | 3. 영상 검사는 나이를 보여 줄 뿐, 늘 통증을 보여 주지는 않아요 | |
+| 13 | Disc "degeneration" and bulges sound frightening, but they're extremely common in people with no pain at all. A review of scans from people without back pain found disc degeneration in 37% of 20-year-olds and 96% of 80-year-olds [5]. Think of them as wrinkles on the inside. That's why Australian guidelines say most back pain doesn't need a scan [2]. | 디스크 "퇴행"이나 팽륜(튀어나옴)은 무섭게 들리지만, 통증이 전혀 없는 사람에게도 아주 흔해요. 허리 통증이 없는 사람들의 영상 검사를 살펴본 리뷰에서 디스크 퇴행은 20세의 37%, 80세의 96%에서 발견됐어요 [5]. 몸 안의 주름이라고 생각하세요. 그래서 호주 지침은 대부분의 허리 통증에 영상 검사가 필요하지 않다고 해요 [2]. | |
+| 14 | 4. What turns the volume up, and down | 4. 볼륨을 키우는 것, 그리고 낮추는 것 | |
+| 15 | Pain works like a volume dial, and many things besides your tissues can turn it. Sleep is a big one: | 통증은 볼륨 다이얼처럼 작동하고, 조직 말고도 많은 것이 다이얼을 돌릴 수 있어요. 수면이 그중 큰 부분이에요. | |
+| 16 | "Sleep impairments are a stronger, more reliable predictor of pain than pain is of sleep impairments." | "수면 장애가 통증을 예측하는 힘은, 통증이 수면 장애를 예측하는 힘보다 더 강하고 믿을 만해요." | |
+| 18 | 5. What the best research says helps | 5. 가장 탄탄한 연구가 말하는 도움이 되는 것 | |
+| 19 | The strongest treatments for persistent pain combine understanding with action. In RESTORE, a large Australian trial of 492 people with long-term back pain, an approach that helped people make sense of their pain and rebuild confidence in movement produced improvements that lasted a year: | 지속성 통증에 가장 효과가 큰 치료는 이해와 실천을 함께해요. 오랫동안 허리 통증을 겪은 492명을 대상으로 한 호주의 대규모 시험 RESTORE에서, 자신의 통증을 이해하고 움직임에 대한 자신감을 되찾도록 돕는 접근은 1년 동안 이어진 개선을 가져왔어요. | |
+| 20 | "CFT can produce large and sustained improvements for people with chronic disabling low back pain." | "CFT(인지 기능 치료)는 일상을 어렵게 하는 만성 허리 통증이 있는 사람들에게 크고 지속적인 개선을 가져올 수 있어요." | |
+| 22 | In a US trial focused on retraining how the brain interprets back pain, 66% of people were pain-free or nearly pain-free after treatment, compared with 20% with placebo and 10% with usual care [8]. Learning about pain on its own has a modest effect; it works best combined with exercise [9]. The World Health Organization's guideline for chronic low back pain also recommends education, exercise programmes, and some hands-on therapies such as spinal manipulation and massage [10]. | 뇌가 허리 통증을 해석하는 방식을 다시 훈련하는 데 초점을 둔 미국의 한 시험에서는, 치료 후 66%가 통증이 없거나 거의 없었어요. 위약군은 20%, 일반 치료군은 10%였어요 [8]. 통증에 대해 배우는 것만으로는 효과가 크지 않고, 운동과 함께할 때 가장 잘 작동해요 [9]. 세계보건기구(WHO)의 만성 허리 통증 지침도 교육, 운동 프로그램, 그리고 척추 교정(spinal manipulation)과 마사지 같은 일부 도수 치료를 권해요 [10]. | |
+| 23 | 6. Five things you can start this week | 6. 이번 주부터 시작할 수 있는 다섯 가지 | |
+| 24 | Keep moving, a little more each week. Pick something you can do on a bad day and build from there. Gentle and regular beats heroic and occasional. | 계속 움직이세요. 매주 조금씩 더. 컨디션이 나쁜 날에도 할 수 있는 걸 골라서 거기서부터 늘려 가세요. 가끔 무리하는 것보다 가볍게 꾸준히 하는 게 나아요. | |
+| 25 | Protect your sleep. Consistent bed and wake times, a dark room, and less screen time before bed. | 수면을 지키세요. 일정한 취침과 기상 시간, 어두운 방, 자기 전 화면 보는 시간 줄이기. | |
+| 26 | Expect flare-ups, and have a plan. A flare is a sensitive alarm, not new damage. Ease back, don't stop, then rebuild. | 통증이 확 심해지는 때가 있을 거라 생각하고, 계획을 세워 두세요. 그건 예민해진 경보이지 새로운 손상이 아니에요. 강도를 줄이되 멈추지 말고, 다시 쌓아 가세요. | |
+| 27 | Do things you enjoy. Time with people, being outdoors, hobbies: they all turn the volume down. | 즐거운 일을 하세요. 사람들과 보내는 시간, 바깥 활동, 취미: 모두 볼륨을 낮춰 줘요. | |
+| 28 | Ask questions until it makes sense. Fear feeds pain. Understanding calms it. | 이해될 때까지 물어보세요. 두려움은 통증을 키워요. 이해는 통증을 가라앉혀요. | |
+| 29 | How I can help | 제가 도울 수 있는 방법 | |
+| 30 | I'll listen to your whole story, examine you thoroughly, and explain what's going on in plain language. Then we build a plan together: hands-on treatment where it helps, exercise you can actually stick with, and the knowledge to manage flare-ups yourself. If something needs a doctor or another practitioner, I'll refer you. | 저는 환자분의 이야기를 처음부터 끝까지 듣고, 꼼꼼하게 진찰한 뒤, 무슨 일이 일어나고 있는지 쉬운 말로 설명해 드려요. 그다음 함께 계획을 세워요. 도움이 되는 곳에는 도수 치료를, 실제로 꾸준히 할 수 있는 운동을, 그리고 통증이 심해질 때 스스로 관리할 수 있는 지식을요. 의사나 다른 의료인이 필요하면 의뢰해 드려요. | |
+| 31 | In 30 seconds | 30초 요약 | |
+| 32 | Pain is your brain's protective alarm, not a direct readout of damage. | 통증은 뇌의 보호 경보이지, 손상을 그대로 읽어 주는 수치가 아니에요. | |
+| 33 | Long-lasting pain often means a sensitive alarm, not ongoing harm. | 오래가는 통증은 계속되는 손상보다 예민해진 경보인 경우가 많아요. | |
+| 34 | Movement, sleep, understanding and support all turn the volume down. | 움직임, 수면, 이해, 그리고 주변의 지지가 모두 볼륨을 낮춰 줘요. | |
+| 35 | A person standing, with a danger signal travelling from the foot up the spine to the brain. The brain combines the signal with context such as past experiences, beliefs, stress and sleep, then decides whether to produce pain. | 서 있는 사람. 위험 신호가 발에서 척추를 따라 뇌로 올라가요. 뇌는 이 신호를 과거의 경험, 믿음, 스트레스, 수면 같은 맥락과 함께 따져 본 뒤 통증을 만들지 결정해요. | |
+| 36 | The brain weighs it all | 뇌는 모든 걸 따져 봐요 | |
+| 37 | Danger signals from tissues | 조직에서 오는 위험 신호 | |
+| 38 | Past injuries and experiences | 과거의 부상과 경험 | |
+| 39 | What you believe is happening | 지금 일어난다고 믿는 일 | |
+| 40 | Stress, mood and sleep | 스트레스, 기분, 수면 | |
+| 41 | Where you are, what's at stake | 있는 곳, 걸려 있는 것 | |
+| 42 | The decision | 결정 | |
+| 43 | Protect? Then: pain | 보호가 필요하면: 통증 | |
+| 44 | Signal travels foot → spinal cord → brain | 신호의 경로: 발 → 척수 → 뇌 | |
+| 45 | Nerves carry danger signals, not pain. Pain is the brain's output after weighing everything. Simplified illustration. | 신경이 전달하는 건 통증이 아니라 위험 신호예요. 통증은 뇌가 모든 걸 따져 본 뒤 내놓는 결과예요. 단순화한 그림이에요. | |
+| 46 | A volume dial for pain with its needle swinging between down and up. Things that turn pain up: poor sleep, stress, worry about damage, avoiding movement, feeling alone. Things that turn it down: understanding, regular movement, good sleep, things you enjoy, support. | 통증의 볼륨 다이얼. 바늘이 낮춤과 키움 사이를 오가요. 통증을 키우는 것: 부족한 수면, 스트레스, 손상에 대한 걱정, 움직임 피하기, 외로움. 통증을 낮추는 것: 이해, 규칙적인 움직임, 좋은 수면, 즐거운 일, 주변의 지지. | |
+| 47 | The pain volume dial | 통증 볼륨 다이얼 | |
+| 48 | Down | 낮춤 | |
+| 49 | Up | 키움 | |
+| 50 | Turns it down | 낮추는 것 | |
+| 51 | Understanding · Regular movement | 이해 · 규칙적인 움직임 | |
+| 52 | Good sleep · Things you enjoy | 좋은 수면 · 즐거운 일 | |
+| 53 | Support from people | 주변의 지지 | |
+| 54 | Turns it up | 키우는 것 | |
+| 55 | Poor sleep · Stress | 부족한 수면 · 스트레스 | |
+| 56 | Worry about damage | 손상에 대한 걱정 | |
+| 57 | Avoiding movement · Isolation | 움직임 피하기 · 고립 | |
+| 58 | Your tissues are one input. These everyday factors are others, and many are in your control. | 조직은 여러 입력 중 하나예요. 이런 일상적인 요인들도 입력이고, 그중 많은 것을 스스로 조절할 수 있어요. | |
+| 59 | Bar chart of spine scan findings in people with no back pain. At age 20: disc degeneration 37 percent, disc bulge 30 percent. At age 80: disc degeneration 96 percent, disc bulge 84 percent. | 허리 통증이 없는 사람들의 척추 영상 검사 결과 막대그래프. 20세: 디스크 퇴행 37퍼센트, 디스크 팽륜 30퍼센트. 80세: 디스크 퇴행 96퍼센트, 디스크 팽륜 84퍼센트. | |
+| 60 | Scan findings in people with no pain | 통증 없는 사람들의 영상 검사 결과 | |
+| 68 | Age 20 | 20세 | |
+| 69 | Age 80 | 80세 | |
+| 70 | Disc degeneration | 디스크 퇴행 | |
+| 71 | Disc bulge | 디스크 팽륜 | |
+| 72 | Data from a systematic review of scans in people without back pain [5]. These findings are often normal age changes. | 허리 통증이 없는 사람들의 영상 검사를 다룬 체계적 문헌고찰 자료예요 [5]. 이런 소견은 나이에 따른 정상적인 변화인 경우가 많아요. | |
+| 73 | See a doctor urgently if pain comes on suddenly and severely, comes with fever or feeling unwell, numbness or weakness in your arms or legs, changes to bladder or bowel control, or unexplained weight loss [11]. | 바로 의사의 진료를 받으세요. 통증이 갑자기 심하게 올 때, 열이 나거나 몸이 안 좋은 느낌이 함께 올 때, 팔다리에 감각이 없거나 힘이 빠질 때, 소변이나 대변 조절에 변화가 있을 때, 또는 설명되지 않는 체중 감소가 있을 때요 [11]. | |
+| 74 | Trusted places to learn more | 더 알아보기 좋은 믿을 만한 곳(영어) | |
+| 75 | Tame the Beast: a short video on how pain works (Prof Lorimer Moseley) | Tame the Beast: 통증이 어떻게 작동하는지 알려 주는 짧은 영상(Lorimer Moseley 교수) | |
+| 76 | painHEALTH: tips and modules for musculoskeletal pain (University of Western Australia) | painHEALTH: 근골격계 통증을 위한 팁과 학습 모듈(서호주대학교) | |
+| 77 | Pain Revolution: Australian pain education initiative | Pain Revolution: 호주의 통증 교육 프로그램 | |
+| 78 | Healthdirect: chronic pain | Healthdirect: chronic pain(만성 통증) | |

@@ -36,6 +36,11 @@
 | isotonic | 등장성 |
 | Nordic hamstring exercise (NHE) | 노르딕 햄스트링 운동(NHE) |
 | tendinopathy / tendon | 건병증 / 힘줄 |
+| chronic / persistent pain | 만성 통증 / 지속성 통증 |
+| flare-up | 통증이 확 심해지는 때 |
+| disc degeneration / disc bulge | 디스크 퇴행 / 디스크 팽륜 |
+| spinal manipulation | 척추 교정(spinal manipulation) |
+| CFT (Cognitive Functional Therapy) | CFT(인지 기능 치료) |
 | rehab stages: settle, build, perform | 가라앉히기, 다지기, 실전 |
 | registered practitioner | 등록된 의료인 |
 | initial consultation / follow-up | 첫 진료(초진) / 재진 |
