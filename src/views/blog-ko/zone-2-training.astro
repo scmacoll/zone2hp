@@ -1,0 +1,67 @@
+---
+// Korean translation of src/pages/blog/zone-2-training.astro (the client's
+// post), rendered at /ko/blog/zone-2-training. Our translation, 해요체,
+// awaiting Dr Kim's review. Quotes are translated; their citations and the
+// reference list stay in English. The diagram is the same drawing with Korean
+// labels. Keep in step with the English.
+import ClinicNote from '../../layouts/ClinicNote.astro';
+---
+
+<ClinicNote slug="zone-2-training">
+  <p>운동 강도는 흔히 아주 쉬운 단계(존 1)부터 전력을 다하는 단계(존 5)까지 다섯 존으로 나눠요. 존 2는 오래 유지할 수 있는 꾸준하고 편안한 강도예요. 빠르게 걷기, 가볍게 조깅하기, 느긋하게 자전거 타기처럼요.</p>
+  <p>2025년, 지구력 과학 전문가 패널(지구력 훈련 강도 연구로 가장 잘 알려진 연구자 중 한 명인 Stephen Seiler 포함)이 존 2의 정의에 합의했어요.</p>
+  <blockquote><p>존 2는 "첫 번째 젖산 역치 또는 환기 역치 바로 아래의 강도"에 해당해요.</p><cite>Sitko et al., Int J Sports Physiol Perform, 2025 [1]</cite></blockquote>
+  <h2>검사실 없이 찾는 법</h2>
+  <p>대화 테스트(talk test)를 해 보세요. 완전한 문장으로 말할 수는 있지만, 노래는 부르고 싶지 않은 정도예요. 숨은 쉴 때보다 깊지만 일정해요. 말 사이사이 숨을 헐떡인다면 강도를 낮추세요.</p>
+  <h2>마법일까요? 아니에요.</h2>
+  <p>존 2는 몸을 혹사하지 않고 매일 반복할 수 있는 유산소 기초를 다져 줘요. 저희가 존 2를 좋아하는 이유예요. 하지만 2025년의 한 리뷰에 따르면, 체력을 키우는 데 존 2가 유일하게 가장 좋은 강도는 아니에요.</p>
+  <blockquote><p>"근거에 따르면, 심혈관·대사 건강을 극대화하려면 더 높은 운동 강도(존 2 초과)를 우선하는 것이 중요해요."</p><cite>Storoschuk et al., Sports Medicine, 2025 [2]</cite></blockquote>
+  <p>현실적인 답은 둘 다예요. 편하고 꾸준한 운동을 충분히 하고, 매주 조금 더 힘든 운동도 더하세요. 호주 가이드라인은 일주일에 중간 강도 활동 2.5~5시간과 함께, 최소 이틀은 근력 운동을 하라고 권해요 [3].</p>
+  <h2>클리닉 이름을 여기서 따온 이유</h2>
+  <p>존 2는 기초가 되는, 지속할 수 있는 노력을 꾸준히 하는 거예요. 저희는 회복도 그렇게 생각해요. 느림이 곧 빠름.</p>
+
+  <Fragment slot="side">
+    <div class="cn-tldr"><h2>30초 요약</h2><ul>
+      <li>존 2는 첫 번째 젖산 역치 바로 아래의 꾸준한 강도예요.</li>
+      <li>대화 테스트: 완전한 문장으로 말하기는 되고, 노래는 안 돼요.</li>
+      <li>존 2로 기초를 다지고, 조금 더 힘든 운동을 더하고, 일주일에 두 번 근력 운동을 하세요.</li>
+    </ul></div>
+    <figure>
+      <div class="cn-scroll" tabindex="0">
+      <svg viewBox="0 0 420 300" role="img" aria-labelledby="z-t">
+        <title id="z-t">다섯 개의 훈련 존을 점점 높아지는 막대로 나타낸 그림. 존 2는 첫 번째 젖산 역치 또는 환기 역치 바로 아래에 강조되어 있어요.</title>
+        <rect x="0" y="0" width="420" height="300" class="s-surface"/>
+        <text x="16" y="26" class="big s-ink">운동 강도의 다섯 존</text>
+        <line x1="16" y1="236" x2="404" y2="236" stroke="var(--chrome-line)" stroke-width="1.5"/>
+        <rect x="24"  y="196" width="64" height="40"  rx="6" class="s-wash"/>
+        <rect x="100" y="166" width="64" height="70"  rx="6" class="s-or"/>
+        <rect x="176" y="136" width="64" height="100" rx="6" class="s-wash"/>
+        <rect x="252" y="106" width="64" height="130" rx="6" class="s-wash"/>
+        <rect x="328" y="70"  width="64" height="166" rx="6" class="s-wash"/>
+        <line x1="170" y1="56" x2="170" y2="244" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="176" y="52" class="lbl s-ink">첫 번째 젖산 /</text>
+        <text x="176" y="66" class="lbl s-ink">환기 역치</text>
+        <text x="56"  y="256" text-anchor="middle" class="lbl s-muted">Z1</text>
+        <text x="132" y="256" text-anchor="middle" class="lbl s-ink" font-weight="700">Z2</text>
+        <text x="208" y="256" text-anchor="middle" class="lbl s-muted">Z3</text>
+        <text x="284" y="256" text-anchor="middle" class="lbl s-muted">Z4</text>
+        <text x="360" y="256" text-anchor="middle" class="lbl s-muted">Z5</text>
+        <text x="56"  y="276" text-anchor="middle" class="s-muted">아주 쉬움</text>
+        <text x="132" y="276" text-anchor="middle" class="s-ink">대화 가능</text>
+        <text x="208" y="276" text-anchor="middle" class="s-muted">짧은 문장</text>
+        <text x="284" y="276" text-anchor="middle" class="s-muted">몇 마디</text>
+        <text x="360" y="276" text-anchor="middle" class="s-muted">전력</text>
+        <text x="132" y="156" text-anchor="middle" class="big s-ink">존 2</text>
+      </svg>
+      </div>
+      <figcaption>막대 높이는 상대적인 강도를 나타내며, 생리학적 척도에 맞춘 것은 아니에요. 존 2는 첫 번째 역치 바로 아래, 호흡이 처음으로 눈에 띄게 깊어지는 지점에 있어요.</figcaption>
+    </figure>
+    <p class="cn-gp"><b>새 운동을 시작하기 전에 GP와 상담하세요.</b> 심장이나 폐 질환이 있을 때, 가슴 통증이 있을 때, 힘을 쓰면 어지러울 때, 또는 오랫동안 운동하지 않았을 때요.</p>
+  </Fragment>
+
+  <Fragment slot="refs">
+    <li>Sitko S, Artetxe X, Bonnevie-Svendsen M, et al. What is "zone 2 training"? Experts' viewpoint on definition, training methods, and expected adaptations. Int J Sports Physiol Perform. 2025;20(11):1614–1617. <a href="https://doi.org/10.1123/ijspp.2024-0303" target="_blank" rel="noopener">doi:10.1123/ijspp.2024-0303</a></li>
+    <li>Storoschuk KL, Moran-MacDonald A, Gibala MJ, Gurd BJ. Much ado about zone 2: a narrative review assessing the efficacy of zone 2 training for improving mitochondrial capacity and cardiorespiratory fitness in the general population. Sports Med. 2025. <a href="https://doi.org/10.1007/s40279-025-02261-y" target="_blank" rel="noopener">doi:10.1007/s40279-025-02261-y</a></li>
+    <li>Australian Government Department of Health, Disability and Ageing. <a href="https://www.health.gov.au/topics/physical-activity-and-exercise/physical-activity-and-exercise-guidelines-for-all-australians/for-adults-18-to-64-years" target="_blank" rel="noopener">Physical activity and exercise guidelines for adults (18 to 64 years)</a>.</li>
+  </Fragment>
+</ClinicNote>

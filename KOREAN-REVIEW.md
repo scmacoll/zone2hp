@@ -68,6 +68,9 @@ Every English string on the Korean pages, beside its Korean translation, for Dr 
 | health fund, extras, gap | 사설 건강보험(health fund), 엑스트라(extras) 플랜, 본인 부담금(gap) |
 | Medicare, rebate, item number | 메디케어(Medicare), 환급금, 항목 번호(item number) |
 | WorkCover / CTP | 워크커버(WorkCover) / CTP |
+| zone 2 / zone 2 training | 존 2 / 존 2 트레이닝 |
+| lactate threshold / ventilatory threshold | 젖산 역치 / 환기 역치 |
+| talk test / aerobic base / cardiometabolic health | 대화 테스트(talk test) / 유산소 기초 / 심혈관·대사 건강 |
 | Clinic Notes | 클리닉 노트 |
 | Expression of interest | 관심 지원서 |
 | Book now / Book online | 지금 예약하기 / 온라인 예약 |
@@ -701,3 +704,35 @@ Each post's text in reading order. References stay in English on both pages and 
 | 34 | Limited data | 자료 부족 | |
 | 35 | Top: patient-reported after-effects in one 2025 survey [2]; most were mild. Bottom: summary of the 2023 umbrella review [1]. | 위: 2025년의 한 설문 조사에서 환자가 보고한 시술 후 증상 [2]. 대부분 가벼웠어요. 아래: 2023년 엄브렐러 리뷰 [1]의 요약이에요. | |
 | 36 | Tell us first if you're pregnant, take blood thinners, have a bleeding disorder, a pacemaker or a fear of needles. | 먼저 알려 주세요. 임신 중이거나, 혈액을 묽게 하는 약(항응고제)을 먹고 있거나, 출혈 질환이나 심장 박동기가 있거나, 바늘이 무섭다면요. | |
+
+### Zone 2: the pace behind our name
+
+| Where | English | Korean | OK? |
+|---|---|---|---|
+| 1 | Exercise intensity is often split into five zones, from very easy (zone 1) to all-out (zone 5). Zone 2 is the steady, comfortable effort you could hold for a long time: a brisk walk, an easy jog, a relaxed ride. | 운동 강도는 흔히 아주 쉬운 단계(존 1)부터 전력을 다하는 단계(존 5)까지 다섯 존으로 나눠요. 존 2는 오래 유지할 수 있는 꾸준하고 편안한 강도예요. 빠르게 걷기, 가볍게 조깅하기, 느긋하게 자전거 타기처럼요. | |
+| 2 | In 2025, a panel of endurance-science experts (including Stephen Seiler, one of the best-known researchers on endurance training intensity) agreed on a definition: | 2025년, 지구력 과학 전문가 패널(지구력 훈련 강도 연구로 가장 잘 알려진 연구자 중 한 명인 Stephen Seiler 포함)이 존 2의 정의에 합의했어요. | |
+| 3 | Zone 2 sits at "intensities located immediately below the first lactate or ventilatory threshold." | 존 2는 "첫 번째 젖산 역치 또는 환기 역치 바로 아래의 강도"에 해당해요. | |
+| 5 | How to find it without a lab | 검사실 없이 찾는 법 | |
+| 6 | Use the talk test. You can speak in full sentences, but you'd rather not sing. Breathing is deeper than at rest, but steady. If you're gasping between words, ease off. | 대화 테스트(talk test)를 해 보세요. 완전한 문장으로 말할 수는 있지만, 노래는 부르고 싶지 않은 정도예요. 숨은 쉴 때보다 깊지만 일정해요. 말 사이사이 숨을 헐떡인다면 강도를 낮추세요. | |
+| 7 | Is it magic? No. | 마법일까요? 아니에요. | |
+| 8 | Zone 2 builds an aerobic base you can repeat day after day without wrecking your body, which is why we love it. But a 2025 review found it isn't the single best intensity for fitness: | 존 2는 몸을 혹사하지 않고 매일 반복할 수 있는 유산소 기초를 다져 줘요. 저희가 존 2를 좋아하는 이유예요. 하지만 2025년의 한 리뷰에 따르면, 체력을 키우는 데 존 2가 유일하게 가장 좋은 강도는 아니에요. | |
+| 9 | "Evidence suggests prioritizing higher exercise intensities (&gt; Zone 2) is critical to maximize cardiometabolic health." | "근거에 따르면, 심혈관·대사 건강을 극대화하려면 더 높은 운동 강도(존 2 초과)를 우선하는 것이 중요해요." | |
+| 11 | The practical answer is both: plenty of easy, steady work, plus some harder efforts each week. Australia's guidelines recommend 2.5 to 5 hours of moderate activity a week, plus muscle strengthening on at least two days [3]. | 현실적인 답은 둘 다예요. 편하고 꾸준한 운동을 충분히 하고, 매주 조금 더 힘든 운동도 더하세요. 호주 가이드라인은 일주일에 중간 강도 활동 2.5~5시간과 함께, 최소 이틀은 근력 운동을 하라고 권해요 [3]. | |
+| 12 | Why we named the clinic after it | 클리닉 이름을 여기서 따온 이유 | |
+| 13 | Zone 2 is foundational, sustainable effort, done consistently. That's how we think about recovery too. Slow is fast. | 존 2는 기초가 되는, 지속할 수 있는 노력을 꾸준히 하는 거예요. 저희는 회복도 그렇게 생각해요. 느림이 곧 빠름. | |
+| 14 | In 30 seconds | 30초 요약 | |
+| 15 | Zone 2 is steady effort just below your first lactate threshold. | 존 2는 첫 번째 젖산 역치 바로 아래의 꾸준한 강도예요. | |
+| 16 | Talk test: full sentences yes, singing no. | 대화 테스트: 완전한 문장으로 말하기는 되고, 노래는 안 돼요. | |
+| 17 | Build the base in zone 2, add some harder work, and lift weights twice a week. | 존 2로 기초를 다지고, 조금 더 힘든 운동을 더하고, 일주일에 두 번 근력 운동을 하세요. | |
+| 18 | Five training zones shown as rising bars; zone 2 is highlighted just below the first lactate or ventilatory threshold | 다섯 개의 훈련 존을 점점 높아지는 막대로 나타낸 그림. 존 2는 첫 번째 젖산 역치 또는 환기 역치 바로 아래에 강조되어 있어요. | |
+| 19 | The five intensity zones | 운동 강도의 다섯 존 | |
+| 20 | 1st lactate / | 첫 번째 젖산 / | |
+| 21 | ventilatory threshold | 환기 역치 | |
+| 27 | Very easy | 아주 쉬움 | |
+| 28 | Can chat | 대화 가능 | |
+| 29 | Short phrases | 짧은 문장 | |
+| 30 | Few words | 몇 마디 | |
+| 31 | All-out | 전력 | |
+| 32 | Zone 2 | 존 2 | |
+| 33 | Bar heights show relative effort and aren't to a physiological scale. Zone 2 sits just under the first threshold, where breathing first deepens noticeably. | 막대 높이는 상대적인 강도를 나타내며, 생리학적 척도에 맞춘 것은 아니에요. 존 2는 첫 번째 역치 바로 아래, 호흡이 처음으로 눈에 띄게 깊어지는 지점에 있어요. | |
+| 34 | Check with your GP before starting new exercise if you have heart or lung conditions, chest pain, dizziness on exertion, or haven't exercised in a long time. | 새 운동을 시작하기 전에 GP와 상담하세요. 심장이나 폐 질환이 있을 때, 가슴 통증이 있을 때, 힘을 쓰면 어지러울 때, 또는 오랫동안 운동하지 않았을 때요. | |

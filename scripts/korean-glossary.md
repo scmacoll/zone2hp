@@ -59,6 +59,9 @@
 | health fund, extras, gap | 사설 건강보험(health fund), 엑스트라(extras) 플랜, 본인 부담금(gap) |
 | Medicare, rebate, item number | 메디케어(Medicare), 환급금, 항목 번호(item number) |
 | WorkCover / CTP | 워크커버(WorkCover) / CTP |
+| zone 2 / zone 2 training | 존 2 / 존 2 트레이닝 |
+| lactate threshold / ventilatory threshold | 젖산 역치 / 환기 역치 |
+| talk test / aerobic base / cardiometabolic health | 대화 테스트(talk test) / 유산소 기초 / 심혈관·대사 건강 |
 | Clinic Notes | 클리닉 노트 |
 | Expression of interest | 관심 지원서 |
 | Book now / Book online | 지금 예약하기 / 온라인 예약 |
