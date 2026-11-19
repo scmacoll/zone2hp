@@ -29,6 +29,7 @@ describe('hasTwin', () => {
     expect(hasTwin('/blog/')).toBe(true);
     expect(hasTwin('/blog/not-translated-yet')).toBe(false);
     expect(hasTwin('/privacy/')).toBe(true);
+    expect(hasTwin('/privacy/data-security')).toBe(true);
     expect(hasTwin('/refer/')).toBe(false);
     expect(hasTwin('/careers-compare/')).toBe(false);
   });

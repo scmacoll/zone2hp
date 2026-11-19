@@ -11,11 +11,12 @@ import Careers from '../../views/Careers.astro';
 import CareersRole from '../../views/CareersRole.astro';
 import BlogIndex from '../../views/BlogIndex.astro';
 import Privacy from '../../views/legal-ko/privacy.astro';
+import DataSecurity from '../../views/legal-ko/data-security.astro';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import { KOREAN_POSTS, koreanLive } from '../../i18n/lang';
 import { roles, type Role } from '../../lib/careers';
 
-type View = 'home' | 'faq' | 'careers' | 'role' | 'blog' | 'post' | 'privacy';
+type View = 'home' | 'faq' | 'careers' | 'role' | 'blog' | 'post' | 'privacy' | 'dataSecurity';
 
 // Korean Clinic Notes posts: one view per translated post, named by its slug.
 const posts = import.meta.glob<{ default: AstroComponentFactory }>('../../views/blog-ko/*.astro', {
@@ -31,6 +32,7 @@ export function getStaticPaths() {
     { params: { page: 'careers' }, props: { view: 'careers' as View } },
     { params: { page: 'blog' }, props: { view: 'blog' as View } },
     { params: { page: 'privacy' }, props: { view: 'privacy' as View } },
+    { params: { page: 'privacy/data-security' }, props: { view: 'dataSecurity' as View } },
     ...KOREAN_POSTS.map((slug) => ({ params: { page: `blog/${slug}` }, props: { view: 'post' as View, slug } })),
     ...roles.map((role) => ({
       params: { page: `careers/${role.slug}` },
@@ -50,4 +52,5 @@ if (view === 'post' && !Post) throw new Error(`No Korean view for post: ${slug}`
 {view === 'role' && role && <CareersRole role={role} />}
 {view === 'blog' && <BlogIndex />}
 {view === 'privacy' && <Privacy />}
+{view === 'dataSecurity' && <DataSecurity />}
 {Post && <Post />}

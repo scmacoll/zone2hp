@@ -1,0 +1,79 @@
+---
+// Korean translation of src/pages/privacy/data-security.astro (the client's
+// approved text), rendered at /ko/privacy/data-security. Our translation,
+// 해요체, for Dr Kim and the solicitor to review. The English page is the
+// official text and the notice at the top says so. Same terms as the Korean
+// privacy policy (src/views/legal-ko/privacy.astro). Keep in step with the
+// English, sentence for sentence; never reword the meaning.
+import Legal from '../../layouts/Legal.astro';
+import { localise } from '../../i18n/lang';
+---
+
+<Legal
+  title="전자 건강 기록과 데이터 보안 | Zone Two Health and Performance"
+  description="Zone Two Health and Performance가 환자 기록 보관에 Cliniko를 어떻게 사용하는지, 그리고 기록을 보호하는 보안 조치를 안내해요."
+  eyebrow="개인정보 보호"
+  heading="전자 건강 기록과 데이터 보안"
+>
+  <p class="legal__notice">
+    <b>안내:</b> 이 한국어 번역은 이해를 돕기 위한 것이에요. 공식 방침은
+    <a href="/privacy/data-security" lang="en" hreflang="en-AU">영어 원문</a>이며, 두 내용이 다를 경우 영어
+    원문이 우선해요.
+  </p>
+
+  <p>
+    Zone Two Health &amp; Performance는 환자 기록, 예약, 임상 문서, 서신, 온라인 예약, 환자와의 보안
+    연락을 관리하기 위해, 전 세계 의료 기관이 사용하는 안전한 클라우드 기반 진료 관리 시스템인 Cliniko를
+    사용해요.
+  </p>
+
+  <h2>보안 조치</h2>
+  <p>Cliniko는 환자 정보 보호에 도움이 되는 업계 표준 보안 조치를 사용해요. 여기에는 다음이 포함돼요.</p>
+  <ul>
+    <li>전송 중(SSL/TLS)과 저장 시(AES-256 암호화)의 데이터 암호화</li>
+    <li>호주 의료 기관의 데이터는 호주에서 호스팅</li>
+    <li>안전한 외부 보관소에 저장되는 정기 암호화 백업</li>
+    <li>사용자 인증과 선택형 2단계 인증(2FA)</li>
+    <li>승인된 직원만 접근하도록 제한하는 역할 기반 사용자 권한</li>
+    <li>시스템 안에서 이루어진 변경 사항을 기록하는 활동 로그</li>
+  </ul>
+
+  <h2>정보에 접근할 수 있는 사람</h2>
+  <p>
+    여러분의 개인정보에 대한 접근은 진료를 제공하거나 직업상 업무를 수행하는 데 접근이 필요한, 승인된
+    임상 및 행정 직원으로 제한돼요.
+  </p>
+
+  <p>
+    여러분의 개인정보와 건강 정보는 1988년 개인정보 보호법(Privacy Act 1988 (Cth)), 호주 개인정보 보호
+    원칙(Australian Privacy Principles, APPs), 2002년 NSW 건강 기록 및 정보 보호법(Health Records and
+    Information Privacy Act 2002 (NSW)), 그리고 등록된 의료인으로서 저희가 지는 직업상 의무에 따라 수집,
+    보관, 관리돼요.
+  </p>
+
+  <h2>책임 주체</h2>
+  <p>
+    Cliniko는 기록 관리에 쓰이는 안전한 기술 플랫폼을 제공하지만, 여러분의 개인정보가 적법하게, 비밀이
+    유지되도록, 그리고 의료 제공 목적으로만 다뤄지도록 할 책임은 Zone Two Health &amp; Performance에
+    있어요. 저희는 여러분의 동의가 있을 때, 법률에 따라 요구되거나 허용될 때, 또는 여러분의 건강이나
+    안전을 보호하기 위해 필요할 때에만 정보를 제공해요.
+  </p>
+
+  <p>Cliniko의 개인정보 보호 및 보안 관행에 대한 자세한 내용은 다음을 참고하세요.</p>
+  <ul>
+    <li>
+      <a href="https://www.cliniko.com/security/" rel="noopener noreferrer" target="_blank"
+        >Cliniko 보안 정책(영문)</a
+      >
+    </li>
+    <li>
+      <a href="https://www.cliniko.com/policies/privacy/" rel="noopener noreferrer" target="_blank"
+        >Cliniko 개인정보처리방침(영문)</a
+      >
+    </li>
+  </ul>
+
+  <nav class="legal__next" aria-label="개인정보 더 알아보기">
+    <a href={localise('ko', '/privacy')}>개인정보처리방침으로 돌아가기</a>
+  </nav>
+</Legal>

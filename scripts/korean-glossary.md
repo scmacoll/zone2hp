@@ -69,5 +69,6 @@
 | Opening hours | 진료 시간 |
 | Privacy Policy / Privacy Statement | 개인정보처리방침 / 개인정보 보호 안내문(Privacy Statement) |
 | practice management system | 진료 관리 시스템 |
+| encryption / two-factor authentication / role-based permissions / activity logs | 암호화 / 2단계 인증(2FA) / 역할 기반 사용자 권한 / 활동 로그 |
 | DVA / medical certificate | 보훈부(DVA) / 진단서(medical certificate) |
 | Privacy Act 1988 (Cth) / Australian Privacy Principles | 1988년 개인정보 보호법(Privacy Act 1988 (Cth)) / 호주 개인정보 보호 원칙(Australian Privacy Principles) |
