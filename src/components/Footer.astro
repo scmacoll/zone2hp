@@ -63,7 +63,7 @@ const openingHours = t.hours;
                 <a class="footer__legal-link" href={localise(lang, "/careers")}>{t.footer.careers}</a>
                 <a class="footer__legal-link" href={localise(lang, "/faq")}>{t.footer.faq}</a>
                 {showDrafts && <a class="footer__legal-link" href="/refer">{t.footer.refer}</a>}
-                <a class="footer__legal-link" href="/privacy">{t.footer.privacy}</a>
+                <a class="footer__legal-link" href={localise(lang, "/privacy")}>{t.footer.privacy}</a>
             </div>
         </div>
     </div>

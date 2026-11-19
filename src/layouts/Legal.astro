@@ -98,6 +98,19 @@ const { title, heading, description, eyebrow } = Astro.props;
     text-underline-offset: 0.2em;
   }
 
+  /* Korean pages: "the English is the official version". The Clinic Notes
+     peach box (.cn-gp, --cn-wash). */
+  .legal__body :global(.legal__notice) {
+    margin: 0 0 var(--space-md);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    background: #ffe8da;
+    font-size: 0.9375rem;
+  }
+  .legal__body :global(.legal__notice b) {
+    color: var(--accent-deep);
+  }
+
   /* Closing block: the cross-link between the two legal pages. */
   .legal__body :global(.legal__next) {
     display: block;

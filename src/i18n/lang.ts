@@ -13,7 +13,7 @@ export const koreanPublished = false;
 export const koreanLive = koreanPublished || showDrafts;
 
 /** English paths (trailing slash) that have a Korean twin. */
-const TRANSLATED = ['/', '/faq/', '/careers/', '/blog/'];
+const TRANSLATED = ['/', '/faq/', '/careers/', '/blog/', '/privacy/'];
 
 /** Clinic Notes posts translated so far (slugs). Add each as it is done; the
     route at src/pages/ko/[...page].astro builds a page for each one. */

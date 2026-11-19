@@ -7,7 +7,7 @@
 // With no JS the browser's own required checks apply and the form posts to
 // Formspree's page. The script adds inline errors and stays on the page.
 // Styles: src/styles/careers.css.
-import { langFromUrl } from '../i18n/lang';
+import { langFromUrl, localise } from '../i18n/lang';
 import { careers } from '../i18n/careers';
 
 interface Props {
@@ -75,7 +75,7 @@ const t = careers[lang].form;
   </div>
 
   <p class="cr-form__notice">
-    {t.notice[0]}<a href="/privacy">{t.notice[1]}</a>{t.notice[2]}
+    {t.notice[0]}<a href={localise(lang, '/privacy')}>{t.notice[1]}</a>{t.notice[2]}
   </p>
 
   <div class="cr-field">

@@ -10,6 +10,7 @@
 8. **Aged care** is 노인 치료 / 노인 재활 in the keyword band and 노인 요양(aged care) in the FAQ. Which do Korean families use?
 9. **Muscle names.** The thumb muscles use the newer Korean anatomy names (긴엄지벌림근, 짧은엄지폄근), but gluteus medius uses the familiar 중둔근 rather than the newer 중간볼기근, because patients know it from gyms and Pilates. Keep this mix, or use one naming style throughout?
 10. **Dry needling and acupuncture.** The post says acupuncture is "based on traditional Chinese medicine", translated as 중국 전통 의학에 바탕을 둔 침술 (not 한의학). Dry needling versus 침 is a sensitive topic for Korean readers. Is this wording right for them?
+11. **Privacy policy register.** The Korean privacy page uses the site's 해요체. Korean legal pages usually use the formal 합니다체. Keep 해요체 for consistency, or switch the legal pages to 합니다체? (The solicitor should see this page either way; the English stays the official policy.)
 
 ## Glossary
 
@@ -66,3 +67,7 @@
 | Expression of interest | 관심 지원서 |
 | Book now / Book online | 지금 예약하기 / 온라인 예약 |
 | Opening hours | 진료 시간 |
+| Privacy Policy / Privacy Statement | 개인정보처리방침 / 개인정보 보호 안내문(Privacy Statement) |
+| practice management system | 진료 관리 시스템 |
+| DVA / medical certificate | 보훈부(DVA) / 진단서(medical certificate) |
+| Privacy Act 1988 (Cth) / Australian Privacy Principles | 1988년 개인정보 보호법(Privacy Act 1988 (Cth)) / 호주 개인정보 보호 원칙(Australian Privacy Principles) |

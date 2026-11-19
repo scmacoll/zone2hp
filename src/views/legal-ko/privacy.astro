@@ -1,0 +1,109 @@
+---
+// Korean translation of the Privacy Policy (src/pages/privacy/index.astro, the
+// client's legal text), rendered at /ko/privacy. Our translation, 해요체, for
+// Dr Kim and the solicitor to review. The English page is the official policy
+// and the notice at the top says so. Laws, programmes and product names keep
+// their English names in brackets. Keep in step with the English, sentence for
+// sentence; never reword the meaning.
+import Legal from '../../layouts/Legal.astro';
+import { hasTwin, localise } from '../../i18n/lang';
+
+const dataSecurity = '/privacy/data-security';
+---
+
+<Legal
+  title="개인정보처리방침 | Zone Two Health and Performance"
+  description="Zone Two Health and Performance가 개인정보와 건강 정보를 수집, 이용, 보관, 제공하는 방법을 안내해요."
+  eyebrow="개인정보처리방침"
+  heading="개인정보 보호 및 개인정보 수집"
+>
+  <p class="legal__notice">
+    <b>안내:</b> 이 한국어 번역은 이해를 돕기 위한 것이에요. 공식 방침은
+    <a href="/privacy" lang="en" hreflang="en-AU">영어 원문</a>이며, 두 내용이 다를 경우 영어 원문이 우선해요.
+  </p>
+
+  <p>
+    Zone Two Health &amp; Performance는 여러분의 개인정보를 보호하고, 개인정보와 건강 정보의 비밀을
+    지키는 데 힘쓰고 있어요.
+  </p>
+
+  <p>
+    저희는 안전하고 효과적이며 서로 연계된 의료를 제공하는 데 필요한 정보를 수집해요. 여기에는 인적
+    사항, 병력, 복용 중인 약, 영상 검사 보고서, 의뢰 정보, 생활 습관 요인, 그리고 치료와 관련된 기타
+    건강 정보가 포함될 수 있어요.
+  </p>
+
+  <h2>정보의 이용</h2>
+  <p>여러분의 정보는 다음 목적으로 이용돼요.</p>
+  <ul>
+    <li>건강 상태를 평가하고 치료를 제공하기 위해</li>
+    <li>적절한 관리 계획을 세우기 위해</li>
+    <li>치료에 참여하는 다른 의료 제공자와 소통하기 위해</li>
+    <li>보고서, 의뢰서, 진단서(medical certificate), 기타 임상 문서를 작성하기 위해</li>
+    <li>
+      해당되는 경우, 사설 건강보험(health fund), 메디케어(Medicare), 보훈부(DVA), 워크커버(WorkCover), CTP
+      또는 기타 보험사 청구를 처리하기 위해
+    </li>
+    <li>법적 의무와 직업상 의무를 지키기 위해.</li>
+  </ul>
+
+  <h2>정보의 보관</h2>
+  <p>
+    여러분의 정보는 전자 진료 관리 시스템과 적절한 관리적, 기술적, 물리적 보호 조치를 통해 안전하게
+    보관돼요. 접근 권한은 업무 수행에 그 정보가 필요한, 승인된 임상 및 행정 직원으로 제한돼요.
+  </p>
+
+  <h2>정보를 제공할 수 있는 경우</h2>
+  <p>
+    여러분의 개인정보는 다음의 경우를 제외하고, 동의 없이 다른 사람이나 기관에 제공되지 않아요.
+  </p>
+  <ul>
+    <li>법률에 따라 제공이 요구되거나 허용되는 경우;</li>
+    <li>본인 또는 다른 사람의 생명, 건강, 안전에 대한 심각한 위협을 막기 위해 필요한 경우;</li>
+    <li>
+      치료와 직접 관련된 메디케어(Medicare), 보험사, 워크커버(WorkCover), CTP, 보훈부(DVA) 또는 기타
+      적법한 목적에 필요한 경우.
+    </li>
+  </ul>
+
+  <h2>기록의 열람과 정정</h2>
+  <p>
+    관련 법령에 따라, 건강 기록의 열람을 요청하거나, 정보가 부정확하거나 불완전한 경우 정정을 요청할 수
+    있어요.
+  </p>
+
+  <h2>동의</h2>
+  <p>
+    이 양식에 서명하면, 이 개인정보 보호 안내문(Privacy Statement)을 읽고 이해했음을 확인하고, Zone Two
+    Health &amp; Performance가 1988년 개인정보 보호법(Privacy Act 1988 (Cth)), 호주 개인정보 보호
+    원칙(Australian Privacy Principles), 2002년 NSW 건강 기록 및 정보 보호법(Health Records and
+    Information Privacy Act 2002 (NSW))에 따라 위에 설명한 목적으로 여러분의 개인정보를 수집, 이용,
+    보관, 제공하는 데 동의하게 돼요.
+  </p>
+
+  <h2>온라인 예약과 쿠키</h2>
+  <p>
+    이 웹사이트는 온라인 예약을 위해 호주의 안전한 진료 관리 시스템인 Cliniko를 사용해요. 예약 페이지를
+    이용하면, Cliniko 예약 시스템이 예약 과정이 작동하는 데 꼭 필요한 기능성 쿠키를 설정해요. 여기에는
+    세션 식별자와 브라우저 식별자가 포함돼요. 예약 시스템은 마케팅, 광고, 분석 쿠키를 설정하지 않아요.
+  </p>
+  <p>
+    입력한 예약 정보(이름, 연락처, 선택한 서비스 등)는 Cliniko가 처리하며, 호주에 있는 서버에 저장돼요.
+    자세한 내용은
+    <a href="https://www.cliniko.com/policies/privacy/" rel="noopener noreferrer" target="_blank">Cliniko 개인정보처리방침(영문)</a>을
+    참고하세요.
+  </p>
+  <p>
+    이 웹사이트는 방문자가 사이트를 어떻게 이용하는지(어떤 페이지를 보는지, 어떻게 저희를 찾게 되는지 등)
+    이해하기 위해 Google 애널리틱스(Google Analytics)도 사용해요. Google 애널리틱스는 쿠키를 설정하고 기기,
+    브라우저, 대략적인 위치, 방문한 페이지 같은 정보를 수집해요. 이 정보는 Google이 처리하며 호주 밖에
+    저장될 수 있어요. 이 정보는 개인을 식별하는 데 쓰이지 않으며, 환자 기록과 연결되지 않아요. 이
+    웹사이트는 광고 쿠키를 설정하지 않아요. 브라우저에서 쿠키를 차단하거나 Google 애널리틱스 차단 브라우저
+    부가 기능(Google Analytics Opt-out Browser Add-on)을 사용해 수집을 거부할 수 있어요.
+  </p>
+
+  <nav class="legal__next" aria-label="개인정보 더 알아보기">
+    <a href={localise('ko', dataSecurity)}>전자 건강 기록과 데이터 보안{!hasTwin(dataSecurity) && ' (영문)'}</a>
+    <p>기록을 보관하는 진료 관리 시스템에 대한 자세한 내용이에요.</p>
+  </nav>
+</Legal>
