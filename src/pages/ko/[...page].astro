@@ -12,11 +12,15 @@ import CareersRole from '../../views/CareersRole.astro';
 import BlogIndex from '../../views/BlogIndex.astro';
 import Privacy from '../../views/legal-ko/privacy.astro';
 import DataSecurity from '../../views/legal-ko/data-security.astro';
+import BookTypes from '../../views/book/BookTypes.astro';
+import BookPatient from '../../views/book/BookPatient.astro';
+import BookEmbedPage from '../../views/book/BookEmbedPage.astro';
+import { bookingConfig } from '../../lib/booking/config';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import { KOREAN_POSTS, koreanLive } from '../../i18n/lang';
 import { roles, type Role } from '../../lib/careers';
 
-type View = 'home' | 'faq' | 'careers' | 'role' | 'blog' | 'post' | 'privacy' | 'dataSecurity';
+type View = 'home' | 'faq' | 'careers' | 'role' | 'blog' | 'post' | 'privacy' | 'dataSecurity' | 'book' | 'bookPatient' | 'bookNew' | 'bookReturning';
 
 // Korean Clinic Notes posts: one view per translated post, named by its slug.
 const posts = import.meta.glob<{ default: AstroComponentFactory }>('../../views/blog-ko/*.astro', {
@@ -33,6 +37,16 @@ export function getStaticPaths() {
     { params: { page: 'blog' }, props: { view: 'blog' as View } },
     { params: { page: 'privacy' }, props: { view: 'privacy' as View } },
     { params: { page: 'privacy/data-security' }, props: { view: 'dataSecurity' as View } },
+    // Booking: the Cliniko (embedded) path only, and only where booking is on.
+    // /ko/book/refer renders on demand (src/pages/ko/book/refer.astro).
+    ...(bookingConfig.linksVisible && bookingConfig.mode === 'embedded'
+      ? [
+          { params: { page: 'book' }, props: { view: 'book' as View } },
+          { params: { page: 'book/patient' }, props: { view: 'bookPatient' as View } },
+          { params: { page: 'book/new' }, props: { view: 'bookNew' as View } },
+          { params: { page: 'book/returning' }, props: { view: 'bookReturning' as View } },
+        ]
+      : []),
     ...KOREAN_POSTS.map((slug) => ({ params: { page: `blog/${slug}` }, props: { view: 'post' as View, slug } })),
     ...roles.map((role) => ({
       params: { page: `careers/${role.slug}` },
@@ -53,4 +67,8 @@ if (view === 'post' && !Post) throw new Error(`No Korean view for post: ${slug}`
 {view === 'blog' && <BlogIndex />}
 {view === 'privacy' && <Privacy />}
 {view === 'dataSecurity' && <DataSecurity />}
+{view === 'book' && <BookTypes />}
+{view === 'bookPatient' && <BookPatient />}
+{view === 'bookNew' && <BookEmbedPage kind="new" />}
+{view === 'bookReturning' && <BookEmbedPage kind="returning" />}
 {Post && <Post />}

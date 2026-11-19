@@ -5,7 +5,7 @@ import { bookingConfig } from '../lib/booking/config';
 // from side-by-side to stacked on its own container width via a container query,
 // which is the fix for the split-window case.
 import Eyebrow from './Eyebrow.astro';
-import { langFromUrl } from '../i18n/lang';
+import { langFromUrl, localise } from '../i18n/lang';
 import { ui } from '../i18n/ui';
 
 interface Props {
@@ -72,7 +72,7 @@ const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${enc
       </div>
       {
         bookingConfig.linksVisible ? (
-          <a class="map__book" href="/book">
+          <a class="map__book" href={localise(lang, '/book')}>
             {t.bookNow}
           </a>
         ) : (

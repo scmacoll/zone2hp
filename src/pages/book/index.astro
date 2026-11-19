@@ -4,11 +4,8 @@
 // funding types show a "call or email" page. In custom-funnel mode, shows
 // the new/existing customer step as before.
 import BookingShell from "../../components/booking/BookingShell.astro";
-import Base from "../../layouts/Base.astro";
-import PageHeader from "../../components/PageHeader.astro";
-import Footer from "../../components/Footer.astro";
+import BookTypes from "../../views/book/BookTypes.astro";
 import { bookingConfig } from "../../lib/booking/config";
-import { BOOKING_TYPES } from "../../lib/booking/funnel";
 import { buildStepUrl } from "../../lib/booking/funnel-state";
 import '../../styles/booking.css';
 
@@ -16,36 +13,11 @@ import '../../styles/booking.css';
 if (!bookingConfig.linksVisible) return Astro.redirect("/");
 
 const useEmbed = bookingConfig.mode === "embedded";
-
-function tileHref(id: string): string {
-    return id === 'standard' ? '/book/patient' : `/book/refer?type=${id}`;
-}
 ---
 
 {
     useEmbed ? (
-        <Base
-            title="Book an appointment | Zone Two Health and Performance"
-            description="Book an appointment with Zone Two Health and Performance in Eastwood, NSW."
-            noindex
-        >
-            <PageHeader />
-            <main id="main" class="book">
-                <div class="gate">
-                    <h1 class="gate__title">Book an appointment</h1>
-                    <p class="gate__lede">What kind of appointment do you need?</p>
-                    <div class="choices">
-                        {BOOKING_TYPES.map((t) => (
-                            <a class="choice" href={tileHref(t.id)}>
-                                <span class="choice__title">{t.label}</span>
-                                <span class="choice__blurb">{t.blurb}</span>
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </main>
-            <Footer />
-        </Base>
+        <BookTypes />
     ) : (
         <BookingShell step="customer">
             <p class="step__lede">Have you been to Zone Two before?</p>
@@ -241,19 +213,3 @@ function tileHref(id: string): string {
     }
 </script>
 
-<style>
-  .gate {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding-inline: var(--section-pad-inline);
-    padding-block: var(--space-lg);
-  }
-  .gate__title {
-    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
-  }
-  .gate__lede {
-    margin-top: var(--space-2xs);
-    color: var(--ink-2);
-    max-width: 52ch;
-  }
-</style>

@@ -1,0 +1,17 @@
+---
+export const prerender = false;
+
+// Korean "call or email to book" page (/ko/book/refer?type=...). On demand, like
+// the English one, because it reads ?type=. The rest of the Korean booking
+// pages are static, in src/pages/ko/[...page].astro. Answers 404 wherever the
+// Korean pages are off (production until Dr Kim signs off).
+import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+import BookRefer from '../../../views/book/BookRefer.astro';
+import { bookingConfig } from '../../../lib/booking/config';
+import { koreanLive } from '../../../i18n/lang';
+
+if (!koreanLive) return new Response(null, { status: 404 });
+if (!bookingConfig.linksVisible) return Astro.redirect('/ko/');
+---
+
+<BookRefer />

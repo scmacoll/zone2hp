@@ -9,7 +9,7 @@
 // button would otherwise lead nowhere. The caption belongs to the button, so the
 // two show or hide together.
 import { bookingConfig } from '../lib/booking/config';
-import { langFromUrl } from '../i18n/lang';
+import { langFromUrl, localise } from '../i18n/lang';
 import { ui } from '../i18n/ui';
 import { blog } from '../i18n/blog';
 
@@ -20,7 +20,7 @@ const t = blog[lang].close;
 {
   bookingConfig.linksVisible && (
     <div class="cn-cta">
-      <a class="cn-btn" href="/book">
+      <a class="cn-btn" href={localise(lang, '/book')}>
         {ui[lang].bookOnline}
       </a>
       <p class="cn-cta__lang">

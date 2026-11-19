@@ -29,8 +29,10 @@ const links = [
 const current = (href: string) =>
   (href.endsWith('/blog') && onClinicNotes) || (href.endsWith('/faq') && /^(\/ko)?\/faq/.test(path));
 
-// The same page in the other language, last in the list, when it exists.
-const twin = twinPath(path);
+// The same page in the other language, last in the list, when it exists. On
+// on-demand pages (/book/refer?type=...) the query comes along too.
+const twinBase = twinPath(path);
+const twin = twinBase && !Astro.isPrerendered ? twinBase + Astro.url.search : twinBase;
 ---
 
 <div class:list={['menu', `menu--${tone}`, className]} data-site-menu>

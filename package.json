@@ -12,7 +12,7 @@
     "astro": "astro",
     "test": "vitest",
     "test:run": "vitest run",
-    "korean-review": "esbuild scripts/korean-review.ts --bundle --platform=node --format=esm --log-level=warning --define:import.meta.env.DEV=false --outfile=node_modules/.cache/korean-review.mjs && PUBLIC_SHOW_DRAFT_ROLES=true node node_modules/.cache/korean-review.mjs"
+    "korean-review": "esbuild scripts/korean-review.ts --bundle --platform=node --format=esm --log-level=warning --define:import.meta.env.DEV=false --define:import.meta.env=process.env --outfile=node_modules/.cache/korean-review.mjs && PUBLIC_SHOW_DRAFT_ROLES=true node node_modules/.cache/korean-review.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

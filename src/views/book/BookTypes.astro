@@ -1,0 +1,56 @@
+---
+// /book in embedded (Cliniko) mode: choose a funding type. Standard goes to the
+// new/existing gate; the others go to the "call or email" page. Shared by the
+// English route (src/pages/book/index.astro) and /ko/book.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Footer from '../../components/Footer.astro';
+import { langFromUrl, localise } from '../../i18n/lang';
+import { booking, bookingTypes } from '../../i18n/booking';
+import '../../styles/booking.css';
+
+const lang = langFromUrl(Astro.url);
+const t = booking[lang].types;
+
+function tileHref(id: string): string {
+  return localise(lang, id === 'standard' ? '/book/patient' : `/book/refer?type=${id}`);
+}
+---
+
+<Base title={t.title} description={t.description} noindex>
+  <PageHeader />
+  <main id="main" class="book">
+    <div class="gate">
+      <h1 class="gate__title">{t.heading}</h1>
+      <p class="gate__lede">{t.lede}</p>
+      <div class="choices">
+        {
+          bookingTypes(lang).map((type) => (
+            <a class="choice" href={tileHref(type.id)}>
+              <span class="choice__title">{type.label}</span>
+              <span class="choice__blurb">{type.blurb}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .gate {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-block: var(--space-lg);
+  }
+  .gate__title {
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  }
+  .gate__lede {
+    margin-top: var(--space-2xs);
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+</style>

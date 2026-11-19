@@ -13,7 +13,7 @@ import { faq as faqEn } from '../lib/faq';
 import { faqKo } from '../lib/faq.ko';
 import { showDrafts } from '../lib/drafts';
 import { bookingConfig } from '../lib/booking/config';
-import { langFromUrl } from '../i18n/lang';
+import { langFromUrl, localise } from '../i18n/lang';
 import { ui } from '../i18n/ui';
 
 const lang = langFromUrl(Astro.url);
@@ -93,7 +93,7 @@ const structuredData = {
           <h2 class="faq-heading" id="faq-close-heading">{faq.closingTitle}</h2>
           <p>{faq.closingText}</p>
           <div class="faq-close__row">
-            {bookingConfig.linksVisible && <a class="cn-btn" href="/book">{t.bookOnline}</a>}
+            {bookingConfig.linksVisible && <a class="cn-btn" href={localise(lang, '/book')}>{t.bookOnline}</a>}
             <a class="faq-close__phone" href="tel:0450222122">0450 222 122</a>
           </div>
           {

@@ -1,0 +1,67 @@
+---
+// Cliniko embed page, filtered to new or existing patient appointment types.
+// Shared by the English routes (src/pages/book/new.astro, returning.astro) and
+// their /ko/book twins. Cliniko's form inside the frame stays in English.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import BookingEmbed from '../../components/BookingEmbed.astro';
+import Footer from '../../components/Footer.astro';
+import { bookingConfig } from '../../lib/booking/config';
+import { langFromUrl, localise } from '../../i18n/lang';
+import { booking } from '../../i18n/booking';
+
+interface Props {
+  kind: 'new' | 'returning';
+}
+
+const { kind } = Astro.props;
+const lang = langFromUrl(Astro.url);
+const t = booking[lang][kind];
+const back = booking[lang].embed.back;
+const typeIds =
+  (kind === 'new' ? bookingConfig.clinikoNewPatientTypes : bookingConfig.clinikoExistingPatientTypes) ?? undefined;
+---
+
+<Base title={t.title} description={t.description} noindex>
+  <PageHeader />
+  <main id="main">
+    <div class="embed-page">
+      <h1 class="embed-page__title">{t.heading}</h1>
+      <p class="embed-page__back"><a href={localise(lang, '/book/patient')}>{back}</a></p>
+    </div>
+    <BookingEmbed typeIds={typeIds} />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .embed-page {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--section-pad-inline);
+    padding-top: var(--space-sm);
+  }
+  /* Announced by screen readers; the Cliniko page below carries its own visible title. */
+  .embed-page__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .embed-page__back {
+    font-size: var(--step-small);
+    color: var(--ink-2);
+  }
+
+  /* Unselectable UI (see the selection policy in src/styles/global.css). Back
+     link. */
+  .embed-page__back a {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+</style>

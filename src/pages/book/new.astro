@@ -1,60 +1,10 @@
 ---
-// Cliniko embed filtered to new patient appointment types.
-import Base from '../../layouts/Base.astro';
-import PageHeader from '../../components/PageHeader.astro';
-import BookingEmbed from '../../components/BookingEmbed.astro';
-import Footer from '../../components/Footer.astro';
+// Cliniko embed filtered to new patient appointment types. Markup and copy:
+// src/views/book/BookEmbedPage.astro (shared with /ko/book/new).
+import BookEmbedPage from '../../views/book/BookEmbedPage.astro';
 import { bookingConfig } from '../../lib/booking/config';
 
 if (!bookingConfig.linksVisible) return Astro.redirect('/');
-
-const typeIds = bookingConfig.clinikoNewPatientTypes ?? undefined;
 ---
 
-<Base
-  title="Book as a new patient | Zone Two Health and Performance"
-  description="Book your first appointment with Zone Two Health and Performance."
-  noindex
->
-  <PageHeader />
-  <main id="main">
-    <div class="embed-page">
-      <h1 class="embed-page__title">Book as a new patient</h1>
-      <p class="embed-page__back"><a href="/book/patient">Back</a></p>
-    </div>
-    <BookingEmbed typeIds={typeIds} />
-  </main>
-  <Footer />
-</Base>
-
-<style>
-  .embed-page {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding-inline: var(--section-pad-inline);
-    padding-top: var(--space-sm);
-  }
-  /* Announced by screen readers; the Cliniko page below carries its own visible title. */
-  .embed-page__title {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
-  }
-  .embed-page__back {
-    font-size: var(--step-small);
-    color: var(--ink-2);
-  }
-
-  /* Unselectable UI (see the selection policy in src/styles/global.css). Back
-     link. */
-  .embed-page__back a {
-    -webkit-user-select: none;
-    user-select: none;
-  }
-</style>
+<BookEmbedPage kind="new" />

@@ -2,6 +2,7 @@
 // Only the routes listed in TRANSLATED have a Korean twin, so links switch to
 // /ko/... only where a Korean page exists and otherwise stay on the English one.
 import { showDrafts } from '../lib/drafts';
+import { bookingConfig } from '../lib/booking/config';
 
 export type Lang = 'en' | 'ko';
 
@@ -13,7 +14,18 @@ export const koreanPublished = false;
 export const koreanLive = koreanPublished || showDrafts;
 
 /** English paths (trailing slash) that have a Korean twin. */
-const TRANSLATED = ['/', '/faq/', '/careers/', '/blog/', '/privacy/', '/privacy/data-security/'];
+const TRANSLATED = [
+  '/',
+  '/faq/',
+  '/careers/',
+  '/blog/',
+  '/privacy/',
+  '/privacy/data-security/',
+  // Booking, on the Cliniko (embedded) path only, and only where booking is on.
+  ...(bookingConfig.linksVisible && bookingConfig.mode === 'embedded'
+    ? ['/book/', '/book/patient/', '/book/new/', '/book/returning/', '/book/refer/']
+    : []),
+];
 
 /** Clinic Notes posts translated so far (slugs). Add each as it is done; the
     route at src/pages/ko/[...page].astro builds a page for each one. */

@@ -55,6 +55,8 @@
 | rehab stages: settle, build, perform | 가라앉히기, 다지기, 실전 |
 | registered practitioner | 등록된 의료인 |
 | initial consultation / follow-up | 첫 진료(초진) / 재진 |
+| new patient / existing patient / standard consultation | 신규 환자 / 기존 환자 / 일반 진료 |
+| GPCCMP / third party, compensable / funding type | GPCCMP(GP 만성질환 관리 계획) / 제3자, 보상 청구 / 비용 지원 유형 |
 | GP, referral, specialist, imaging | GP, 의뢰서(referral), 전문의, 영상 검사 |
 | red flags / emergency department | 위험 신호(red flags) / 응급실 |
 | health fund, extras, gap | 사설 건강보험(health fund), 엑스트라(extras) 플랜, 본인 부담금(gap) |

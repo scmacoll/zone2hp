@@ -4,12 +4,15 @@
 // ACCOUNTS.md). Until PUBLIC_BOOKING_EMBED_URL is set this shows a factual
 // placeholder and loads no third-party content.
 import { bookingConfig } from '../lib/booking/config';
+import { langFromUrl } from '../i18n/lang';
+import { booking } from '../i18n/booking';
 
 interface Props {
   typeIds?: string;
 }
 
 const { typeIds } = Astro.props;
+const t = booking[langFromUrl(Astro.url)].embed;
 const url = bookingConfig.embedUrl;
 
 let embedSrc: string | null = null;
@@ -25,26 +28,27 @@ if (url) {
 }
 ---
 
-<section class="embed" aria-label="Online booking">
+<section class="embed" aria-label={t.region}>
   {
     url ? (
       <Fragment>
+        {t.formLanguage && <p class="embed__lang">{t.formLanguage}</p>}
         <iframe
           id="cliniko-booking"
           class="embed__frame"
           src={embedSrc}
-          title="Online booking"
+          title={t.frameTitle}
           loading="lazy"
           scrolling="no"
           allow="payment"
         />
         <p class="embed__fallback">
-          If the booking page does not load, <a class="embed__link" href={fallbackHref} target="_blank" rel="noopener noreferrer">open it in a new tab</a>.
+          {t.fallback[0]}<a class="embed__link" href={fallbackHref} target="_blank" rel="noopener noreferrer">{t.fallback[1]}</a>{t.fallback[2]}
         </p>
       </Fragment>
     ) : (
       <div class="embed__placeholder">
-        <p class="embed__title">The online booking page will appear here.</p>
+        <p class="embed__title">{t.placeholder}</p>
         <p class="embed__note">
           In embedded mode this frames the practice booking system's own page. Set
           <code>PUBLIC_BOOKING_EMBED_URL</code> to preview it.
@@ -86,6 +90,13 @@ if (url) {
     width: 100%;
     min-height: calc(100svh - 4rem);
     border: none;
+  }
+  /* Translated pages only: Cliniko's form below is in English. */
+  .embed__lang {
+    margin: 0;
+    padding-block: var(--space-xs);
+    font-size: var(--step-small);
+    color: var(--ink-2);
   }
   .embed__fallback {
     margin: 0;
