@@ -700,7 +700,7 @@ Each post's text in reading order. References stay in English on both pages and 
 | 16 | Works best as a stepping stone to exercise, never on its own. | 운동으로 넘어가는 디딤돌로 쓸 때 가장 잘 맞고, 단독으로는 쓰지 않아요. | |
 | 17 | Bar chart of patient-reported side effects after dry needling: soreness 52 percent, fatigue 21.7 percent, headache 15.4 percent; and evidence strength by time frame | 드라이 니들링 후 보고된 부작용 막대그래프: 근육통 52퍼센트, 피로감 21.7퍼센트, 두통 15.4퍼센트. 그리고 기간별 근거의 강도. | |
 | 18 | Most common after-effects | 시술 후 가장 흔한 증상 | |
-| 19 | % of 221 patients reporting each (Tolbert et al., 2025) | 치료 부위 221곳 중 보고된 비율(Tolbert et al., 2025) | |
+| 19 | % of 221 treated areas, 123 patients (Tolbert et al., 2025) | 환자 123명, 치료 부위 221곳 중 비율(Tolbert et al., 2025) | |
 | 23 | Soreness | 근육통 | |
 | 25 | Fatigue | 피로감 | |
 | 27 | Headache | 두통 | |
@@ -710,7 +710,7 @@ Each post's text in reading order. References stay in English on both pages and 
 | 32 | Long term | 장기 | |
 | 33 | Better than sham | 가짜 시술보다 나음 | |
 | 34 | Limited data | 자료 부족 | |
-| 35 | Top: patient-reported after-effects in one 2025 survey [2]; most were mild. Bottom: summary of the 2023 umbrella review [1]. | 위: 2025년의 한 설문 조사에서 환자가 보고한 시술 후 증상 [2]. 대부분 가벼웠어요. 아래: 2023년 엄브렐러 리뷰 [1]의 요약이에요. | |
+| 35 | Top: patient-reported after-effects in one 2025 survey [2]; most were short-lived. Bottom: summary of the 2023 umbrella review [1]. | 위: 2025년의 한 설문 조사에서 환자가 보고한 시술 후 증상 [2]. 대부분 오래가지 않았어요. 아래: 2023년 엄브렐러 리뷰 [1]의 요약이에요. | |
 | 36 | Tell us first if you're pregnant, take blood thinners, have a bleeding disorder, a pacemaker or a fear of needles. | 먼저 알려 주세요. 임신 중이거나, 혈액을 묽게 하는 약(항응고제)을 먹고 있거나, 출혈 질환이나 심장 박동기가 있거나, 바늘이 무섭다면요. | |
 
 ### Zone 2: the pace behind our name
@@ -724,7 +724,7 @@ Each post's text in reading order. References stay in English on both pages and 
 | 6 | Use the talk test. You can speak in full sentences, but you'd rather not sing. Breathing is deeper than at rest, but steady. If you're gasping between words, ease off. | 대화 테스트(talk test)를 해 보세요. 완전한 문장으로 말할 수는 있지만, 노래는 부르고 싶지 않은 정도예요. 숨은 쉴 때보다 깊지만 일정해요. 말 사이사이 숨을 헐떡인다면 강도를 낮추세요. | |
 | 7 | Is it magic? No. | 마법일까요? 아니에요. | |
 | 8 | Zone 2 builds an aerobic base you can repeat day after day without wrecking your body, which is why we love it. But a 2025 review found it isn't the single best intensity for fitness: | 존 2는 몸을 혹사하지 않고 매일 반복할 수 있는 유산소 기초를 다져 줘요. 저희가 존 2를 좋아하는 이유예요. 하지만 2025년의 한 리뷰에 따르면, 체력을 키우는 데 존 2가 유일하게 가장 좋은 강도는 아니에요. | |
-| 9 | "Evidence suggests prioritizing higher exercise intensities (&gt; Zone 2) is critical to maximize cardiometabolic health." | "근거에 따르면, 심혈관·대사 건강을 극대화하려면 더 높은 운동 강도(존 2 초과)를 우선하는 것이 중요해요." | |
+| 9 | "Evidence suggests prioritizing higher exercise intensities (&gt; Zone 2) is critical to maximize cardiometabolic health benefits, particularly in the context of lower training volumes." | "근거에 따르면, 특히 훈련량이 적을 때 심혈관·대사 건강 효과를 극대화하려면 더 높은 운동 강도(존 2 초과)를 우선하는 것이 중요해요." | |
 | 11 | The practical answer is both: plenty of easy, steady work, plus some harder efforts each week. Australia's guidelines recommend 2.5 to 5 hours of moderate activity a week, plus muscle strengthening on at least two days [3]. | 현실적인 답은 둘 다예요. 편하고 꾸준한 운동을 충분히 하고, 매주 조금 더 힘든 운동도 더하세요. 호주 가이드라인은 일주일에 중간 강도 활동 2.5~5시간과 함께, 최소 이틀은 근력 운동을 하라고 권해요 [3]. | |
 | 12 | Why we named the clinic after it | 클리닉 이름을 여기서 따온 이유 | |
 | 13 | Zone 2 is foundational, sustainable effort, done consistently. That's how we think about recovery too. Slow is fast. | 존 2는 기초가 되는, 지속할 수 있는 노력을 꾸준히 하는 거예요. 저희는 회복도 그렇게 생각해요. 느림이 곧 빠름. | |

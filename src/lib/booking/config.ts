@@ -29,7 +29,7 @@ export const bookingConfig = {
   linksVisible: env.PUBLIC_BOOKING_LINKS_VISIBLE === 'true',
 
   /** Whether the ACCOUNTS surface is reachable: the Log in button, /account/*
-      and /api/account/*. Deliberately SEPARATE from booking, so the Splose
+      and /api/account/*. Deliberately SEPARATE from booking, so the Cliniko
       booking embed can be demonstrated while accounts stay switched off. Off
       unless PUBLIC_ACCOUNTS_ENABLED=true. */
   accountsEnabled: env.PUBLIC_ACCOUNTS_ENABLED === 'true',
